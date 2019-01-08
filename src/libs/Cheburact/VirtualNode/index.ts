@@ -1,14 +1,13 @@
 import {
   IComponent,
   IVirtualNode,
-  isIComponent,
-  isIVirtualNode,
   VirtualNodeProps,
 } from 'libs/Cheburact/types';
 import isClassNameProp from 'libs/Cheburact/utils/props/isClassNameProp';
 import isEventProp from 'libs/Cheburact/utils/props/isEventProp';
 import setBooleanProp from 'libs/Cheburact/utils/props/setBooleanProp';
 import extractEventName from 'libs/Cheburact/utils/props/extractEventName';
+import appendChild from 'libs/Cheburact/utils/appendChild';
 
 export default class VirtualNode implements IVirtualNode {
   type: string;
@@ -36,29 +35,9 @@ export default class VirtualNode implements IVirtualNode {
   }
 
   appendChildren(): VirtualNode {
-    this.children.map(this.appendChild);
+    this.children.map((child) => appendChild(this.$el, child));
     return this;
   }
-
-  appendChild = (
-      child: IComponent | IVirtualNode | string | null | Array<any>,
-  ) => {
-    if (typeof child === 'string') {
-      return this.$el.appendChild(document.createTextNode(child));
-    }
-    if (isIComponent(child)) {
-      return this.appendChild(child.render());
-    }
-    if (Array.isArray(child)) {
-      return child.map((child) => this.appendChild(child as any));
-    }
-    if (isIVirtualNode(child)) {
-      const $child = child.asHTML();
-      if ($child) {
-        this.$el.appendChild($child);
-      }
-    }
-  };
 
   setAttributes(): VirtualNode {
     Object.keys(this.props).map((name) => {

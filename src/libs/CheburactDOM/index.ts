@@ -1,9 +1,15 @@
-import VirtualNode from 'libs/Cheburact/VirtualNode';
+import {
+  IComponent,
+  IVirtualNode,
+} from 'libs/Cheburact/types';
+import appendChild from 'libs/Cheburact/utils/appendChild';
 
-const render =  (element: VirtualNode, container: HTMLElement | null) => {
-  if (container) {
-    window.onload = () => container.appendChild(element.asHTML());
+const render = (element: IVirtualNode | IComponent | string | null, container: HTMLElement | null) => {
+  if (!container) {
+    return;
   }
+
+  window.onload = () => appendChild(container, element);
 };
 
 export {

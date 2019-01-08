@@ -1,5 +1,3 @@
-export type PureFunc = (props: any) => HTMLElement | Text | null;
-
 export interface VirtualNodeProps {
   [name: string]: string | boolean | Function;
 }
