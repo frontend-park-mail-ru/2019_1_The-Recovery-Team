@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "paths": {
+      "components/*": [ "components/*" ],
+      "utils/*": [ "utils/*" ],
+      "config/*": [ "config/*" ],
       "libs/*": [ "libs/*" ]
     },
     "baseUrl": "src",
@@ -8,6 +11,7 @@
     "module": "es6",
     "jsx": "react",
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -16,10 +20,12 @@
     "outDir": "dist",
     "allowUnusedLabels": false,
     "noImplicitReturns": true,
+    //    "noImplicitThis": true,
+    //    "noImplicitAny": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "lib": [
-      "es7",
+      "es2017",
       "dom"
     ],
     "pretty": true,

@@ -1,13 +1,6 @@
-import { IComponent, IVirtualNode } from 'libs/Cheburact/types';
+import Component from 'libs/Cheburact/Component/Component';
 
-export default class Component implements IComponent {
-  props: any;
+export default Component;
 
-  constructor(props) {
-    this.props = props;
-  }
-
-  render(): IComponent | IVirtualNode | string | null {
-    return null;
-  }
-}
+export const isComponentClass = (mayBeComponent: any): boolean =>
+    mayBeComponent.prototype instanceof Component;

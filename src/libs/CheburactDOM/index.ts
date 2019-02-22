@@ -1,15 +1,25 @@
-import {
-  IComponent,
-  IVirtualNode,
-} from 'libs/Cheburact/types';
-import appendChild from 'libs/Cheburact/utils/appendChild';
+import { IElement } from 'libs/Cheburact/types';
+import { rootContext } from './utils/hostContext';
+import buildTree from 'libs/CheburactDOM/utils/buildTree';
 
-const render = (element: IVirtualNode | IComponent | string | null, container: HTMLElement | null) => {
-  if (!container) {
+
+const render = (element: IElement | null, container: HTMLElement | null) => {
+  if (!container || !element) {
     return;
   }
 
-  window.onload = () => appendChild(container, element);
+  if (!rootContext.rootHTMLContainer) {
+    rootContext.rootHTMLContainer = container;
+  }
+
+  if (!rootContext.rootElement) {
+    rootContext.rootElement = element;
+  }
+
+  window.onload = () => {
+    rootContext.referenceFiberRoot = buildTree(container, element);
+    console.log('BUILT:', container, rootContext.rootElement, rootContext.referenceFiberRoot);
+  };
 };
 
 export {
