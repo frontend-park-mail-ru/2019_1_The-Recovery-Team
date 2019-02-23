@@ -1,0 +1,10 @@
+.tab-bar__tab {
+    border-bottom: 3px solid #FFFFFF;
+    padding: 20px;
+    margin-right: 52px;
+    display: inline-block;
+}
+
+.tab-bar__tab:last-child {
+    margin-right: 0;
+}

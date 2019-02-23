@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Exo+2');
-
 .header {
-    height: 245px;
-    background: #0097A7;
-    font-family: 'Exo 2', sans-serif;
-}
-
-.header_start {
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 244px;
+    background: var(--global-color-primary-light);
     padding: 0 116px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header__container-volume-button {
+    width: 140px;
 }

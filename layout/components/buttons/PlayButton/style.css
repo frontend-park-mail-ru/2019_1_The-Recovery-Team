@@ -1,0 +1,16 @@
+.play-button {
+    display: inline-block;
+    width: 276px;
+    height: 276px;
+    border: 5px solid #FFFFFF;
+    border-radius: 50%;
+    background-color: var(--global-color-primary-light);
+}
+
+.play-button_single-pl {
+    background: url("../../../components/icons/SinglePlayerIcon.svg") no-repeat center;
+}
+
+.play-button_multi-pl {
+    background: url("../../../components/icons/MultiPlayerIcon.svg") no-repeat center;
+}

@@ -1,9 +1,6 @@
 .entrance-button {
-    background: #0097A7;
-    width: 177px;
+    background: transparent;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .entrance-button__icon {
@@ -12,8 +9,7 @@
     background: url("../../icons/EntranceIcon.svg");
 }
 .entrance-button__title {
-    width: 129px;
-    font-size: 30px;
+    padding: 12px 10px 12px;
     color: #FFFFFF;
     text-align: center;
 }

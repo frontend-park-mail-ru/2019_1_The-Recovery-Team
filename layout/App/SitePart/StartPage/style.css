@@ -1,19 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Exo+2');
-
-button {
-    padding: 0;
-    border: 0;
-    font-family: 'Exo 2', serif;
-    font-size: 30px;
-    letter-spacing: 0.13em;
-    background-color: #0097A7;
-    color: #FFFFFF;
+.start-page {
+    flex-grow: 1;
+    background-color: var(--global-color-primary-light);
 }
 
-.start-page {
-    margin: 0;
-    font-family: 'Exo 2', serif;
-    font-size: 30px;
-    letter-spacing: 0.13em;
-    color: #FFFFFF;
+.start-page__play-buttons {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.start-page__play-button_align {
+    margin-right: 120px;
+}
+
+.start-page__play-button_align:last-child {
+    margin-right: 0;
 }

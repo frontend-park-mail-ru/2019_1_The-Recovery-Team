@@ -4,42 +4,40 @@
     <meta charset="UTF-8">
     <title>Start Page</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Header/style.css">
-    <link rel="stylesheet" href="TabBar/style.css">
-    <link rel="stylesheet" href="TabBar/Tab/style.css">
+    <link rel="stylesheet" href="../Header/TabBar/style.css">
+    <link rel="stylesheet" href="../Header/TabBar/Tab/style.css">
     <link rel="stylesheet" href="../../../components/buttons/VolumeButton/style.css">
     <link rel="stylesheet" href="../../../components/buttons/EntranceButton/style.css">
-    <link rel="stylesheet" href="../../../components/Background/style.css">
     <link rel="stylesheet" href="../../../components/Content/style.css">
     <link rel="stylesheet" href="../../../components/Logotype/style.css">
-    <link rel="stylesheet" href="../../../components/buttons/SinglePlayerButton/style.css">
-    <link rel="stylesheet" href="../../../components/buttons/MultiPlayerButton/style.css">
+    <link rel="stylesheet" href="../../../components/buttons/PlayButton/style.css">
+    <link rel="stylesheet" href="../../../global.css">
 </head>
-<body class="start-page">
-    <div class="header header_start">
-        <button class="volume-button">
-            <div class="volume-button__icon"></div>
-        </button>
-        <div class="tab-bar tab-bar_flex">
-            <button class="tab tab_rules">Правила</button>
-            <button class="tab tab_leader">Лидеры</button>
-            <button class="tab tab_about">О нас</button>
+<body>
+    <div class="site-part">
+        <div class="header">
+            <div class="header__container-volume-button">
+                <button class="volume-button">
+                    <div class="volume-button__icon"></div>
+                </button>
+            </div>
+            <div class="tab-bar">
+                <a href="#" class="tab-bar__tab">Правила</a>
+                <a href="#" class="tab-bar__tab">Лидеры</a>
+                <a href="#" class="tab-bar__tab">О нас</a>
+            </div>
+            <a href="#" class="entrance-button">
+                <div class="entrance-button__title">Вход</div>
+                <div class="entrance-button__icon"></div>
+            </a>
         </div>
-        <button class="entrance-button">
-            <div class="entrance-button__title">Вход</div>
-            <div class="entrance-button__icon"></div>
-        </button>
-    </div>
-    <div class="logotype logotype_start">SAD ISLANDS</div>
-    <div class="background background_dark background_flex">
-        <div class="content content_dark content_start">
-            <div class="content__play-buttons">
-                <button class="single-pl-button">
-                    <div class="single-pl-button__icon"></div>
-                </button>
-                <button class="multi-pl-button">
-                    <div class="multi-pl-button__icon"></div>
-                </button>
+        <div class="start-page">
+            <div class="logotype logotype_start"></div>
+            <div class="start-page__play-buttons">
+                <div class="play-button start-page__play-button_align play-button_single-pl"></div>
+                <div class="play-button start-page__play-button_align play-button_multi-pl"></div>
             </div>
         </div>
     </div>
