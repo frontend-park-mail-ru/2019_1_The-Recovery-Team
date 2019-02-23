@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Exo+2');
+
+button {
+    padding: 0;
+    border: 0;
+    font-family: 'Exo 2', serif;
+    font-size: 30px;
+    letter-spacing: 0.13em;
+    background-color: #0097A7;
+    color: #FFFFFF;
+}
+
+.start-page {
+    margin: 0;
+    font-family: 'Exo 2', serif;
+    font-size: 30px;
+    letter-spacing: 0.13em;
+    color: #FFFFFF;
+}

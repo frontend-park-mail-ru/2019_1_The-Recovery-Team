@@ -1,0 +1,11 @@
+.tab-bar {
+    width: 567px;
+    height: 62px;
+}
+
+.tab-bar_flex {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 115px;
+    margin-bottom: 28px;
+}

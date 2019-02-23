@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Passion+One');
+
+.logotype_start {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 230px;
+}
+.logotype {
+    height: 166.26px;
+    font-family: 'Passion One', cursive;
+    font-size: 180px;
+    color: #0097A7;
+    text-align: center;
+    letter-spacing: 0.13em;
+    text-shadow:
+        -5px -5px 0px #FFFFFF,
+        -1px -5px 0px #FFFFFF,
+        0px -5px 0px #FFFFFF,
+        1px -5px 0px #FFFFFF,
+        5px -5px 0px #FFFFFF,
+        5px -1px 0px #FFFFFF,
+        5px  0px 0px #FFFFFF,
+        5px  1px 0px #FFFFFF,
+        5px  5px 0px #FFFFFF,
+        1px  5px 0px #FFFFFF,
+        0px  5px 0px #FFFFFF,
+        -1px  5px 0px #FFFFFF,
+        -5px  5px 0px #FFFFFF,
+        -5px  1px 0px #FFFFFF,
+        -5px  0px 0px #FFFFFF,
+        -5px -1px 0px #FFFFFF;
+}

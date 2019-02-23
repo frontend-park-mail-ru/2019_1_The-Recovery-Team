@@ -1,0 +1,19 @@
+.tab {
+    box-sizing: border-box;
+    border-bottom: 3px solid #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab_rules {
+    width: 175px;
+}
+
+.tab_leader {
+    width: 159px;
+}
+
+.tab_about {
+    width: 122px;
+}

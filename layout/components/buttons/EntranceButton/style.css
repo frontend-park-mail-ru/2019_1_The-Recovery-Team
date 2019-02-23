@@ -1,0 +1,19 @@
+.entrance-button {
+    background: #0097A7;
+    width: 177px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.entrance-button__icon {
+    width: 50px;
+    height: 64px;
+    background: url("../../icons/EntranceIcon.svg");
+}
+.entrance-button__title {
+    width: 129px;
+    font-size: 30px;
+    color: #FFFFFF;
+    text-align: center;
+}

@@ -1,0 +1,16 @@
+.single-pl-button {
+    width: 276px;
+    height: 287px;
+    box-sizing: border-box;
+    border: 5px solid #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.single-pl-button__icon {
+    width: 179px;
+    height: 187px;
+    background: url("../../../components/icons/SinglePlayerIcon.svg");
+}

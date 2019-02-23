@@ -1,0 +1,12 @@
+.volume-button {
+    width: 60px;
+    height: 60px;
+    background-color: #0097A7;
+    display: flex;
+}
+
+.volume-button__icon {
+    width: 60px;
+    height: 60px;
+    background: url("../../icons/VolumeOnButton.svg");
+}
