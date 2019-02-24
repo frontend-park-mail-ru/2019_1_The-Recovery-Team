@@ -27,6 +27,24 @@
     background: url("../../icons/Settings.svg");
 }
 
+.submit-button__lock-icon {
+    width: 40px;
+    height: 40px;
+    background: url("../../icons/Lock.svg");
+}
+
+.submit-button__save-icon {
+    width: 40px;
+    height: 40px;
+    background: url("../../icons/Save.svg");
+}
+
+.submit-button__cancel-icon {
+    width: 32px;
+    height: 32px;
+    background: url("../../icons/Cancel.svg");
+}
+
 .submit-button_light {
     border: 1px solid var(--global-color-primary-dark);
     background: transparent;

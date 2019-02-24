@@ -1,0 +1,39 @@
+.edit-profile {
+    height: 100%;
+}
+
+.edit-profile__container {
+    padding: 80px 40px;
+    display: flex;
+}
+
+.edit-profile__container-avatar {
+    position: relative;
+    margin-right: 50px;
+}
+
+.edit-profile__container-edit-button {
+    position: absolute;
+    transform: translateY(-100%);
+    left: 68%;
+    top: 48%;
+}
+
+.edit-profile__container-edit {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.edit-profile__container-buttons {
+    margin-top: 50px;
+}
+
+.edit-profile__container-submit-buttons {
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-profile__container-save-button {
+    margin-right: 20px;
+}
