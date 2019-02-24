@@ -1,11 +1,11 @@
-.form__button {
+.sign-in__button {
     width: 350px;
     height: 100px;
     color: var(--global-color-primary-dark);
     margin-right: 100px;
 }
 
-.form__button:last-child {
+.sign-in__button:last-child {
     margin-right: 0;
 }
 

@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 
-.form__container-buttons {
+.sign-in__container-buttons {
     display: flex;
 }
 
@@ -11,7 +11,7 @@
     margin-top: 90px;
 }
 
-.form__container-submits {
+.sign-in__container-submits {
     margin-top: 90px;
     display: flex;
     justify-content: space-between;
