@@ -1,0 +1,20 @@
+.submit-button {
+    height: 75px;
+    padding: 20px 30px;
+    background: var(--global-color-primary-light);
+    display: flex;
+}
+
+.submit-button__container-icon {
+    margin-right: 20px;
+}
+
+.submit-button__next-icon {
+    width: 20px;
+    height: 32px;
+    background: url("../../icons/ArrowIcon.svg");
+}
+
+.submit-button__next-title {
+
+}

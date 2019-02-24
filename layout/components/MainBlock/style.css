@@ -1,0 +1,15 @@
+.main-block {
+    flex-grow: 1;
+    /*height: 100%;*/
+    background: var(--global-color-secondary-dark);
+    padding-top: 60px;
+    /*display: flex;*/
+}
+
+.main-block__content {
+    height: 100%;
+    width: 900px;
+    background: #FFFFFF;
+    margin: 0 auto;
+    padding: 50px
+}

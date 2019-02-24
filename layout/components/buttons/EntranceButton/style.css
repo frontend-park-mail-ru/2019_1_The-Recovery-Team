@@ -3,6 +3,10 @@
     display: flex;
 }
 
+.entrance-button_none {
+
+ }
+
 .entrance-button__icon {
     width: 50px;
     height: 64px;

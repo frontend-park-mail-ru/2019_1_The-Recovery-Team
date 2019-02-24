@@ -1,9 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Passion+One');
 
 .logotype {
+
+}
+
+.logotype_l {
     width: 1087px;
     height: 126px;
     background: url("../../components/icons/Logotype.svg");
+}
+
+.logotype_m {
+    width: 531px;
+    height: 52px;
+    background: url("../../components/icons/LogotypeM.svg");
 }
 
 .logotype_start {

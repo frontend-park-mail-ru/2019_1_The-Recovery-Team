@@ -1,14 +1,30 @@
 .header {
     flex-grow: 0;
     flex-shrink: 0;
-    height: 244px;
-    background: var(--global-color-primary-light);
-    padding: 0 116px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    height: 244px;
+    padding: 0 116px;
+    justify-content: center;
+    background: var(--global-color-primary-light);
+}
+
+.navigation {
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
 .header__container-volume-button {
-    width: 140px;
+width: 140px;
+}
+
+.header__container-logotype {
+    margin-bottom: 30px;
+}
+
+.header_main {
+    flex-direction: column;
+    padding: 32px 116px;
 }
