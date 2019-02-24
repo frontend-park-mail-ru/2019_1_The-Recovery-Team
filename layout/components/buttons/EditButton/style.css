@@ -1,0 +1,6 @@
+.edit-button {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: var(--global-color-primary-light) url("../../icons/Pencil.svg") no-repeat center;
+}

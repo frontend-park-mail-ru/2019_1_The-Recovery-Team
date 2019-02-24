@@ -1,0 +1,7 @@
+.avatar-profile {
+    width: 250px;
+    height: 250px;
+    border: 3px solid var(--global-color-primary-light);
+    border-radius: 50%;
+    background: url("../img/Avatar.png") no-repeat center;
+}

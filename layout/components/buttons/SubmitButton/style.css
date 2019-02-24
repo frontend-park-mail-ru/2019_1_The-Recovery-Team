@@ -13,19 +13,24 @@
 .submit-button__next-icon {
     width: 20px;
     height: 32px;
-    background: url("../../icons/ArrowIcon.svg");
+    background: url("../../icons/Arrow.svg");
+}
+.submit-button__camera-icon {
+     width: 50px;
+     height: 50px;
+     background: url("../../icons/Camera.svg");
+ }
+
+.submit-button__settings-icon {
+    width: 35px;
+    height: 35px;
+    background: url("../../icons/Settings.svg");
 }
 
 .submit-button_light {
     border: 1px solid var(--global-color-primary-dark);
     background: transparent;
     color: var(--global-color-primary-dark);
-}
-
-.submit-button__camera-icon {
-    width: 50px;
-    height: 50px;
-    background: url("../../icons/Camera.svg");
 }
 
 .submit-button__title {

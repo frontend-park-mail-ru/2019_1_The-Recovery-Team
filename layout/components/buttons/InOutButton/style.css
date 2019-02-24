@@ -1,0 +1,22 @@
+.in-out-button {
+    background: transparent;
+    display: flex;
+}
+
+.in-out-button__in-icon {
+    width: 50px;
+    height: 64px;
+    background: url("../../icons/Entrance.svg");
+}
+
+.in-out-button__out-icon {
+    width: 61px;
+    height: 66px;
+    background: url("../../icons/Exit.svg");
+}
+
+.in-out-button__title {
+    padding: 12px 10px 12px;
+    color: #FFFFFF;
+    text-align: center;
+}

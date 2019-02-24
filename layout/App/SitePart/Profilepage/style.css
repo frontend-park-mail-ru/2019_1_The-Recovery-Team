@@ -1,0 +1,42 @@
+.profile {
+    height: 100%;
+    position: relative;
+}
+
+.profile__container-information {
+    padding-top: 30px;
+}
+
+.profile__container {
+    padding: 80px 100px 0;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 200px;
+}
+
+.profile__field {
+    margin-bottom: 30px;
+}
+
+.profile__field_nickname {
+    color: var(--global-color-primary-dark);
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.profile__field_email {
+    color: var(--global-color-primary-dark);
+    font-size: 25px;
+}
+
+.profile__container-avatar {
+    position: relative;
+
+}
+
+.profile__container-edit-button {
+    position: absolute;
+    transform: translateY(-100%);
+    left: 68%;
+    top: 96%;
+}

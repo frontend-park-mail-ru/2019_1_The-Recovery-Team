@@ -8,9 +8,9 @@
 }
 
 .play-button_single-pl {
-    background: url("../../../components/icons/SinglePlayerIcon.svg") no-repeat center;
+    background: url("../../icons/SinglePlayer.svg") no-repeat center;
 }
 
 .play-button_multi-pl {
-    background: url("../../../components/icons/MultiPlayerIcon.svg") no-repeat center;
+    background: url("../../icons/MultiPlayer.svg") no-repeat center;
 }
