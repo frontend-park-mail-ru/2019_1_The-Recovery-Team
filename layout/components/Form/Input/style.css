@@ -3,8 +3,6 @@
     width: 100%;
     height: 75px;
     position: relative;
-    border-bottom: 1px solid var(--global-color-primary-dark);
-    padding: 0 20px;
 }
 
 .form__input-container:first-child {
@@ -18,13 +16,16 @@
     display: block;
     color: var(--global-color-primary-dark);
     font-weight: 700;
+    border-bottom: 1px solid var(--global-color-primary-dark);
+    padding: 0 20px;
 }
 
 .form__input-label {
     color: var(--global-color-primary-dark);
     position: absolute;
     transform: translateY(-50%);
-    top: 50%
+    top: 50%;
+    left: 20px;
 }
 
 .form__input-label_active {

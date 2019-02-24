@@ -21,3 +21,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.main-block__container-ready-button {
+    margin-top: 90px;
+    display: flex;
+    justify-content: flex-end;
+}

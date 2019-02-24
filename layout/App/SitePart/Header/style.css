@@ -4,20 +4,16 @@
     display: flex;
     align-items: center;
     height: 244px;
-    padding: 0 116px;
     justify-content: center;
     background: var(--global-color-primary-light);
+    position: relative;
 }
 
 .navigation {
-width: 100%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-.header__container-volume-button {
-width: 140px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .header__container-logotype {
@@ -26,5 +22,22 @@ width: 140px;
 
 .header_main {
     flex-direction: column;
-    padding: 32px 116px;
+}
+
+.header__container-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    padding: 0 56px;
+    transform: translateY(-100%);
+    top: 40%;
+}
+
+.header__container-buttons_auth-page {
+    justify-content: flex-start;
+}
+
+.header__container-buttons_start-page {
+    top:60%;
 }
