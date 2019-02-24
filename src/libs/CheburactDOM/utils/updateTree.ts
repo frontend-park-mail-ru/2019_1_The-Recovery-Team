@@ -5,5 +5,5 @@ export default function updateTree(
     newElement: IElement,
     oldElement: IElement,
 ) {
-
+  
 }

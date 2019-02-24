@@ -15,11 +15,14 @@ export default function createElement(
       ref,
     } as IVirtualNode;
   }
+
   if (isComponentClass(type)) {
     return new (type as any)({ ...otherProps, children });
   }
+
   if (typeof type === 'function') {
     return type({ ...otherProps, children });
   }
+
   return type;
 }
