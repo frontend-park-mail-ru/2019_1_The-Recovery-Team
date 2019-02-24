@@ -3,16 +3,6 @@
     flex-direction: column;
 }
 
-.sign-in__container-buttons {
-    display: flex;
-}
-
 .form__container-inputs {
     margin-top: 90px;
-}
-
-.sign-in__container-submits {
-    margin-top: 90px;
-    display: flex;
-    justify-content: space-between;
 }

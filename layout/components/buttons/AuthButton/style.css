@@ -1,14 +1,14 @@
-.sign-in__button {
+.auth-button {
     width: 350px;
     height: 100px;
     color: var(--global-color-primary-dark);
     margin-right: 100px;
 }
 
-.sign-in__button:last-child {
+.auth-button:last-child {
     margin-right: 0;
 }
 
-.form__button_active {
+.auth-button_active {
     border: 3px solid var(--global-color-primary-dark);
 }
