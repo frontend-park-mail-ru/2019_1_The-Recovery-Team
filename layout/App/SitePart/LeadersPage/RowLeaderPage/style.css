@@ -6,7 +6,6 @@
 }
 
 .leaders-page-row-table__column {
-    text-align: center;
     padding-top: 20px;
     color: var(--global-color-primary-dark);
 }
@@ -15,14 +14,16 @@
     flex-grow: 0;
     flex-shrink: 0;
     width: 120px;
+    padding-left: 52px;
 }
 
 .leaders-page-row-table__nick {
     flex-grow: 1;
+    padding-left: 160px;
 }
 
 .leaders-page-row-table__rating {
-    padding-left: 40px;
+    padding-left: 120px;
     width: 300px;
     flex-grow: 0;
     flex-shrink: 0;
