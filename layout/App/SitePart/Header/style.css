@@ -41,3 +41,7 @@
 .header__container-buttons_start-page {
     top:60%;
 }
+
+.header__container-buttons_auth {
+    padding-right: 0;
+}

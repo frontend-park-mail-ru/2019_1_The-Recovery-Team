@@ -1,0 +1,29 @@
+.label-auth {
+    position: relative;
+}
+
+.label-auth__circle {
+    width: 84px;
+    height: 84px;
+    border: 3px solid #FFFFFF;
+    border-radius: 50%;
+    background: var(--global-color-primary-light) url("../img/AvatarM.png") no-repeat center;
+    position: absolute;
+    transform: translateY(-100%);
+    top: 110%;
+    left: -24%;
+}
+
+.label-auth__rect {
+    width: 268px;
+    height: 70px;
+    background: #FFFFFF;
+    text-align: center;
+    vertical-align: center;
+}
+
+.label-auth__nickname {
+    margin-top: 15px;
+    display: inline-block;
+    color: var(--global-color-primary-dark);
+}

@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="../Header/style.css">
     <link rel="stylesheet" href="../Header/TabBar/style.css">
     <link rel="stylesheet" href="../Header/TabBar/Tab/style.css">
+    <link rel="stylesheet" href="../../../components/Logotype/style.css">
+    <link rel="stylesheet" href="../../../components/LabelAuthUser/style.css">
     <link rel="stylesheet" href="../../../components/buttons/VolumeButton/style.css">
     <link rel="stylesheet" href="../../../components/buttons/InOutButton/style.css">
-    <link rel="stylesheet" href="../../../components/Logotype/style.css">
     <link rel="stylesheet" href="../../../components/buttons/PlayButton/style.css">
     <link rel="stylesheet" href="../../../global.css">
 </head>
@@ -25,11 +26,22 @@
                     <a href="#" class="tabbar__tab">О нас</a>
                 </div>
             </div>
-            <div class="header__container-buttons header__container-buttons_start-page">
+            <!--if user isn't authorized-->
+            <!--<div class="header__container-buttons header__container-buttons_start-page">
                 <button class="volume-button volume-button_on"></button>
                 <a href="#" class="in-out-button">
                     <div class="in-out-button__title">Вход</div>
                     <div class="in-out-button__in-icon"></div>
+                </a>
+            </div>-->
+            <!--if user is authorized-->
+            <div class="header__container-buttons header__container-buttons_start-page header__container-buttons_auth">
+                <button class="volume-button volume-button_on"></button>
+                <a href="#" class="label-auth">
+                    <div class="label-auth__circle"></div>
+                    <div class="label-auth__rect">
+                        <div class="label-auth__nickname">Nagibator228</div>
+                    </div>
                 </a>
             </div>
         </div>
