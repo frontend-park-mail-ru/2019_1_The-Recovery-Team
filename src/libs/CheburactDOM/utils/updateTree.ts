@@ -1,6 +1,7 @@
 import { IRootContext } from './hostContext';
 import { FiberTypes, IFiberNode, UpdateQueueItem } from '../types';
 import { IComponent } from 'libs/Cheburact/types';
+import getTreeBuilder from 'libs/CheburactDOM/utils/buildTree';
 
 const findItemInQueue = (item: IComponent, q: Array<UpdateQueueItem>): UpdateQueueItem | null => {
   for (let qItem of q) {
@@ -11,19 +12,25 @@ const findItemInQueue = (item: IComponent, q: Array<UpdateQueueItem>): UpdateQue
   return null;
 };
 
+const compareTrees = ($target, fibers, elements) => {
+
+};
+
 export default function updateTree(
     rootContext: IRootContext,
     updateQueue: Array<UpdateQueueItem>,
 ): Array<IFiberNode> | null {
-  const { referenceFiberRoot } = rootContext;
+  const { referenceFiberRoot, rootHTMLContainer } = rootContext;
 
-  if (referenceFiberRoot === null) {
+  if (referenceFiberRoot === null || rootHTMLContainer === null) {
     // Нечего обновлять
     return null;
   }
 
-  const bypassFiber = (fiberNodes: Array<IFiberNode>) => {
-    fiberNodes.forEach((node: IFiberNode) => {
+  const bypassFiber = (fiberNodes: Array<IFiberNode>, $target: HTMLElement): Array<IFiberNode> => {
+    return fiberNodes.map((node: IFiberNode) => {
+      const $nextTarget = node.ref instanceof HTMLElement ? node.ref : $target;
+
       if (node.type === FiberTypes.COMPONENT) {
         debugger;
         const qItem = findItemInQueue(node.stateNode as any, updateQueue);
@@ -31,19 +38,22 @@ export default function updateTree(
           const element: IComponent = qItem.fiberNode.stateNode as IComponent;
           element.writeState(qItem.nextState);
           const subtree = element.render();
-          console.log('FOUND TO UPDATE:', qItem, subtree);
+          const buildTree = getTreeBuilder(rootContext);
+          const newTree = buildTree($nextTarget, subtree);
+          node.children = newTree || [];
+          console.log('FOUND TO UPDATE:', qItem, subtree, node, newTree);
+          return node;
         }
         else {
-          bypassFiber(node.children);
+          node.children = bypassFiber(node.children, $nextTarget);
         }
       }
       else {
-        bypassFiber(node.children);
+        node.children = bypassFiber(node.children, $nextTarget);
       }
+      return node;
     });
   };
 
-  bypassFiber(rootContext.referenceFiberRoot || []);
-
-  return null;
+  return bypassFiber(rootContext.referenceFiberRoot || [], rootHTMLContainer);
 }

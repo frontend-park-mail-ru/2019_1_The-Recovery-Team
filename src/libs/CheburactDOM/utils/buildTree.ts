@@ -18,11 +18,10 @@ const getTreeBuilder = (rootContext: IRootContext) => {
   * */
   const getSubBuildTree = (
       $target: HTMLElement,
-      parent: null | IFiberNode = null,
       container: Array<IFiberNode>,
   ) =>
       (child) =>
-          container.push(...(buildTree($target, child, parent) || []));
+          container.push(...(buildTree($target, child) || []));
 
   const buildTextNode = (node: string, $parent: HTMLElement): Array<IFiberNode> => {
     const $textNode = rootContext.createInstance(node);
@@ -64,7 +63,7 @@ const getTreeBuilder = (rootContext: IRootContext) => {
     });
 
     if ($node instanceof HTMLElement) {
-      node.children.map(getSubBuildTree($node, curFiberNode, curFiberNode.children));
+      node.children.map(getSubBuildTree($node, curFiberNode.children));
     }
 
     rootContext.finalizeCreateInstance($node, node);
@@ -74,7 +73,6 @@ const getTreeBuilder = (rootContext: IRootContext) => {
   const buildTree = (
     $target: HTMLElement,
     child: IElement | null | Array<IElement | null>,
-    parent: IFiberNode | null = null,
   ): Array<IFiberNode> | null => {
     console.log('build tree: ', child);
 
@@ -96,7 +94,7 @@ const getTreeBuilder = (rootContext: IRootContext) => {
 
     if (Array.isArray(child)) {
       const container: Array<IFiberNode> = [];
-      child.map(getSubBuildTree($target, parent, container));
+      child.map(getSubBuildTree($target, container));
       return container;
     }
 

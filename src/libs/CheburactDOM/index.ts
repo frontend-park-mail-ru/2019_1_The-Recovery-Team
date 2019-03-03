@@ -14,7 +14,7 @@ const render = (element: IElement | null, container: HTMLElement | null) => {
   rootContext.updater = new Updater();
   buildTree = treeBuilder(rootContext);
   rootContext.updater.setUpdateTreeFunc((q) => {
-    updateTree(rootContext, q);
+    rootContext.referenceFiberRoot = updateTree(rootContext, q);
   });
 
   if (!rootContext.rootHTMLContainer) {
