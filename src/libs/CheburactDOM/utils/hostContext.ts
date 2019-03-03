@@ -1,13 +1,14 @@
 import { IElement, isIVirtualNode, IVirtualNode } from 'libs/Cheburact/types';
-import { isEventProp, isClassNameProp, setBooleanProp } from 'libs/CheburactDOM/utils/props/index';
-import setEventProp from 'libs/CheburactDOM/utils/props/setEventProp';
-import { IFiberNode } from 'libs/CheburactDOM/types';
+import { isEventProp, isClassNameProp, setBooleanProp, setEventProp } from './props';
+import { IFiberNode } from '../types';
+import Updater from '../Updater';
 
 
 export interface IRootContext {
   rootHTMLContainer: HTMLElement | null;
   referenceFiberRoot: Array<IFiberNode> | null;
   rootElement: IElement | null;
+  updater: Updater | null;
 
   createInstance: (element: IElement) => Text | HTMLElement | null;
   finalizeCreateInstance: ($target: HTMLElement, element: IVirtualNode) => any;
@@ -18,6 +19,7 @@ export const rootContext: IRootContext = {
   rootHTMLContainer: null,
   referenceFiberRoot: null,
   rootElement: null,
+  updater: null,
 
   createInstance: (element: IElement): Text | HTMLElement | null => {
     if (typeof element === 'string') {

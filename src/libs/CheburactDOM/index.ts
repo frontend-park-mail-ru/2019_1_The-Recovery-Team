@@ -1,22 +1,20 @@
 import { IElement } from 'libs/Cheburact/types';
 import { rootContext } from './utils/hostContext';
-import treeBuilder from 'libs/CheburactDOM/utils/buildTree';
-import Updater from 'libs/CheburactDOM/Updater';
+import treeBuilder from './utils/buildTree';
+import updateTree from './utils/updateTree';
+import Updater from './Updater';
 
 let buildTree: any = null;
-let updater: Updater | null = null;
 
 const render = (element: IElement | null, container: HTMLElement | null) => {
   if (!container || !element) {
     return;
   }
 
-  updater = new Updater();
-  buildTree = treeBuilder(rootContext, updater);
-  updater.setUpdateTreeFunc(() => {
-    container.innerText = '';
-    console.log(element, rootContext.referenceFiberRoot);
-    rootContext.referenceFiberRoot = buildTree(container, element);
+  rootContext.updater = new Updater();
+  buildTree = treeBuilder(rootContext);
+  rootContext.updater.setUpdateTreeFunc((q) => {
+    updateTree(rootContext, q);
   });
 
   if (!rootContext.rootHTMLContainer) {

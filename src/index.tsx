@@ -3,7 +3,9 @@ import * as CheburactDOM from 'libs/CheburactDOM';
 
 class Lol extends React.Component {
   headerRef: null | HTMLElement = null;
-  text: number = 0;
+  state = {
+    text: 0,
+  };
 
   componentDidMount() {
     console.log(this.props);
@@ -17,8 +19,7 @@ class Lol extends React.Component {
     //   this.headerRef.innerText = 'Clicked';
     // }
 
-    this.text++;
-    (this.getUpdater() || { enqueueUpdate: () => null }).enqueueUpdate(this);
+    this.setState({ text: this.state.text + 1 });
   };
 
   render() {
@@ -27,7 +28,7 @@ class Lol extends React.Component {
           <h2
               className={'header'}
               ref={this.handleSetHeaderRef}
-          >{ `${this.text}` }</h2>
+          >{ `${this.state.text}` }</h2>
           { Array
               .from(Array(5).keys())
               .map((i) => (
@@ -43,9 +44,19 @@ class Lol extends React.Component {
 }
 
 class Kek extends React.Component {
+  handleOuterClick = () => {
+    const updater = this.getUpdater();
+    if (updater) {
+      updater.enqueueUpdate(this, { newValue: 'aaa' });
+    }
+  };
+
   render() {
     return (
-        <Lol aaa='bbb'/>
+        <div>
+          <Lol aaa='bbb'/>
+          <button onClick={this.handleOuterClick}>Outer button</button>
+        </div>
     );
   }
 }

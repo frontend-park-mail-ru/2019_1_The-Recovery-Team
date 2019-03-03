@@ -1,19 +1,15 @@
-import { IElement, IUpdater } from 'libs/Cheburact/types';
+import { IComponent, IUpdater } from 'libs/Cheburact/types';
 import debounce from 'libs/debounce';
+import { UpdateQueueItem } from '../types';
 
 const UPDATE_DELAY = 16; // ms
-
-interface UpdateQueueItem {
-  element: IElement,
-  nextState?: Object,
-}
 
 export default class Updater implements IUpdater {
   updateQueue: Array<UpdateQueueItem> = [];
   waitingUpdateQueue: Array<UpdateQueueItem> = [];
-  updateTreeFunc: ((updateQueue: Array<UpdateQueueItem>) => any) | null = null;
+  updateTreeFunc: ((q: Array<UpdateQueueItem>) => any) | null = null;
 
-  setUpdateTreeFunc(updateTreeFunc: () => any) {
+  setUpdateTreeFunc(updateTreeFunc: (q: Array<UpdateQueueItem>) => any) {
     this.updateTreeFunc = updateTreeFunc;
   }
 
@@ -31,11 +27,17 @@ export default class Updater implements IUpdater {
     return this.updateQueue.length === 0 && this.waitingUpdateQueue.length !== 0;
   }
 
-  enqueueUpdate(element: IElement, nextState?: Object) {
-    this.waitingUpdateQueue.push({ element, nextState});
+  enqueueUpdate(element: IComponent, nextState?: Object) {
+    if (element['__fiber']) {
+      const relatedFiber: any = element['__fiber'];
+      this.waitingUpdateQueue.push({
+        fiberNode: relatedFiber,
+        nextState
+      });
 
-    if (this.canStartUpdate()) {
-      this.reconcile();
+      if (this.canStartUpdate()) {
+        this.reconcile();
+      }
     }
   }
 

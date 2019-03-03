@@ -1,4 +1,4 @@
-import { IElement } from 'libs/Cheburact/types';
+import { IComponent, IDOMNode, IElement } from 'libs/Cheburact/types';
 
 export enum FiberTypes {
   STRING = 'string',
@@ -11,4 +11,10 @@ export interface IFiberNode {
   stateNode: IElement;
   key: null | string | number;
   children: Array<IFiberNode>;
+  ref: null | IDOMNode;
+}
+
+export interface UpdateQueueItem {
+  fiberNode: IFiberNode,
+  nextState?: Object,
 }

@@ -1,12 +1,15 @@
 import { IComponent, IElement, IUpdater } from 'libs/Cheburact/types';
 
 export default class Component implements IComponent {
-  props: any;
+  props: any = null;
+  state: any = null;
   private updater: IUpdater | null;
+  private readonly symbol: Symbol;
 
   constructor(props) {
     this.props = props;
     this.updater = null;
+    this.symbol = Symbol(`Component`);
   }
 
   componentDidMount() {}
@@ -21,8 +24,30 @@ export default class Component implements IComponent {
     return this.updater;
   }
 
-  getProps(): any {
+  getSymbol(): Symbol {
+    return this.symbol;
+  }
+
+  getProps() {
     return this.props;
+  }
+
+  getState() {
+    return this.state || {};
+  }
+
+  setState(nextState) {
+    if (this.updater) {
+      const newState = {
+        ...(this.state || {}),
+        ...(nextState || {}),
+      };
+      this.updater.enqueueUpdate(this, newState);
+    }
+  }
+
+  writeState(newState) {
+    this.state = newState;
   }
 
   render(): IElement | null {
