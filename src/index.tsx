@@ -3,6 +3,7 @@ import * as CheburactDOM from 'libs/CheburactDOM';
 
 class Lol extends React.Component {
   headerRef: null | HTMLElement = null;
+  text: number = 0;
 
   componentDidMount() {
     console.log(this.props);
@@ -12,15 +13,12 @@ class Lol extends React.Component {
       this.headerRef = ref;
 
   handleClick = () => {
-    if (this.headerRef) {
-      this.headerRef.innerText = 'Clicked';
-    }
-    const updater = this.getUpdater();
-    if (updater) {
-      for (let i = 0; i < 100; i++) {
-        updater.enqueueUpdate(this);
-      }
-    }
+    // if (this.headerRef) {
+    //   this.headerRef.innerText = 'Clicked';
+    // }
+
+    this.text++;
+    (this.getUpdater() || { enqueueUpdate: () => null }).enqueueUpdate(this);
   };
 
   render() {
@@ -29,7 +27,7 @@ class Lol extends React.Component {
           <h2
               className={'header'}
               ref={this.handleSetHeaderRef}
-          >Lol component!</h2>
+          >{ `${this.text}` }</h2>
           { Array
               .from(Array(5).keys())
               .map((i) => (

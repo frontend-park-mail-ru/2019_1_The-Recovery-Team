@@ -4,7 +4,7 @@ import setEventProp from 'libs/CheburactDOM/utils/props/setEventProp';
 import { IFiberNode } from 'libs/CheburactDOM/types';
 
 
-interface IRootContext {
+export interface IRootContext {
   rootHTMLContainer: HTMLElement | null;
   referenceFiberRoot: Array<IFiberNode> | null;
   rootElement: IElement | null;
