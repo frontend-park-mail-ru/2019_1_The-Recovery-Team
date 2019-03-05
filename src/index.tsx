@@ -24,7 +24,7 @@ class Lol extends React.Component {
 
   render() {
     return (
-        <div className={'root'} hidden={false}>
+        <div className={'root'} hidden={false} key='array-container'>
           <h2
               className={'header'}
               ref={this.handleSetHeaderRef}
@@ -32,7 +32,7 @@ class Lol extends React.Component {
           { Array
               .from(Array(5).keys())
               .map((i) => (
-                <p className={'list-item'}>{`${i}`}</p>
+                <p className={'list-item'} key={i}>{`${i}`}</p>
               ))
           }
           <button
@@ -62,7 +62,7 @@ class Kek extends React.Component {
 }
 
 CheburactDOM.render(
-    <div kek={'lol'}>
+    <div kek={'lol'} key='root'>
       <Kek/>
       <p>Hello world</p>
     </div>,

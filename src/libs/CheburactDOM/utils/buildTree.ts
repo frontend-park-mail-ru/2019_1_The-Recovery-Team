@@ -8,6 +8,7 @@ import {
 import { IRootContext } from './hostContext';
 import createFiberNode from './createFiberNode';
 import { FiberTypes, IFiberNode } from '../types';
+import { COMPONENT_FIBER } from '../config/customFields';
 
 
 const getTreeBuilder = (rootContext: IRootContext) => {
@@ -38,8 +39,9 @@ const getTreeBuilder = (rootContext: IRootContext) => {
     const curFiberNode = createFiberNode({
       stateNode: node,
       type: FiberTypes.COMPONENT,
+      key: node['key'] !== 0 ? node['key'] || null : 0,
     });
-    node['__fiber'] = curFiberNode;
+    node[COMPONENT_FIBER] = curFiberNode;
     node.setUpdater(rootContext.updater as any); // updater should be not null
     const subChildren: Array<IFiberNode> = buildTree($parent, node.render(), curFiberNode) || [];
 
@@ -60,6 +62,7 @@ const getTreeBuilder = (rootContext: IRootContext) => {
       type: FiberTypes.VIRTUAL_NODE,
       stateNode: node,
       ref: $node,
+      key: node.key !== 0 ? node.key || null : 0,
     });
 
     if ($node instanceof HTMLElement) {
@@ -74,7 +77,6 @@ const getTreeBuilder = (rootContext: IRootContext) => {
     $target: HTMLElement,
     child: IElement | null | Array<IElement | null>,
   ): Array<IFiberNode> | null => {
-    console.log('build tree: ', child);
 
     if (!child) {
       return null;

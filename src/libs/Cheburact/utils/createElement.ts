@@ -28,12 +28,15 @@ export default function createElement(
       type,
       props: otherProps,
       children: flatChildren,
+      key,
       ref,
     } as IVirtualNode;
   }
 
   if (isComponentClass(type)) {
-    return new (type as any)({ ...otherProps, children: flatChildren });
+    const component = new (type as any)({ ...otherProps, children: flatChildren });
+    component['key'] = key;
+    return component;
   }
 
   if (typeof type === 'function') {

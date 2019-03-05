@@ -2,6 +2,7 @@ import { IElement, isIVirtualNode, IVirtualNode } from 'libs/Cheburact/types';
 import { isEventProp, isClassNameProp, setBooleanProp, setEventProp } from './props';
 import { IFiberNode } from '../types';
 import Updater from '../Updater';
+import getFiberTypeOfElement from 'libs/CheburactDOM/utils/getFiberTypeOfElement';
 
 
 export interface IRootContext {
@@ -13,6 +14,7 @@ export interface IRootContext {
   createInstance: (element: IElement) => Text | HTMLElement | null;
   finalizeCreateInstance: ($target: HTMLElement, element: IVirtualNode) => any;
   appendChild: ($target: HTMLElement, $child: Text | HTMLElement | null) => any;
+  areEqual: (fiber: IFiberNode, element: IElement) => boolean;
 }
 
 export const rootContext: IRootContext = {
@@ -59,4 +61,11 @@ export const rootContext: IRootContext = {
       $target.appendChild($child);
     }
   },
+
+  areEqual: (fiber: IFiberNode, element: IElement): boolean => {
+    if (fiber.type !== getFiberTypeOfElement(element)) {
+      return false;
+    }
+    return false;
+  }
 };

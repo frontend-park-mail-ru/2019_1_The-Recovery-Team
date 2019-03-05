@@ -1,19 +1,94 @@
-import { IRootContext } from './hostContext';
+import { IRootContext, rootContext } from './hostContext';
 import { FiberTypes, IFiberNode, UpdateQueueItem } from '../types';
-import { IComponent } from 'libs/Cheburact/types';
-import getTreeBuilder from 'libs/CheburactDOM/utils/buildTree';
+import {
+  IComponent,
+  IElement,
+  isIComponent,
+  isIVirtualNode,
+  IVirtualNode,
+} from 'libs/Cheburact/types';
+import getTreeBuilder from './buildTree';
+import { COMPONENT_FIBER } from '../config/customFields';
+import getFiberTypeOfElement from 'libs/CheburactDOM/utils/getFiberTypeOfElement';
 
 const findItemInQueue = (item: IComponent, q: Array<UpdateQueueItem>): UpdateQueueItem | null => {
   for (let qItem of q) {
-    if (qItem.fiberNode.stateNode === item) {
+    if (qItem.fiberNode === (item as any)[COMPONENT_FIBER]) {
       return qItem;
     }
   }
   return null;
 };
 
-const compareTrees = ($target, fibers, elements) => {
+const configureFiberCollectionsByType = (fibers: Array<IFiberNode>) => {
+  const result = {
+    keysMap: {},
+    vNodesMap: {},
+    stringsMap: {},
+    componentsArr: [],
+  };
 
+  fibers.forEach((fiber, index) => {
+    const item = { fiber, index };
+    if (fiber.key) {
+      result.keysMap[fiber.key] = item;
+      return;
+    }
+    switch (fiber.type) {
+      case FiberTypes.COMPONENT:
+        result.componentsArr.push(item);
+        return;
+      case FiberTypes.VIRTUAL_NODE:
+        const type = (fiber.stateNode as IVirtualNode).type;
+        result.vNodesMap[type] = [...(result.vNodesMap[type] || []), item];
+        return;
+      case FiberTypes.STRING:
+        const key = fiber.stateNode as string;
+        result.stringsMap[key] = [...(result.stringsMap[key] || []), item];
+        return;
+    }
+  });
+
+  return result;
+};
+
+const reconcileTrees = (
+    $target: HTMLElement,
+    fibers: Array<IFiberNode>,
+    elements: Array<IElement>,
+) => {
+
+  const {
+      stringsMap,
+      vNodesMap,
+      keysMap,
+      componentsArr,
+  } = configureFiberCollectionsByType(fibers);
+
+  elements.forEach((element, index) => {
+    if (element['key']) {
+      // TODO:
+      const { fiber, index } = keysMap[element['key']];
+      if (rootContext.areEqual(fiber, element)) {
+
+      }
+      return;
+    }
+    const fiberType = getFiberTypeOfElement(element);
+    switch (fiberType) {
+      case FiberTypes.VIRTUAL_NODE:
+        const nodes = vNodesMap[element.type] || [];
+        return;
+      case FiberTypes.COMPONENT:
+        // TODO:
+        return;
+      case FiberTypes.STRING:
+        // TODO;
+        return;
+    }
+  });
+
+  console.log('RECONCILE', keysMap, stringsMap, vNodesMap, componentsArr, 'TO:', elements);
 };
 
 export default function updateTree(
@@ -37,20 +112,21 @@ export default function updateTree(
         if (qItem) {
           const element: IComponent = qItem.fiberNode.stateNode as IComponent;
           element.writeState(qItem.nextState);
-          const subtree = element.render();
+          let renderedTree: any = element.render();
+          if (!Array.isArray(renderedTree)) {
+            renderedTree = [renderedTree];
+          }
+
+          reconcileTrees($target, node.children, renderedTree);
           const buildTree = getTreeBuilder(rootContext);
-          const newTree = buildTree($nextTarget, subtree);
+          const newTree = buildTree($nextTarget, renderedTree);
           node.children = newTree || [];
-          console.log('FOUND TO UPDATE:', qItem, subtree, node, newTree);
+          console.log('FOUND TO UPDATE:', qItem, renderedTree, node, newTree);
           return node;
         }
-        else {
-          node.children = bypassFiber(node.children, $nextTarget);
-        }
       }
-      else {
-        node.children = bypassFiber(node.children, $nextTarget);
-      }
+
+      node.children = bypassFiber(node.children, $nextTarget);
       return node;
     });
   };

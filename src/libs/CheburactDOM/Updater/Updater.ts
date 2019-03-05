@@ -1,6 +1,7 @@
 import { IComponent, IUpdater } from 'libs/Cheburact/types';
 import debounce from 'libs/debounce';
 import { UpdateQueueItem } from '../types';
+import { COMPONENT_FIBER } from '../config/customFields';
 
 const UPDATE_DELAY = 16; // ms
 
@@ -28,8 +29,8 @@ export default class Updater implements IUpdater {
   }
 
   enqueueUpdate(element: IComponent, nextState?: Object) {
-    if (element['__fiber']) {
-      const relatedFiber: any = element['__fiber'];
+    if (element[COMPONENT_FIBER]) {
+      const relatedFiber: any = element[COMPONENT_FIBER];
       this.waitingUpdateQueue.push({
         fiberNode: relatedFiber,
         nextState

@@ -11,6 +11,7 @@ export interface IVirtualNode {
   props: VirtualNodeProps;
   children: Array<IElement>;
   ref: null | ((node: IDOMNode) => any);
+  key: null | string | number;
 }
 
 export const isIVirtualNode = (obj): obj is IVirtualNode =>

@@ -1,4 +1,4 @@
-import { IComponent, IDOMNode, IElement } from 'libs/Cheburact/types';
+import { IDOMNode, IElement } from 'libs/Cheburact/types';
 
 export enum FiberTypes {
   STRING = 'string',
