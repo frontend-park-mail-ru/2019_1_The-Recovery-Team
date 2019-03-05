@@ -4,7 +4,8 @@
       "components/*": [ "components/*" ],
       "utils/*": [ "utils/*" ],
       "config/*": [ "config/*" ],
-      "libs/*": [ "libs/*" ]
+      "libs/*": [ "libs/*" ],
+      "styles/*": [ "styles/*" ]
     },
     "baseUrl": "src",
     "target": "es5",

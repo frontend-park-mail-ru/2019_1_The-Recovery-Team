@@ -1,5 +1,7 @@
 import * as React from 'libs/Cheburact';
 import * as CheburactDOM from 'libs/CheburactDOM';
+import App from './App';
+
 
 class Lol extends React.Component {
   headerRef: null | HTMLElement = null;
@@ -37,7 +39,7 @@ class Lol extends React.Component {
           }
           <button
             onClick={ this.handleClick }
-          >click me</button>
+          >{this.props.aaa}</button>
         </div>
     );
   }
@@ -63,7 +65,8 @@ class Kek extends React.Component {
 
 CheburactDOM.render(
     <div kek={'lol'} key='root'>
-      <Kek/>
+      <App />
+      <Kek />
       <p>Hello world</p>
     </div>,
     document.getElementById('root'),
