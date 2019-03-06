@@ -1,0 +1,12 @@
+@import "~styles/constants";
+
+.start-page {
+  flex-grow: 1;
+  background-color: $global-color-primary-light;
+
+  &__play-buttons {
+    text-align: center;
+    margin-top: 100px;
+  }
+
+}

@@ -1,0 +1,27 @@
+@import "~styles/constants";
+
+.play-button {
+  display: inline-block;
+  width: 276px;
+  height: 276px;
+  border: 5px solid #FFFFFF;
+  border-radius: 50%;
+  background-color: $global-color-primary-light;
+
+  &_single-pl {
+    background: url("../../icons/SinglePlayer.svg") no-repeat center;
+  }
+
+  &_multi-pl {
+    background: url("../../icons/MultiPlayer.svg") no-repeat center;
+  }
+
+  &_align {
+    margin-right: 120px;
+  }
+
+  &_align:last-child {
+    margin-right: 0;
+  }
+}
+

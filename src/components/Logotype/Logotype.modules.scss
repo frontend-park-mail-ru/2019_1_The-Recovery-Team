@@ -1,0 +1,17 @@
+.logotype {
+  &_l {
+    width: 1087px;
+    height: 126px;
+    background: url("../../components/icons/Logotype.svg");
+  }
+
+  &_m {
+    width: 531px;
+    height: 52px;
+    background: url("../../components/icons/LogotypeM.svg");
+  }
+
+  &_start {
+    margin: 0 auto;
+  }
+}
