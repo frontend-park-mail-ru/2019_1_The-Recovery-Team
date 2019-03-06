@@ -1,0 +1,16 @@
+.sign-in-page {
+  height: 100%;
+  padding: 50px;
+
+  &__container-buttons {
+    display: flex;
+  }
+
+  &__button {
+    margin-right: 100px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

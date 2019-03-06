@@ -1,6 +1,8 @@
 import * as React from 'libs/Cheburact';
 import Header from './Header';
-import StartPage from './StartPage/StartPage';
+// import StartPage from './StartPage/StartPage';
+import MainBlock from './MainBlock/MainBlock';
+import SignInPage from './SignInPage/SignInPage';
 const styles = require('./SitePart.modules.scss');
 
 export default class SitePart extends React.Component {
@@ -15,7 +17,10 @@ export default class SitePart extends React.Component {
     return (
         <div className={styles['site-part']}>
           <Header isStartPage={isStartPage} isAuth={isAuth} />
-          <StartPage />
+          {/*<StartPage />*/}
+          <MainBlock>
+            <SignInPage/>
+          </MainBlock>
         </div>
     );
   }
