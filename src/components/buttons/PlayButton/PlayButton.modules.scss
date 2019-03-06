@@ -7,6 +7,7 @@
   border: 5px solid #FFFFFF;
   border-radius: 50%;
   background-color: $global-color-primary-light;
+  background-size: contain;
 
   &_single-pl {
     background: url("./img/SinglePlayer.svg") no-repeat center;
@@ -14,14 +15,6 @@
 
   &_multi-pl {
     background: url("./img/MultiPlayer.svg") no-repeat center;
-  }
-
-  &_align {
-    margin-right: 120px;
-  }
-
-  &_align:last-child {
-    margin-right: 0;
   }
 }
 

@@ -6,14 +6,17 @@ const cn = className(styles);
 
 export default class PlayButton extends React.Component {
   render() {
+    const {mode, className} = this.props;
+    let classes = cn(
+        'play-button',
+        `play-button_${mode}`,
+    );
+    if (className) {
+      classes = `${classes} ${className}`;
+    }
+
     return (
-        <div className={cn(
-            'play-button',
-            this.props.isStartPage && 'play-button_align',
-            this.props.isSinglePlayer && 'play-button_single-pl',
-            this.props.isMultiPlayer && 'play-button_multi-pl',
-        )}>
-        </div>
+        <div className={classes} />
     );
   }
 }

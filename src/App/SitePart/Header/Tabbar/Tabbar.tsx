@@ -13,14 +13,14 @@ export default class Tabbar extends React.Component {
   };
 
   render() {
+    const {tabs} = this.state;
+
     return (
         <div className={styles['tabbar']}>
-          { this.state.tabs.map(({title, isActive}) => (
-            <Tab
-                title={title}
-                isActive={isActive}
-            />
-          ))
+          {
+            tabs.map(({title, isActive}) => (
+              <Tab isActive={isActive}>{title}</Tab>
+            ))
           }
         </div>
     );

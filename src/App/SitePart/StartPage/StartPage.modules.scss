@@ -9,4 +9,11 @@
     margin-top: 100px;
   }
 
+  &__play-button {
+    margin-right: 120px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }

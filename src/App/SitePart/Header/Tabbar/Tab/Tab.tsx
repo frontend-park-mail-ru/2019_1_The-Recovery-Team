@@ -7,10 +7,12 @@ const cn = classNames(styles);
 
 export default class Tab extends React.Component {
   render() {
+    const { isActive, children } = this.props;
     return (
         <a className={cn(
             'tabbar__tab',
-            this.props.isActive && 'tabbar__tab_active')}>{this.props.title}</a>
+            isActive && 'tabbar__tab_active')}
+        >{children}</a>
     );
   }
 }
