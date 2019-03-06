@@ -1,0 +1,31 @@
+@import '~styles/constants';
+
+.label-auth {
+  position: relative;
+
+  &__circle {
+    width: 84px;
+    height: 84px;
+    border: 3px solid #FFFFFF;
+    border-radius: 50%;
+    background: $global-color-primary-light url('../img/AvatarM.png') no-repeat center;
+    position: absolute;
+    transform: translateY(-100%);
+    top: 110%;
+    left: -24%;
+  }
+
+  &__rect {
+    width: 268px;
+    height: 70px;
+    background: #FFFFFF;
+    text-align: center;
+    vertical-align: center;
+  }
+
+  &__nickname {
+    margin-top: 15px;
+    display: inline-block;
+    color: $global-color-primary-dark;
+  }
+}
