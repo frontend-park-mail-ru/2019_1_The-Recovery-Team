@@ -8,7 +8,9 @@ const cn = classNames(styles);
 export default class Tab extends React.Component {
   render() {
     return (
-        <a className={cn('tabbar__tab', this.props.isActive && 'tabbar__tab_active')}>{this.props.title}</a>
+        <a className={cn(
+            'tabbar__tab',
+            this.props.isActive && 'tabbar__tab_active')}>{this.props.title}</a>
     );
   }
 }
