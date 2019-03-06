@@ -8,20 +8,25 @@ const styles = require('./Header.modules.scss');
 const cn = classNames(styles);
 
 export default class Header extends React.Component {
-  user = {
-    nickname: 'Nagibator228'
+  state = {
+    user: {
+      nickname: 'Nagibator228'
+    }
   };
 
   render() {
+    const { isStartPage, isAuth } = this.props;
+    const { user } = this.state;
+
     return (
         <div className={styles['header']}>
           <Tabbar/>
           <div className={cn(
               'header__container-buttons',
-              this.props.isStartPage && 'header__container-buttons_start-page',
-              this.props.isAuth && 'header__container-buttons_auth')}>
+              isStartPage && 'header__container-buttons_start-page',
+              isAuth && 'header__container-buttons_auth')}>
             <VolumeButton/>
-            <LabelAuthUser nickname={this.user.nickname}/>
+            <LabelAuthUser nickname={user.nickname}/>
           </div>
         </div>
     );
