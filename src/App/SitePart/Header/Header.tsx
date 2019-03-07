@@ -20,7 +20,7 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { isStartPage, isAuth, isAuthPage, inOutMode} = this.props;
+    const { isStartPage, isAuth, isLoginPage, inOutMode} = this.props;
     const { user } = this.state;
 
     return (
@@ -43,7 +43,7 @@ export default class Header extends React.Component {
             {
               isAuth ?
                   (<LabelAuthUser user={user}/>) :
-                  !isAuthPage ?
+                  !isLoginPage ?
                       (<InOutButton inOutMode={inOutMode}/>) : null
             }
           </div>

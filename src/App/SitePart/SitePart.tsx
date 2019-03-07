@@ -11,19 +11,19 @@ export default class SitePart extends React.Component {
   state = {
     isStartPage : false,
     isAuth : false,
-    isAuthPage: false,
+    isLoginPage: true,
     inOutMode: InOutButtonModes.IN,
   };
 
   render() {
-    const {isStartPage, isAuth, isAuthPage, inOutMode} = this.state;
+    const {isStartPage, isAuth, isLoginPage, inOutMode} = this.state;
 
     return (
         <div className={styles['site-part']}>
           <Header
               isStartPage={isStartPage}
               isAuth={isAuth}
-              isAuthPage={isAuthPage}
+              isLoginPage={isLoginPage}
               inOutMode={inOutMode}
           />
           {/*<StartPage />*/}

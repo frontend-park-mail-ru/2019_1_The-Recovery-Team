@@ -40,12 +40,11 @@ export default class SignInPage extends React.Component {
             {
               authButtons.map(({title, isActive}) => (
                   <AuthButton className={cn('sign-in-page__button')}
-                              isActive={isActive}
-                  >{title}</AuthButton>
+                              isActive={isActive}>{title}</AuthButton>
               ))
             }
           </div>
-          <Form inputs={inputs}/>
+          <Form inputs={inputs} />
           <div className={cn('sign-in-page__container-submits')}>
             <VkButton />
             <SubmitButton mode={modes.NEXT}/>
