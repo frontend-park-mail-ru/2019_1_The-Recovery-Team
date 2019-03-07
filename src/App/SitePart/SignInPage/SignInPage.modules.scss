@@ -13,4 +13,10 @@
       margin-right: 0;
     }
   }
+
+  &__container-submits {
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-between;
+  }
 }

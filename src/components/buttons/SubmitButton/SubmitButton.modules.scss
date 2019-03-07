@@ -1,0 +1,63 @@
+@import "~styles/constants";
+
+.submit-button {
+  height: 75px;
+  padding: 12px 20px;
+  background: $global-color-primary-light;
+  display: flex;
+  align-items: center;
+
+  &__container-icon {
+    margin-right: 20px;
+  }
+
+  &__next-icon {
+    width: 20px;
+    height: 32px;
+    background: url('img/Arrow.svg');
+  }
+
+  &__camera-icon {
+    width: 50px;
+    height: 50px;
+    background: url('img/Camera.svg');
+  }
+
+  &__settings-icon {
+    width: 35px;
+    height: 35px;
+    background: url('img/Settings.svg');
+  }
+
+  &__lock-icon {
+    width: 40px;
+    height: 40px;
+    background: url('img/Lock.svg');
+  }
+
+  &__save-icon {
+    width: 40px;
+    height: 40px;
+    background: url('img/Save.svg');
+  }
+
+  &__cancel-icon {
+    width: 32px;
+    height: 32px;
+    background: url('img/Cancel.svg');
+  }
+
+  &_light {
+    border: 1px solid $global-color-primary-dark;
+    background: transparent;
+    color: $global-color-primary-dark;
+  }
+
+  &_dark {
+    background: $global-color-primary-dark;
+    color: #FFFFFF;
+  }
+
+  &__title {
+  }
+}

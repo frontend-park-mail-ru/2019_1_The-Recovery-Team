@@ -3,6 +3,9 @@ import Tabbar from './Tabbar/Tabbar';
 import VolumeButton from 'components/buttons/VolumeButton/VolumeButton';
 import LabelAuthUser from 'components/LabelAuthUser/LabelAuthUser';
 import classNames from 'libs/classNames';
+import Logotype from 'components/Logotype/Logotype';
+import {LogotypeSizes} from 'components/Logotype';
+import InOutButton from 'components/buttons/InOutButton/InOutButton';
 const styles = require('./Header.modules.scss');
 const __avatar = require('./__img/AvatarM.png');
 
@@ -17,11 +20,19 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { isStartPage, isAuth } = this.props;
+    const { isStartPage, isAuth, isAuthPage, inOutMode} = this.props;
     const { user } = this.state;
 
     return (
-        <div className={styles['header']}>
+        <div className={cn('header', 'header_main')}>
+          {
+            !isStartPage ?
+                (
+                    <div className={cn('header__container-logotype')}>
+                      <Logotype size={LogotypeSizes.MIDDLE}/>
+                    </div>
+                ) : null
+          }
           <Tabbar/>
           <div className={cn(
               'header__container-buttons',
@@ -29,7 +40,12 @@ export default class Header extends React.Component {
               isAuth && 'header__container-buttons_auth')}
           >
             <VolumeButton on={true} />
-            <LabelAuthUser user={user}/>
+            {
+              isAuth ?
+                  (<LabelAuthUser user={user}/>) :
+                  !isAuthPage ?
+                      (<InOutButton inOutMode={inOutMode}/>) : null
+            }
           </div>
         </div>
     );
