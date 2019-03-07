@@ -1,11 +1,14 @@
 import * as React from 'libs/Cheburact';
+import classNames from 'libs/classNames';
 import {InOutButtonModes} from 'components/buttons/InOutButton';
 import Header from './Header';
-// import StartPage from './StartPage/StartPage';
 import MainBlock from './MainBlock';
-// import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
+// import SignInPage from './SignInPage';
+// import StartPage from './StartPage/StartPage';
 const styles = require('./SitePart.modules.scss');
+
+const cn = classNames(styles);
 
 export default class SitePart extends React.Component {
   state = {
@@ -19,7 +22,7 @@ export default class SitePart extends React.Component {
     const {isStartPage, isAuth, isLoginPage, inOutMode} = this.state;
 
     return (
-        <div className={styles['site-part']}>
+        <div className={cn('site-part')}>
           <Header
               isStartPage={isStartPage}
               isAuth={isAuth}
@@ -28,8 +31,8 @@ export default class SitePart extends React.Component {
           />
           {/*<StartPage />*/}
           <MainBlock>
-            {/*<SignInPage/>*/}
-            <SignUpPage/>
+            {/*<SignInPage />*/}
+            <SignUpPage />
           </MainBlock>
         </div>
     );

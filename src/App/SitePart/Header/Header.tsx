@@ -1,11 +1,11 @@
 import * as React from 'libs/Cheburact';
-import Tabbar from './Tabbar/Tabbar';
-import VolumeButton from 'components/buttons/VolumeButton/VolumeButton';
-import LabelAuthUser from 'components/LabelAuthUser/LabelAuthUser';
 import classNames from 'libs/classNames';
-import Logotype from 'components/Logotype/Logotype';
 import {LogotypeSizes} from 'components/Logotype';
+import Logotype from 'components/Logotype/Logotype';
+import LabelAuthUser from 'components/LabelAuthUser/LabelAuthUser';
 import InOutButton from 'components/buttons/InOutButton/InOutButton';
+import VolumeButton from 'components/buttons/VolumeButton/VolumeButton';
+import Tabbar from './Tabbar/Tabbar';
 const styles = require('./Header.modules.scss');
 const __avatar = require('./__img/AvatarM.png');
 
@@ -33,7 +33,7 @@ export default class Header extends React.Component {
                     </div>
                 ) : null
           }
-          <Tabbar/>
+          <Tabbar />
           <div className={cn(
               'header__container-buttons',
               isStartPage && 'header__container-buttons_start-page',

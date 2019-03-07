@@ -1,10 +1,10 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import AuthButton from 'components/buttons/AuthButton/AuthButton';
-import Form from 'components/Form/Form';
-import VkButton from 'components/buttons/VkButton/VkButton';
-import SubmitButton from 'components/buttons/SubmitButton/SubmitButton';
+import Form from 'components/Form';
+import VkButton from 'components/buttons/VkButton';
 import {modes} from 'components/buttons/SubmitButton';
+import AuthButton from 'components/buttons/AuthButton';
+import SubmitButton from 'components/buttons/SubmitButton';
 const styles = require('./SignInPage.modules.scss');
 
 const cn = classNames(styles);
@@ -47,7 +47,7 @@ export default class SignInPage extends React.Component {
           <Form inputs={inputs} />
           <div className={cn('sign-in-page__container-submits')}>
             <VkButton />
-            <SubmitButton mode={modes.NEXT}/>
+            <SubmitButton mode={modes.NEXT} />
           </div>
         </div>
     );
