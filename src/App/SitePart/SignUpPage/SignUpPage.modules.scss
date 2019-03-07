@@ -1,0 +1,14 @@
+.sign-up-page {
+  height: 100%;
+  padding: 50px;
+
+  &__container-buttons {
+    display: flex;
+  }
+
+  &__container-submits {
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
