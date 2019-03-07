@@ -2,7 +2,7 @@ import { IElement, isIVirtualNode, IVirtualNode } from 'libs/Cheburact/types';
 import { isEventProp, isClassNameProp, setBooleanProp, setEventProp } from './props';
 import { IFiberNode } from '../types';
 import Updater from '../Updater';
-import getFiberTypeOfElement from 'libs/CheburactDOM/utils/getFiberTypeOfElement';
+import getFiberTypeOfElement from 'libs/CheburactDOM/utils/updateTree/getFiberTypeOfElement';
 
 
 export interface IRootContext {

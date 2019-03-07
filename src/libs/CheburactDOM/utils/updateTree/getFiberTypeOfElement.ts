@@ -1,5 +1,5 @@
 import { IElement, isIComponent, isIVirtualNode } from 'libs/Cheburact/types';
-import { FiberTypes } from '../types';
+import { FiberTypes } from '../../types';
 
 export default (element: IElement): FiberTypes | null => {
   if (typeof element === 'string') {
