@@ -7,7 +7,7 @@ import {
 } from 'libs/Cheburact/types';
 import getTreeBuilder from './buildTree';
 import { COMPONENT_FIBER } from '../config/customFields';
-import getFiberTypeOfElement from './updateTree/getFiberTypeOfElement';
+import getFiberTypeOfElement from '../updateTree/getFiberTypeOfElement';
 
 const findItemInQueue = (item: IComponent, q: Array<UpdateQueueItem>): UpdateQueueItem | null => {
   for (let qItem of q) {

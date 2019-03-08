@@ -1,8 +1,7 @@
-import { FiberTypes, IFiberNode, UpdateQueueItem } from 'libs/CheburactDOM/types';
 import { IComponent, IElement, IVirtualNode } from 'libs/Cheburact/types';
-import getTreeBuilder from 'libs/CheburactDOM/utils/buildTree';
-import { rootContext } from 'libs/CheburactDOM/utils/hostContext';
-import findItemInUpdateQueue from 'libs/CheburactDOM/utils/updateTree/findItemInUpdateQueue';
+import { FiberTypes, IFiberNode, UpdateQueueItem } from '../types';
+import { rootContext, getTreeBuilder } from '../utils';
+import findItemInUpdateQueue from './findItemInUpdateQueue';
 
 export default (
     updateQueue: Array<UpdateQueueItem>,

@@ -1,6 +1,6 @@
-import { FiberTypes, IFiberNode } from 'libs/CheburactDOM/types';
 import { IComponent } from 'libs/Cheburact/types';
-import { BOUND_EVENT_LISTENERS } from 'libs/CheburactDOM/config/customFields';
+import { FiberTypes, IFiberNode } from '../types';
+import { BOUND_EVENT_LISTENERS } from '../config/customFields';
 
 const unmount = (fiber: IFiberNode) => {
   for (let child of fiber.children) {

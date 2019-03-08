@@ -1,7 +1,7 @@
 import { IElement, IVirtualNode } from 'libs/Cheburact/types';
 import { FiberCollectionItem, FiberCollections } from './types';
 import getFiberTypeOfElement from './getFiberTypeOfElement';
-import { FiberTypes } from 'libs/CheburactDOM/types';
+import { FiberTypes } from '../types';
 
 const eraseKeyFormMapArray = (
     map: {[key: string]: Array<FiberCollectionItem>},

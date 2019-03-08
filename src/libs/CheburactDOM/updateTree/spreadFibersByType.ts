@@ -1,5 +1,5 @@
 import { IVirtualNode } from 'libs/Cheburact/types';
-import { FiberTypes, IFiberNode } from '../../types';
+import { FiberTypes, IFiberNode } from '../types';
 import { FiberCollectionItem, FiberCollections } from './types';
 
 

@@ -11,7 +11,7 @@ import { FiberTypes, IFiberNode } from '../types';
 import { COMPONENT_FIBER } from '../config/customFields';
 
 
-const getTreeBuilder = (rootContext: IRootContext) => {
+export const getTreeBuilder = (rootContext: IRootContext) => {
 
   /*
   *  Возвращает метод, который использует забинденные значения для вызова buildTree,

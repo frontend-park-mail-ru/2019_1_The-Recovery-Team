@@ -2,8 +2,8 @@ import { IElement, isIVirtualNode, IVirtualNode } from 'libs/Cheburact/types';
 import { isEventProp, isClassNameProp, setBooleanProp, setEventProp } from './props';
 import { IFiberNode } from '../types';
 import Updater from '../Updater';
-import getFiberTypeOfElement from 'libs/CheburactDOM/utils/updateTree/getFiberTypeOfElement';
-import { BOUND_EVENT_LISTENERS, COMPONENT_FIBER } from 'libs/CheburactDOM/config/customFields';
+import getFiberTypeOfElement from '../updateTree/getFiberTypeOfElement';
+import { BOUND_EVENT_LISTENERS } from '../config/customFields';
 
 
 export interface IRootContext {

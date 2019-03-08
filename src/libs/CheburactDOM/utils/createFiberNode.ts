@@ -1,7 +1,7 @@
-import { FiberTypes, IFiberNode } from 'libs/CheburactDOM/types';
 import { IDOMNode, IElement } from 'libs/Cheburact/types';
+import { FiberTypes, IFiberNode } from '../types';
 
-export default ({
+export const createFiberNode = ({
     type,
     stateNode,
     key = null,
@@ -20,3 +20,5 @@ export default ({
   children,
   ref,
 });
+
+export default createFiberNode;

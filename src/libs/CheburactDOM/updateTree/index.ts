@@ -1,17 +1,15 @@
 import { IComponent, IElement, IVirtualNode } from 'libs/Cheburact/types';
-import getTreeBuilder from '../buildTree';
-import { IRootContext } from '../hostContext';
-import { FiberTypes, IFiberNode, UpdateQueueItem } from '../../types';
+import { IRootContext, getTreeBuilder, rootContext } from '../utils';
+import { FiberTypes, IFiberNode, UpdateQueueItem } from '../types';
 
 import eraseEqualFiberCollectionItem from './eraseEqualFiberCollectionItem';
-import spreadFibersByType from './spreadFibersByType';
 import getFlatArrayFromCollection from './getFlatArrayFromCollection';
-import unmount from './unmount';
 import findItemInUpdateQueue from './findItemInUpdateQueue';
-import { rootContext } from 'libs/CheburactDOM/utils/hostContext';
-import { FiberCollectionItem } from 'libs/CheburactDOM/utils/updateTree/types';
+import spreadFibersByType from './spreadFibersByType';
+import { FiberCollectionItem } from './types';
+import unmount from './unmount';
 
-const gerTreesReconciler = (
+const getTreesReconciler = (
     updateQueue: Array<UpdateQueueItem>
 ) => {
 
@@ -132,7 +130,7 @@ export default function updateTree(
             renderedTree = [renderedTree];
           }
 
-          node.children = gerTreesReconciler(updateQueue)($target, node.children, renderedTree);
+          node.children = getTreesReconciler(updateQueue)($target, node.children, renderedTree);
           console.log('FOUND TO UPDATE:', qItem, renderedTree, node.children);
           return node;
         }

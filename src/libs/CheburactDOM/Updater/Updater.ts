@@ -1,5 +1,5 @@
-import { IComponent, IUpdater } from 'libs/Cheburact/types';
 import debounce from 'libs/debounce';
+import { IComponent, IUpdater } from 'libs/Cheburact/types';
 import { UpdateQueueItem } from '../types';
 import { COMPONENT_FIBER } from '../config/customFields';
 

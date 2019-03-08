@@ -1,4 +1,4 @@
-import { IFiberNode } from '../../types';
+import { IFiberNode } from '../types';
 
 export type FiberCollectionItem = {
   fiber: IFiberNode,
