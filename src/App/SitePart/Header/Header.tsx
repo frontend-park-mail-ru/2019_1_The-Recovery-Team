@@ -29,11 +29,11 @@ export default class Header extends React.Component {
           <div className={cn(
               'header__container-buttons',
               isStartPage && 'header__container-buttons_start-page',
-              (user && !isLoginPage) && 'header__container-buttons_auth')}
+              !((isStartPage && !user) || (isProfilePage && user)) && 'header__container-buttons_auth')}
           >
             <VolumeButton on={true} />
             { (user && !isLoginPage && !isProfilePage) ? <LabelAuthUser user={user}/> : null }
-            { !isLoginPage && isStartPage && !user
+            { (isStartPage && !user) || (isProfilePage && user)
                 ? (<InOutButton isAuthenticated={isAuthenticated}/>)
                 : null
             }
