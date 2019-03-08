@@ -7,7 +7,7 @@ import ProfilePage from './ProfilePage/';
 import SignInPage from './SignInPage';
 import StartPage from './StartPage/StartPage';
 import {curPage} from '..';
-import LeadersPage from "./LeadersPage/LeadersPage";
+import LeadersPage from './LeadersPage';
 const styles = require('./SitePart.modules.scss');
 
 const cn = classNames(styles);
@@ -22,7 +22,7 @@ export default class SitePart extends React.Component {
 
   render() {
     const {isStartPage, isLoginPage, isAuthenticated, isProfilePage} = this.state;
-    const { user, mode, leaders } = this.props;
+    const { user, mode, } = this.props;
 
     return (
         <div className={cn('site-part')}>
@@ -39,7 +39,7 @@ export default class SitePart extends React.Component {
                 {mode === curPage.SIGNIN ? <SignInPage /> : null}
                 {mode === curPage.SIGNOUT ? <SignUpPage /> : null}
                 {mode === curPage.PROFILE ? <ProfilePage user={user} /> : null}
-                {mode === curPage.LEADERS ? <LeadersPage leaders={leaders} /> : null}
+                {mode === curPage.LEADERS ? <LeadersPage /> : null}
               </MainBlock>}
         </div>
     );

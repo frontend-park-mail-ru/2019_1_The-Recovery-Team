@@ -11,12 +11,19 @@ export default class LeadersPage extends React.Component {
         {title: '#', classesName: 'num'},
         {title: 'Игрок', classesName: 'nick'},
         {title: 'Рейтинг', classesName: 'rating'},
+    ],
+    leaders : [
+      {nickname: 'Ivan', rating: 500},
+      {nickname: 'Daniil', rating: 475},
+      {nickname: 'Nikita', rating: 450},
+      {nickname: 'Marya', rating: 400},
+      {nickname: 'Ivan198', rating: 300},
+      {nickname: 'Opa', rating: 250}
     ]
   };
 
   render() {
-    const { columns } = this.state;
-    const { leaders } = this.props;
+    const { columns, leaders } = this.state;
 
     let count = 0;
     leaders.forEach((leader) => {
