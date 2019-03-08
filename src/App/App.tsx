@@ -13,14 +13,22 @@ export default class App extends React.Component {
       rating: 1050,
       position: 30,
     },
-    mode: curPage.PROFILE
+    leaders : [
+      {nickname: 'Ivan', rating: 500},
+      {nickname: 'Daniil', rating: 475},
+      {nickname: 'Nikita', rating: 450},
+      {nickname: 'Marya', rating: 400},
+      {nickname: 'Ivan198', rating: 300},
+      {nickname: 'Opa', rating: 250}
+    ],
+    mode: curPage.LEADERS
   };
 
   render() {
-    const { user, mode } = this.state;
+    const { user, mode, leaders } = this.state;
 
     return (
-        <SitePart user={user} mode={mode}/>
+        <SitePart user={user} mode={mode} leaders={leaders}/>
     );
   }
 }

@@ -1,0 +1,55 @@
+@import '~styles/constants';
+
+.leaders-page {
+  height: 100%;
+
+  &__header-table {
+    width: 100%;
+    height: 100px;
+    background-color: $global-color-primary-light;
+    display: flex;
+    flex-direction: row;
+    color: #FFFFFF;
+  }
+
+  &__header-column {
+    text-align: center;
+    padding-top: 32px;
+
+    &_num {
+      width: 120px;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+    &_nick {
+      flex-grow: 1;
+    }
+
+    &_rating {
+      width: 300px;
+      padding: 10px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__container-trophy-icon {
+    margin-right: 12px;
+  }
+  &__trophy-icon {
+    width: 40px;
+    height: 40px;
+    background: url("img/Trophy.svg") no-repeat center;
+  }
+
+  &__content-table {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
