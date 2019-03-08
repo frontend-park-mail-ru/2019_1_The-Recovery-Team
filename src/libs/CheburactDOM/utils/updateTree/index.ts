@@ -29,9 +29,14 @@ const reconcileTrees = (
 
   const collection = spreadFibersByType(fibers);
   const relatedItems = elements.map((el) => eraseEqualFiberCollectionItem(collection, el));
-  const itemsToDelete = getFlatArrayFromCollection(collection);
 
-  relatedItems.map(({ fiber }) => unmount(fiber));
+  // Удаляем оставшиеся элементы
+  const itemsToDelete = getFlatArrayFromCollection(collection);
+  relatedItems.map((item) => item && unmount(item.fiber));
+
+  // Обновляем и вставляем в target с текущего индекса
+  // TODO:
+
 
   console.log('RECONCILE', collection, 'TO:', elements, 'FOUND', relatedItems, itemsToDelete);
 };

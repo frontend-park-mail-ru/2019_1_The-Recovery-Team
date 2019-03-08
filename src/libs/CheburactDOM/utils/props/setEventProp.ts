@@ -1,6 +1,5 @@
 import { BOUND_EVENT_LISTENERS } from 'libs/CheburactDOM/config/customFields';
-
-const extractEventName = (name: string): string => name.slice(2).toLowerCase();
+import extractEventName from 'libs/CheburactDOM/utils/props/extractEventName';
 
 const tryAssignBoundEventListener = ($target: HTMLElement, name: string, value: Function) => {
   const listeners = $target[BOUND_EVENT_LISTENERS];

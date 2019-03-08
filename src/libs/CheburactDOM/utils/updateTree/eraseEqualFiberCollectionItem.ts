@@ -15,8 +15,7 @@ const eraseKeyFormMapArray = (
   const relatedItem = relatedArr[0];
 
   if (relatedArr.length > 1) {
-    const [_, ...rest] = relatedArr;
-    map[key] = rest;
+    relatedArr.splice(0, 1);
   }
   else {
     delete map[key as string];

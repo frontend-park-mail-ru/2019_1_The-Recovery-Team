@@ -4,7 +4,6 @@ export default ($target: HTMLElement, name: string, value: boolean) => {
     $target[name] = true;
   }
   else {
-    $target.removeAttribute('false');
-    $target[name] = false;
+    $target.removeAttribute(name);
   }
 };
