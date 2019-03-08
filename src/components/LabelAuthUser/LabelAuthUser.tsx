@@ -10,7 +10,9 @@ export default class LabelAuthUser extends React.Component {
 
     return (
         <a href='#' className={cn('label-auth')}>
-          <img src={user.avatar} className={cn('label-auth__circle')} />
+          <div className={cn('label-auth__container-avatar')}>
+            <img src={user.avatar} className={cn('label-auth__image')} />
+          </div>
           <div className={cn('label-auth__rect')}>
             <span className={cn('label-auth__nickname')}>
               {user.nickname}

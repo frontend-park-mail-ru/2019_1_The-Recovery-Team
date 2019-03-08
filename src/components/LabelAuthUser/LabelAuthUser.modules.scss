@@ -1,22 +1,31 @@
 @import '~styles/constants';
 
-$local-height: 70px;
+$local-container-height: 70px;
 
 .label-auth {
   position: relative;
 
-  &__circle {
-    width: $local-height;
-    height: $local-height;
+  &__container-avatar {
+    width: $local-container-height;
+    height: $local-container-height;
     border-radius: 50%;
+    box-shadow: 0px 0px 0px 3px #ffffff, 0px 0px 0px 5px #0097a7 inset;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+  &__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
   }
 
   &__rect {
-    height: $local-height;
+    height: $local-container-height;
     background: #FFFFFF;
     display: flex;
     align-items: center;

@@ -2,7 +2,7 @@ import * as React from 'libs/Cheburact';
 import className from 'libs/classNames';
 import AuthButton from 'components/buttons/AuthButton';
 import Form from 'components/Form';
-import VkButton from 'components/buttons/VkButton';
+// import VkButton from 'components/buttons/VkButton';
 import SubmitButton from 'components/buttons/SubmitButton';
 import {modes} from 'components/buttons/SubmitButton';
 const styles = require('./SignUpPage.modules.scss');

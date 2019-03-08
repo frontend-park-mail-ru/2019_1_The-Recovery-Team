@@ -13,5 +13,10 @@ export const modes = {
     className: 'next-icon',
     title: 'Готово',
     theme: 'dark',
+  },
+  SETTINGS: {
+    className: 'settings-icon',
+    title: 'Редактировать',
+    theme: 'light',
   }
 };

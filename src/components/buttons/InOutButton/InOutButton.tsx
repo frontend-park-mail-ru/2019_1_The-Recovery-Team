@@ -6,11 +6,17 @@ const cn = className(styles);
 
 export default class InOutButton extends React.Component {
   render() {
-    const {inOutMode} = this.props;
+    const {isAuthenticated} = this.props;
     return (
         <a href='#' className={cn('in-out-button')}>
-          <div className={cn('in-out-button__title')}>{inOutMode.title}</div>
-          <div className={cn(`in-out-button__${inOutMode.className}-icon`)} />
+          <div className={cn('in-out-button__title')}>{
+            isAuthenticated ? 'Выход' : 'Вход'
+          }</div>
+          <div className={cn(
+              isAuthenticated
+                  ? 'in-out-button__out-icon'
+                  : 'in-out-button__in-icon')}
+          />
         </a>
     );
   }
