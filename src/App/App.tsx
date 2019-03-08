@@ -19,11 +19,18 @@ export default class App extends React.Component {
 
   handleChangeMode = (mode: CurPage) => this.setState({ mode });
 
+  handleLogout = () => this.setState({ user: null });
+
   render() {
     const { user, mode, } = this.state;
 
     return (
-        <SitePart user={user} mode={mode} onChangeMode={this.handleChangeMode}/>
+        <SitePart
+            user={user}
+            mode={mode}
+            onChangeMode={this.handleChangeMode}
+            onLogout={this.handleLogout}
+        />
     );
   }
 }

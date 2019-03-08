@@ -85,8 +85,6 @@ const reconcileTrees = (
         return;
     }
   });
-
-  console.log('RECONCILE', keysMap, stringsMap, vNodesMap, componentsArr, 'TO:', elements);
 };
 
 export default function updateTree(
@@ -118,7 +116,6 @@ export default function updateTree(
           const buildTree = getTreeBuilder(rootContext);
           const newTree = buildTree($nextTarget, renderedTree);
           node.children = newTree || [];
-          console.log('FOUND TO UPDATE:', qItem, renderedTree, node, newTree);
           return node;
         }
       }

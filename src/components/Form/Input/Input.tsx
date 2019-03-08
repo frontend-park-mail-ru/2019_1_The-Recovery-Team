@@ -5,16 +5,37 @@ const styles = require('./Input.modules.scss');
 const cn = classNames(styles);
 
 export default class Input extends React.Component {
+  _input: null | HTMLElement;
+
+  state = {
+    active: false,
+  };
+
+  handleFocus = () => {
+    this.setState({ active: true });
+    console.log('Input', this._input);
+    if (this._input) {
+      this._input.focus();
+    }
+  };
+  handleBlur = () => this.setState({ active: false });
+
   render() {
-    const {placeholder, isActive, isError} = this.props;
+    const {placeholder, isError} = this.props;
+    const {active} = this.state;
 
     return (
         <div className={cn('form-input-container')}>
-          <input className={cn('form__input')} />
+          <input
+              className={cn('input')}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              ref={(inp) => this._input = inp}
+          />
           <div className={cn(
-              'form__input-label',
-              isActive && 'form__input-label_active',
-              isError && 'form__input-label_error'
+              'input-label',
+              active && 'input-label_active',
+              isError && 'input-label_error'
           )
           }>{placeholder}</div>
         </div>

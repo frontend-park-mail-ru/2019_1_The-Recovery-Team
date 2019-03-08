@@ -99,7 +99,6 @@ const getTreesReconciler = (
       }
     });
 
-    console.log('RECONCILE', collection, 'TO:', elements, 'FOUND', relatedItems, itemsToDelete);
     return nextChildren;
   };
 
@@ -131,9 +130,7 @@ export default function updateTree(
             renderedTree = [renderedTree];
           }
 
-          debugger;
           node.children = getTreesReconciler(updateQueue)($target, node.children, renderedTree);
-          console.log('FOUND TO UPDATE:', qItem, renderedTree, node.children);
           return node;
         }
       }

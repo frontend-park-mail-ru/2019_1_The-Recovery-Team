@@ -14,7 +14,7 @@ const cn = classNames(styles);
 
 export default class SitePart extends React.Component {
   render() {
-    const { user, mode, onChangeMode } = this.props;
+    const { user, mode, onChangeMode, onLogout } = this.props;
 
     return (
         <div className={cn('site-part')}>
@@ -22,11 +22,12 @@ export default class SitePart extends React.Component {
               user={user}
               mode={mode}
               onChangeMode={onChangeMode}
+              onLogout={onLogout}
           />
           {mode === CurPage.START ? <StartPage /> :
               <MainBlock>
-                {mode === CurPage.SIGNIN ? <SignInPage /> : null}
-                {mode === CurPage.SIGNUP ? <SignUpPage /> : null}
+                {mode === CurPage.SIGNIN ? <SignInPage onChangeMode={onChangeMode} /> : null}
+                {mode === CurPage.SIGNUP ? <SignUpPage onChangeMode={onChangeMode} /> : null}
                 {mode === CurPage.PROFILE ? <ProfilePage user={user} /> : null}
                 {mode === CurPage.LEADERS ? <LeadersPage /> : null}
               </MainBlock>}

@@ -13,6 +13,16 @@ const cn = classNames(styles);
 
 
 export default class Header extends React.Component {
+  handleIOClick = () => {
+    const { user, onChangeMode, onLogout } = this.props;
+    if (user) {
+      onLogout();
+    }
+    else {
+      onChangeMode(CurPage.SIGNIN);
+    }
+  };
+
   render() {
     const { user, mode, onChangeMode } = this.props;
 
@@ -45,7 +55,7 @@ export default class Header extends React.Component {
           )}>
             <VolumeButton on={true} />
             { !labelUserHidden && <LabelAuthUser className={cn('header__container-user-wrapper')} user={user}/>}
-            { !ioButtonHidden && (<InOutButton isAuthenticated={!!user}/>)}
+            { !ioButtonHidden && (<InOutButton isAuthenticated={!!user} onClick={this.handleIOClick}/>)}
           </div>
         </div>
     );

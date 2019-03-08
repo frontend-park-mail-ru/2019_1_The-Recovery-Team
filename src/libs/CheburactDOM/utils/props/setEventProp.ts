@@ -20,6 +20,25 @@ const tryAssignBoundEventListener = ($target: HTMLElement, name: string, value: 
 
 export default ($target: HTMLElement, name: string, value) => {
   if (typeof value === 'function') {
+    if (name === 'onFocus') {
+      $target.addEventListener(
+          'onfocus',
+          () => {
+            value();
+            $target.focus();
+          }
+      );
+    }
+    if (name === 'onBlur') {
+      $target.addEventListener(
+          'onblur',
+          () => {
+            value();
+            $target.blur();
+          }
+      );
+    }
+
     $target.addEventListener(
         extractEventName(name),
         value as any

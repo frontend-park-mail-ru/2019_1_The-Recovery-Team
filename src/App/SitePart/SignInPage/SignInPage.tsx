@@ -5,15 +5,17 @@ import VkButton from 'components/buttons/VkButton';
 import {modes} from 'components/buttons/SubmitButton';
 import AuthButton from 'components/buttons/AuthButton';
 import SubmitButton from 'components/buttons/SubmitButton';
+import {AuthPageMode} from "./config/modes";
 const styles = require('./SignInPage.modules.scss');
 
 const cn = classNames(styles);
 
 export default class SignInPage extends React.Component {
   state = {
+    currentTab: AuthPageMode.SIGN_IN,
     authButtons: [
-      {title: 'Вход', isActive: true},
-      {title: 'Регистрация', isActive: false},
+      {title: 'Вход', mode: AuthPageMode.SIGN_IN},
+      {title: 'Регистрация', mode: AuthPageMode.SIGN_UP_1},
     ],
     inputs: [
       {
@@ -31,16 +33,23 @@ export default class SignInPage extends React.Component {
     ]
   };
 
+  toMode = (mode: AuthPageMode) => this.setState({ currentTab: mode });
+  toSignUp2 = () => this.setState({ currentTab: AuthPageMode.SIGN_UP_2 });
+
   render() {
-    const {authButtons, inputs} = this.state;
+    const {authButtons, inputs, currentTab} = this.state;
 
     return (
         <div className={cn('sign-in-page')}>
           <div className={cn('sign-in-page__container-buttons')}>
             {
-              authButtons.map(({title, isActive}) => (
+              authButtons.map(({title, mode}) => (
                   <AuthButton className={cn('sign-in-page__button')}
-                              isActive={isActive}>{title}</AuthButton>
+                              isActive={mode === currentTab}
+                              onClick={() => this.toMode(mode)}
+                  >
+                    {title}
+                  </AuthButton>
               ))
             }
           </div>

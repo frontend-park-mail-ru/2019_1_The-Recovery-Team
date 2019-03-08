@@ -6,7 +6,7 @@ const cn = classNames(styles);
 
 export default class AuthButton extends React.Component {
   render() {
-    const { isActive, children, className } = this.props;
+    const { isActive, children, className, onClick } = this.props;
     let classes = cn(
         'auth-button',
         isActive && 'auth-button_active'
@@ -17,7 +17,7 @@ export default class AuthButton extends React.Component {
     }
 
     return (
-        <button className={classes}>{children}</button>
+        <button className={classes} onClick={onClick}>{children}</button>
     );
   }
 }

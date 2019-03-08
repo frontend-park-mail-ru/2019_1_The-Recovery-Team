@@ -1,17 +1,21 @@
 @import '~styles/constants';
 
-.form__input {
+.input {
   width: 100%;
   height: 100%;
   display: block;
   color: $global-color-primary-dark;
   font-weight: 700;
   border-bottom: 1px solid $global-color-primary-dark;
+  background: transparent;
   padding: 0 20px;
+  position: relative;
+  z-index: 1;
 
   &-label {
     color: $global-color-primary-dark;
     position: absolute;
+    z-index: 0;
     transform: translateY(-50%);
     top: 50%;
     left: 20px;
@@ -33,6 +37,7 @@
 }
 
 .form-input-container {
-    max-width: 100%;
+  max-width: 100%;
   height: 100%;
+  position: relative;
 }
