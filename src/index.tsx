@@ -45,13 +45,12 @@ class Kek extends React.Component {
   };
 
   handleOuterClick = () => {
-    const updater = this.getUpdater();
-    if (updater) {
-      updater.enqueueUpdate(this, { newValue: 'aaa' });
-    }
+    this.setState({ newValue: 'aaa' });
   };
 
   render() {
+    console.log('render lol', this.state);
+
     return (
         <div>
           <Lol aaa='bbb' onClick={(text) => this.setState({ outerText: text })}/>
