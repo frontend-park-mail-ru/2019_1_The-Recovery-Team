@@ -12,7 +12,7 @@ export default class ProfilePage extends React.Component {
   render() {
     const { user } = this.props;
 
-    return (
+    return user ? (
         <div className={cn('profile-page')}>
           <div className={cn('profile-page__container')}>
             <div className={cn('profile-page__container-avatar')}>
@@ -31,6 +31,6 @@ export default class ProfilePage extends React.Component {
             </div>
           </div>
         </div>
-    );
+    ) : null;
   }
 }

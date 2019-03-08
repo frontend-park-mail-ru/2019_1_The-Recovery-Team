@@ -4,7 +4,7 @@ export const modes = {
     title: 'Далее',
     theme: 'dark',
   },
-  UPLOADPHOTO: {
+  UPLOAD_PHOTO: {
     className: 'camera-icon',
     title: 'Загрузить фото',
     theme: 'light',

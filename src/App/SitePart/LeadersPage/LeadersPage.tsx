@@ -12,6 +12,7 @@ export default class LeadersPage extends React.Component {
         {title: 'Игрок', classesName: 'nick'},
         {title: 'Рейтинг', classesName: 'rating'},
     ],
+    startIndex: 1,
     leaders : [
       {nickname: 'Ivan', rating: 500},
       {nickname: 'Daniil', rating: 475},
@@ -23,12 +24,7 @@ export default class LeadersPage extends React.Component {
   };
 
   render() {
-    const { columns, leaders } = this.state;
-
-    let count = 0;
-    leaders.forEach((leader) => {
-      leader['position'] = ++count;
-    });
+    const { columns, leaders, startIndex } = this.state;
 
     return (
         <div className={cn('leaders-page')}>
@@ -57,7 +53,9 @@ export default class LeadersPage extends React.Component {
           </div>
           <div className={cn('leaders-page__content-table')}>
             {
-              leaders.map((leader) => (<RowLeader leader={leader} />))
+              leaders.map((leader, index) => (
+                  <RowLeader leader={leader} index={index + startIndex}/>
+              ))
             }
           </div>
         </div>

@@ -1,7 +1,7 @@
 export enum curPage {
   START,
   SIGNIN,
-  SIGNOUT,
+  SIGNUP,
   PROFILE,
   RULES,
   LEADERS,

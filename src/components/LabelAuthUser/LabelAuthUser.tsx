@@ -6,10 +6,10 @@ const cn = classNames(styles);
 
 export default class LabelAuthUser extends React.Component {
   render() {
-    const {user} = this.props;
+    const {user, className} = this.props;
 
     return (
-        <a href='#' className={cn('label-auth')}>
+        <a href='#' className={`${cn('label-auth')} ${className}`}>
           <div className={cn('label-auth__container-avatar')}>
             <img src={user.avatar} className={cn('label-auth__image')} />
           </div>
