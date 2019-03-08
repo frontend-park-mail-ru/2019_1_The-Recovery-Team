@@ -3,7 +3,7 @@ import { isEventProp, isClassNameProp, setBooleanProp, setEventProp } from './pr
 import { IFiberNode } from '../types';
 import Updater from '../Updater';
 import getFiberTypeOfElement from 'libs/CheburactDOM/utils/updateTree/getFiberTypeOfElement';
-import { BOUND_EVENT_LISTENERS } from 'libs/CheburactDOM/config/customFields';
+import { BOUND_EVENT_LISTENERS, COMPONENT_FIBER } from 'libs/CheburactDOM/config/customFields';
 
 
 export interface IRootContext {

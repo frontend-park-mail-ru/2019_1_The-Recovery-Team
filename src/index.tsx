@@ -7,22 +7,17 @@ class Lol extends React.Component {
     text: 0,
   };
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   handleSetHeaderRef = (ref: HTMLElement) =>
       this.headerRef = ref;
 
   handleClick = () => {
-    // if (this.headerRef) {
-    //   this.headerRef.innerText = 'Clicked';
-    // }
-
+    console.log('click');
     this.setState({ text: this.state.text + 1 });
+    this.props.onClick(this.state.text + 6);
   };
 
   render() {
+    console.log('RENDER', this.state);
     return (
         <div className={'root'} hidden={false} key='array-container'>
           <h2
@@ -30,7 +25,7 @@ class Lol extends React.Component {
               ref={this.handleSetHeaderRef}
           >{ `${this.state.text}` }</h2>
           { Array
-              .from(Array(5).keys())
+              .from(Array(this.state.text).keys())
               .map((i) => (
                 <p className={'list-item'} key={i}>{`${i}`}</p>
               ))
@@ -38,12 +33,17 @@ class Lol extends React.Component {
           <button
             onClick={ this.handleClick }
           >click me</button>
+          { this.state.text % 2 === 0 && 'Четное' }
         </div>
     );
   }
 }
 
 class Kek extends React.Component {
+  state = {
+    outerText: 0,
+  };
+
   handleOuterClick = () => {
     const updater = this.getUpdater();
     if (updater) {
@@ -54,8 +54,8 @@ class Kek extends React.Component {
   render() {
     return (
         <div>
-          <Lol aaa='bbb'/>
-          <button onClick={this.handleOuterClick}>Outer button</button>
+          <Lol aaa='bbb' onClick={(text) => this.setState({ outerText: text })}/>
+          <button onClick={this.handleOuterClick}>{`outer ${this.state.outerText}`}</button>
         </div>
     );
   }
@@ -63,7 +63,7 @@ class Kek extends React.Component {
 
 CheburactDOM.render(
     <div kek={'lol'} key='root'>
-      <Kek/>
+      <Kek />
       <p>Hello world</p>
     </div>,
     document.getElementById('root'),

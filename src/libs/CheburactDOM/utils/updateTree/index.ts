@@ -38,7 +38,7 @@ const gerTreesReconciler = (
         return builtTree[ 0 ];
       }
 
-      if (!fiber.ref) {
+      if (!fiber.ref && fiber.type !== FiberTypes.COMPONENT) {
         return null;
       }
 
@@ -61,11 +61,19 @@ const gerTreesReconciler = (
 
       if (fiber.type === FiberTypes.COMPONENT) {
         const prevComp = fiber.stateNode as IComponent;
-        const nextComp = element as IComponent;
+        // const nextComp = element as IComponent;
 
-        const incomingState = findItemInUpdateQueue(prevComp, updateQueue) || {};
-        nextComp.writeState({ ...incomingState, ...prevComp.getState() });
-        // TODO: didUpdate и render;
+        const { nextState } = findItemInUpdateQueue(prevComp, updateQueue) || {};
+        prevComp.writeState({ ...prevComp.getState(), ...(nextState || {}) });
+
+        let renderedTree: any = prevComp.render();
+        if (!Array.isArray(renderedTree)) {
+          renderedTree = [renderedTree];
+        }
+
+        fiber.children = reconcileTrees($target, fiber.children, renderedTree);
+        fiber.stateNode = prevComp;
+        return fiber;
       }
       return null;
     };
@@ -125,9 +133,6 @@ export default function updateTree(
           }
 
           node.children = gerTreesReconciler(updateQueue)($target, node.children, renderedTree);
-          // const buildTree = getTreeBuilder(rootContext);
-          // const newTree = buildTree($nextTarget, renderedTree);
-          // node.children = newTree || [];
           console.log('FOUND TO UPDATE:', qItem, renderedTree, node.children);
           return node;
         }
