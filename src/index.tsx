@@ -17,7 +17,7 @@ class Lol extends React.Component {
   };
 
   render() {
-    console.log('RENDER', this.state);
+    console.log('RENDER', this.state, this.props);
     return (
         <div className={'root'} hidden={false} key='array-container'>
           <h2
@@ -32,7 +32,7 @@ class Lol extends React.Component {
           }
           <button
             onClick={ this.handleClick }
-          >click me</button>
+          >{ this.props.title }</button>
           { this.state.text % 2 === 0 && 'Четное' }
         </div>
     );
@@ -42,10 +42,11 @@ class Lol extends React.Component {
 class Kek extends React.Component {
   state = {
     outerText: 0,
+    title: 'Hello world',
   };
 
   handleOuterClick = () => {
-    this.setState({ newValue: 'aaa' });
+    this.setState({ title: this.state.title === 'Hello world' ? '---' : 'Hello world' });
   };
 
   render() {
@@ -53,7 +54,7 @@ class Kek extends React.Component {
 
     return (
         <div>
-          <Lol aaa='bbb' onClick={(text) => this.setState({ outerText: text })}/>
+          <Lol aaa='bbb' onClick={(text) => this.setState({ outerText: text })} title={this.state.title} />
           <button onClick={this.handleOuterClick}>{`outer ${this.state.outerText}`}</button>
         </div>
     );

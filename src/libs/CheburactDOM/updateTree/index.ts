@@ -59,10 +59,11 @@ const getTreesReconciler = (
 
       if (fiber.type === FiberTypes.COMPONENT) {
         const prevComp = fiber.stateNode as IComponent;
-        // const nextComp = element as IComponent;
+        const nextComp = element as IComponent;
 
         const { nextState } = findItemInUpdateQueue(prevComp, updateQueue) || {};
         prevComp.writeState({ ...prevComp.getState(), ...(nextState || {}) });
+        prevComp['props'] = nextComp.getProps();
 
         let renderedTree: any = prevComp.render();
         if (!Array.isArray(renderedTree)) {
