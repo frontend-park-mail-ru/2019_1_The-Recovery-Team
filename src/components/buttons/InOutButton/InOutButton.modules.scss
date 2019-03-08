@@ -1,0 +1,21 @@
+.in-out-button {
+  background: transparent;
+  display: flex;
+
+  &__in-icon {
+    width: 50px;
+    height: 64px;
+    background: url('img/Entrance.svg');
+  }
+  &__out-icon {
+    width: 61px;
+    height: 66px;
+    background: url('img/Exit.svg');
+  }
+
+  &__title {
+    padding: 12px 10px 12px;
+    color: #FFFFFF;
+    text-align: center;
+  }
+}

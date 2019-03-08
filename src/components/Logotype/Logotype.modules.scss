@@ -1,0 +1,15 @@
+.logotype {
+  margin: 0 auto;
+  background: url("img/Logotype.svg") no-repeat center;
+  background-size: contain;
+
+  &_l {
+    width: 1087px;
+    height: 126px;
+  }
+
+  &_m {
+    width: 531px;
+    height: 52px;
+  }
+}

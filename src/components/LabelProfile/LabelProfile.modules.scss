@@ -1,0 +1,33 @@
+.label-profile {
+  width: 427px;
+  height: 85px;
+  background: url("img/Label.svg") no-repeat center;
+  padding-top: 10px;
+  color: #FFFFFF;
+
+  &__content {
+    display: flex;
+    height: 100%;
+    padding: 5px 64px;
+  }
+
+  &__star-icon {
+    width: 59px;
+    height: 59px;
+    background: url("img/Star.svg") no-repeat center;
+  }
+
+  &__stat {
+    margin-left: 32px;
+  }
+
+  &__pos {
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  &__rating {
+    font-size: 20px;
+    font-weight: 700;
+  }
+}
