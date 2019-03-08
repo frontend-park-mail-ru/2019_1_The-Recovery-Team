@@ -6,38 +6,42 @@ import LabelAuthUser from 'components/LabelAuthUser';
 import InOutButton from 'components/buttons/InOutButton';
 import VolumeButton from 'components/buttons/VolumeButton';
 import Tabbar from './Tabbar/Tabbar';
-import {curPage} from '../..';
+import {CurPage} from '../..';
 const styles = require('./Header.modules.scss');
-
 
 const cn = classNames(styles);
 
+
 export default class Header extends React.Component {
   render() {
-    const { user, mode} = this.props;
+    const { user, mode, onChangeMode } = this.props;
 
     const labelUserHidden =
-        mode === curPage.SIGNIN
-        || mode === curPage.SIGNUP
-        || mode === curPage.PROFILE
+        mode === CurPage.SIGNIN
+        || mode === CurPage.SIGNUP
+        || mode === CurPage.PROFILE
         || !user;
 
     const ioButtonHidden =
-        user && mode !== curPage.PROFILE
-        || mode === curPage.SIGNIN
-        || mode === curPage.SIGNUP;
+        user && mode !== CurPage.PROFILE
+        || mode === CurPage.SIGNIN
+        || mode === CurPage.SIGNUP;
 
     return (
         <div className={cn('header', 'header_main')}>
-          {  mode !== curPage.START && (
+          {  mode !== CurPage.START && (
               <div className={cn('header__container-logotype')}>
                 <Logotype size={LogotypeSizes.MIDDLE}/>
               </div>
           )}
-          <Tabbar mode={mode} />
+          <Tabbar
+              mode={mode}
+              onChangeMode={onChangeMode}
+              className={cn('header__tabbar')}
+          />
           <div className={cn(
               'header__container-buttons',
-              mode === curPage.START && 'header__container-buttons_start-page'
+              mode === CurPage.START && 'header__container-buttons_start-page'
           )}>
             <VolumeButton on={true} />
             { !labelUserHidden && <LabelAuthUser className={cn('header__container-user-wrapper')} user={user}/>}

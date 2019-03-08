@@ -1,27 +1,39 @@
 import * as React from 'libs/Cheburact';
 import Tab from './Tab/Tab';
-import {curPage} from '../../..';
+import {CurPage} from '../../..';
+import classNames from "libs/classNames";
 const styles = require('./Tabbar.modules.scss');
+const cn = classNames(styles);
 
 export default class Tabbar extends React.Component {
   state = {
     tabs: [
-      {title: 'Играть', curPage: curPage.START},
-      {title: 'Правила', curPage: curPage.RULES},
-      {title: 'Лидеры', curPage: curPage.LEADERS},
-      {title: 'О нас', curPage: curPage.ABOUT}
+      {title: 'Играть', curPage: CurPage.START},
+      {title: 'Правила', curPage: CurPage.RULES},
+      {title: 'Лидеры', curPage: CurPage.LEADERS},
+      {title: 'О нас', curPage: CurPage.ABOUT}
     ]
+  };
+
+  handleClick = (mode: CurPage) => {
+    console.log('click on tab', this.props);
+    this.props.onChangeMode(mode);
   };
 
   render() {
     const {tabs} = this.state;
-    const {mode} = this.props;
+    const {mode, className} = this.props;
 
     return (
-        <div className={styles['tabbar']}>
+        <div className={`${cn('tabbar')} ${className}`}>
           {
             tabs.map(({title, curPage}) => (
-              <Tab isActive={mode === curPage}>{title}</Tab>
+              <Tab
+                  isActive={mode === curPage}
+                  onClick={() => this.handleClick(curPage)}
+              >
+                {title}
+              </Tab>
             ))
           }
         </div>
