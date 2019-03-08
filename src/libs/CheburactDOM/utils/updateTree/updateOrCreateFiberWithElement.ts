@@ -1,9 +1,17 @@
-import { FiberTypes, IFiberNode } from 'libs/CheburactDOM/types';
-import { IElement, IVirtualNode } from 'libs/Cheburact/types';
+import { FiberTypes, IFiberNode, UpdateQueueItem } from 'libs/CheburactDOM/types';
+import { IComponent, IElement, IVirtualNode } from 'libs/Cheburact/types';
 import getTreeBuilder from 'libs/CheburactDOM/utils/buildTree';
 import { rootContext } from 'libs/CheburactDOM/utils/hostContext';
+import findItemInUpdateQueue from 'libs/CheburactDOM/utils/updateTree/findItemInUpdateQueue';
 
-export default ($target: HTMLElement, fiber: IFiberNode | null, element: IElement, reconcileFunc): IFiberNode | null => {
+export default (
+    updateQueue: Array<UpdateQueueItem>,
+    reconcileFunc,
+) => (
+    $target: HTMLElement,
+    fiber: IFiberNode | null,
+    element: IElement,
+): IFiberNode | null => {
   if (!fiber) {
     if (!rootContext.updater) {
       return null;
@@ -25,11 +33,21 @@ export default ($target: HTMLElement, fiber: IFiberNode | null, element: IElemen
     if (!nextFiber) {
       return null;
     }
-    nextFiber.children = reconcileFunc(nextFiber.children, (element as IVirtualNode).children);
+    nextFiber.children = reconcileFunc(
+        nextFiber.ref,
+        nextFiber.children,
+        (element as IVirtualNode).children
+    );
     return nextFiber;
   }
 
   if (fiber.type === FiberTypes.COMPONENT) {
+    const prevComp = fiber.stateNode as IComponent;
+    const nextComp = element as IComponent;
 
+    const incomingState = findItemInUpdateQueue(prevComp, updateQueue) || {};
+    nextComp.writeState({ ...incomingState, ...prevComp.getState() });
+    // TODO: didUpdate и render;
   }
+  return null;
 };

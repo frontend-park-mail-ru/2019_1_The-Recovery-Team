@@ -105,7 +105,6 @@ export default function updateTree(
       const $nextTarget = node.ref instanceof HTMLElement ? node.ref : $target;
 
       if (node.type === FiberTypes.COMPONENT) {
-        debugger;
         const qItem = findItemInQueue(node.stateNode as any, updateQueue);
         if (qItem) {
           const element: IComponent = qItem.fiberNode.stateNode as IComponent;
