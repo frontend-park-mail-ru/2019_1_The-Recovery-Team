@@ -69,23 +69,33 @@ export default class SignInForm extends React.Component {
       password: password.value,
     }).then(({ response, error }) => {
       if (error) {
-        this.setState({
-          email: {
-            ...email,
-            isError: true,
-            placeholder: 'Неправильный email или пароль',
-          },
-          password: {
-            ...password,
-            isError: true,
-            placeholder: password.label,
-          }
-        });
+        return Promise.reject();
       }
       else {
+        return Requester.get(API.profileItem((response || {}).id));
+      }
+    })
+    .then(({response, error}) => {
+      if (response) {
         this.props.onAuthorized(response);
       }
-      console.log({ response, error });
+      else {
+        return Promise.reject();
+      }
+    })
+    .catch((error) => {
+      this.setState({
+        email: {
+          ...email,
+          isError: true,
+          placeholder: 'Неправильный email или пароль',
+        },
+        password: {
+          ...password,
+          isError: true,
+          placeholder: password.label,
+        }
+      });
     });
   };
 

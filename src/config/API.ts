@@ -1,4 +1,6 @@
-const prefixAPI = (url) => `/api${url}`;
+export const BASE_URL = '';
+
+const prefixAPI = (url) => `${BASE_URL}${url}`;
 
 export default {
   avatars: () => prefixAPI('/avatars'),

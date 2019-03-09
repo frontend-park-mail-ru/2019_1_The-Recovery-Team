@@ -16,6 +16,7 @@ interface State {
   email: InputConfig;
   password: InputConfig;
   nickname: InputConfig;
+  avatar: ImageData | null;
 }
 
 export default class SignUpForm extends React.Component {
@@ -44,7 +45,8 @@ export default class SignUpForm extends React.Component {
       name: 'nickname',
       touched: false,
       label: 'Никнейм',
-    }
+    },
+    avatar: null,
   };
 
   componentDidUpdate() {
@@ -54,14 +56,15 @@ export default class SignUpForm extends React.Component {
   toSecondStage = () => this.setState({ stage: SignUpStage.SECOND });
 
   handleSubmit = () => {
-    const { email, nickname, password } = this.state;
+    const { email, nickname, password, avatar } = this.state;
+    console.log(avatar);
     Requester.post(API.profiles(), {
       email: email.value,
       nickname: nickname.value,
       password: password.value,
+      avatar,
     }, true).then(({ response, error }) => {
       this.props.onAuthorized(response);
-      console.log({ response, error });
     });
   };
 
@@ -90,6 +93,11 @@ export default class SignUpForm extends React.Component {
       });
     }
   };
+
+  handleSelectPhoto = (e) =>
+    this.setState({
+      avatar: e.target.files[0] || null,
+    });
 
   render() {
     const {
@@ -128,9 +136,10 @@ export default class SignUpForm extends React.Component {
                   )
                 : (
                     <div className={cn('sign-up-form__up2-container-submits')}>
-                      <div className={cn('sign-up-form__button-container')}>
-                        <SubmitButton mode={modes.UPLOAD_PHOTO}/>
-                      </div>
+                      <input type='file' accept='image/*' onChange={this.handleSelectPhoto} />
+                      {/*<div className={cn('sign-up-form__button-container')}>*/}
+                        {/*<SubmitButton mode={modes.UPLOAD_PHOTO}/>*/}
+                      {/*</div>*/}
                       <div className={cn('sign-up-form__container-ready-button')}>
                         <SubmitButton mode={modes.READY} disabled={readyDisabled} onClick={this.handleSubmit}/>
                       </div>

@@ -36,6 +36,7 @@ export default class Requester {
       method,
       headers,
       credentials: 'include',
+      mode: 'cors',
     };
     if (data) {
       options.body = data;
