@@ -11,7 +11,7 @@ export default class RowLeader extends React.Component {
           <div className={cn('leaders-page-row-table')}>
             <div className={cn('leaders-page-row-table__column', 'leaders-page-row-table_num')}>{`${index}`}</div>
             <div className={cn('leaders-page-row-table__column', 'leaders-page-row-table_nick')}>{leader.nickname}</div>
-            <div className={cn('leaders-page-row-table__column', 'leaders-page-row-table_rating')}>{`${leader.rating}`}</div>
+            <div className={cn('leaders-page-row-table__column', 'leaders-page-row-table_rating')}>{`${leader.record}`}</div>
           </div>
     );
   }

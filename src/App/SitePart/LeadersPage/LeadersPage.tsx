@@ -1,30 +1,52 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import RowLeader from "./RowLeader/RowLeader";
+import Requester from 'libs/Requester/Requester';
+import API from 'config/API';
+import SubmitButton from 'components/buttons/SubmitButton/SubmitButton';
+import { modes } from 'components/buttons/SubmitButton';
 const styles = require('./LeadersPage.modules.scss');
 
 const cn = classNames(styles);
 
+const LIMIT = 4;
+
 export default class LeadersPage extends React.Component {
   state = {
+    offset: 0,
     columns: [
         {title: '#', classesName: 'num'},
         {title: 'Игрок', classesName: 'nick'},
         {title: 'Рейтинг', classesName: 'rating'},
     ],
-    startIndex: 1,
-    leaders : [
-      {nickname: 'Ivan', rating: 500},
-      {nickname: 'Daniil', rating: 475},
-      {nickname: 'Nikita', rating: 450},
-      {nickname: 'Marya', rating: 400},
-      {nickname: 'Ivan198', rating: 300},
-      {nickname: 'Opa', rating: 250}
-    ]
+    leaders: [],
   };
 
+  componentDidMount() {
+    this.loadPage(0);
+  };
+
+  loadPage = (offset) =>
+      Requester.get(API.scores(), {
+        limit: LIMIT,
+        start: offset,
+      }).then(({response, error}) => {
+        const { offset, leaders } = this.state;
+        if (response && Array.isArray(response)) {
+          this.setState({
+            leaders: [
+                ...leaders,
+                ...response,
+            ],
+            offset: offset + response.length,
+          });
+        }
+      });
+
+  handleLoadNextPage = () => this.loadPage(this.state.offset);
+
   render() {
-    const { columns, leaders, startIndex } = this.state;
+    const { columns, leaders } = this.state;
 
     return (
         <div className={cn('leaders-page')}>
@@ -54,9 +76,12 @@ export default class LeadersPage extends React.Component {
           <div className={cn('leaders-page__content-table')}>
             {
               leaders.map((leader, index) => (
-                  <RowLeader leader={leader} index={index + startIndex}/>
+                  <RowLeader leader={leader} index={index + 1}/>
               ))
             }
+          </div>
+          <div className={cn('leaders-page__load-button')}>
+            <SubmitButton mode={modes.LOAD_MORE} onClick={this.handleLoadNextPage}/>
           </div>
         </div>
     );
