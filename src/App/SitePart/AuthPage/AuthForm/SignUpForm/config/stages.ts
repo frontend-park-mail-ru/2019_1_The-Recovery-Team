@@ -1,4 +1,4 @@
-export enum SignUpStages {
+export enum SignUpStage {
   FIRST = 'FIRST',
   SECOND = 'SECOND',
 }

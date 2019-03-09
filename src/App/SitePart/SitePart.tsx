@@ -2,9 +2,8 @@ import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import Header from './Header';
 import MainBlock from './MainBlock';
-import SignUpPage from './SignUpPage';
 import ProfilePage from './ProfilePage/';
-import SignInPage from './SignInPage';
+import AuthPage from './AuthPage';
 import StartPage from './StartPage/StartPage';
 import {CurPage} from '..';
 import LeadersPage from './LeadersPage';
@@ -26,7 +25,7 @@ export default class SitePart extends React.Component {
           />
           {mode === CurPage.START ? <StartPage /> :
               <MainBlock>
-                {mode === CurPage.SIGNIN ? <SignInPage onChangeMode={onChangeMode} /> : null}
+                {mode === CurPage.SIGNIN ? <AuthPage onChangeMode={onChangeMode} /> : null}
                 {mode === CurPage.SIGNUP ? <SignUpPage onChangeMode={onChangeMode} /> : null}
                 {mode === CurPage.PROFILE ? <ProfilePage user={user} /> : null}
                 {mode === CurPage.LEADERS ? <LeadersPage /> : null}

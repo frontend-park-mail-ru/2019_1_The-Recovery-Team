@@ -6,10 +6,10 @@ const cn = classNames(styles);
 
 export default class SubmitButton extends React.Component {
   render() {
-    const {mode} = this.props;
+    const {mode, onClick} = this.props;
 
     return (
-        <button className={cn('submit-button', `submit-button_${mode.theme}`)}>
+        <button onClick={onClick} className={cn('submit-button', `submit-button_${mode.theme}`)}>
           <div className={cn('submit-button__container-icon')}>
             <div className={cn(`submit-button__${mode.className}`)} />
           </div>

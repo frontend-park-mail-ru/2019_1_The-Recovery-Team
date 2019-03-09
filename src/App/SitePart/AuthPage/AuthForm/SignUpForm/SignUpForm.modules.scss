@@ -1,23 +1,17 @@
-.sign-up-page {
+.sign-up-form {
+  width: 100%;
   height: 100%;
-  padding: 50px;
 
-  &__container-buttons {
-    display: flex;
-  }
-
-  &__container-submits {
+  &__up1-container-submits {
     margin-top: 90px;
     display: flex;
     justify-content: space-between;
   }
 
-  &__button {
-    margin-right: 100px;
-
-    &:last-child {
-      margin-right: 0;
-    }
+  &__up2-container-submits {
+    margin-top: 60px;
+    width: 100%;
+    height: 100%;
   }
 
   &__button-container {
