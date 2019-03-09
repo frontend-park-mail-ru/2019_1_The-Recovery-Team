@@ -3,6 +3,7 @@ export enum CurPage {
   SIGNIN,
   SIGNUP,
   PROFILE,
+  EDIT_PROFILE,
   RULES,
   LEADERS,
   ABOUT

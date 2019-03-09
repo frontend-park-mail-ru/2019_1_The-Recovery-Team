@@ -1,6 +1,7 @@
 import * as React from 'libs/Cheburact';
 import SitePart from './SitePart';
 import {CurPage} from './config/modes';
+import StartPage from "./SitePart/StartPage/StartPage";
 const __avatar = require('./__img/Avatar.png');
 
 const __user = {
@@ -13,13 +14,16 @@ const __user = {
 
 export default class App extends React.Component {
   state = {
-    user: null,
-    mode: CurPage.SIGNIN,
+    user: __user,
+    mode: CurPage.START,
   };
 
   handleChangeMode = (mode: CurPage) => this.setState({ mode });
 
-  handleLogout = () => this.setState({ user: null });
+  handleLogout = () => this.setState({
+    mode: CurPage.START,
+    user: null,
+  });
 
   render() {
     const { user, mode, } = this.state;

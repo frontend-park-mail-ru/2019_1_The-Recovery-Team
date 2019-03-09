@@ -1,11 +1,10 @@
-import * as React from 'libs/Cheburact';
-import classNames from 'libs/classNames';
+import * as React from 'libs/Cheburact/index';
+import classNames from 'libs/classNames/index';
 import {SignUpStage} from './config/stages';
-import Form from 'components/Form';
-import VkButton from 'components/buttons/VkButton';
-import SubmitButton from 'components/buttons/SubmitButton';
-import {modes} from 'components/buttons/SubmitButton';
-import {AuthPageMode} from "../../config/modes";
+import Form from 'components/Form/index';
+import VkButton from 'components/buttons/VkButton/index';
+import SubmitButton from 'components/buttons/SubmitButton/index';
+import {modes} from 'components/buttons/SubmitButton/index';
 const styles = require('./SignUpForm.modules.scss');
 
 const cn = classNames(styles);

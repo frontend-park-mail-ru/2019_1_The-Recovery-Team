@@ -2,7 +2,8 @@ import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import AuthButton from 'components/buttons/AuthButton';
 import {AuthPageMode} from './config/modes';
-import AuthForm from './AuthForm/AuthForm';
+import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 const styles = require('./AuthPage.modules.scss');
 
 const cn = classNames(styles);
@@ -38,7 +39,8 @@ export default class AuthPage extends React.Component {
               ))
             }
           </div>
-          <AuthForm currentTab={currentTab}/>
+          {currentTab === AuthPageMode.SIGN_IN && (<SignInForm/>)}
+          {currentTab === AuthPageMode.SIGN_UP && (<SignUpForm/>)}
         </div>
     );
   }

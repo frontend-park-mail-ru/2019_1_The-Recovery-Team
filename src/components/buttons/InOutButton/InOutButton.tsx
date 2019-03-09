@@ -10,7 +10,6 @@ export default class InOutButton extends React.Component {
     const {isAuthenticated, onClick} = this.props;
     return (
         <a
-            href='#'
             className={cn('in-out-button')}
             onClick={onClick}
         >

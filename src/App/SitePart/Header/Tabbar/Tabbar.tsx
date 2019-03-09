@@ -1,7 +1,7 @@
 import * as React from 'libs/Cheburact';
 import Tab from './Tab/Tab';
 import {CurPage} from '../../..';
-import classNames from "libs/classNames";
+import classNames from 'libs/classNames';
 const styles = require('./Tabbar.modules.scss');
 const cn = classNames(styles);
 

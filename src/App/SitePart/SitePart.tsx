@@ -7,6 +7,7 @@ import AuthPage from './AuthPage';
 import StartPage from './StartPage/StartPage';
 import {CurPage} from '..';
 import LeadersPage from './LeadersPage';
+import EditProfilePage from './EditProfilePage';
 const styles = require('./SitePart.modules.scss');
 
 const cn = classNames(styles);
@@ -25,10 +26,10 @@ export default class SitePart extends React.Component {
           />
           {mode === CurPage.START ? <StartPage /> :
               <MainBlock>
-                {mode === CurPage.SIGNIN ? <AuthPage onChangeMode={onChangeMode} /> : null}
-                {mode === CurPage.SIGNUP ? <SignUpPage onChangeMode={onChangeMode} /> : null}
-                {mode === CurPage.PROFILE ? <ProfilePage user={user} /> : null}
+                {mode === CurPage.SIGNIN || mode === CurPage.SIGNUP  ? <AuthPage onChangeMode={onChangeMode} /> : null}
+                {mode === CurPage.PROFILE ? <ProfilePage user={user} onChangeMode={onChangeMode} /> : null}
                 {mode === CurPage.LEADERS ? <LeadersPage /> : null}
+                {mode === CurPage.EDIT_PROFILE ? <EditProfilePage user={user} /> : null}
               </MainBlock>}
         </div>
     );

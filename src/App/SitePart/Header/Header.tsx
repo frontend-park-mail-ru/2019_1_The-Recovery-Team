@@ -30,10 +30,11 @@ export default class Header extends React.Component {
         mode === CurPage.SIGNIN
         || mode === CurPage.SIGNUP
         || mode === CurPage.PROFILE
+        || mode === CurPage.EDIT_PROFILE
         || !user;
 
     const ioButtonHidden =
-        user && mode !== CurPage.PROFILE
+        user && mode !== CurPage.PROFILE && mode !== CurPage.EDIT_PROFILE
         || mode === CurPage.SIGNIN
         || mode === CurPage.SIGNUP;
 
@@ -54,7 +55,11 @@ export default class Header extends React.Component {
               mode === CurPage.START && 'header__container-buttons_start-page'
           )}>
             <VolumeButton on={true} />
-            { !labelUserHidden && <LabelAuthUser className={cn('header__container-user-wrapper')} user={user}/>}
+            { !labelUserHidden && <LabelAuthUser
+                className={cn('header__container-user-wrapper')}
+                user={user}
+                onChangeMode={onChangeMode}
+            />}
             { !ioButtonHidden && (<InOutButton isAuthenticated={!!user} onClick={this.handleIOClick}/>)}
           </div>
         </div>
