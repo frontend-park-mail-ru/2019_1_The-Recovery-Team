@@ -5,24 +5,22 @@ const styles = require('./Input.modules.scss');
 const cn = classNames(styles);
 
 export default class Input extends React.Component {
-  _input: null | HTMLElement;
-
   state = {
     active: false,
+    value: this.props.value || '',
   };
 
-  handleFocus = () => {
-    this.setState({ active: true });
-    console.log('Input', this._input);
-    if (this._input) {
-      this._input.focus();
-    }
-  };
+  handleFocus = () => this.setState({ active: true });
   handleBlur = () => this.setState({ active: false });
+
+  handleInput = (e) => {
+    this.setState({ value: e.target.value });
+    this.props.onChange(e.target.value);
+  };
 
   render() {
     const {placeholder, isError} = this.props;
-    const {active} = this.state;
+    const {active, value} = this.state;
 
     return (
         <div className={cn('form-input-container')}>
@@ -30,11 +28,12 @@ export default class Input extends React.Component {
               className={cn('input')}
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
-              ref={(inp) => this._input = inp}
+              onInput={this.handleInput}
+              value={value}
           />
           <div className={cn(
               'input-label',
-              active && 'input-label_active',
+              (active || value.length) && 'input-label_active',
               isError && 'input-label_error'
           )
           }>{placeholder}</div>

@@ -11,6 +11,11 @@
   padding: 0 20px;
   position: relative;
   z-index: 1;
+  transition:
+          color ease-out 0.3s,
+          transform ease-out 0.3s,
+          top ease-out 0.3s,
+          font-size ease-out 0.3s;
 
   &-label {
     color: $global-color-primary-dark;
