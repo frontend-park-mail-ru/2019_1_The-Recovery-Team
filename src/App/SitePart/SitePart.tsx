@@ -32,7 +32,11 @@ export default class SitePart extends React.Component {
                 /> : null}
                 {mode === CurPage.PROFILE ? <ProfilePage user={user} onChangeMode={onChangeMode} /> : null}
                 {mode === CurPage.LEADERS ? <LeadersPage /> : null}
-                {mode === CurPage.EDIT_PROFILE ? <EditProfilePage user={user} /> : null}
+                {mode === CurPage.EDIT_PROFILE ? <EditProfilePage
+                    onChangeMode={onChangeMode}
+                    user={user}
+                    onAuthorized={onAuthorized}
+                /> : null}
               </MainBlock>}
         </div>
     );
