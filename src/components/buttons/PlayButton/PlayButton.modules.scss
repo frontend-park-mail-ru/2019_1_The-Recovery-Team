@@ -8,6 +8,7 @@
   border-radius: 50%;
   background-color: $global-color-primary-light;
   background-size: contain;
+  cursor: pointer;
 
   &_single-pl {
     background: url("./img/SinglePlayer.svg") no-repeat center;

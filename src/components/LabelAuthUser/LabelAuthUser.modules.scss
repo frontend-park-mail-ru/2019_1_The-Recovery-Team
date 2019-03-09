@@ -4,6 +4,7 @@ $local-container-height: 70px;
 
 .label-auth {
   position: relative;
+  cursor: pointer;
 
   &__container-avatar {
     width: $local-container-height;

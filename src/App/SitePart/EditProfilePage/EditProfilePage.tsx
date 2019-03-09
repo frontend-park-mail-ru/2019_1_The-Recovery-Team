@@ -3,8 +3,7 @@ import classNames from 'libs/classNames';
 import AvatarProfile from 'components/AvatarProfile';
 import EditButton from 'components/buttons/EditButton';
 import Form from 'components/Form';
-import SubmitButton from "components/buttons/SubmitButton/SubmitButton";
-import {modes} from "components/buttons/SubmitButton";
+import SubmitButton, {modes} from 'components/buttons/SubmitButton';
 const styles = require('./EditProfilePage.modules.scss');
 
 const cn = classNames(styles);
@@ -14,15 +13,13 @@ export default class EditProfilePage extends React.Component {
     inputsSignIn: [
       {
         placeholder: 'Изменить email',
-        textError: 'Пользователь с таким email уже существует',
-        isActive: false,
         isError: false,
+        value: '',
       },
       {
         placeholder: 'Изменить никнейм',
-        textError: 'Пользователь с таким ни кнеймом уже существует',
-        isActive: false,
         isError: false,
+        value: '',
       }
     ],
   };

@@ -1,5 +1,4 @@
 import { HTTPMethods } from './config';
-import { error } from 'util';
 
 export interface RespResult {
   response: null | Object;

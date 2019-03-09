@@ -1,53 +1,56 @@
 import * as React from 'libs/Cheburact/index';
 import classNames from 'libs/classNames/index';
 import {SignUpStage} from './config/stages';
-import Form from 'components/Form/index';
+import Form, {FormConfig} from 'components/Form/index';
 import VkButton from 'components/buttons/VkButton/index';
-import SubmitButton from 'components/buttons/SubmitButton/index';
-import {modes} from 'components/buttons/SubmitButton/index';
+import SubmitButton, {modes} from 'components/buttons/SubmitButton/index';
+
 const styles = require('./SignUpForm.modules.scss');
 
 const cn = classNames(styles);
 
+interface State {
+  stage: SignUpStage;
+  first: FormConfig;
+  second: FormConfig;
+}
+
 export default class SignUpForm extends React.Component {
-  state = {
+  state: State = {
     stage: SignUpStage.FIRST,
-    inputsSignUpFirst: [
-      {
-        placeholder: 'Введите email',
-        textError: 'Неправильный email',
-        isActive: true,
-        isError: false,
-      },
-      {
-        placeholder: 'Придумайте пароль',
-        textError: 'Короткий пароль',
-        isActive: false,
-        isError: false,
-      }
-    ],
-    inputsSignUpSecond: [
-      {
-        placeholder: 'Придумайте никнейм',
-        textError: 'Пользователь с таким никнеймом уже существует',
-        isActive: true,
-        isError: false,
-      }
-    ]
+    first: {
+      inputs: [
+        {
+          placeholder: 'Введите email',
+          isError: false,
+          value: '',
+        },
+        {
+          placeholder: 'Придумайте пароль',
+          isError: false,
+          value: '',
+        }
+      ]
+    },
+    second: {
+      inputs: [
+        {
+          placeholder: 'Придумайте никнейм',
+          isError: false,
+          value: '',
+        }
+      ]
+    },
   };
 
   toSecondStage = () => this.setState({ stage: SignUpStage.SECOND });
 
   render() {
-    const { inputsSignUpFirst, inputsSignUpSecond, stage } = this.state;
+    const { first, second, stage } = this.state;
 
     return (
         <div className={'sign-up-form'}>
-          {
-            stage === SignUpStage.FIRST
-                ? (<Form inputs={inputsSignUpFirst}/>)
-                : (<Form inputs={inputsSignUpSecond}/>)
-          }
+          <Form inputs={stage === SignUpStage.FIRST ? first.inputs : second.inputs}/>
           {
             stage === SignUpStage.FIRST
                 ? (

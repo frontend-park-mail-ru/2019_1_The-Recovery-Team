@@ -15,7 +15,7 @@ const __user = {
 export default class App extends React.Component {
   state = {
     user: __user,
-    mode: CurPage.START,
+    mode: CurPage.PROFILE,
   };
 
   handleChangeMode = (mode: CurPage) => this.setState({ mode });

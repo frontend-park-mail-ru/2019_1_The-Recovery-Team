@@ -11,7 +11,7 @@ CheburactDOM.render(
     document.getElementById('root'),
 );
 
-Requester.get(API.scores() + 'ddd', {
+Requester.get(API.scores(), {
   limit: 2,
   start: 0
 }).then(({ response, error }) => {

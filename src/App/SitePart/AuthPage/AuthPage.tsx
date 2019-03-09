@@ -10,12 +10,20 @@ const cn = classNames(styles);
 
 export default class AuthPage extends React.Component {
   state = {
-    currentTab: AuthPageMode.SIGN_UP,
+    currentTab: AuthPageMode.SIGN_IN,
     authButtons: [
       {title: 'Вход', mode: AuthPageMode.SIGN_IN},
       {title: 'Регистрация', mode: AuthPageMode.SIGN_UP},
     ],
   };
+
+  componentDidMount() {
+    console.log(this.props, this.state);
+  }
+
+  componentDidUpdate() {
+    console.log(this.props, this.state);
+  }
 
   toMode = (mode: AuthPageMode) => this.setState({ currentTab: mode });
 
