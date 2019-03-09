@@ -26,10 +26,11 @@ export default class App extends React.Component {
           if (response && response.id) {
             return Requester.get(API.profileItem(response.id || ''));
           }
+          return { response, error };
         })
         .then(({ response, error }) => {
           if (response) {
-            this.setState({ user: response });
+            this.handleAuthorized(response);
           }
         });
   }
