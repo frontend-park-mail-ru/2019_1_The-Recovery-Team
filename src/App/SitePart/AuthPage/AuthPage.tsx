@@ -49,7 +49,7 @@ export default class AuthPage extends React.Component {
               ))
             }
           </div>
-          {currentTab === AuthPageMode.SIGN_IN && (<SignInForm/>)}
+          {currentTab === AuthPageMode.SIGN_IN && (<SignInForm onAuthorized={onAuthorized}/>)}
           {currentTab === AuthPageMode.SIGN_UP && (<SignUpForm onAuthorized={onAuthorized}/>)}
         </div>
     );
