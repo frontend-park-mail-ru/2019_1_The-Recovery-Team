@@ -1,4 +1,4 @@
-.sign-in-page {
+.sign-auth-page {
   height: 100%;
   padding: 50px;
 
@@ -12,11 +12,5 @@
     &:last-child {
       margin-right: 0;
     }
-  }
-
-  &__container-submits {
-    margin-top: 90px;
-    display: flex;
-    justify-content: space-between;
   }
 }

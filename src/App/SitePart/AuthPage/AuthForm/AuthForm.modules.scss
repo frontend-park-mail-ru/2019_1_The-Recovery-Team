@@ -1,0 +1,10 @@
+.auth-form {
+  width: 100%;
+  height: 100%;
+
+  &__in-container-submits {
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-between;
+  }
+}

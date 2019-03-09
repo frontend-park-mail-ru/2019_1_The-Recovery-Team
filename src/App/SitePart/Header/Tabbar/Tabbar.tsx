@@ -16,7 +16,7 @@ export default class Tabbar extends React.Component {
   };
 
   handleClick = (mode: CurPage) =>
-    this.props.onChangeMode(mode);
+    this.props.onChangeMode(mode)
 
   render() {
     const {tabs} = this.state;

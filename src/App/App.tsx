@@ -14,7 +14,7 @@ const __user = {
 export default class App extends React.Component {
   state = {
     user: null,
-    mode: CurPage.LEADERS,
+    mode: CurPage.SIGNIN,
   };
 
   handleChangeMode = (mode: CurPage) => this.setState({ mode });
