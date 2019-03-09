@@ -13,5 +13,11 @@ module.exports = webpackMerge(commonConfig, {
             warnings: false,
             errors: true
         },
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8080',
+                pathRewrite: {'^/api' : ''}
+            }
+        }
     },
 });

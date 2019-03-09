@@ -20,6 +20,7 @@ export default class Form extends React.Component {
                       textError={textError}
                       isActive={isActive}
                       isError={isError}
+                      value={'kek'}
                   />
                 </div>
             ))
