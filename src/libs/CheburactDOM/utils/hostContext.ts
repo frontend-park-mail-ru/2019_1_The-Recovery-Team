@@ -114,7 +114,12 @@ export const rootContext: IRootContext = {
 
       if (isEventProp(key)) {
         if (oldValue !== nextEventListenersMap[key]) {
-          htmlRef.removeEventListener(key, oldValue as any);
+          try {
+            htmlRef.removeEventListener(key, oldValue as any);
+          }
+          catch (e) {
+            // если нет такого события, ничо не произойдет
+          }
           const listeners = htmlRef[BOUND_EVENT_LISTENERS] || {};
           const index = (listeners[key] || []).indexOf(oldValue);
           if (index >= 0) {

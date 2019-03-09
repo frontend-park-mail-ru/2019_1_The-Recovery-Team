@@ -7,20 +7,19 @@ const cn = classNames(styles);
 export default class Input extends React.Component {
   state = {
     active: false,
-    value: this.props.value || '',
   };
 
   handleFocus = () => this.setState({ active: true });
-  handleBlur = () => this.setState({ active: false });
-
-  handleInput = (e) => {
-    this.setState({ value: e.target.value });
-    this.props.onChange(e.target.value);
+  handleBlur = () => {
+    this.setState({ active: false });
+    this.props.onBlur();
   };
 
+  handleInput = (e) => this.props.onChange(e.target.value);
+
   render() {
-    const {placeholder, isError} = this.props;
-    const {active, value} = this.state;
+    const {placeholder, isError, value} = this.props;
+    const {active} = this.state;
 
     return (
         <div className={cn('form-input-container')}>

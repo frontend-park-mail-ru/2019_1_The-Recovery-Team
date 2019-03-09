@@ -45,11 +45,12 @@ export default class Header extends React.Component {
                 <Logotype size={LogotypeSizes.MIDDLE}/>
               </div>
           )}
-          <Tabbar
-              mode={mode}
-              onChangeMode={onChangeMode}
-              className={cn('header__tabbar')}
-          />
+          <div className={cn('header__tabbar')}>
+            <Tabbar
+                mode={mode}
+                onChangeMode={onChangeMode}
+            />
+          </div>
           <div className={cn(
               'header__container-buttons',
               mode === CurPage.START && 'header__container-buttons_start-page'
