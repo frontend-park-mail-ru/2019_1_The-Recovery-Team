@@ -67,7 +67,7 @@ export default class SignInForm extends React.Component {
     Requester.post(API.sessions(), {
       email: email.value,
       password: password.value,
-    }, true).then(({ response, error }) => {
+    }).then(({ response, error }) => {
       if (error) {
         this.setState({
           email: {

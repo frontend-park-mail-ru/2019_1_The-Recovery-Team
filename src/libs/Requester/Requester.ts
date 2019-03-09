@@ -43,7 +43,13 @@ export default class Requester {
 
     return fetch(url, options)
         .then((r: Response) => r.ok ? r : Promise.reject(r))
-        .then((r: Response) => r.json())
+        .then((r: Response) =>
+            // Перелавливаем, если пустое тело ответа
+            r.json()
+              .catch(() => {
+                return {};
+              })
+        )
         .then((response: Response) => {
           return {
             response,
