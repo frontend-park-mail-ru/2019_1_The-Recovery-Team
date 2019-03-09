@@ -4,13 +4,18 @@ import Form from 'components/Form/Form';
 import VkButton from 'components/buttons/VkButton/VkButton';
 import SubmitButton from 'components/buttons/SubmitButton/SubmitButton';
 import {modes} from 'components/buttons/SubmitButton/index';
-import {FormConfig} from 'components/Form';
+import { InputConfig } from 'components/Form';
 const styles = require('./SignInForm.modules.scss');
 
 const cn = classNames(styles);
 
+interface State {
+  email: InputConfig;
+  password: InputConfig;
+}
+
 export default class SignInForm extends React.Component {
-  state: { config: FormConfig } = {
+  state = {
     config: {
       inputs: [
         {

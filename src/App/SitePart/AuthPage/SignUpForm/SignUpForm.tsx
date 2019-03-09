@@ -4,6 +4,8 @@ import {SignUpStage} from './config/stages';
 import Form, { InputConfig } from 'components/Form/index';
 import VkButton from 'components/buttons/VkButton/index';
 import SubmitButton, {modes} from 'components/buttons/SubmitButton/index';
+import Requester from 'libs/Requester/Requester';
+import API from 'config/API';
 
 const styles = require('./SignUpForm.modules.scss');
 
@@ -50,6 +52,18 @@ export default class SignUpForm extends React.Component {
   }
 
   toSecondStage = () => this.setState({ stage: SignUpStage.SECOND });
+
+  handleSubmit = () => {
+    const { email, nickname, password } = this.state;
+    Requester.post(API.profiles(), {
+      email: email.value,
+      nickname: nickname.value,
+      password: password.value,
+    }, true).then(({ response, error }) => {
+      this.props.onAuthorized(response);
+      console.log({ response, error });
+    });
+  };
 
   handleChangeValue = (name: string, value: string) => {
     const field: InputConfig = this.state[name];
@@ -118,7 +132,7 @@ export default class SignUpForm extends React.Component {
                         <SubmitButton mode={modes.UPLOAD_PHOTO}/>
                       </div>
                       <div className={cn('sign-up-form__container-ready-button')}>
-                        <SubmitButton mode={modes.READY} disabled={readyDisabled}/>
+                        <SubmitButton mode={modes.READY} disabled={readyDisabled} onClick={this.handleSubmit}/>
                       </div>
                     </div>
                 )

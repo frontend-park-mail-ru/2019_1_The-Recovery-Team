@@ -6,6 +6,7 @@ import SubmitButton, {modes} from 'components/buttons/SubmitButton';
 import LabelProfile from 'components/LabelProfile';
 import {CurPage} from "../..";
 const styles = require('./ProfilePage.modules.scss');
+const noUserImg = require('./img/nouser.png');
 
 const cn = classNames(styles);
 
@@ -18,7 +19,7 @@ export default class ProfilePage extends React.Component {
         <div className={cn('profile-page')}>
           <div className={cn('profile-page__container')}>
             <div className={cn('profile-page__container-avatar')}>
-              <AvatarProfile user={user} />
+              <AvatarProfile user={user} defaultImg={noUserImg} />
               <div className={cn('profile-page__container-edit-button')}>
                 <EditButton/>
               </div>
