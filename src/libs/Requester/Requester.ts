@@ -58,7 +58,6 @@ export default class Requester {
           };
         })
         .catch((error) => {
-          console.log('error', error);
           return {
             response: null,
             error,

@@ -1,12 +1,15 @@
+import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import Requester from 'libs/Requester';
+import ModalWindow from 'components/ModalWindow';
 import AvatarProfile from 'components/AvatarProfile';
 import EditButton from 'components/buttons/EditButton';
 import Form, { InputConfig } from 'components/Form';
 import SubmitButton, {modes} from 'components/buttons/SubmitButton';
 import { CurPage } from '../..';
-import API from 'config/API';
+import EditPasswordForm from './EditPasswordForm';
+import EditAvatarForm from './EditAvatarForm';
 const styles = require('./EditProfilePage.modules.scss');
 
 const cn = classNames(styles);
@@ -14,6 +17,8 @@ const cn = classNames(styles);
 interface State {
   email: InputConfig;
   nickname: InputConfig;
+  isShownModalPassword: boolean;
+  isShownModalAvatar: boolean;
 }
 
 export default class EditProfilePage extends React.Component {
@@ -36,6 +41,8 @@ export default class EditProfilePage extends React.Component {
       label: 'Никнейм',
       type: 'text',
     },
+    isShownModalPassword: false,
+    isShownModalAvatar: false,
   };
 
   changeValueField(name: string, value, field: InputConfig) {
@@ -91,34 +98,67 @@ export default class EditProfilePage extends React.Component {
 
   updateUser = () => {
     const {email, nickname} = this.state;
-    console.log(this.props);
-    Requester.put(API.profileItem(this.props.user.id),
-        {email: email.value,
-          nickname: nickname.value,
-        }).then(({response, error}) => {
-      const { user, onAuthorized } = this.props;
-      if (response) {
-        onAuthorized({...user, email: email.value, nickname: nickname.value});
-      }
+    const { user } = this.props;
+
+    let data = {};
+    if (email.value !== user.email && nickname.value !== user.nickname) {
+      data = {
+        email: email.value,
+        nickname: nickname.value,
+      };
+    } else if (email.value !== user.email) {
+      data = {
+        email: email.value,
+      };
+    } else {
+      data = {
+        nickname: nickname.value,
+      };
+    }
+
+    Requester.put(API.profileItem(this.props.user.id), data)
+        .then(({response, error}) => {
+          console.log('response', response, 'error', error);
+          const { user, onAuthorized } = this.props;
+          if (response) {
+            onAuthorized({...user, email: email.value, nickname: nickname.value});
+        }
       });
   };
 
+  toggleEditModalPassword = () =>
+      this.setState({isShownModalPassword: !this.state.isShownModalPassword});
+  toggleEditModalAvatar = () =>
+      this.setState({isShownModalAvatar: !this.state.isShownModalAvatar});
+
   render() {
-    const {email, nickname} = this.state;
-    const { user, onChangeMode} = this.props;
+    const {email, nickname, isShownModalPassword, isShownModalAvatar} = this.state;
+    const { user, onChangeMode, onAuthorized} = this.props;
 
     const saveDisabled = email.isError
         || nickname.isError
         || (user.email === email.value
-            && user.nickname === nickname.value);
+            && user.nickname === nickname.value)
+        || email.value.length === 0
+        || nickname.value.length === 0;
 
     return (
         <div className={cn('edit-profile-page')}>
+          {isShownModalPassword && <ModalWindow
+              onClose={this.toggleEditModalPassword}
+          >{<EditPasswordForm/>}</ModalWindow>}
+          {isShownModalAvatar && <ModalWindow
+              onClose={this.toggleEditModalAvatar}
+          >{<EditAvatarForm
+              onAuthorized={onAuthorized}
+              user={user}
+              onChangeMode={onChangeMode}
+          />}</ModalWindow>}
           <div className={cn('edit-profile-page__container')}>
             <div className={cn('edit-profile-page__container-avatar')}>
               <AvatarProfile user={user}/>
               <div className={cn('edit-profile-page__container-edit-button')}>
-                <EditButton/>
+                <EditButton onClick={this.toggleEditModalAvatar} />
               </div>
             </div>
             <div className={cn('edit-profile-page__container-edit')}>
@@ -130,7 +170,9 @@ export default class EditProfilePage extends React.Component {
                 />
               </div>
               <div className={cn('edit-profile-page__container-buttons')}>
-                <SubmitButton mode={modes.CHANGE_PASSWORD}/>
+                <SubmitButton
+                    onClick={this.toggleEditModalPassword}
+                    mode={modes.CHANGE_PASSWORD}/>
                 <div className={cn('edit-profile-page__container-submit-buttons')}>
                   <div className={cn('edit-profile-page__container-save-button')}>
                     <SubmitButton

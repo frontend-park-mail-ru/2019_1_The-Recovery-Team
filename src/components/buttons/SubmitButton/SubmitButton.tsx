@@ -8,8 +8,6 @@ export default class SubmitButton extends React.Component {
   render() {
     const {mode, onClick, disabled} = this.props;
 
-    console.log(this.props, 'button');
-
     return (
         <button onClick={!disabled && onClick} className={cn(
             'submit-button',
