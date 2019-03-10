@@ -9,11 +9,12 @@ const styles = require('./LeadersPage.modules.scss');
 
 const cn = classNames(styles);
 
-const LIMIT = 4;
+const LIMIT = 1;
 
 export default class LeadersPage extends React.Component {
   state = {
     offset: 0,
+    total: 0,
     columns: [
         {title: '#', classesName: 'num'},
         {title: 'Игрок', classesName: 'nick'},
@@ -32,13 +33,14 @@ export default class LeadersPage extends React.Component {
         start: offset,
       }).then(({response, error}) => {
         const { offset, leaders } = this.state;
-        if (response && Array.isArray(response)) {
+        if (response && Array.isArray(response.List)) {
           this.setState({
             leaders: [
                 ...leaders,
-                ...response,
+                ...response.List,
             ],
-            offset: offset + response.length,
+            offset: offset + response.List.length,
+            total: response.total,
           });
         }
       });
@@ -46,7 +48,7 @@ export default class LeadersPage extends React.Component {
   handleLoadNextPage = () => this.loadPage(this.state.offset);
 
   render() {
-    const { columns, leaders } = this.state;
+    const { columns, leaders, total, offset } = this.state;
 
     return (
         <div className={cn('leaders-page')}>
@@ -81,7 +83,9 @@ export default class LeadersPage extends React.Component {
             }
           </div>
           <div className={cn('leaders-page__load-button')}>
-            <SubmitButton mode={modes.LOAD_MORE} onClick={this.handleLoadNextPage}/>
+            {total !== offset && <SubmitButton
+                mode={modes.LOAD_MORE}
+                onClick={this.handleLoadNextPage}/>}
           </div>
         </div>
     );
