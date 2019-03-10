@@ -6,7 +6,7 @@ const cn = classNames(styles);
 
 export default class AvatarProfile extends React.Component {
   render() {
-  const { user } = this.props;
+    const { user } = this.props;
 
     return (
         <div className={cn('avatar-profile')} >

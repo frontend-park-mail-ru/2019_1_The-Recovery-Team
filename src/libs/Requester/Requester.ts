@@ -28,10 +28,7 @@ export default class Requester {
   ): Promise<RespResult> {
     const headers = {};
 
-    if (multipartFormData) {
-      headers['Content-Type'] = 'multipart/form-data';
-    }
-    else if (method === HTTPMethods.POST || method === HTTPMethods.PUT) {
+    if (!multipartFormData && method === HTTPMethods.POST || method === HTTPMethods.PUT) {
       headers['Content-Type'] = 'application/json';
     }
 
@@ -39,6 +36,7 @@ export default class Requester {
       method,
       headers,
       credentials: 'include',
+      mode: 'cors',
     };
     if (data) {
       options.body = data;
@@ -46,7 +44,13 @@ export default class Requester {
 
     return fetch(url, options)
         .then((r: Response) => r.ok ? r : Promise.reject(r))
-        .then((r: Response) => r.json())
+        .then((r: Response) =>
+            // Перелавливаем, если пустое тело ответа
+            r.json()
+              .catch(() => {
+                return {};
+              })
+        )
         .then((response: Response) => {
           return {
             response,
@@ -71,14 +75,18 @@ export default class Requester {
   }
 
   static get(url: string, data: Object = {}) {
-    const query = Object.entries(data)
+    let query = Object.entries(data)
         .filter(([key, value]) => !!value || value === 0)
         .map(([key, value]) =>
           `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
         )
         .join('&');
 
-    return Requester.doRequest(`${url}?${query}`, HTTPMethods.GET);
+    if (query.length) {
+      query = `?${query}`;
+    }
+
+    return Requester.doRequest(`${url}${query}`, HTTPMethods.GET);
   }
 
   static put(url: string, data: Object = {}, multipart: boolean = false) {

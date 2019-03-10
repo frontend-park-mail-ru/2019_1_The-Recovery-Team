@@ -30,8 +30,10 @@ export default class AuthPage extends React.Component {
   render() {
     const {
       authButtons,
-      currentTab
+      currentTab,
     } = this.state;
+
+    const { onAuthorized } = this.props;
 
     return (
         <div className={cn('sign-auth-page')}>
@@ -47,8 +49,8 @@ export default class AuthPage extends React.Component {
               ))
             }
           </div>
-          {currentTab === AuthPageMode.SIGN_IN && (<SignInForm/>)}
-          {currentTab === AuthPageMode.SIGN_UP && (<SignUpForm/>)}
+          {currentTab === AuthPageMode.SIGN_IN && (<SignInForm onAuthorized={onAuthorized}/>)}
+          {currentTab === AuthPageMode.SIGN_UP && (<SignUpForm onAuthorized={onAuthorized}/>)}
         </div>
     );
   }

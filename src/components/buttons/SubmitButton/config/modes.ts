@@ -34,4 +34,9 @@ export const modes = {
     title: 'Отменить',
     theme: 'light',
   },
+  LOAD_MORE: {
+    className: 'next-icon',
+    title: 'Загрузить еще',
+    theme: 'dark',
+  },
 };

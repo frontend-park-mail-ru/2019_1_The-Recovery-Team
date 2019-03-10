@@ -6,29 +6,24 @@ const styles = require('./Form.modules.scss');
 const cn = classNames(styles);
 
 export default class Form extends React.Component {
-
-  componentDidMount() {
-    console.log('mount', this.props, this.state);
-  }
-
-  componentDidUpdate() {
-    console.log('update', this.props, this.state);
-  }
+  handleChange = (name, value) => this.props.onChangeValue(name, value);
+  handleBlur = (name) => this.props.onBlur(name);
 
   render() {
-    console.log(this.props, this.state);
     const { inputs } = this.props;
 
     return (
         <div className={cn('form')}>
           <div className={cn('form__container-inputs')}>
           {
-            inputs.map(({placeholder, isError, value}) => (
+            inputs.map(({placeholder, isError, value, name}) => (
                 <div className={cn('form__input-container')}>
                   <Input
                       placeholder={placeholder}
                       isError={isError}
                       value={value}
+                      onChange={(value) => this.handleChange(name, value)}
+                      onBlur={() => this.handleBlur(name)}
                   />
                 </div>
             ))

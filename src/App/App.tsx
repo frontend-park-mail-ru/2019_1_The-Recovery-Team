@@ -1,33 +1,60 @@
+import API from 'config/API';
 import * as React from 'libs/Cheburact';
-import SitePart from './SitePart';
+import Requester from 'libs/Requester/Requester';
 import {CurPage} from './config/modes';
-import StartPage from "./SitePart/StartPage/StartPage";
-const __avatar = require('./__img/Avatar.png');
-
-const __user = {
-  nickname: 'Nagibator228',
-  email: 'vasya@mail.ru',
-  avatar: __avatar,
-  rating: 1050,
-  position: 30,
-};
+import SitePart from './SitePart';
+const defaultAvatar = require('./img/nouser.png');
 
 export default class App extends React.Component {
   state = {
-    user: __user,
-    mode: CurPage.PROFILE,
+    user: null,
+    mode: CurPage.START,
   };
 
   componentDidMount() {
+<<<<<<< HEAD
 
+=======
+    Requester
+        .get(API.sessions())
+        .then(({ response, error }) => {
+          if (response && response.id) {
+            return Requester.get(API.profileItem(response.id || ''));
+          }
+          return { response, error };
+        })
+        .then(({ response, error }) => {
+          if (response) {
+            this.handleAuthorized(response);
+          }
+        });
+>>>>>>> eb43918fe5b4f33e176671a7acfd6b9b6054f7e4
   }
 
   handleChangeMode = (mode: CurPage) => this.setState({ mode });
 
-  handleLogout = () => this.setState({
-    mode: CurPage.START,
-    user: null,
-  });
+  handleLogout = () =>
+    Requester.delete(API.sessions())
+        .then(({response, error}) => {
+          if (response) {
+            this.setState({
+              mode: CurPage.START,
+              user: null,
+            });
+          }
+        });
+
+  handleAuthorized = (user) => {
+    this.setState({
+      user: user ? {
+        ...user,
+        avatar: user.avatar && user.avatar.length !== 0
+            ? user.avatar
+            : defaultAvatar,
+      } : null,
+      mode: CurPage.PROFILE,
+    });
+  };
 
   render() {
     const { user, mode, } = this.state;
@@ -38,6 +65,7 @@ export default class App extends React.Component {
             mode={mode}
             onChangeMode={this.handleChangeMode}
             onLogout={this.handleLogout}
+            onAuthorized={this.handleAuthorized}
         />
     );
   }

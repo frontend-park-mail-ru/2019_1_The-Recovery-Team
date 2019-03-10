@@ -50,13 +50,22 @@
 
   &_light {
     border: 1px solid $global-color-primary-dark;
-    background: transparent;
+    background: #ffffff;
     color: $global-color-primary-dark;
+
+    &.submit-button_disabled {
+      border: 1px solid $global-color-light-grey;
+      color: darken($global-color-light-grey, 10%);
+    }
   }
 
   &_dark {
     background: $global-color-primary-light;
     color: #FFFFFF;
+
+    &.submit-button_disabled {
+      background: $global-color-light-grey;
+    }
   }
 
   &__title {

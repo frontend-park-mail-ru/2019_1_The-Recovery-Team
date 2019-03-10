@@ -14,7 +14,7 @@ const cn = classNames(styles);
 
 export default class SitePart extends React.Component {
   render() {
-    const { user, mode, onChangeMode, onLogout } = this.props;
+    const { user, mode, onChangeMode, onLogout, onAuthorized } = this.props;
 
     return (
         <div className={cn('site-part')}>
@@ -26,10 +26,17 @@ export default class SitePart extends React.Component {
           />
           {mode === CurPage.START ? <StartPage /> :
               <MainBlock>
-                {mode === CurPage.SIGNIN || mode === CurPage.SIGNUP  ? <AuthPage onChangeMode={onChangeMode} /> : null}
+                {mode === CurPage.SIGNIN || mode === CurPage.SIGNUP  ? <AuthPage
+                    onChangeMode={onChangeMode}
+                    onAuthorized={onAuthorized}
+                /> : null}
                 {mode === CurPage.PROFILE ? <ProfilePage user={user} onChangeMode={onChangeMode} /> : null}
                 {mode === CurPage.LEADERS ? <LeadersPage /> : null}
-                {mode === CurPage.EDIT_PROFILE ? <EditProfilePage user={user} /> : null}
+                {mode === CurPage.EDIT_PROFILE ? <EditProfilePage
+                    onChangeMode={onChangeMode}
+                    user={user}
+                    onAuthorized={onAuthorized}
+                /> : null}
               </MainBlock>}
         </div>
     );
