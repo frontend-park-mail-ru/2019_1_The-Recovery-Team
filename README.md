@@ -15,6 +15,8 @@
 
 ## Ссылка на игру
 
+https://sadislands.now.sh/
+
 ## Репозиторий бекенда
  
 [Бекенд](https://github.com/go-park-mail-ru/2019_1_The-Recovery-Team)
