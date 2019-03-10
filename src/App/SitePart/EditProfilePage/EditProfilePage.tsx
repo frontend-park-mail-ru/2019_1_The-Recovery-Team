@@ -107,6 +107,11 @@ export default class EditProfilePage extends React.Component {
     const {email, nickname} = this.state;
     const { user, onChangeMode} = this.props;
 
+    const saveDisabled = email.isError
+        || nickname.isError
+        || (user.email === email.value
+            && user.nickname === nickname.value);
+
     return (
         <div className={cn('edit-profile-page')}>
           <div className={cn('edit-profile-page__container')}>
@@ -118,15 +123,26 @@ export default class EditProfilePage extends React.Component {
             </div>
             <div className={cn('edit-profile-page__container-edit')}>
               <div className={cn('edit-profile-page__container-form')}>
-                <Form onChangeValue={this.handleChangeValue} onBlur={this.handleBlur} inputs={[email, nickname]}/>
+                <Form
+                    onChangeValue={this.handleChangeValue}
+                    onBlur={this.handleBlur}
+                    inputs={[email, nickname]}
+                />
               </div>
               <div className={cn('edit-profile-page__container-buttons')}>
                 <SubmitButton mode={modes.CHANGE_PASSWORD}/>
                 <div className={cn('edit-profile-page__container-submit-buttons')}>
                   <div className={cn('edit-profile-page__container-save-button')}>
-                    <SubmitButton onClick={this.updateUser} mode={modes.SAVE}/>
+                    <SubmitButton
+                        onClick={this.updateUser}
+                        mode={modes.SAVE}
+                        disabled={saveDisabled}
+                    />
                   </div>
-                  <SubmitButton onClick={() => onChangeMode(CurPage.PROFILE)} mode={modes.CANCEL}/>
+                  <SubmitButton
+                      onClick={() => onChangeMode(CurPage.PROFILE)}
+                      mode={modes.CANCEL}
+                  />
                 </div>
               </div>
             </div>
