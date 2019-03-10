@@ -30,6 +30,7 @@ export default class Input extends React.Component {
               onInput={this.handleInput}
               value={value}
               type={type}
+              spellcheck='false'
           />
           <div className={cn(
               'input-label',

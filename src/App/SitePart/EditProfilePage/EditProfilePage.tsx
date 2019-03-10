@@ -17,7 +17,7 @@ interface State {
 }
 
 export default class EditProfilePage extends React.Component {
-  state = {
+  state : State = {
     email: {
       placeholder: 'Email',
       isError: false,
@@ -25,6 +25,7 @@ export default class EditProfilePage extends React.Component {
       name: 'email',
       touched: false,
       label: 'Email',
+      type: 'email'
     },
     nickname: {
       placeholder: 'Никнейм',
@@ -33,11 +34,11 @@ export default class EditProfilePage extends React.Component {
       name: 'nickname',
       touched: false,
       label: 'Никнейм',
+      type: 'text',
     },
   };
 
-  handleChangeValue = (name: string, value: string) => {
-    const field: InputConfig = this.state[name];
+  changeValueField(name: string, value, field: InputConfig) {
     this.setState({
       [name]: {
         ...field,
@@ -47,6 +48,32 @@ export default class EditProfilePage extends React.Component {
         touched: true,
       }
     });
+  }
+
+  handleChangeValue = (name: string, value: string) => {
+    const field: InputConfig = this.state[name];
+
+    if ((name === 'email' || name === 'nickname') && value !== this.props.user[name]) {
+      Requester.get(API.profiles(), {
+        [name]: value
+      }).then(({response, error}) => {
+        if (!error) {
+          this.setState({
+            [name]: {
+              ...field,
+              placeholder: `Такой ${field.label} уже существует`,
+              isError: true,
+              value,
+              touched: true
+            }
+          });
+        } else {
+          this.changeValueField(name, value, field);
+        }
+      });
+    } else {
+      this.changeValueField(name, value, field);
+    }
   };
 
   handleBlur = (name: string) => {
@@ -80,6 +107,11 @@ export default class EditProfilePage extends React.Component {
     const {email, nickname} = this.state;
     const { user, onChangeMode} = this.props;
 
+    const saveDisabled = email.isError
+        || nickname.isError
+        || (user.email === email.value
+            && user.nickname === nickname.value);
+
     return (
         <div className={cn('edit-profile-page')}>
           <div className={cn('edit-profile-page__container')}>
@@ -91,15 +123,26 @@ export default class EditProfilePage extends React.Component {
             </div>
             <div className={cn('edit-profile-page__container-edit')}>
               <div className={cn('edit-profile-page__container-form')}>
-                <Form onChangeValue={this.handleChangeValue} onBlur={this.handleBlur} inputs={[email, nickname]}/>
+                <Form
+                    onChangeValue={this.handleChangeValue}
+                    onBlur={this.handleBlur}
+                    inputs={[email, nickname]}
+                />
               </div>
               <div className={cn('edit-profile-page__container-buttons')}>
                 <SubmitButton mode={modes.CHANGE_PASSWORD}/>
                 <div className={cn('edit-profile-page__container-submit-buttons')}>
                   <div className={cn('edit-profile-page__container-save-button')}>
-                    <SubmitButton onClick={this.updateUser} mode={modes.SAVE}/>
+                    <SubmitButton
+                        onClick={this.updateUser}
+                        mode={modes.SAVE}
+                        disabled={saveDisabled}
+                    />
                   </div>
-                  <SubmitButton onClick={() => onChangeMode(CurPage.PROFILE)} mode={modes.CANCEL}/>
+                  <SubmitButton
+                      onClick={() => onChangeMode(CurPage.PROFILE)}
+                      mode={modes.CANCEL}
+                  />
                 </div>
               </div>
             </div>
