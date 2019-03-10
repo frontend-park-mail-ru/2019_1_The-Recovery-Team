@@ -52,10 +52,6 @@ export default class SignUpForm extends React.Component {
     avatar: null,
   };
 
-  componentDidUpdate() {
-    console.log('new state', this.state);
-  }
-
   toSecondStage = () => this.setState({ stage: SignUpStage.SECOND });
 
   handleSubmit = () => {
@@ -71,8 +67,26 @@ export default class SignUpForm extends React.Component {
     });
   };
 
-  handleChangeValue = (name: string, value: string) => {
-    const field: InputConfig = this.state[name];
+  validateField (name: string, value: string, field: InputConfig) {
+    if (name === 'email' || name === 'nickname') {
+      Requester.get(API.profiles(), {
+        [name]: value
+      }).then(({response, error}) => {
+
+        if (response) {
+          this.setState({
+            [name]: {
+              ...field,
+              placeholder: `Такой ${field.label} уже существует`,
+              isError: true
+            }
+          });
+        }
+      });
+    }
+  }
+
+  changeValueField(name: string, value, field: InputConfig) {
     this.setState({
       [name]: {
         ...field,
@@ -82,6 +96,12 @@ export default class SignUpForm extends React.Component {
         touched: true,
       }
     });
+  }
+
+  handleChangeValue = (name: string, value: string) => {
+    const field: InputConfig = this.state[name];
+    this.validateField(name, value, field);
+    this.changeValueField(name, value, field);
   };
 
   handleBlur = (name: string) => {
