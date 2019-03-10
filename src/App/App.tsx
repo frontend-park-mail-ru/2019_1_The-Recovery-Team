@@ -1,6 +1,6 @@
 import API from 'config/API';
 import * as React from 'libs/Cheburact';
-import Requester from 'libs/Requester/Requester';
+import Requester from 'libs/Requester';
 import {CurPage} from './config/modes';
 import SitePart from './SitePart';
 const defaultAvatar = require('./img/nouser.png');
