@@ -1,4 +1,4 @@
-import API, { BASE_URL } from 'config/API';
+import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import Requester from 'libs/Requester';
 import {CurPage} from './config/modes';
@@ -45,7 +45,7 @@ export default class App extends React.Component {
       user: user ? {
         ...user,
         avatar: user.avatar && user.avatar.length !== 0
-            ? `${BASE_URL}${user.avatar}`
+            ? user.avatar
             : defaultAvatar,
       } : null,
       mode: CurPage.PROFILE,
