@@ -14,7 +14,7 @@ module.exports = webpackMerge(commonConfig, {
             errors: true
         },
         proxy: {
-            '/': 'http://127.0.0.1:8080',
+            '/': 'http://104.248.28.45',
         }
     },
 });
