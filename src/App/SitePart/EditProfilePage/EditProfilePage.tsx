@@ -1,11 +1,11 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
+import Requester from 'libs/Requester';
 import AvatarProfile from 'components/AvatarProfile';
 import EditButton from 'components/buttons/EditButton';
 import Form, { InputConfig } from 'components/Form';
 import SubmitButton, {modes} from 'components/buttons/SubmitButton';
 import { CurPage } from '../..';
-import Requester from 'libs/Requester/Requester';
 import API from 'config/API';
 const styles = require('./EditProfilePage.modules.scss');
 
