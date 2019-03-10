@@ -3,7 +3,7 @@ export const BASE_URL =
     || window.location.hostname === 'localhost'
         ? '' : 'http://104.248.28.45:8080';
 
-const prefixAPI = (url) => `${BASE_URL}${url}`;
+const prefixAPI = (url) => `${BASE_URL}/api/v1${url}`;
 
 export default {
   avatars: () => prefixAPI('/avatars'),
