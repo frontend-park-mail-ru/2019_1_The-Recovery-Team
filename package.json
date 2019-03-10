@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --inline --config config/webpack.dev.js --progress",
-    "build": "webpack --config config/webpack.prod.js --colors --progress --bail"
+    "build": "webpack --config config/webpack.prod.js --colors --progress --bail",
+	"now-build": "npm run build"
   },
   "author": "Vitaly Cherkov",
   "license": "ISC",
