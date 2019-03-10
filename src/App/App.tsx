@@ -12,9 +12,6 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-<<<<<<< HEAD
-
-=======
     Requester
         .get(API.sessions())
         .then(({ response, error }) => {
@@ -28,7 +25,6 @@ export default class App extends React.Component {
             this.handleAuthorized(response);
           }
         });
->>>>>>> eb43918fe5b4f33e176671a7acfd6b9b6054f7e4
   }
 
   handleChangeMode = (mode: CurPage) => this.setState({ mode });
