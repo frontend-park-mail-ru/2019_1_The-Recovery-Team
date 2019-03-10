@@ -18,6 +18,10 @@ export default class App extends React.Component {
     mode: CurPage.PROFILE,
   };
 
+  componentDidMount() {
+
+  }
+
   handleChangeMode = (mode: CurPage) => this.setState({ mode });
 
   handleLogout = () => this.setState({
