@@ -17,7 +17,7 @@ interface State {
 }
 
 export default class EditProfilePage extends React.Component {
-  state = {
+  state : State = {
     email: {
       placeholder: 'Email',
       isError: false,
@@ -25,6 +25,7 @@ export default class EditProfilePage extends React.Component {
       name: 'email',
       touched: false,
       label: 'Email',
+      type: 'email'
     },
     nickname: {
       placeholder: 'Никнейм',
@@ -33,11 +34,11 @@ export default class EditProfilePage extends React.Component {
       name: 'nickname',
       touched: false,
       label: 'Никнейм',
+      type: 'text',
     },
   };
 
-  handleChangeValue = (name: string, value: string) => {
-    const field: InputConfig = this.state[name];
+  changeValueField(name: string, value, field: InputConfig) {
     this.setState({
       [name]: {
         ...field,
@@ -47,6 +48,32 @@ export default class EditProfilePage extends React.Component {
         touched: true,
       }
     });
+  }
+
+  handleChangeValue = (name: string, value: string) => {
+    const field: InputConfig = this.state[name];
+
+    if ((name === 'email' || name === 'nickname') && value !== this.props.user[name]) {
+      Requester.get(API.profiles(), {
+        [name]: value
+      }).then(({response, error}) => {
+        if (!error) {
+          this.setState({
+            [name]: {
+              ...field,
+              placeholder: `Такой ${field.label} уже существует`,
+              isError: true,
+              value,
+              touched: true
+            }
+          });
+        } else {
+          this.changeValueField(name, value, field);
+        }
+      });
+    } else {
+      this.changeValueField(name, value, field);
+    }
   };
 
   handleBlur = (name: string) => {
