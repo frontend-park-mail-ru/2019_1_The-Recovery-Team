@@ -15,7 +15,11 @@ git pu# 2019_1_The-Recovery-Team
 
 ## Ссылка на игру
 
-https://sadislands.now.sh/
+http://104.248.28.45/
+
+## Доукментация API
+
+http://104.248.28.45:8080/swagger/index.html
 
 ## Репозиторий бекенда
  
