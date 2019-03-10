@@ -25,6 +25,7 @@ export default class SignInForm extends React.Component {
       name: 'email',
       touched: false,
       label: 'Email',
+      type: 'email'
     },
     password: {
       placeholder: 'Пароль',
@@ -33,6 +34,7 @@ export default class SignInForm extends React.Component {
       name: 'password',
       touched: false,
       label: 'Пароль',
+      type: 'password',
     }
   };
 

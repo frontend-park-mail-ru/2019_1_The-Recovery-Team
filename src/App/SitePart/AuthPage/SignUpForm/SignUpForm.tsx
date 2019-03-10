@@ -29,6 +29,7 @@ export default class SignUpForm extends React.Component {
       name: 'email',
       touched: false,
       label: 'Email',
+      type: 'email'
     },
     password: {
       placeholder: 'Пароль',
@@ -37,6 +38,7 @@ export default class SignUpForm extends React.Component {
       name: 'password',
       touched: false,
       label: 'Пароль',
+      type: 'password',
     },
     nickname: {
       placeholder: 'Никнейм',
@@ -45,6 +47,7 @@ export default class SignUpForm extends React.Component {
       name: 'nickname',
       touched: false,
       label: 'Никнейм',
+      type: 'text',
     },
     avatar: null,
   };

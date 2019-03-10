@@ -18,7 +18,7 @@ export default class Input extends React.Component {
   handleInput = (e) => this.props.onChange(e.target.value);
 
   render() {
-    const {placeholder, isError, value} = this.props;
+    const {placeholder, isError, value, type} = this.props;
     const {active} = this.state;
 
     return (
@@ -29,6 +29,7 @@ export default class Input extends React.Component {
               onBlur={this.handleBlur}
               onInput={this.handleInput}
               value={value}
+              type={type}
           />
           <div className={cn(
               'input-label',

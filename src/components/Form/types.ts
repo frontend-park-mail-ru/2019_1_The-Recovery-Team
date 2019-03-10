@@ -5,6 +5,7 @@ export interface InputConfig {
   name: string;
   touched: boolean;
   label: string;
+  type: string;
 }
 
 export interface FormConfig {
