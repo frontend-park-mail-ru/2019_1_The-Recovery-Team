@@ -1,12 +1,7 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-<<<<<<< HEAD
-import Requester from 'libs/Requester/Requester';
-import RowLeader from './RowLeader';
-=======
 import RowLeader from './RowLeader';
 import Requester from 'libs/Requester';
->>>>>>> 77fbb3e8dfde7f36e0fb90db021737ef3e88cc99
 import API from 'config/API';
 import SubmitButton from 'components/buttons/SubmitButton/SubmitButton';
 import { modes } from 'components/buttons/SubmitButton';

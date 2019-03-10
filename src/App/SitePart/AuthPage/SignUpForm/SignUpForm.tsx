@@ -67,25 +67,6 @@ export default class SignUpForm extends React.Component {
     });
   };
 
-  validateField (name: string, value: string, field: InputConfig) {
-    if (name === 'email' || name === 'nickname') {
-      Requester.get(API.profiles(), {
-        [name]: value
-      }).then(({response, error}) => {
-
-        if (response) {
-          this.setState({
-            [name]: {
-              ...field,
-              placeholder: `Такой ${field.label} уже существует`,
-              isError: true
-            }
-          });
-        }
-      });
-    }
-  }
-
   changeValueField(name: string, value, field: InputConfig) {
     this.setState({
       [name]: {
@@ -100,8 +81,28 @@ export default class SignUpForm extends React.Component {
 
   handleChangeValue = (name: string, value: string) => {
     const field: InputConfig = this.state[name];
-    this.validateField(name, value, field);
-    this.changeValueField(name, value, field);
+
+    if (name === 'email' || name === 'nickname') {
+      Requester.get(API.profiles(), {
+        [name]: value
+      }).then(({response, error}) => {
+        if (!error) {
+          this.setState({
+            [name]: {
+              ...field,
+              placeholder: `Такой ${field.label} уже существует`,
+              isError: true,
+              value,
+              touched: true
+            }
+          });
+        } else {
+          this.changeValueField(name, value, field);
+        }
+      });
+    } else {
+      this.changeValueField(name, value, field);
+    }
   };
 
   handleBlur = (name: string) => {
