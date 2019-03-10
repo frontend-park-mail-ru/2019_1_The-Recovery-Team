@@ -9,7 +9,7 @@ const styles = require('./LeadersPage.modules.scss');
 
 const cn = classNames(styles);
 
-const LIMIT = 1;
+const LIMIT = 6;
 
 export default class LeadersPage extends React.Component {
   state = {
