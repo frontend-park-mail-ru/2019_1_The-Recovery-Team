@@ -146,7 +146,11 @@ export default class EditProfilePage extends React.Component {
         <div className={cn('edit-profile-page')}>
           {isShownModalPassword && <ModalWindow
               onClose={this.toggleEditModalPassword}
-          >{<EditPasswordForm/>}</ModalWindow>}
+          >{<EditPasswordForm
+              user={user}
+              onAuthorized={onAuthorized}
+              onChangeMode={onChangeMode}
+          />}</ModalWindow>}
           {isShownModalAvatar && <ModalWindow
               onClose={this.toggleEditModalAvatar}
           >{<EditAvatarForm

@@ -4,6 +4,9 @@ import {InputConfig} from 'components/Form';
 import Form from 'components/Form';
 import SubmitButton from 'components/buttons/SubmitButton';
 import {modes} from 'components/buttons/SubmitButton';
+import Requester from "libs/Requester/Requester";
+import API from "config/API";
+import {CurPage} from "../../..";
 const styles = require('./EditPasswordForm.modules.scss');
 
 const cn = classNames(styles);
@@ -71,6 +74,23 @@ export default class EditPasswordForm extends React.Component {
     }
   };
 
+  updatePassword = () => {
+    const { oldPassword, newPassword } = this.state;
+
+  Requester.put(API.profileItem(this.props.user.id), {
+      password_old: oldPassword.value,
+      password: newPassword.value,
+    })
+      .then(({response, error}) => {
+        const { user, onAuthorized, onChangeMode } = this.props;
+
+        if (response) {
+          onAuthorized({...user});
+          onChangeMode(CurPage.PROFILE);
+        }
+      });
+  };
+
   render() {
     const { oldPassword, newPassword, repeatNewPassword } = this.state;
     const saveDisabled =
@@ -79,7 +99,8 @@ export default class EditPasswordForm extends React.Component {
         || repeatNewPassword.isError
         || oldPassword.value.length === 0
         || newPassword.value.length === 0
-        || repeatNewPassword.value.length === 0;
+        || repeatNewPassword.value.length === 0
+        || newPassword.value !== repeatNewPassword.value;
     return (
         <div className={cn('edit-password-form')}>
           <Form
@@ -89,6 +110,7 @@ export default class EditPasswordForm extends React.Component {
           />
           <div className={cn('edit-password-form__button')}>
             <SubmitButton
+                onClick={this.updatePassword}
                 disabled={saveDisabled}
                 mode={modes.SAVE}/>
           </div>

@@ -37,11 +37,14 @@ export default class EditAvatarForm extends React.Component {
 
   render() {
 
+    const savedDisabled = !this.state.avatar;
+
     return (
         <div className={cn('edit-avatar-form')}>
           <input type='file' accept='image/*' onChange={this.handleSelectPhoto} />
           <div className={cn('edit-avatar-form__button')}>
             <SubmitButton
+                disabled={savedDisabled}
                 onClick={this.updateAvatar}
                 mode={modes.SAVE}
             />

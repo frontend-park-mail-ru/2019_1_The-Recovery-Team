@@ -28,7 +28,7 @@ export default class Requester {
   ): Promise<RespResult> {
     const headers = {};
 
-    if (!multipartFormData && method === HTTPMethods.POST || method === HTTPMethods.PUT) {
+    if (!multipartFormData && (method === HTTPMethods.POST || method === HTTPMethods.PUT)) {
       headers['Content-Type'] = 'application/json';
     }
 
