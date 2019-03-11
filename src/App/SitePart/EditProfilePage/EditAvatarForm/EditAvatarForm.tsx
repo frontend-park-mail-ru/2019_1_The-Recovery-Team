@@ -26,7 +26,7 @@ export default class EditAvatarForm extends React.Component {
     console.log(avatar);
 
     Requester.put(API.avatars(), {
-      avatars,
+      avatar,
     }, true).then(({response, error}) => {
       if (response) {
         this.props.onAuthorized({...this.props.user, avatar: response.avatar});
