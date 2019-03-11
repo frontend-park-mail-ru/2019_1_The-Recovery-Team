@@ -4,9 +4,10 @@ import {InputConfig} from 'components/Form';
 import Form from 'components/Form';
 import SubmitButton from 'components/buttons/SubmitButton';
 import {modes} from 'components/buttons/SubmitButton';
-import Requester from "libs/Requester/Requester";
-import API from "config/API";
-import {CurPage} from "../../..";
+import Requester from 'libs/Requester/Requester';
+import API from 'config/API';
+import {CurPage} from '../../..';
+import validatePasswords from './utils/validatePasswords';
 const styles = require('./EditPasswordForm.modules.scss');
 
 const cn = classNames(styles);
@@ -49,6 +50,24 @@ export default class EditPasswordForm extends React.Component {
   };
 
   handleChangeValue = (name: string, value: string) => {
+    const {newPassword, repeatNewPassword} = this.state;
+    if (name === newPassword.name || name === repeatNewPassword.name) {
+      let nextNewP: null | InputConfig = null;
+      let nextNewRepeatP: null | InputConfig = null;
+      if (name === newPassword.name) {
+        [nextNewP, nextNewRepeatP] = validatePasswords({ ...newPassword, value, touched: true }, repeatNewPassword);
+      }
+      else {
+        [nextNewP, nextNewRepeatP] = validatePasswords(newPassword, { ...repeatNewPassword, value, touched: true });
+      }
+      console.log(nextNewP, nextNewRepeatP);
+      this.setState({
+        [newPassword.name]: nextNewP,
+        [repeatNewPassword.name]: nextNewRepeatP,
+      });
+      return;
+    }
+
     const field: InputConfig = this.state[name];
     this.setState({
       [name]: {
@@ -87,6 +106,15 @@ export default class EditPasswordForm extends React.Component {
         if (response) {
           onAuthorized({...user});
           onChangeMode(CurPage.PROFILE);
+        }
+        else {
+          this.setState({
+            [oldPassword.name]: {
+              ...oldPassword,
+              isError: true,
+              placeholder: 'Возможно, неверный пароль',
+            }
+          });
         }
       });
   };
