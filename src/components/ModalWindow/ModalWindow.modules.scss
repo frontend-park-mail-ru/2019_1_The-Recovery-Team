@@ -1,0 +1,60 @@
+@import '~styles/constants';
+
+.modal-window {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+
+  z-index: 2;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content{
+    padding: 40px;
+    background: #FFFFFF;
+    z-index: 1;
+    position: relative;
+  }
+  &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: $global-color-light-grey;
+    opacity: 0.9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  &__exit-button {
+    margin: 40px;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      right: 0;
+      top: 0;
+      background: #ffffff;
+      background-size: contain;
+      background: url('./img/Cancel.svg') no-repeat center;
+    }
+
+    &:hover {
+      background-color: darken(#ffffff, 10%);
+    }
+  }
+
+}

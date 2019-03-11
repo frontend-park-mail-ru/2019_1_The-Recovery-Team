@@ -1,0 +1,43 @@
+@import '~styles/constants';
+
+$local-container-height: 70px;
+
+.label-auth {
+  position: relative;
+  cursor: pointer;
+
+  &__container-avatar {
+    width: $local-container-height;
+    height: $local-container-height;
+    border-radius: 50%;
+    box-shadow: 0px 0px 0px 3px #ffffff, 0px 0px 0px 5px #0097a7 inset;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__rect {
+    height: $local-container-height;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    padding: 0 20px 0 60px;
+  }
+
+  &__nickname {
+    font-size: 25px;
+    line-height: 25px;
+    display: inline-block;
+    color: $global-color-primary-dark;
+  }
+}

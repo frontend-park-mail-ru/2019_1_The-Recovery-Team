@@ -1,0 +1,22 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    ["@babel/preset-react", {
+      "pragma": "React.createElement",
+      "pragmaFrag": "default is React.Fragment",
+      "throwIfNamespace": false // defaults to true
+    }],
+    "@babel/preset-flow",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-syntax-jsx",
+    "@babel/plugin-transform-async-to-generator",
+    ["@babel/plugin-syntax-decorators", {
+      "decoratorsBeforeExport": true
+    }]
+  ]
+}

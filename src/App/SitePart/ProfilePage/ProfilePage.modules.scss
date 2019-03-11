@@ -1,0 +1,51 @@
+@import '~styles/constants';
+
+.profile-page {
+  height: 100%;
+  position: relative;
+
+  &__container-information {
+    padding-top: 30px;
+  }
+
+  &__container {
+    padding: 80px 100px 0;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 200px;
+
+    &-avatar {
+      position: relative;
+    }
+
+    &-edit-button {
+      position: absolute;
+      transform: translateY(-100%);
+      left: 68%;
+      top: 96%;
+    }
+  }
+
+  &__container-label {
+    position: absolute;
+    transform: translateY(-100%);
+    left: -2%;
+    top: 80%;
+  }
+
+  &__field {
+    margin-bottom: 30px;
+
+    &_nickname {
+      color: $global-color-primary-dark;
+      font-size: 40px;
+      font-weight: 700;
+    }
+
+    &_email {
+      color: $global-color-primary-dark;
+      font-size: 25px;
+    }
+
+  }
+}

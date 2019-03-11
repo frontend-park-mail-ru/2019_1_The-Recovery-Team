@@ -15,6 +15,12 @@
 
 ## Ссылка на игру
 
+sadislands.ru
+
+## Доукментация API
+
+http://104.248.28.45:8080/swagger/index.html
+
 ## Репозиторий бекенда
  
 [Бекенд](https://github.com/go-park-mail-ru/2019_1_The-Recovery-Team)

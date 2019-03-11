@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Exo+2');
+@import url('https://fonts.googleapis.com/css?family=Passion+One');
+
+:global {
+  * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    font-family: 'Exo 2', serif;
+    font-size: 25px;
+    letter-spacing: 0.13em;
+  }
+
+  button {
+    outline: none;
+    background: transparent;
+    font-family: 'Exo 2', serif;
+    font-size: 25px;
+    letter-spacing: 0.13em;
+  }
+  input {
+    font-family: 'Exo 2', serif;
+    font-size: 25px;
+    letter-spacing: 0.13em;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  #root {
+    height: 100%;
+  }
+}

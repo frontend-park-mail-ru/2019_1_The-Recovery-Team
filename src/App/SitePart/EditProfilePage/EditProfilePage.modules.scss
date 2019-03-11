@@ -1,0 +1,43 @@
+.edit-profile-page {
+  height: 100%;
+
+  &__container {
+    padding: 80px 40px;
+    display: flex;
+  }
+
+  &__container-avatar {
+    position: relative;
+    margin-right: 50px;
+  }
+
+  &__container-edit-button {
+    position: absolute;
+    transform: translateY(-100%);
+    left: 72%;
+    top: 48%;
+  }
+
+  &__container-edit {
+  width: 100%;
+  margin-top: 25px;
+  }
+
+  &__container-form {
+    margin-top: -90px;
+  }
+
+  &__container-buttons {
+    margin-top: 50px;
+  }
+
+  &__container-submit-buttons {
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__container-save-button {
+    margin-right: 20px;
+  }
+}

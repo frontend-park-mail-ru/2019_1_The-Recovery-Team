@@ -1,0 +1,9 @@
+@import '~styles/constants';
+
+.edit-button {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: $global-color-primary-light url("./img/Pencil.svg") no-repeat center;
+  cursor: pointer;
+}

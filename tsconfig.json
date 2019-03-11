@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "components/*": [ "components/*" ],
+      "utils/*": [ "utils/*" ],
+      "config/*": [ "config/*" ],
+      "libs/*": [ "libs/*" ],
+      "styles/*": [ "styles/*" ],
+      "icons/*": ["components/icons/*"]
+    },
+    "baseUrl": "src",
+    "target": "es5",
+    "module": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "outDir": "dist",
+    "allowUnusedLabels": false,
+    "noImplicitReturns": true,
+    //    "noImplicitThis": true,
+    //    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "pretty": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "./src/**/*"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": [
+      "./src/**/*"
+    ]
+  },
+  "compileOnSave": false,
+  "buildOnSave": false
+}
