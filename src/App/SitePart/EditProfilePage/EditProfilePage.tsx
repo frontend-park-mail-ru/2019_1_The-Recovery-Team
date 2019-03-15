@@ -10,6 +10,8 @@ import SubmitButton, {modes} from 'components/buttons/SubmitButton';
 import { CurPage } from '../..';
 import EditPasswordForm from './EditPasswordForm';
 import EditAvatarForm from './EditAvatarForm';
+import debounce from 'libs/debounce';
+
 const styles = require('./EditProfilePage.modules.scss');
 
 const cn = classNames(styles);
@@ -82,6 +84,8 @@ export default class EditProfilePage extends React.Component {
       this.changeValueField(name, value, field);
     }
   };
+
+  debounceHandler = debounce(this.handleChangeValue, 1000);
 
   handleBlur = (name: string) => {
     const field: InputConfig = this.state[name];
@@ -168,7 +172,7 @@ export default class EditProfilePage extends React.Component {
             <div className={cn('edit-profile-page__container-edit')}>
               <div className={cn('edit-profile-page__container-form')}>
                 <Form
-                    onChangeValue={this.handleChangeValue}
+                    onChangeValue={this.debounceHandler}
                     onBlur={this.handleBlur}
                     inputs={[email, nickname]}
                 />

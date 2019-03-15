@@ -6,6 +6,7 @@ import VkButton from 'components/buttons/VkButton';
 import SubmitButton, {modes} from 'components/buttons/SubmitButton';
 import API from 'config/API';
 import {SignUpStage} from './config/stages';
+import debounce from 'libs/debounce';
 
 const styles = require('./SignUpForm.modules.scss');
 
@@ -105,6 +106,8 @@ export default class SignUpForm extends React.Component {
     }
   };
 
+  debounceHandler = debounce(this.handleChangeValue, 1000);
+
   handleBlur = (name: string) => {
     const field: InputConfig = this.state[name];
     if (field.value.length === 0 && field.touched ) {
@@ -144,7 +147,7 @@ export default class SignUpForm extends React.Component {
           {/* TODO: Див убрать, когда Чебурякт доделОем */}
           <div>
             <Form
-                onChangeValue={this.handleChangeValue}
+                onChangeValue={this.debounceHandler}
                 onBlur={this.handleBlur}
                 inputs={stage === SignUpStage.FIRST ? [email, password] : [nickname]}
                 key={stage === SignUpStage.FIRST ? 'form1' : 'form2'}
