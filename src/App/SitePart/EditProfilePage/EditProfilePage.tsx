@@ -180,19 +180,20 @@ export default class EditProfilePage extends React.Component {
               <div className={cn('edit-profile-page__container-buttons')}>
                 <SubmitButton
                     onClick={this.toggleEditModalPassword}
-                    mode={modes.CHANGE_PASSWORD}/>
+                    mode={modes.SETTINGS}
+                >{'Изменить пароль'}</SubmitButton>
                 <div className={cn('edit-profile-page__container-submit-buttons')}>
                   <div className={cn('edit-profile-page__container-save-button')}>
                     <SubmitButton
                         onClick={this.updateUser}
                         mode={modes.SAVE}
                         disabled={saveDisabled}
-                    />
+                    >{'Сохранить'}</SubmitButton>
                   </div>
                   <SubmitButton
                       onClick={() => onChangeMode(CurPage.PROFILE)}
                       mode={modes.CANCEL}
-                  />
+                  >{'Отменить'}</SubmitButton>
                 </div>
               </div>
             </div>

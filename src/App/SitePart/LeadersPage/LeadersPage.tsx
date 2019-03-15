@@ -3,7 +3,7 @@ import classNames from 'libs/classNames';
 import RowLeader from './RowLeader';
 import Requester from 'libs/Requester';
 import API from 'config/API';
-import SubmitButton from 'components/buttons/SubmitButton/SubmitButton';
+import SubmitButton from 'components/buttons/SubmitButton';
 import { modes } from 'components/buttons/SubmitButton';
 const styles = require('./LeadersPage.modules.scss');
 
@@ -83,9 +83,11 @@ export default class LeadersPage extends React.Component {
             }
           </div>
           <div className={cn('leaders-page__load-button')}>
-            {total !== offset && <SubmitButton
-                mode={modes.LOAD_MORE}
-                onClick={this.handleLoadNextPage}/>}
+            {total !== offset &&
+            <SubmitButton
+                mode={modes.NEXT}
+                onClick={this.handleLoadNextPage}
+            >{'Загрузить ещё'}</SubmitButton>}
           </div>
         </div>
     );

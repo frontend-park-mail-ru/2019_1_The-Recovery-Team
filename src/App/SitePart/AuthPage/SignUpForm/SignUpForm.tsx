@@ -158,7 +158,11 @@ export default class SignUpForm extends React.Component {
                 ? (
                     <div className={cn('sign-up-form__up1-container-submits')}>
                       <VkButton />
-                      <SubmitButton mode={modes.NEXT} onClick={this.toSecondStage} disabled={nextDisabled}/>
+                      <SubmitButton
+                          mode={modes.NEXT}
+                          onClick={this.toSecondStage}
+                          disabled={nextDisabled}
+                      >{'Далее'}</SubmitButton>
                     </div>
                   )
                 : (
@@ -168,7 +172,11 @@ export default class SignUpForm extends React.Component {
                         {/*<SubmitButton mode={modes.UPLOAD_PHOTO}/>*/}
                       {/*</div>*/}
                       <div className={cn('sign-up-form__container-ready-button')}>
-                        <SubmitButton mode={modes.READY} disabled={readyDisabled} onClick={this.handleSubmit}/>
+                        <SubmitButton
+                            mode={modes.NEXT}
+                            disabled={readyDisabled}
+                            onClick={this.handleSubmit}
+                        >{'Готово'}</SubmitButton>
                       </div>
                     </div>
                 )

@@ -6,7 +6,7 @@ const cn = classNames(styles);
 
 export default class SubmitButton extends React.Component {
   render() {
-    const {mode, onClick, disabled} = this.props;
+    const {mode, onClick, disabled, children} = this.props;
 
     return (
         <button onClick={!disabled && onClick} className={cn(
@@ -17,7 +17,7 @@ export default class SubmitButton extends React.Component {
           <div className={cn('submit-button__container-icon')}>
             <div className={cn(`submit-button__${mode.className}`)} />
           </div>
-            <div className={cn('submit-button__title')}>{mode.title}</div>
+            <div className={cn('submit-button__title')}>{children}</div>
         </button>
     );
   }

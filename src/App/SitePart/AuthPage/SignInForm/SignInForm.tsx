@@ -122,7 +122,7 @@ export default class SignInForm extends React.Component {
                 mode={modes.NEXT}
                 disabled={nextDisabled}
                 onClick={this.handleSubmit}
-            />
+            >{'Далее'}</SubmitButton>
           </div>
         </div>
     );

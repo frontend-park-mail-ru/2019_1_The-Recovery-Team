@@ -2,9 +2,9 @@ import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import {modes} from 'components/buttons/SubmitButton';
 import SubmitButton from 'components/buttons/SubmitButton';
-import Requester from "libs/Requester/Requester";
-import API from "config/API";
-import {CurPage} from "../../..";
+import Requester from 'libs/Requester';
+import API from 'config/API';
+import {CurPage} from '../../..';
 const styles = require('./EditAvatarForm.modules.scss');
 
 const cn = classNames(styles);
@@ -47,7 +47,7 @@ export default class EditAvatarForm extends React.Component {
                 disabled={savedDisabled}
                 onClick={this.updateAvatar}
                 mode={modes.SAVE}
-            />
+            >{'Сохранить'}</SubmitButton>
           </div>
         </div>
     );
