@@ -5,7 +5,7 @@ import Form from 'components/Form';
 import VkButton from 'components/buttons/VkButton';
 import SubmitButton from 'components/buttons/SubmitButton';
 import {modes} from 'components/buttons/SubmitButton';
-import { InputConfig } from 'components/Form';
+import { InputConfig } from 'utils/form/types';
 import API from 'config/API';
 const styles = require('./SignInForm.modules.scss');
 

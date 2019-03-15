@@ -1,4 +1,4 @@
-import { InputConfig } from 'components/Form';
+import { InputConfig } from 'utils/form/types';
 
 export const validateRequired = (field: InputConfig): boolean => field.touched && field.value.length === 0;
 

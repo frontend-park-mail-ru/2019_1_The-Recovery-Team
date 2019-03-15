@@ -1,7 +1,8 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import Requester from 'libs/Requester';
-import Form, { InputConfig } from 'components/Form';
+import { InputConfig } from 'utils/form/types';
+import Form from 'components/Form';
 import VkButton from 'components/buttons/VkButton';
 import SubmitButton, {modes} from 'components/buttons/SubmitButton';
 import API from 'config/API';
