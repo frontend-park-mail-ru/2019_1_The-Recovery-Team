@@ -6,13 +6,8 @@ const cn = classNames(styles);
 
 export default class VolumeButton extends React.Component {
   render() {
-    const {on} = this.props;
+    const { on } = this.props;
 
-    return (
-        <button className={cn(
-            'volume-button',
-            on && 'volume-button_on'
-        )} />
-    );
+    return <button className={cn('volume-button', on && 'volume-button_on')} />;
   }
 }

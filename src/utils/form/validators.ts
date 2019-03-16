@@ -1,6 +1,9 @@
 import { InputConfig } from './types';
 
-export type InputValidator = (input: InputConfig, nextValue: string) => InputConfig;
+export type InputValidator = (
+  input: InputConfig,
+  nextValue: string
+) => InputConfig;
 
 export const touchField: InputValidator = (input, nextValue) => ({
   ...input,

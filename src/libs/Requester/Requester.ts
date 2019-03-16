@@ -6,7 +6,10 @@ export interface RespResult {
 }
 
 export default class Requester {
-  private static createBody(data: Object = {}, multipart: boolean = false): FormData | string {
+  private static createBody(
+    data: Object = {},
+    multipart: boolean = false
+  ): FormData | string {
     if (multipart) {
       const body = new FormData();
       Object.entries(data).forEach(([key, value]) => {
@@ -21,14 +24,17 @@ export default class Requester {
   }
 
   private static doRequest(
-      url: string,
-      method: HTTPMethods,
-      data: string | FormData | null = null,
-      multipartFormData: boolean = false,
+    url: string,
+    method: HTTPMethods,
+    data: string | FormData | null = null,
+    multipartFormData: boolean = false
   ): Promise<RespResult> {
     const headers = {};
 
-    if (!multipartFormData && (method === HTTPMethods.POST || method === HTTPMethods.PUT)) {
+    if (
+      !multipartFormData &&
+      (method === HTTPMethods.POST || method === HTTPMethods.PUT)
+    ) {
       headers['Content-Type'] = 'application/json';
     }
 
@@ -43,43 +49,44 @@ export default class Requester {
     }
 
     return fetch(url, options)
-        .then((r: Response) => r.ok ? r : Promise.reject(r))
-        .then((r: Response) =>
-            // Перелавливаем, если пустое тело ответа
-            r.json()
-              .catch(() => {
-                return {};
-              })
-        )
-        .then((response: Response) => {
-          return {
-            response,
-            error: null,
-          };
+      .then((r: Response) => (r.ok ? r : Promise.reject(r)))
+      .then((r: Response) =>
+        // Перелавливаем, если пустое тело ответа
+        r.json().catch(() => {
+          return {};
         })
-        .catch((error) => {
-          return {
-            response: null,
-            error,
-          };
-        });
+      )
+      .then((response: Response) => {
+        return {
+          response,
+          error: null,
+        };
+      })
+      .catch(error => {
+        return {
+          error,
+          response: null,
+        };
+      });
   }
 
   static post(url: string, data: Object = {}, multipart: boolean = false) {
     return Requester.doRequest(
-        url,
-        HTTPMethods.POST,
-        Requester.createBody(data, multipart),
-        multipart);
+      url,
+      HTTPMethods.POST,
+      Requester.createBody(data, multipart),
+      multipart
+    );
   }
 
   static get(url: string, data: Object = {}) {
     let query = Object.entries(data)
-        .filter(([key, value]) => !!value || value === 0)
-        .map(([key, value]) =>
+      .filter(([key, value]) => !!value || value === 0)
+      .map(
+        ([key, value]) =>
           `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-        )
-        .join('&');
+      )
+      .join('&');
 
     if (query.length) {
       query = `?${query}`;
@@ -90,10 +97,10 @@ export default class Requester {
 
   static put(url: string, data: Object = {}, multipart: boolean = false) {
     return Requester.doRequest(
-        url,
-        HTTPMethods.PUT,
-        Requester.createBody(data, multipart),
-        multipart,
+      url,
+      HTTPMethods.PUT,
+      Requester.createBody(data, multipart),
+      multipart
     );
   }
 

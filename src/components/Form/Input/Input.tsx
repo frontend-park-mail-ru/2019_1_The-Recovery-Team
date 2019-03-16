@@ -15,30 +15,33 @@ export default class Input extends React.Component {
     this.props.onBlur();
   };
 
-  handleInput = (e) => this.props.onChange(e.target.value);
+  handleInput = e => this.props.onChange(e.target.value);
 
   render() {
-    const {placeholder, isError, value, type} = this.props;
-    const {active} = this.state;
+    const { placeholder, isError, value, type } = this.props;
+    const { active } = this.state;
 
     return (
-        <div className={cn('form-input-container')}>
-          <input
-              className={cn('input')}
-              onFocus={this.handleFocus}
-              onBlur={this.handleBlur}
-              onInput={this.handleInput}
-              value={value}
-              type={type}
-              spellcheck='false'
-          />
-          <div className={cn(
-              'input-label',
-              (active || value.length) && 'input-label_active',
-              isError && 'input-label_error'
-          )
-          }>{placeholder}</div>
+      <div className={cn('form-input-container')}>
+        <input
+          className={cn('input')}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onInput={this.handleInput}
+          value={value}
+          type={type}
+          spellcheck="false"
+        />
+        <div
+          className={cn(
+            'input-label',
+            (active || value.length) && 'input-label_active',
+            isError && 'input-label_error'
+          )}
+        >
+          {placeholder}
         </div>
+      </div>
     );
   }
 }

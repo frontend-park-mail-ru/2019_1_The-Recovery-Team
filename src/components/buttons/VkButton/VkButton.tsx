@@ -6,8 +6,6 @@ const cn = classNames(styles);
 
 export default class VkButton extends React.Component {
   render() {
-    return (
-        <a href='#' className={cn('vk-button')} />
-    );
+    return <a href="#" className={cn('vk-button')} />;
   }
 }
