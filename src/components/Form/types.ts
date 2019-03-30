@@ -7,7 +7,3 @@ export interface InputConfig {
   label: string;
   type: string;
 }
-
-export interface FormConfig {
-  inputs: Array<InputConfig>;
-}

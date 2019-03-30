@@ -9,6 +9,11 @@ import classNames from 'libs/classNames';
 import debounce from 'libs/debounce';
 import Requester from 'libs/Requester';
 import { InputConfig } from 'utils/form/types';
+import {
+  touchField,
+  validateAlreadyExists,
+  validateRequired,
+} from 'utils/form/validators';
 import { CurPage } from '../..';
 import EditAvatarForm from './EditAvatarForm';
 import EditPasswordForm from './EditPasswordForm';
@@ -48,98 +53,75 @@ export default class EditProfilePage extends React.Component {
     isShownModalAvatar: false,
   };
 
-  debounceHandler = debounce((name: string, value: string) => {
-    const field: InputConfig = this.state[name];
-
+  validateAlreadyExists = debounce(async (field: InputConfig) => {
     if (
-      (name === 'email' || name === 'nickname') &&
-      value !== this.props.user[name]
+      field.value &&
+      field.value !== '' &&
+      field.value !== this.props.user[field.name] &&
+      (field.name === 'email' || field.name === 'nickname')
     ) {
-      Requester.get(API.profiles(), {
-        [name]: value,
-      }).then(({ response, error }) => {
-        if (!error) {
-          this.setState({
-            [name]: {
-              ...field,
-              value,
-              placeholder: `Такой ${field.label} уже существует`,
-              isError: true,
-              touched: true,
-            },
-          });
-        } else {
-          this.changeValueField(name, value, field);
-        }
-      });
-    } else {
-      this.changeValueField(name, value, field);
-    }
-  }, 1000);
-
-  changeValueField(name: string, value, field: InputConfig) {
-    this.setState({
-      [name]: {
-        ...field,
-        value,
-        placeholder: value.length ? field.label : field.placeholder,
-        isError: value.length ? false : field.isError,
-        touched: true,
-      },
-    });
-  }
-
-  handleBlur = (name: string) => {
-    const field: InputConfig = this.state[name];
-    if (field.value.length === 0 && field.touched) {
+      const result = await validateAlreadyExists(API.profiles())(field);
       this.setState({
-        [name]: {
-          ...field,
-          placeholder: `${field.label} - обязательное поле`,
-          isError: true,
-        },
+        [field.name]: result,
       });
     }
+  }, 500);
+
+  handleChangeValue = (name: string, value: string) => {
+    const nextField = touchField(this.state[name], value);
+
+    this.setState({
+      [name]: nextField,
+    });
+
+    this.validateAlreadyExists(nextField);
   };
 
-  updateUser = () => {
-    const { email, nickname } = this.state;
-    const { user } = this.props;
+  handleBlur = (name: string) =>
+    this.setState({
+      [name]: validateRequired(this.state[name]),
+    });
 
-    let data = {};
-    if (email.value !== user.email && nickname.value !== user.nickname) {
-      data = {
-        email: email.value,
-        nickname: nickname.value,
-      };
-    } else if (email.value !== user.email) {
-      data = {
-        email: email.value,
-      };
-    } else {
-      data = {
-        nickname: nickname.value,
-      };
+  updateUser = async () => {
+    if (this.saveDisabled) {
+      return;
     }
 
-    Requester.put(API.profileItem(this.props.user.id), data).then(
-      ({ response, error }) => {
-        const { user, onAuthorized } = this.props;
-        if (response) {
-          onAuthorized({
-            ...user,
-            email: email.value,
-            nickname: nickname.value,
-          });
-        }
-      }
+    const { email, nickname } = this.state;
+
+    const data = {
+      nickname: nickname.value,
+      email: email.value,
+    };
+
+    const { response } = await Requester.put(
+      API.profileItem(this.props.user.id),
+      data
     );
+    const { user, onAuthorized } = this.props;
+    if (response) {
+      onAuthorized({
+        ...user,
+        email: email.value,
+        nickname: nickname.value,
+      });
+    }
   };
 
   toggleEditModalPassword = () =>
     this.setState({ isShownModalPassword: !this.state.isShownModalPassword });
   toggleEditModalAvatar = () =>
     this.setState({ isShownModalAvatar: !this.state.isShownModalAvatar });
+
+  get saveDisabled() {
+    const { email, nickname } = this.state;
+    return (
+      email.isError ||
+      nickname.isError ||
+      email.value.length === 0 ||
+      nickname.value.length === 0
+    );
+  }
 
   render() {
     const {
@@ -149,13 +131,6 @@ export default class EditProfilePage extends React.Component {
       isShownModalAvatar,
     } = this.state;
     const { user, onChangeMode, onAuthorized } = this.props;
-
-    const saveDisabled =
-      email.isError ||
-      nickname.isError ||
-      (user.email === email.value && user.nickname === nickname.value) ||
-      email.value.length === 0 ||
-      nickname.value.length === 0;
 
     return (
       <div className={cn('edit-profile-page')}>
@@ -191,7 +166,7 @@ export default class EditProfilePage extends React.Component {
           <div className={cn('edit-profile-page__container-edit')}>
             <div className={cn('edit-profile-page__container-form')}>
               <Form
-                onChangeValue={this.debounceHandler}
+                onChangeValue={this.handleChangeValue}
                 onBlur={this.handleBlur}
                 inputs={[email, nickname]}
               />
@@ -210,7 +185,7 @@ export default class EditProfilePage extends React.Component {
                   <SubmitButton
                     onClick={this.updateUser}
                     mode={modes.SAVE}
-                    disabled={saveDisabled}
+                    disabled={this.saveDisabled}
                   >
                     {'Сохранить'}
                   </SubmitButton>

@@ -6,6 +6,7 @@ import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import Requester from 'libs/Requester/Requester';
+import { touchField, validateRequired } from 'utils/form/validators';
 import { CurPage } from '../../..';
 import validatePasswords from './utils/validatePasswords';
 const styles = require('./EditPasswordForm.modules.scss');
@@ -50,28 +51,23 @@ export default class EditPasswordForm extends React.Component {
   };
 
   handleChangeValue = (name: string, value: string) => {
+    const nextField = touchField(this.state[name], value);
     const { newPassword, repeatNewPassword } = this.state;
     if (name === newPassword.name || name === repeatNewPassword.name) {
       let nextNewP: null | InputConfig = null;
       let nextNewRepeatP: null | InputConfig = null;
       if (name === newPassword.name) {
         [nextNewP, nextNewRepeatP] = validatePasswords(
-          { ...newPassword, value, touched: true },
+          nextField,
           repeatNewPassword
         );
       } else {
-        [nextNewP, nextNewRepeatP] = validatePasswords(newPassword, {
-          ...repeatNewPassword,
-          value,
-          touched: true,
-        });
+        [nextNewP, nextNewRepeatP] = validatePasswords(newPassword, nextField);
       }
-      console.log(nextNewP, nextNewRepeatP);
       this.setState({
         [newPassword.name]: nextNewP,
         [repeatNewPassword.name]: nextNewRepeatP,
       });
-      return;
     }
 
     const field: InputConfig = this.state[name];
@@ -86,41 +82,36 @@ export default class EditPasswordForm extends React.Component {
     });
   };
 
-  handleBlur = (name: string) => {
-    const field: InputConfig = this.state[name];
-    if (field.value.length === 0 && field.touched) {
+  handleBlur = (name: string) =>
+    this.setState({
+      [name]: validateRequired(this.state[name]),
+    });
+
+  updatePassword = async () => {
+    const { oldPassword, newPassword } = this.state;
+
+    const { response } = await Requester.put(
+      API.profilePassword(this.props.user.id),
+      {
+        password_old: oldPassword.value,
+        password: newPassword.value,
+      }
+    );
+
+    const { user, onAuthorized, onChangeMode } = this.props;
+
+    if (response) {
+      onAuthorized({ ...user });
+      onChangeMode(CurPage.PROFILE);
+    } else {
       this.setState({
-        [name]: {
-          ...field,
-          placeholder: 'Обязательное поле',
+        [oldPassword.name]: {
+          ...oldPassword,
           isError: true,
+          placeholder: 'Возможно, неверный пароль',
         },
       });
     }
-  };
-
-  updatePassword = () => {
-    const { oldPassword, newPassword } = this.state;
-
-    Requester.put(API.profileItem(this.props.user.id), {
-      password_old: oldPassword.value,
-      password: newPassword.value,
-    }).then(({ response, error }) => {
-      const { user, onAuthorized, onChangeMode } = this.props;
-
-      if (response) {
-        onAuthorized({ ...user });
-        onChangeMode(CurPage.PROFILE);
-      } else {
-        this.setState({
-          [oldPassword.name]: {
-            ...oldPassword,
-            isError: true,
-            placeholder: 'Возможно, неверный пароль',
-          },
-        });
-      }
-    });
   };
 
   render() {

@@ -15,18 +15,27 @@ export default class Form extends React.Component {
     return (
       <div className={cn('form')}>
         <div className={cn('form__container-inputs')}>
-          {inputs.map(({ placeholder, isError, value, name, type }) => (
-            <div className={cn('form__input-container')}>
-              <Input
-                type={type}
-                placeholder={placeholder}
-                isError={isError}
-                value={value}
-                onChange={value => this.handleChange(name, value)}
-                onBlur={() => this.handleBlur(name)}
-              />
-            </div>
-          ))}
+          {inputs.map(
+            ({
+              placeholder,
+              isError,
+              value,
+              name,
+              type,
+              currentPlaceholder = null,
+            }) => (
+              <div className={cn('form__input-container')}>
+                <Input
+                  type={type}
+                  placeholder={currentPlaceholder || placeholder}
+                  isError={isError}
+                  value={value}
+                  onChange={value => this.handleChange(name, value)}
+                  onBlur={() => this.handleBlur(name)}
+                />
+              </div>
+            )
+          )}
         </div>
       </div>
     );

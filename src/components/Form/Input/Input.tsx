@@ -15,10 +15,15 @@ export default class Input extends React.Component {
     this.props.onBlur();
   };
 
-  handleInput = e => this.props.onChange(e.target.value);
+  handleInput = e => this.props.onChange(e.target.value || '');
 
   render() {
-    const { placeholder, isError, value, type } = this.props;
+    const {
+      placeholder,
+      isError,
+      value,
+      type,
+    } = this.props;
     const { active } = this.state;
 
     return (

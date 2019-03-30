@@ -7,6 +7,11 @@ import classNames from 'libs/classNames';
 import debounce from 'libs/debounce';
 import Requester from 'libs/Requester';
 import { InputConfig } from 'utils/form/types';
+import {
+  touchField,
+  validateAlreadyExists,
+  validateRequired,
+} from 'utils/form/validators';
 import { SignUpStage } from './config/stages';
 
 const styles = require('./SignUpForm.modules.scss');
@@ -34,7 +39,7 @@ export default class SignUpForm extends React.Component {
       type: 'email',
     },
     password: {
-      placeholder: 'Пароль',
+      placeholder: 'Придумайте пароль',
       isError: false,
       value: '',
       name: 'password',
@@ -43,7 +48,7 @@ export default class SignUpForm extends React.Component {
       type: 'password',
     },
     nickname: {
-      placeholder: 'Никнейм',
+      placeholder: 'Придумайте никнейм',
       isError: false,
       value: '',
       name: 'nickname',
@@ -54,90 +59,76 @@ export default class SignUpForm extends React.Component {
     avatar: null,
   };
 
-  toSecondStage = () => this.setState({ stage: SignUpStage.SECOND });
+  toSecondStage = () =>
+    !this.nextDisabled ? this.setState({ stage: SignUpStage.SECOND }) : null;
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { email, nickname, password, avatar } = this.state;
-    Requester.post(
+    if (!nickname.value || nickname.value.length === 0) {
+      return;
+    }
+
+    const { response } = await Requester.post(
       API.profiles(),
       {
+        avatar,
         email: email.value,
         nickname: nickname.value,
         password: password.value,
-        avatar,
       },
       true
-    ).then(({ response, error }) => {
+    );
+    if (response) {
       this.props.onAuthorized(response);
-    });
+    }
   };
 
-  changeValueField(name: string, value, field: InputConfig) {
-    this.setState({
-      [name]: {
-        ...field,
-        value,
-        placeholder: value.length ? field.label : field.placeholder,
-        isError: value.length ? false : field.isError,
-        touched: true,
-      },
-    });
-  }
+  validateAlreadyExists = debounce(async (field: InputConfig) => {
+    if (
+      field.value &&
+      field.value !== '' &&
+      (field.name === 'email' || field.name === 'nickname')
+    ) {
+      const result = await validateAlreadyExists(API.profiles())(field);
+      this.setState({
+        [field.name]: result,
+      });
+    }
+  }, 500);
 
   handleChangeValue = (name: string, value: string) => {
-    const field: InputConfig = this.state[name];
+    const nextField = touchField(this.state[name], value);
 
-    if (name === 'email' || name === 'nickname') {
-      Requester.get(API.profiles(), {
-        [name]: value,
-      }).then(({ response, error }) => {
-        if (!error) {
-          this.setState({
-            [name]: {
-              ...field,
-              value,
-              placeholder: `Такой ${field.label} уже существует`,
-              isError: true,
-              touched: true,
-            },
-          });
-        } else {
-          this.changeValueField(name, value, field);
-        }
-      });
-    } else {
-      this.changeValueField(name, value, field);
-    }
+    this.setState({
+      [name]: nextField,
+    });
+
+    this.validateAlreadyExists(nextField);
   };
 
-  debounceHandler = debounce(this.handleChangeValue, 1000);
-
-  handleBlur = (name: string) => {
-    const field: InputConfig = this.state[name];
-    if (field.value.length === 0 && field.touched) {
-      this.setState({
-        [name]: {
-          ...field,
-          placeholder: `${field.label} - обязательное поле`,
-          isError: true,
-        },
-      });
-    }
-  };
+  handleBlur = (name: string) =>
+    this.setState({
+      [name]: validateRequired(this.state[name]),
+    });
 
   handleSelectPhoto = e =>
     this.setState({
       avatar: e.target.files[0] || null,
     });
 
-  render() {
-    const { stage, email, password, nickname } = this.state;
+  get nextDisabled() {
+    const { email, password } = this.state;
 
-    const nextDisabled =
+    return (
       email.isError ||
       password.isError ||
       email.value.length === 0 ||
-      password.value.length === 0;
+      password.value.length === 0
+    );
+  }
+
+  render() {
+    const { stage, email, password, nickname } = this.state;
 
     const readyDisabled = nickname.isError || nickname.value.length === 0;
 
@@ -146,7 +137,7 @@ export default class SignUpForm extends React.Component {
         {/* TODO: Див убрать, когда Чебурякт доделОем */}
         <div>
           <Form
-            onChangeValue={this.debounceHandler}
+            onChangeValue={this.handleChangeValue}
             onBlur={this.handleBlur}
             inputs={
               stage === SignUpStage.FIRST ? [email, password] : [nickname]
@@ -160,9 +151,9 @@ export default class SignUpForm extends React.Component {
             <SubmitButton
               mode={modes.NEXT}
               onClick={this.toSecondStage}
-              disabled={nextDisabled}
+              disabled={this.nextDisabled}
             >
-              {'Далее'}
+              {'Продолжить регистрацию'}
             </SubmitButton>
           </div>
         ) : (
@@ -172,16 +163,13 @@ export default class SignUpForm extends React.Component {
               accept="image/*"
               onChange={this.handleSelectPhoto}
             />
-            {/*<div className={cn('sign-up-form__button-container')}>*/}
-            {/*<SubmitButton mode={modes.UPLOAD_PHOTO}/>*/}
-            {/*</div>*/}
             <div className={cn('sign-up-form__container-ready-button')}>
               <SubmitButton
                 mode={modes.NEXT}
                 disabled={readyDisabled}
                 onClick={this.handleSubmit}
               >
-                {'Готово'}
+                {'Зарегистрироваться'}
               </SubmitButton>
             </div>
           </div>

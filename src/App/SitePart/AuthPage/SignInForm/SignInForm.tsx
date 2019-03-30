@@ -6,6 +6,7 @@ import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import Requester from 'libs/Requester/Requester';
 import { InputConfig } from 'utils/form/types';
+import { touchField, validateRequired } from 'utils/form/validators';
 const styles = require('./SignInForm.modules.scss');
 
 const cn = classNames(styles);
@@ -37,31 +38,15 @@ export default class SignInForm extends React.Component {
     },
   };
 
-  handleChangeValue = (name: string, value: string) => {
-    const field: InputConfig = this.state[name];
+  handleChangeValue = (name: string, value: string) =>
     this.setState({
-      [name]: {
-        ...field,
-        value,
-        placeholder: value.length ? field.label : field.placeholder,
-        isError: value.length ? false : field.isError,
-        touched: true,
-      },
+      [name]: touchField(this.state[name], value),
     });
-  };
 
-  handleBlur = (name: string) => {
-    const field: InputConfig = this.state[name];
-    if (field.value.length === 0 && field.touched) {
-      this.setState({
-        [name]: {
-          ...field,
-          placeholder: `${field.label} - обязательное поле`,
-          isError: true,
-        },
-      });
-    }
-  };
+  handleBlur = (name: string) =>
+    this.setState({
+      [name]: validateRequired(this.state[name]),
+    });
 
   handleSubmit = () => {
     const { email, password } = this.state;
