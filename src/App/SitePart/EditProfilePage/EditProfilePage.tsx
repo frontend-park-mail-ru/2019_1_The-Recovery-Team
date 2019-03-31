@@ -157,10 +157,12 @@ export default class EditProfilePage extends React.Component {
           </ModalWindow>
         )}
         <div className={cn('edit-profile-page__container')}>
-          <div className={cn('edit-profile-page__container-avatar')}>
-            <AvatarProfile user={user} />
-            <div className={cn('edit-profile-page__container-edit-button')}>
-              <EditButton onClick={this.toggleEditModalAvatar} />
+          <div className={cn('edit-profile-page__left-container')}>
+            <div className={cn('edit-profile-page__container-avatar')}>
+              <AvatarProfile user={user} />
+              <div className={cn('edit-profile-page__container-edit-button')}>
+                <EditButton onClick={this.toggleEditModalAvatar} />
+              </div>
             </div>
           </div>
           <div className={cn('edit-profile-page__container-edit')}>

@@ -6,16 +6,20 @@
     display: flex;
   }
 
-  &__container-avatar {
+  &__left-container {
     position: relative;
     margin-right: 50px;
+  }
+
+  &__container-avatar {
+    width: 100%;
   }
 
   &__container-edit-button {
     position: absolute;
     transform: translateY(-100%);
-    left: 72%;
-    top: 48%;
+    left: 176px;
+    top: 240px;
   }
 
   &__container-edit {
