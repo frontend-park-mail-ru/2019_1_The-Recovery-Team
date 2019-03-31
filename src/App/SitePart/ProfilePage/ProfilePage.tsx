@@ -3,14 +3,25 @@ import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import LabelProfile from 'components/LabelProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
+import userStore from 'store/userStore';
 import { CurPage } from '../..';
+
 const styles = require('./ProfilePage.modules.scss');
 
 const cn = classNames(styles);
 
 export default class ProfilePage extends React.Component {
+  state = {
+    user: userStore.select().user,
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const { user, onChangeMode } = this.props;
+    const { user } = this.state;
+    const { onChangeMode } = this.props;
     const onClick = () => onChangeMode(CurPage.EDIT_PROFILE);
 
     return user ? (

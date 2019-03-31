@@ -8,6 +8,7 @@ import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import debounce from 'libs/debounce';
 import Requester from 'libs/Requester';
+import userStore, { Profile } from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
 import {
   touchField,
@@ -23,6 +24,8 @@ const styles = require('./EditProfilePage.modules.scss');
 const cn = classNames(styles);
 
 interface State {
+  user: Profile;
+
   email: InputConfig;
   nickname: InputConfig;
   isShownModalPassword: boolean;
@@ -31,10 +34,12 @@ interface State {
 
 export default class EditProfilePage extends React.Component {
   state: State = {
+    user: userStore.select().user,
+
     email: {
       placeholder: 'Email',
       isError: false,
-      value: this.props.user.email,
+      value: (userStore.select().user as any).email,
       name: 'email',
       touched: false,
       label: 'Email',
@@ -43,7 +48,7 @@ export default class EditProfilePage extends React.Component {
     nickname: {
       placeholder: 'Никнейм',
       isError: false,
-      value: this.props.user.nickname,
+      value: (userStore.select().user as any).nickname,
       name: 'nickname',
       touched: false,
       label: 'Никнейм',
@@ -54,10 +59,11 @@ export default class EditProfilePage extends React.Component {
   };
 
   validateAlreadyExists = debounce(async (field: InputConfig) => {
+    const { user } = this.state;
     if (
       field.value &&
       field.value !== '' &&
-      field.value !== this.props.user[field.name] &&
+      field.value !== user[field.name] &&
       (field.name === 'email' || field.name === 'nickname')
     ) {
       const result = await validateAlreadyExists(API.profiles())(field);
@@ -94,11 +100,9 @@ export default class EditProfilePage extends React.Component {
       email: email.value,
     };
 
-    const { response } = await Requester.put(
-      API.profileItem(this.props.user.id),
-      data
-    );
-    const { user, onAuthorized } = this.props;
+    const { user } = this.state;
+    const { onAuthorized } = this.props;
+    const { response } = await Requester.put(API.profileItem(user.id), data);
     if (response) {
       onAuthorized({
         ...user,
@@ -125,12 +129,13 @@ export default class EditProfilePage extends React.Component {
 
   render() {
     const {
+      user,
       email,
       nickname,
       isShownModalPassword,
       isShownModalAvatar,
     } = this.state;
-    const { user, onChangeMode, onAuthorized } = this.props;
+    const { onChangeMode, onAuthorized } = this.props;
 
     return (
       <div className={cn('edit-profile-page')}>

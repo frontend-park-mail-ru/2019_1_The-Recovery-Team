@@ -1,6 +1,6 @@
+import { HTTP_STATUS } from 'config/API';
 import Requester from 'libs/Requester/Requester';
 import { InputConfig } from './types';
-import { HTTP_STATUS } from 'config/API';
 
 export type InputValidator = (
   input: InputConfig,
@@ -69,3 +69,12 @@ export const validateAlreadyExists = (
     value,
   };
 };
+
+export const setInputError = (
+  input: InputConfig,
+  message: string | null = null
+): InputConfig => ({
+  ...input,
+  isError: true,
+  currentPlaceholder: message || input.label,
+});

@@ -3,9 +3,14 @@ import VkButton from 'components/buttons/VkButton';
 import Form from 'components/Form';
 import API from 'config/API';
 import * as React from 'libs/Cheburact';
+import { Action } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import debounce from 'libs/debounce';
-import Requester from 'libs/Requester';
+import userStore, {
+  actionUserSignup,
+  userActionTypes,
+  UserLoginErrorPL,
+} from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
 import {
   touchField,
@@ -59,6 +64,11 @@ export default class SignUpForm extends React.Component {
     avatar: null,
   };
 
+  constructor(props) {
+    super(props);
+    userStore.on(userActionTypes.USER_SIGNUP_ERROR, this.handleSignupError);
+  }
+
   toSecondStage = () =>
     !this.nextDisabled ? this.setState({ stage: SignUpStage.SECOND }) : null;
 
@@ -68,19 +78,18 @@ export default class SignUpForm extends React.Component {
       return;
     }
 
-    const { response } = await Requester.post(
-      API.profiles(),
-      {
+    userStore.emit(
+      actionUserSignup({
         avatar,
         email: email.value,
         nickname: nickname.value,
         password: password.value,
-      },
-      true
+      })
     );
-    if (response) {
-      this.props.onAuthorized(response);
-    }
+  };
+
+  handleSignupError = (action: Action<UserLoginErrorPL>) => {
+    // TODO:
   };
 
   validateAlreadyExists = debounce(async (field: InputConfig) => {

@@ -1,12 +1,21 @@
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import VkButton from 'components/buttons/VkButton';
 import Form from 'components/Form';
-import API from 'config/API';
 import * as React from 'libs/Cheburact';
+import { Action } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import Requester from 'libs/Requester/Requester';
+import userStore, {
+  actionUserLogin,
+  userActionTypes,
+  UserLoginErrorPL,
+} from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
-import { touchField, validateRequired } from 'utils/form/validators';
+import {
+  setInputError,
+  touchField,
+  validateRequired,
+} from 'utils/form/validators';
+
 const styles = require('./SignInForm.modules.scss');
 
 const cn = classNames(styles);
@@ -38,6 +47,15 @@ export default class SignInForm extends React.Component {
     },
   };
 
+  constructor(props) {
+    super(props);
+    userStore.on(userActionTypes.USER_LOGIN_ERROR, this.handleLoginError);
+  }
+
+  componentWillUnmount() {
+    userStore.off(userActionTypes.USER_LOGIN_ERROR, this.handleLoginError);
+  }
+
   handleChangeValue = (name: string, value: string) =>
     this.setState({
       [name]: touchField(this.state[name], value),
@@ -48,44 +66,19 @@ export default class SignInForm extends React.Component {
       [name]: validateRequired(this.state[name]),
     });
 
-  handleSubmit = () => {
-    const { email, password } = this.state;
-    Requester.post(API.sessions(), {
-      email: email.value,
-      password: password.value,
-    })
-      .then(({ response, error }) => {
-        if (error) {
-          return Promise.reject();
-        }
-
-        const { id } = (response || {}) as any;
-        return Requester.get(API.profileItem(id));
+  handleSubmit = () =>
+    userStore.emit(
+      actionUserLogin({
+        password: this.state.password.value,
+        email: this.state.email.value,
       })
-      .then(
-        ({ response, error }): any => {
-          if (response) {
-            this.props.onAuthorized(response);
-          } else {
-            return Promise.reject();
-          }
-        }
-      )
-      .catch(error => {
-        this.setState({
-          email: {
-            ...email,
-            isError: true,
-            placeholder: 'Неправильный email или пароль',
-          },
-          password: {
-            ...password,
-            isError: true,
-            placeholder: password.label,
-          },
-        });
-      });
-  };
+    );
+
+  handleLoginError = (action: Action<UserLoginErrorPL>) =>
+    this.setState({
+      email: setInputError(this.state.email, action.payload.errorMessage),
+      password: setInputError(this.state.password),
+    });
 
   render() {
     const { email, password } = this.state;

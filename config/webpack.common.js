@@ -23,6 +23,7 @@ module.exports = {
             utils: srcPath('utils'),
             components: srcPath('components'),
             styles: srcPath('styles'),
+            store: srcPath('store'),
         }
     },
     module: {

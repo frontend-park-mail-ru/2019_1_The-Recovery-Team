@@ -1,59 +1,51 @@
-import API from 'config/API';
 import * as React from 'libs/Cheburact';
-import Requester from 'libs/Requester';
+import { Action } from 'libs/Cheburstore';
+import userStore, {
+  actionUserCheckAuth,
+  userActionTypes,
+  UserLoginSuccessPL,
+} from 'store/userStore';
 import { CurPage } from './config/modes';
 import SitePart from './SitePart';
-const defaultAvatar = require('./img/nouser.png');
 
 export default class App extends React.Component {
-  public state = {
+  state = {
     user: null,
     mode: CurPage.START,
   };
 
-  public componentDidMount() {
-    Requester.get(API.sessions())
-      .then(({ response, error }) => {
-        if (response && (response as any).id) {
-          return Requester.get(API.profileItem((response as any).id || ''));
-        }
-        return { response, error };
-      })
-      .then(({ response, error }) => {
-        if (response) {
-          this.handleAuthorized(response);
-        }
-      });
+  constructor(props) {
+    super(props);
+    userStore
+      .on(userActionTypes.USER_LOGIN_SUCCESS, this.handleAuthorized)
+      .on(userActionTypes.USER_LOGOUT_SUCCESS, this.handleLogout);
   }
 
-  public handleChangeMode = (mode: CurPage) => this.setState({ mode });
+  componentDidMount() {
+    userStore.emit(actionUserCheckAuth());
+  }
 
-  public handleLogout = () =>
-    Requester.delete(API.sessions()).then(({ response, error }) => {
-      if (response) {
-        this.setState({
-          mode: CurPage.START,
-          user: null,
-        });
-      }
+  componentWillUnmount() {
+    userStore
+      .off(userActionTypes.USER_LOGIN_SUCCESS, this.handleAuthorized)
+      .off(userActionTypes.USER_LOGOUT_SUCCESS, this.handleLogout);
+  }
+
+  handleChangeMode = (mode: CurPage) => this.setState({ mode });
+
+  handleLogout = () =>
+    this.setState({
+      user: null,
+      mode: CurPage.START,
     });
 
-  public handleAuthorized = user => {
+  handleAuthorized = (action: Action<UserLoginSuccessPL>) =>
     this.setState({
-      user: user
-        ? {
-            ...user,
-            avatar:
-              user.avatar && user.avatar.length !== 0
-                ? user.avatar
-                : defaultAvatar,
-          }
-        : null,
+      user: action.payload.profile,
       mode: CurPage.PROFILE,
     });
-  };
 
-  public render() {
+  render() {
     const { user, mode } = this.state;
 
     return (
@@ -61,8 +53,6 @@ export default class App extends React.Component {
         user={user}
         mode={mode}
         onChangeMode={this.handleChangeMode}
-        onLogout={this.handleLogout}
-        onAuthorized={this.handleAuthorized}
       />
     );
   }

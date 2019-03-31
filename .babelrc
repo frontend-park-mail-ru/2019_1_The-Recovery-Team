@@ -14,12 +14,12 @@
   ],
   "plugins": [
     "@babel/plugin-proposal-export-default-from",
+    ["@babel/plugin-proposal-decorators", {
+      "legacy": true
+    }],
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-syntax-jsx",
-    "@babel/plugin-transform-async-to-generator",
-    ["@babel/plugin-syntax-decorators", {
-      "decoratorsBeforeExport": true
-    }]
+    "@babel/plugin-transform-async-to-generator"
   ]
 }

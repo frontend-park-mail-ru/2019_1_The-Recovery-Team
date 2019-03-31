@@ -1,17 +1,16 @@
 import { IComponent, IElement, IVirtualNode } from 'libs/Cheburact/types';
-import { getTreeBuilder, IRootContext } from '../utils';
 import { FiberTypes, IFiberNode, UpdateQueueItem } from '../types';
+import { getTreeBuilder, IRootContext } from '../utils';
 
 import eraseEqualFiberCollectionItem from './eraseEqualFiberCollectionItem';
-import getFlatArrayFromCollection from './getFlatArrayFromCollection';
 import findItemInUpdateQueue from './findItemInUpdateQueue';
+import getFlatArrayFromCollection from './getFlatArrayFromCollection';
 import spreadFibersByType from './spreadFibersByType';
 import unmount from './unmount';
 
-
 export default function updateTree(
-    rootContext: IRootContext,
-    updateQueue: Array<UpdateQueueItem>,
+  rootContext: IRootContext,
+  updateQueue: Array<UpdateQueueItem>
 ): Array<IFiberNode> | null {
   const { referenceFiberRoot, rootHTMLContainer } = rootContext;
 
@@ -21,11 +20,14 @@ export default function updateTree(
   }
 
   const updateOrCreateFiberWithElement = (
-      $target: HTMLElement,
-      fiber: IFiberNode | null,
-      element: IElement,
+    $target: HTMLElement,
+    fiber: IFiberNode | null,
+    element: IElement
   ): IFiberNode | null => {
-    if (!rootContext.updater || fiber && !fiber.ref && fiber.type !== FiberTypes.COMPONENT) {
+    if (
+      !rootContext.updater ||
+      (fiber && !fiber.ref && fiber.type !== FiberTypes.COMPONENT)
+    ) {
       return null;
     }
 
@@ -34,7 +36,7 @@ export default function updateTree(
       if (!builtTree || builtTree.length === 0) {
         return null;
       }
-      return builtTree[ 0 ];
+      return builtTree[0];
     }
 
     if (fiber.type === FiberTypes.STRING) {
@@ -42,14 +44,17 @@ export default function updateTree(
     }
 
     if (fiber.type === FiberTypes.VIRTUAL_NODE) {
-      const nextFiber = rootContext.updateVNodeFiber(fiber, element as IVirtualNode);
+      const nextFiber = rootContext.updateVNodeFiber(
+        fiber,
+        element as IVirtualNode
+      );
       if (!nextFiber) {
         return null;
       }
       nextFiber.children = reconcileTrees(
-          (nextFiber.ref as HTMLElement),
-          nextFiber.children,
-          (element as IVirtualNode).children
+        nextFiber.ref as HTMLElement,
+        nextFiber.children,
+        (element as IVirtualNode).children
       );
       return nextFiber;
     }
@@ -62,7 +67,7 @@ export default function updateTree(
 
       prevComp.writeState({ ...prevComp.getState(), ...(nextState || {}) });
       const prevProps = prevComp.getProps();
-      prevComp['props'] = nextComp.getProps();
+      prevComp.props = nextComp.getProps();
       prevComp.componentDidUpdate(prevProps);
 
       let renderedTree: any = prevComp.render();
@@ -78,28 +83,36 @@ export default function updateTree(
   };
 
   const reconcileTrees = (
-      $target: HTMLElement,
-      fibers: Array<IFiberNode>,
-      elements: Array<IElement>,
+    $target: HTMLElement,
+    fibers: Array<IFiberNode>,
+    elements: Array<IElement>
   ): Array<IFiberNode> => {
     const collection = spreadFibersByType(fibers);
-    const itemsToUpdate = elements.map((el) => ([
+    const itemsToUpdate = elements.map(el => [
       eraseEqualFiberCollectionItem(collection, el),
       el,
-    ]));
+    ]);
 
     // Удаляем оставшиеся элементы
     const itemsToDelete = getFlatArrayFromCollection(collection);
-    itemsToDelete.forEach((item) => item && unmount(item.fiber));
+    itemsToDelete.forEach(item => item && unmount(item.fiber));
 
     // Обновляем и вставляем в target с текущего индекса
     const nextChildren: Array<IFiberNode> = [];
     itemsToUpdate.forEach(([item, el]) => {
-      const { fiber } = (item || { fiber: null });
-      const nextFiber = updateOrCreateFiberWithElement($target, fiber, el as IElement);
+      const { fiber } = item || { fiber: null };
+      const nextFiber = updateOrCreateFiberWithElement(
+        $target,
+        fiber,
+        el as IElement
+      );
       if (nextFiber) {
         nextChildren.push(nextFiber);
-        if (!fiber && nextFiber.type !== FiberTypes.COMPONENT && nextFiber.ref) {
+        if (
+          !fiber &&
+          nextFiber.type !== FiberTypes.COMPONENT &&
+          nextFiber.ref
+        ) {
           $target.appendChild(nextFiber.ref);
         }
       }
@@ -108,7 +121,10 @@ export default function updateTree(
     return nextChildren;
   };
 
-  const bypassFiber = (fiberNodes: Array<IFiberNode>, $target: HTMLElement): Array<IFiberNode> => {
+  const bypassFiber = (
+    fiberNodes: Array<IFiberNode>,
+    $target: HTMLElement
+  ): Array<IFiberNode> => {
     return fiberNodes.map((node: IFiberNode) => {
       const $nextTarget = node.ref instanceof HTMLElement ? node.ref : $target;
 
