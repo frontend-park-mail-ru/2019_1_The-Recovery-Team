@@ -133,13 +133,13 @@ export default function updateTree(
         if (qItem) {
           const element = qItem.fiberNode.stateNode as IComponent;
           element.writeState(qItem.nextState);
-          element.componentDidUpdate(element.getProps());
           let renderedTree: any = element.render();
           if (!Array.isArray(renderedTree)) {
             renderedTree = [renderedTree];
           }
 
           node.children = reconcileTrees($target, node.children, renderedTree);
+          element.componentDidUpdate(element.getProps());
           return node;
         }
       }

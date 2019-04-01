@@ -1,33 +1,38 @@
 import API from 'config/API';
-import Cheburstore, { Action } from 'libs/Cheburstore';
+import Cheburstore, {
+  Action,
+  cheburhandler,
+  cheburmodel,
+} from 'libs/Cheburstore';
 import Requester from 'libs/Requester';
 import {
+  actionUserEditError,
+  actionUserEditPasswordError,
   actionUserLoginError,
-  actionUserLoginSuccess,
   actionUserLogoutSuccess,
-  actionUserSignup,
   actionUserSignupError,
-  userActionTypes,
+  actionUserUpdateSuccess,
+  userActions,
+  UserEditAvatarPL,
+  UserEditPasswordPL,
+  UserEditPL,
   UserLoginPL,
   UserSignupPL,
 } from './actions';
 import { normalizeProfileGet, normalizeSessionGet } from './normalizeResponse';
 import { ProfileState } from './types';
 
+@cheburmodel
 class UserStore extends Cheburstore<ProfileState> {
   constructor() {
     super();
     this.store = {
       user: null,
     };
-
-    this.on(userActionTypes.USER_CHECK_AUTH, this.authorize)
-      .on(userActionTypes.USER_LOGOUT, this.logout)
-      .on(userActionTypes.USER_LOGIN, this.login)
-      .on(userActionTypes.USER_SIGNUP, this.signup);
   }
 
-  private logout = async () => {
+  @cheburhandler(userActions.LOGOUT)
+  async logout() {
     // TODO error process
     const { response } = await Requester.delete(API.sessions());
 
@@ -35,9 +40,10 @@ class UserStore extends Cheburstore<ProfileState> {
       this.emit(actionUserLogoutSuccess());
       return;
     }
-  };
+  }
 
-  private authorize = async () => {
+  @cheburhandler(userActions.CHECK_AUTH)
+  async authorize() {
     const sessionResp = await Requester.get(API.sessions());
     const id = normalizeSessionGet(sessionResp);
     if (id === null) {
@@ -55,10 +61,11 @@ class UserStore extends Cheburstore<ProfileState> {
     }
 
     this.store.user = profile;
-    this.emit(actionUserLoginSuccess({ profile }));
-  };
+    this.emit(actionUserUpdateSuccess({ profile }));
+  }
 
-  private login = async (action: Action<UserLoginPL>) => {
+  @cheburhandler(userActions.LOGIN)
+  async login(action: Action<UserLoginPL>) {
     const loginResp = await Requester.post(API.sessions(), action.payload);
     const profile = normalizeProfileGet(loginResp);
     if (profile === null) {
@@ -74,13 +81,14 @@ class UserStore extends Cheburstore<ProfileState> {
 
     this.store.user = profile;
     this.emit(
-      actionUserLoginSuccess({
+      actionUserUpdateSuccess({
         profile,
       })
     );
-  };
+  }
 
-  private signup = async (action: Action<UserSignupPL>) => {
+  @cheburhandler(userActions.SIGNUP)
+  async signup(action: Action<UserSignupPL>) {
     const signupResp = await Requester.post(
       API.profiles(),
       action.payload,
@@ -101,11 +109,72 @@ class UserStore extends Cheburstore<ProfileState> {
 
     this.store.user = profile;
     this.emit(
-      actionUserLoginSuccess({
+      actionUserUpdateSuccess({
         profile,
       })
     );
-  };
+  }
+
+  @cheburhandler(userActions.EDIT)
+  async edit(action: Action<UserEditPL>) {
+    const { user } = this.store;
+    const { payload } = action;
+
+    if (!user) {
+      this.emit(actionUserEditError());
+      return;
+    }
+
+    const { response } = await Requester.put(API.profileItem(user.id), payload);
+
+    if (!response) {
+      this.emit(actionUserEditError());
+      return;
+    }
+
+    this.store.user = {
+      ...user,
+      nickname: payload.nickname,
+      email: payload.email,
+    };
+    this.emit(
+      actionUserUpdateSuccess({
+        profile: this.store.user,
+      })
+    );
+  }
+
+  @cheburhandler(userActions.EDIT_PASSWORD)
+  async editPassword(action: Action<UserEditPasswordPL>) {
+    const { user } = this.store;
+    const { payload } = action;
+
+    if (!user) {
+      return;
+    }
+
+    const { error } = await Requester.put(API.profilePassword(user.id), {
+      password: payload.password,
+      password_old: payload.passwordOld,
+    });
+
+    if (error !== null) {
+      this.emit(
+        actionUserEditPasswordError({
+          errorMessage: 'Неверный пароль',
+        })
+      );
+    } else {
+      this.emit(
+        actionUserUpdateSuccess({
+          profile: user,
+        })
+      );
+    }
+  }
+
+  @cheburhandler(userActions.EDIT_AVATAR)
+  async editAvatar(action: Action<UserEditAvatarPL>) {}
 }
 
 export * from './types';

@@ -2,21 +2,32 @@ import AvatarProfile from 'components/AvatarProfile';
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import LabelProfile from 'components/LabelProfile';
 import * as React from 'libs/Cheburact';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import userStore from 'store/userStore';
+import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
 import { CurPage } from '../..';
 
 const styles = require('./ProfilePage.modules.scss');
 
 const cn = classNames(styles);
 
+@connectToCheburstore
 export default class ProfilePage extends React.Component {
   state = {
-    user: userStore.select().user,
+    user: null,
   };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    this.setState({
+      user: userStore.select().user,
+    });
+  }
+
+  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
+  updateUser(action: Action<UserUpdateSuccessPL>) {
+    this.setState({
+      user: action.payload,
+    });
   }
 
   render() {

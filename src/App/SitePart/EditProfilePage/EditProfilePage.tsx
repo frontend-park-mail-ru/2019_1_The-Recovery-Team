@@ -7,8 +7,7 @@ import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import debounce from 'libs/debounce';
-import Requester from 'libs/Requester';
-import userStore, { Profile } from 'store/userStore';
+import userStore, { actionUserEdit, Profile } from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
 import {
   touchField,
@@ -94,22 +93,12 @@ export default class EditProfilePage extends React.Component {
     }
 
     const { email, nickname } = this.state;
-
-    const data = {
-      nickname: nickname.value,
-      email: email.value,
-    };
-
-    const { user } = this.state;
-    const { onAuthorized } = this.props;
-    const { response } = await Requester.put(API.profileItem(user.id), data);
-    if (response) {
-      onAuthorized({
-        ...user,
+    userStore.emit(
+      actionUserEdit({
         email: email.value,
         nickname: nickname.value,
-      });
-    }
+      })
+    );
   };
 
   toggleEditModalPassword = () =>

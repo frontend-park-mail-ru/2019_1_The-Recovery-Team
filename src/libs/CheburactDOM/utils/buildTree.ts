@@ -86,6 +86,7 @@ export const getTreeBuilder = (rootContext: IRootContext) => {
     $target: HTMLElement,
     child: IElement | null | Array<IElement | null>
   ): Array<IFiberNode> | null => {
+
     if (!child) {
       return null;
     }

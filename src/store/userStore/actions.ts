@@ -1,24 +1,27 @@
 import { ACreator, ACreatorNull } from '../types';
 import { Profile } from './types';
 
-export enum userActionTypes {
-  USER_CHECK_AUTH = 'USER_CHECK_AUTH',
+export enum userActions {
+  CHECK_AUTH = 'USER_CHECK_AUTH',
 
-  USER_LOGIN = 'USER_LOGIN',
-  USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
-  USER_LOGIN_ERROR = 'USER_LOGIN_ERROR',
+  UPDATE_SUCCESS = 'USER_LOGIN_SUCCESS',
 
-  USER_LOGOUT = 'USER_LOGOUT',
-  USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS',
-  USER_LOGOUT_ERROR = 'USER_LOGOUT_ERROR',
+  LOGIN = 'USER_LOGIN',
+  LOGIN_ERROR = 'USER_LOGIN_ERROR',
 
-  USER_UPDATE = 'USER_UPDATE',
-  USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS',
-  USER_UPDATE_ERROR = 'USER_UPDATE_ERROR',
+  LOGOUT = 'USER_LOGOUT',
+  LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS',
 
-  USER_SIGNUP = 'USER_SIGNUP',
-  USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS',
-  USER_SIGNUP_ERROR = 'USER_SIGNUP_ERROR',
+  SIGNUP = 'USER_SIGNUP',
+  SIGNUP_ERROR = 'USER_SIGNUP_ERROR',
+
+  EDIT = 'USER_EDIT',
+  EDIT_ERROR = 'USER_EDIT_ERROR',
+
+  EDIT_PASSWORD = 'USER_EDIT_PASSWORD',
+  EDIT_PASSWORD_ERROR = 'EDIT_PASSWORD_ERROR',
+
+  EDIT_AVATAR = 'USER_EDIT_AVATAR',
 }
 
 export interface UserLoginPL {
@@ -26,11 +29,11 @@ export interface UserLoginPL {
   password: string;
 }
 
-export interface UserLoginSuccessPL {
+export interface UserUpdateSuccessPL {
   profile: Profile;
 }
 
-export interface UserLoginErrorPL {
+export interface UserErrorPL {
   errorMessage: string;
 }
 
@@ -41,47 +44,85 @@ export interface UserSignupPL {
   avatar: ImageData | null;
 }
 
+export interface UserEditPL {
+  email: string;
+  nickname: string;
+}
+
+export interface UserEditPasswordPL {
+  password: string;
+  passwordOld: string;
+}
+
+export interface UserEditAvatarPL {
+  avatar: ImageData;
+}
+
 export const actionUserCheckAuth: ACreatorNull = () => ({
-  type: userActionTypes.USER_CHECK_AUTH,
+  type: userActions.CHECK_AUTH,
   payload: null,
 });
 
-export const actionUserLogin: ACreator<UserLoginPL> = args => ({
-  type: userActionTypes.USER_LOGIN,
-  payload: args,
+export const actionUserLogin: ACreator<UserLoginPL> = payload => ({
+  payload,
+  type: userActions.LOGIN,
 });
 
-export const actionUserLoginSuccess: ACreator<UserLoginSuccessPL> = args => ({
-  type: userActionTypes.USER_LOGIN_SUCCESS,
-  payload: args,
+export const actionUserUpdateSuccess: ACreator<
+  UserUpdateSuccessPL
+> = payload => ({
+  payload,
+  type: userActions.UPDATE_SUCCESS,
 });
 
-export const actionUserLoginError: ACreator<UserLoginErrorPL> = args => ({
-  type: userActionTypes.USER_LOGIN_ERROR,
-  payload: args,
+export const actionUserLoginError: ACreator<UserErrorPL> = payload => ({
+  payload,
+  type: userActions.LOGIN_ERROR,
 });
 
 export const actionUserLogout: ACreatorNull = () => ({
-  type: userActionTypes.USER_LOGOUT,
+  type: userActions.LOGOUT,
   payload: null,
 });
 
 export const actionUserLogoutSuccess: ACreatorNull = () => ({
-  type: userActionTypes.USER_LOGOUT_SUCCESS,
+  type: userActions.LOGOUT_SUCCESS,
   payload: null,
 });
 
-export const actionUserSignup: ACreator<UserSignupPL> = args => ({
-  type: userActionTypes.USER_SIGNUP,
-  payload: args,
+export const actionUserSignup: ACreator<UserSignupPL> = payload => ({
+  payload,
+  type: userActions.SIGNUP,
 });
 
-export const actionUserSugnupSuccess: ACreator<UserLoginSuccessPL> = args => ({
-  type: userActionTypes.USER_SIGNUP_SUCCESS,
-  payload: args,
+export const actionUserSignupError: ACreator<UserErrorPL> = payload => ({
+  payload,
+  type: userActions.SIGNUP_ERROR,
 });
 
-export const actionUserSignupError: ACreator<UserLoginErrorPL> = args => ({
-  type: userActionTypes.USER_SIGNUP_ERROR,
-  payload: args,
+export const actionUserEdit: ACreator<UserEditPL> = payload => ({
+  payload,
+  type: userActions.EDIT,
+});
+
+export const actionUserEditError: ACreatorNull = () => ({
+  type: userActions.EDIT_ERROR,
+  payload: null,
+});
+
+export const actionUserEditPassword: ACreator<
+  UserEditPasswordPL
+> = payload => ({
+  payload,
+  type: userActions.EDIT_PASSWORD,
+});
+
+export const actionUserEditPasswordError: ACreator<UserErrorPL> = payload => ({
+  payload,
+  type: userActions.EDIT_PASSWORD_ERROR,
+});
+
+export const actionUserEditAvatar: ACreator<UserEditAvatarPL> = payload => ({
+  payload,
+  type: userActions.EDIT_AVATAR,
 });

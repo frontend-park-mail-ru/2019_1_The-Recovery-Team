@@ -1,14 +1,11 @@
-import SubmitButton from 'components/buttons/SubmitButton';
-import { modes } from 'components/buttons/SubmitButton';
-import { InputConfig } from 'components/Form';
-import Form from 'components/Form';
-import API from 'config/API';
+import SubmitButton, { modes } from 'components/buttons/SubmitButton';
+import Form, { InputConfig } from 'components/Form';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import Requester from 'libs/Requester/Requester';
+import userStore, { actionUserEditPassword } from 'store/userStore';
 import { touchField, validateRequired } from 'utils/form/validators';
-import { CurPage } from '../../..';
 import validatePasswords from './utils/validatePasswords';
+
 const styles = require('./EditPasswordForm.modules.scss');
 
 const cn = classNames(styles);
@@ -87,31 +84,14 @@ export default class EditPasswordForm extends React.Component {
       [name]: validateRequired(this.state[name]),
     });
 
-  updatePassword = async () => {
+  updatePassword = () => {
     const { oldPassword, newPassword } = this.state;
-
-    const { response } = await Requester.put(
-      API.profilePassword(this.props.user.id),
-      {
-        password_old: oldPassword.value,
+    userStore.emit(
+      actionUserEditPassword({
         password: newPassword.value,
-      }
+        passwordOld: oldPassword.value,
+      })
     );
-
-    const { user, onAuthorized, onChangeMode } = this.props;
-
-    if (response) {
-      onAuthorized({ ...user });
-      onChangeMode(CurPage.PROFILE);
-    } else {
-      this.setState({
-        [oldPassword.name]: {
-          ...oldPassword,
-          isError: true,
-          placeholder: 'Возможно, неверный пароль',
-        },
-      });
-    }
   };
 
   render() {

@@ -3,13 +3,13 @@ import VkButton from 'components/buttons/VkButton';
 import Form from 'components/Form';
 import API from 'config/API';
 import * as React from 'libs/Cheburact';
-import { Action } from 'libs/Cheburstore';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import debounce from 'libs/debounce';
 import userStore, {
   actionUserSignup,
-  userActionTypes,
-  UserLoginErrorPL,
+  userActions,
+  UserErrorPL,
 } from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
 import {
@@ -31,6 +31,7 @@ interface State {
   avatar: ImageData | null;
 }
 
+@connectToCheburstore
 export default class SignUpForm extends React.Component {
   state: State = {
     stage: SignUpStage.FIRST,
@@ -64,11 +65,6 @@ export default class SignUpForm extends React.Component {
     avatar: null,
   };
 
-  constructor(props) {
-    super(props);
-    userStore.on(userActionTypes.USER_SIGNUP_ERROR, this.handleSignupError);
-  }
-
   toSecondStage = () =>
     !this.nextDisabled ? this.setState({ stage: SignUpStage.SECOND }) : null;
 
@@ -88,9 +84,10 @@ export default class SignUpForm extends React.Component {
     );
   };
 
-  handleSignupError = (action: Action<UserLoginErrorPL>) => {
+  @onCheburevent(userStore, userActions.SIGNUP_ERROR)
+  handleSignupError(action: Action<UserErrorPL>) {
     // TODO:
-  };
+  }
 
   validateAlreadyExists = debounce(async (field: InputConfig) => {
     if (

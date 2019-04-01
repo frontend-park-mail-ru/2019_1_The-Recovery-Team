@@ -2,12 +2,12 @@ import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import VkButton from 'components/buttons/VkButton';
 import Form from 'components/Form';
 import * as React from 'libs/Cheburact';
-import { Action } from 'libs/Cheburstore';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore, {
   actionUserLogin,
-  userActionTypes,
-  UserLoginErrorPL,
+  userActions,
+  UserErrorPL,
 } from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
 import {
@@ -25,6 +25,7 @@ interface State {
   password: InputConfig;
 }
 
+@connectToCheburstore
 export default class SignInForm extends React.Component {
   state: State = {
     email: {
@@ -47,15 +48,6 @@ export default class SignInForm extends React.Component {
     },
   };
 
-  constructor(props) {
-    super(props);
-    userStore.on(userActionTypes.USER_LOGIN_ERROR, this.handleLoginError);
-  }
-
-  componentWillUnmount() {
-    userStore.off(userActionTypes.USER_LOGIN_ERROR, this.handleLoginError);
-  }
-
   handleChangeValue = (name: string, value: string) =>
     this.setState({
       [name]: touchField(this.state[name], value),
@@ -74,11 +66,13 @@ export default class SignInForm extends React.Component {
       })
     );
 
-  handleLoginError = (action: Action<UserLoginErrorPL>) =>
+  @onCheburevent(userStore, userActions.LOGIN_ERROR)
+  handleLoginError(action: Action<UserErrorPL>) {
     this.setState({
       email: setInputError(this.state.email, action.payload.errorMessage),
       password: setInputError(this.state.password),
     });
+  }
 
   render() {
     const { email, password } = this.state;
