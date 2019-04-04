@@ -21,9 +21,8 @@ export default function createElement(
 ): IVirtualNode | Component | Function {
   const { ref = null, key = null, ...otherProps } = props || {};
 
-  const flatChildren = getFlatArray(children).filter(
-    child => child !== null && child !== undefined
-  );
+  const flatChildren = getFlatArray(children).filter(child => !!child);
+  console.log('flat children: ', flatChildren);
 
   if (typeof type === 'string') {
     return {

@@ -3,6 +3,7 @@ import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import Requester from 'libs/Requester';
+import MainBlock from '../MainBlock';
 import RowLeader from './RowLeader';
 const styles = require('./LeadersPage.modules.scss');
 
@@ -47,52 +48,54 @@ export default class LeadersPage extends React.Component {
     const { columns, leaders, total, offset } = this.state;
 
     return (
-      <div className={cn('leaders-page')}>
-        <div className={cn('leaders-page__header-table')}>
-          {columns.map(({ title, classesName }) => {
-            if (title === 'Рейтинг') {
+      <MainBlock>
+        <div className={cn('leaders-page')}>
+          <div className={cn('leaders-page__header-table')}>
+            {columns.map(({ title, classesName }) => {
+              if (title === 'Рейтинг') {
+                return (
+                  <div
+                    className={cn(
+                      'leaders-page__header-column',
+                      `leaders-page__header-column_${classesName}`
+                    )}
+                  >
+                    <div className={cn('leaders-page__container-trophy-icon')}>
+                      <div className={cn('leaders-page__trophy-icon')} />
+                    </div>
+                    <div className={cn('leaders-page__rating-title')}>
+                      {title}
+                    </div>
+                  </div>
+                );
+              }
               return (
                 <div
+                  key={title}
                   className={cn(
                     'leaders-page__header-column',
                     `leaders-page__header-column_${classesName}`
                   )}
                 >
-                  <div className={cn('leaders-page__container-trophy-icon')}>
-                    <div className={cn('leaders-page__trophy-icon')} />
-                  </div>
-                  <div className={cn('leaders-page__rating-title')}>
-                    {title}
-                  </div>
+                  {title}
                 </div>
               );
-            }
-            return (
-              <div
-                key={title}
-                className={cn(
-                  'leaders-page__header-column',
-                  `leaders-page__header-column_${classesName}`
-                )}
-              >
-                {title}
-              </div>
-            );
-          })}
+            })}
+          </div>
+          <div className={cn('leaders-page__content-table')}>
+            {leaders.map((leader, index) => (
+              <RowLeader leader={leader} index={index + 1} />
+            ))}
+          </div>
+          <div className={cn('leaders-page__load-button')}>
+            {total !== offset && (
+              <SubmitButton mode={modes.NEXT} onClick={this.handleLoadNextPage}>
+                {'Загрузить ещё'}
+              </SubmitButton>
+            )}
+          </div>
         </div>
-        <div className={cn('leaders-page__content-table')}>
-          {leaders.map((leader, index) => (
-            <RowLeader leader={leader} index={index + 1} />
-          ))}
-        </div>
-        <div className={cn('leaders-page__load-button')}>
-          {total !== offset && (
-            <SubmitButton mode={modes.NEXT} onClick={this.handleLoadNextPage}>
-              {'Загрузить ещё'}
-            </SubmitButton>
-          )}
-        </div>
-      </div>
+      </MainBlock>
     );
   }
 }

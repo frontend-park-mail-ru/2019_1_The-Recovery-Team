@@ -15,6 +15,7 @@ import {
   validateRequired,
 } from 'utils/form/validators';
 import { CurPage } from '../..';
+import MainBlock from '../MainBlock';
 import EditAvatarForm from './EditAvatarForm';
 import EditPasswordForm from './EditPasswordForm';
 
@@ -127,76 +128,80 @@ export default class EditProfilePage extends React.Component {
     const { onChangeMode, onAuthorized } = this.props;
 
     return (
-      <div className={cn('edit-profile-page')}>
-        {isShownModalPassword && (
-          <ModalWindow onClose={this.toggleEditModalPassword}>
-            {
-              <EditPasswordForm
-                user={user}
-                onAuthorized={onAuthorized}
-                onChangeMode={onChangeMode}
-              />
-            }
-          </ModalWindow>
-        )}
-        {isShownModalAvatar && (
-          <ModalWindow onClose={this.toggleEditModalAvatar}>
-            {
-              <EditAvatarForm
-                onAuthorized={onAuthorized}
-                user={user}
-                onChangeMode={onChangeMode}
-              />
-            }
-          </ModalWindow>
-        )}
-        <div className={cn('edit-profile-page__container')}>
-          <div className={cn('edit-profile-page__left-container')}>
-            <div className={cn('edit-profile-page__container-avatar')}>
-              <AvatarProfile user={user} />
-              <div className={cn('edit-profile-page__container-edit-button')}>
-                <EditButton onClick={this.toggleEditModalAvatar} />
+      <MainBlock>
+        <div className={cn('edit-profile-page')}>
+          {isShownModalPassword && (
+            <ModalWindow onClose={this.toggleEditModalPassword}>
+              {
+                <EditPasswordForm
+                  user={user}
+                  onAuthorized={onAuthorized}
+                  onChangeMode={onChangeMode}
+                />
+              }
+            </ModalWindow>
+          )}
+          {isShownModalAvatar && (
+            <ModalWindow onClose={this.toggleEditModalAvatar}>
+              {
+                <EditAvatarForm
+                  onAuthorized={onAuthorized}
+                  user={user}
+                  onChangeMode={onChangeMode}
+                />
+              }
+            </ModalWindow>
+          )}
+          <div className={cn('edit-profile-page__container')}>
+            <div className={cn('edit-profile-page__left-container')}>
+              <div className={cn('edit-profile-page__container-avatar')}>
+                <AvatarProfile user={user} />
+                <div className={cn('edit-profile-page__container-edit-button')}>
+                  <EditButton onClick={this.toggleEditModalAvatar} />
+                </div>
               </div>
             </div>
-          </div>
-          <div className={cn('edit-profile-page__container-edit')}>
-            <div className={cn('edit-profile-page__container-form')}>
-              <Form
-                onChangeValue={this.handleChangeValue}
-                onBlur={this.handleBlur}
-                inputs={[email, nickname]}
-              />
-            </div>
-            <div className={cn('edit-profile-page__container-buttons')}>
-              <SubmitButton
-                onClick={this.toggleEditModalPassword}
-                mode={modes.SETTINGS}
-              >
-                {'Изменить пароль'}
-              </SubmitButton>
-              <div
-                className={cn('edit-profile-page__container-submit-buttons')}
-              >
-                <div className={cn('edit-profile-page__container-save-button')}>
-                  <SubmitButton
-                    onClick={this.updateUser}
-                    mode={modes.SAVE}
-                    disabled={this.saveDisabled}
+            <div className={cn('edit-profile-page__container-edit')}>
+              <div className={cn('edit-profile-page__container-form')}>
+                <Form
+                  onChangeValue={this.handleChangeValue}
+                  onBlur={this.handleBlur}
+                  inputs={[email, nickname]}
+                />
+              </div>
+              <div className={cn('edit-profile-page__container-buttons')}>
+                <SubmitButton
+                  onClick={this.toggleEditModalPassword}
+                  mode={modes.SETTINGS}
+                >
+                  {'Изменить пароль'}
+                </SubmitButton>
+                <div
+                  className={cn('edit-profile-page__container-submit-buttons')}
+                >
+                  <div
+                    className={cn('edit-profile-page__container-save-button')}
                   >
-                    {'Сохранить'}
+                    <SubmitButton
+                      onClick={this.updateUser}
+                      mode={modes.SAVE}
+                      disabled={this.saveDisabled}
+                    >
+                      {'Сохранить'}
+                    </SubmitButton>
+                  </div>
+                  <SubmitButton
+                    onClick={() => onChangeMode(CurPage.PROFILE)}
+                    mode={modes.CANCEL}
+                  >
+                    {'Отменить'}
                   </SubmitButton>
                 </div>
-                <SubmitButton
-                  onClick={() => onChangeMode(CurPage.PROFILE)}
-                  mode={modes.CANCEL}
-                >
-                  {'Отменить'}
-                </SubmitButton>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </MainBlock>
     );
   }
 }

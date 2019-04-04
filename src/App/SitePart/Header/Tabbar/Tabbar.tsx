@@ -1,17 +1,31 @@
+import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import { CurPage } from '../../..';
-import Tab from './Tab/Tab';
+import Tab from './Tab';
+import { match } from 'libs/Cheburouter/utils';
 const styles = require('./Tabbar.modules.scss');
 const cn = classNames(styles);
 
 export default class Tabbar extends React.Component {
   state = {
     tabs: [
-      { title: 'Играть', curPage: CurPage.START },
-      { title: 'Правила', curPage: CurPage.RULES },
-      { title: 'Лидеры', curPage: CurPage.LEADERS },
-      { title: 'О нас', curPage: CurPage.ABOUT },
+      {
+        title: 'Играть',
+        to: routeCreators.TO_START(),
+      },
+      {
+        title: 'Правила',
+        to: routeCreators.TO_RULES(),
+      },
+      {
+        title: 'Лидеры',
+        to: routeCreators.TO_LEADER_BOARD(0),
+      },
+      {
+        title: 'О нас',
+        to: routeCreators.TO_ABOUT(),
+      },
     ],
   };
 
@@ -19,14 +33,15 @@ export default class Tabbar extends React.Component {
 
   render() {
     const { tabs } = this.state;
-    const { mode, className } = this.props;
+    const { className } = this.props;
+    const { pathname } = window.location;
 
     return (
       <div className={`${cn('tabbar')} ${className}`}>
-        {tabs.map(({ title, curPage }) => (
+        {tabs.map(({ title, curPage, to }) => (
           <Tab
-            isActive={mode === curPage}
-            onClick={() => this.handleClick(curPage)}
+            isActive={match(to, pathname, false)}
+            to={to}
           >
             {title}
           </Tab>
