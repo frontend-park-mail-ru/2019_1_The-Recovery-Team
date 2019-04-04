@@ -22,7 +22,6 @@ export default function createElement(
   const { ref = null, key = null, ...otherProps } = props || {};
 
   const flatChildren = getFlatArray(children).filter(child => !!child);
-  console.log('flat children: ', flatChildren);
 
   if (typeof type === 'string') {
     return {

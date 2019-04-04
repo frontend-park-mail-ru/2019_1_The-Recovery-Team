@@ -1,5 +1,8 @@
 import AuthButton from 'components/buttons/AuthButton';
+import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
+import routerStore, { match, Route, routerActions } from 'libs/Cheburouter';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import MainBlock from '../MainBlock';
 import { AuthPageMode } from './config/modes';
@@ -9,36 +12,43 @@ const styles = require('./AuthPage.modules.scss');
 
 const cn = classNames(styles);
 
+@connectToCheburstore
 export default class AuthPage extends React.Component {
   state = {
     currentTab: AuthPageMode.SIGN_IN,
     authButtons: [
-      { title: 'Вход', mode: AuthPageMode.SIGN_IN },
-      { title: 'Регистрация', mode: AuthPageMode.SIGN_UP },
+      { title: 'Вход', to: routeCreators.TO_SIGN_IN() },
+      { title: 'Регистрация', to: routeCreators.TO_SIGN_UP() },
     ],
   };
+
+  @onCheburevent(routerStore, routerActions.PUSH_OK)
+  selfUpdate() {
+    this.setState({});
+  }
 
   toMode = (mode: AuthPageMode) => this.setState({ currentTab: mode });
 
   render() {
-    const { authButtons, currentTab } = this.state;
+    const { authButtons } = this.state;
+    const { pathname } = window.location;
 
     return (
       <MainBlock>
         <div className={cn('sign-auth-page')}>
           <div className={cn('sign-auth-page__container-buttons')}>
-            {authButtons.map(({ title, mode }) => (
+            {authButtons.map(({ title, to }) => (
               <AuthButton
                 className={cn('sign-auth-page__button')}
-                isActive={mode === currentTab}
-                onClick={() => this.toMode(mode)}
+                isActive={match(pathname, to, false)}
+                to={to}
               >
                 {title}
               </AuthButton>
             ))}
           </div>
-          {currentTab === AuthPageMode.SIGN_IN && <SignInForm />}
-          {currentTab === AuthPageMode.SIGN_UP && <SignUpForm />}
+          <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
+          <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
         </div>
       </MainBlock>
     );

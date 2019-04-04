@@ -23,19 +23,15 @@ class Cheburouter extends Cheburstore<CheburouterState> {
       curPath: window.location.pathname,
       safe: false,
     };
-
-    // this.store.curPath = window.location.pathname;
-    // this.emit(
-    //   actionRouterPushOk({
-    //     path: this.store.curPath,
-    //   })
-    // );
   }
 
   finalGo(name: string, path: string) {
     console.log('final go: ', name, path);
     this.store.curPath = path;
-    window.history.pushState({}, name, path);
+    if (path !== window.location.pathname) {
+      window.history.pushState({}, name, path);
+    }
+    document.title = this.routes[name].name;
     this.emit(actionRouterPushOk({ path }));
   }
 

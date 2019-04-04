@@ -3,7 +3,9 @@ import VolumeButton from 'components/buttons/VolumeButton';
 import LabelAuthUser from 'components/LabelAuthUser';
 import { LogotypeSizes } from 'components/Logotype';
 import Logotype from 'components/Logotype/Logotype';
+import { routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
+import routerStore, { actionRouterPush } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
 import { CurPage } from '../..';
 import Tabbar from './Tabbar/Tabbar';
@@ -12,12 +14,22 @@ const styles = require('./Header.modules.scss');
 const cn = classNames(styles);
 
 export default class Header extends React.Component {
-  handleIOClick = () => {
-    const { user, onChangeMode, onLogout } = this.props;
+  handleIOClick = e => {
+    e.preventDefault();
+    const { user, onLogout } = this.props;
     if (user) {
       onLogout();
+      routerStore.emit(
+        actionRouterPush({
+          path: routesMap.BASE.template,
+        })
+      );
     } else {
-      onChangeMode(CurPage.SIGNIN);
+      routerStore.emit(
+        actionRouterPush({
+          path: routesMap.SIGN_IN.template,
+        })
+      );
     }
   };
 

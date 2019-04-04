@@ -1,12 +1,14 @@
 import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
-import { match } from 'libs/Cheburouter/utils';
+import routerStore, { match, routerActions } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
 import { CurPage } from '../../..';
 import Tab from './Tab';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 const styles = require('./Tabbar.modules.scss');
 const cn = classNames(styles);
 
+@connectToCheburstore
 export default class Tabbar extends React.Component {
   state = {
     tabs: [
@@ -28,6 +30,11 @@ export default class Tabbar extends React.Component {
       },
     ],
   };
+
+  @onCheburevent(routerStore, routerActions.PUSH_OK)
+  selfUpdate() {
+    this.setState({});
+  }
 
   handleClick = (mode: CurPage) => this.props.onChangeMode(mode);
 
