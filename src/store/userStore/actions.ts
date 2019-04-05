@@ -70,7 +70,9 @@ export const actionUserLogin: ACreator<UserLoginPL> = payload => ({
   type: userActions.LOGIN,
 });
 
-export const actionUserUpdateSuccess: ACreator<UserUpdateSuccessPL> = payload => ({
+export const actionUserUpdateSuccess: ACreator<
+  UserUpdateSuccessPL
+> = payload => ({
   payload,
   type: userActions.UPDATE_SUCCESS,
 });

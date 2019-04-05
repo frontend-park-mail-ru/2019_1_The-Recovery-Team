@@ -1,15 +1,21 @@
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
-import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import Requester from 'libs/Requester';
 import RowLeader from './RowLeader';
 const styles = require('./LeadersPage.modules.scss');
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
+import scoreboardStore from '../../../store/scoreboardStore';
+import {
+  actionScoreboardLoadPage,
+  scoreboardActions,
+  UpdateLeadersPL,
+} from '../../../store/scoreboardStore/actions';
 
 const cn = classNames(styles);
 
 const LIMIT = 6;
 
+@connectToCheburstore
 export default class LeadersPage extends React.Component {
   state = {
     offset: 0,
@@ -23,25 +29,30 @@ export default class LeadersPage extends React.Component {
   };
 
   componentDidMount() {
-    this.loadPage(0);
+    scoreboardStore.emit(
+      actionScoreboardLoadPage({
+        offset: 0,
+        limit: LIMIT,
+      })
+    );
   }
 
-  loadPage = offset =>
-    Requester.get(API.scores(), {
-      limit: LIMIT,
-      start: offset,
-    }).then(({ response }: { response: any }) => {
-      const { offset, leaders } = this.state;
-      if (response && Array.isArray(response.List)) {
-        this.setState({
-          leaders: [...leaders, ...response.List],
-          offset: offset + response.List.length,
-          total: response.total,
-        });
-      }
-    });
+  handleLoadNextPage = () =>
+    scoreboardStore.emit(
+      actionScoreboardLoadPage({
+        limit: LIMIT,
+        offset: this.state.offset,
+      })
+    );
 
-  handleLoadNextPage = () => this.loadPage(this.state.offset);
+  @onCheburevent(scoreboardStore, scoreboardActions.UPDATE_LEADERS)
+  handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
+    this.setState({
+      leaders: [...this.state.leaders, ...action.payload.leaders],
+      offset: this.state.offset + action.payload.leaders.length,
+      total: action.payload.total,
+    });
+  }
 
   render() {
     const { columns, leaders, total, offset } = this.state;
