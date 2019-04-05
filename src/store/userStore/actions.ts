@@ -22,6 +22,8 @@ export enum userActions {
   EDIT_PASSWORD_ERROR = 'EDIT_PASSWORD_ERROR',
 
   EDIT_AVATAR = 'USER_EDIT_AVATAR',
+  EDIT_AVATAR_ERROR = 'USER_EDIT_AVATAR_ERROR',
+  EDIT_AVATAR_SUCCESS = 'USER_EDIT_AVATAR_SUCCESS',
 }
 
 export interface UserLoginPL {
@@ -68,9 +70,7 @@ export const actionUserLogin: ACreator<UserLoginPL> = payload => ({
   type: userActions.LOGIN,
 });
 
-export const actionUserUpdateSuccess: ACreator<
-  UserUpdateSuccessPL
-> = payload => ({
+export const actionUserUpdateSuccess: ACreator<UserUpdateSuccessPL> = payload => ({
   payload,
   type: userActions.UPDATE_SUCCESS,
 });
@@ -125,4 +125,14 @@ export const actionUserEditPasswordError: ACreator<UserErrorPL> = payload => ({
 export const actionUserEditAvatar: ACreator<UserEditAvatarPL> = payload => ({
   payload,
   type: userActions.EDIT_AVATAR,
+});
+
+export const actionUserEditAvatarError: ACreatorNull = () => ({
+  payload: null,
+  type: userActions.EDIT_AVATAR_ERROR,
+});
+
+export const actionUserEditAvatarSuccess: ACreatorNull = () => ({
+  payload: null,
+  type: userActions.EDIT_AVATAR_SUCCESS,
 });

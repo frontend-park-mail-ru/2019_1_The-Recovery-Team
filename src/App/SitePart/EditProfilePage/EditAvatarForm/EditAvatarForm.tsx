@@ -1,14 +1,18 @@
-import { modes } from 'components/buttons/SubmitButton';
-import SubmitButton from 'components/buttons/SubmitButton';
-import API from 'config/API';
+import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import * as React from 'libs/Cheburact';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import Requester from 'libs/Requester';
+import userStore, {
+  actionUserEditAvatar,
+  actionUserEditAvatarError,
+  userActions,
+} from 'store/userStore';
 import { CurPage } from '../../..';
 const styles = require('./EditAvatarForm.modules.scss');
 
 const cn = classNames(styles);
 
+@connectToCheburstore
 export default class EditAvatarForm extends React.Component {
   state = {
     avatar: null,
@@ -19,24 +23,18 @@ export default class EditAvatarForm extends React.Component {
       avatar: e.target.files[0] || null,
     });
 
+  @onCheburevent(userStore, userActions.EDIT_AVATAR_SUCCESS)
+  handlerChangePage() {
+    this.props.onChangeMode(CurPage.PROFILE);
+  }
+
   updateAvatar = () => {
     const { avatar } = this.state;
-
-    Requester.put(
-      API.avatars(),
-      {
-        avatar,
-      },
-      true
-    ).then(({ response }: { response: any }) => {
-      if (response) {
-        this.props.onAuthorized({
-          ...this.props.user,
-          avatar: response.avatar,
-        });
-        this.props.onChangeMode(CurPage.PROFILE);
-      }
-    });
+    if (!avatar) {
+      userStore.emit(actionUserEditAvatarError());
+      return;
+    }
+    userStore.emit(actionUserEditAvatar({ avatar }));
   };
 
   render() {
