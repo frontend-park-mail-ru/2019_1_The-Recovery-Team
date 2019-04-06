@@ -1,12 +1,12 @@
+import { routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
+import { Route } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
 import userStore, { actionUserLogout } from 'store/userStore';
-import { CurPage } from '..';
 import AuthPage from './AuthPage';
 import EditProfilePage from './EditProfilePage';
 import Header from './Header';
 import LeadersPage from './LeadersPage';
-import MainBlock from './MainBlock';
 import ProfilePage from './ProfilePage';
 import StartPage from './StartPage/StartPage';
 const styles = require('./SitePart.modules.scss');
@@ -17,32 +17,30 @@ export default class SitePart extends React.Component {
   handleLogout = () => userStore.emit(actionUserLogout());
 
   public render() {
-    const { user, mode, onChangeMode } = this.props;
+    const { user, mode } = this.props;
 
     return (
       <div className={cn('site-part')}>
-        <Header
-          user={user}
-          mode={mode}
-          onChangeMode={onChangeMode}
-          onLogout={this.handleLogout}
+        <Header user={user} mode={mode} onLogout={this.handleLogout} />
+        <Route
+          template={routesMap.BASE.template}
+          exact={true}
+          component={StartPage}
         />
-        {mode === CurPage.START ? (
-          <StartPage />
-        ) : (
-          <MainBlock>
-            {mode === CurPage.SIGNIN || mode === CurPage.SIGNUP ? (
-              <AuthPage onChangeMode={onChangeMode} />
-            ) : null}
-            {mode === CurPage.PROFILE ? (
-              <ProfilePage onChangeMode={onChangeMode} />
-            ) : null}
-            {mode === CurPage.LEADERS ? <LeadersPage /> : null}
-            {mode === CurPage.EDIT_PROFILE ? (
-              <EditProfilePage onChangeMode={onChangeMode} user={user} />
-            ) : null}
-          </MainBlock>
-        )}
+        <Route template={routesMap.SIGN.template} component={AuthPage} />
+        <Route
+          template={routesMap.PROFILE.template}
+          component={ProfilePage}
+          exact={true}
+        />
+        <Route
+          template={routesMap.LEADER_BOARD.template}
+          component={LeadersPage}
+        />
+        <Route
+          template={routesMap.PROFILE_EDIT.template}
+          component={EditProfilePage}
+        />
       </div>
     );
   }

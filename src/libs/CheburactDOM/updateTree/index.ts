@@ -88,10 +88,9 @@ export default function updateTree(
     elements: Array<IElement>
   ): Array<IFiberNode> => {
     const collection = spreadFibersByType(fibers);
-    const itemsToUpdate = elements.map(el => [
-      eraseEqualFiberCollectionItem(collection, el),
-      el,
-    ]);
+    const itemsToUpdate = elements
+      .filter(el => !!el)
+      .map(el => [eraseEqualFiberCollectionItem(collection, el), el]);
 
     // Удаляем оставшиеся элементы
     const itemsToDelete = getFlatArrayFromCollection(collection);

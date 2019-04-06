@@ -1,5 +1,4 @@
 import * as Cheburact from 'libs/Cheburact';
-// import { extends } from 'tslint/lib/configs/latest';
 import Cheburstore from './Cheburstore';
 
 type CheburstoreDecorator<T> = (
@@ -53,7 +52,7 @@ export const connectToCheburstore = component =>
         tryOff(this, prototype[prop]);
       }
 
-      super.componentDidMount();
+      super.componentWillUnmount();
     }
   };
 

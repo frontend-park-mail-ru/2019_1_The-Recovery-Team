@@ -28,6 +28,8 @@
       "trailingComma": true
     }],
     "max-line-length": [true, 120],
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "no-increment-decrement": false,
+    "import-name": false
   }
 }
