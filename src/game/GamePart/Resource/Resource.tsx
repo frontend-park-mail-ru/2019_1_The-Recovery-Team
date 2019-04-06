@@ -1,5 +1,5 @@
-import * as React from 'libs/Cheburact';
-import classNames from 'libs/classNames';
+import * as React from 'libs/Cheburact/index';
+import classNames from 'libs/classNames/index';
 const styles = require('./Resource.modules.scss');
 
 const cn = classNames(styles);

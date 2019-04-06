@@ -1,8 +1,8 @@
-import LabelAuthUser from 'components/LabelAuthUser';
-import * as React from 'libs/Cheburact';
-import classNames from 'libs/classNames';
-import Resource from './Resource';
-import Timer from './Timer';
+import LabelAuthUser from 'components/LabelAuthUser/index';
+import * as React from 'libs/Cheburact/index';
+import classNames from 'libs/classNames/index';
+import Resource from './Resource/index';
+import Timer from './Timer/index';
 const styles = require('./GamePart.modules.scss');
 
 const cn = classNames(styles);

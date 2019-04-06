@@ -3,7 +3,7 @@ import * as React from 'libs/Cheburact';
 import { Route } from 'libs/Cheburouter';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
-import GamePart from './GamePart';
+import GamePart from 'game/GamePart';
 import SitePart from './SitePart';
 const styles = require('./App.modules.scss');
 

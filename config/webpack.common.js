@@ -24,6 +24,7 @@ module.exports = {
             components: srcPath('components'),
             styles: srcPath('styles'),
             store: srcPath('store'),
+            game: srcPath('game'),
         }
     },
     module: {
