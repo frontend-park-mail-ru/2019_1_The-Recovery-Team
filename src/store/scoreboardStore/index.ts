@@ -33,7 +33,7 @@ class ScoreboardStore extends Cheburstore<ScoreboardState> {
     const leaders = normalizeLeadersGet(leadersResp);
     const total = normalizeTotal(leadersResp);
 
-    if (!leaders || !total) {
+    if (!leaders || !!total === null) {
       this.emit(actionScoreboardLoadPageError());
       return;
     }

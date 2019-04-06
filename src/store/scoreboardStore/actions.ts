@@ -1,5 +1,5 @@
 import { ACreator, ACreatorNull } from '../types';
-import { Profile } from '../userStore';
+import { Leader } from './types';
 
 export enum scoreboardActions {
   LOAD_LEADERS = 'BOARD_LOAD_LEADERS',
@@ -15,7 +15,7 @@ export interface LoadScoreboardPL {
 }
 
 export interface UpdateLeadersPL {
-  leaders: Array<Profile>;
+  leaders: Array<Leader>;
   total: number;
 }
 

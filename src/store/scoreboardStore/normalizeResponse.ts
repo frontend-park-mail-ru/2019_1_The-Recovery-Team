@@ -9,7 +9,7 @@ export const normalizeLeadersGet = (response): Array<Profile> | null => {
 };
 
 export const normalizeTotal = (response): number | null => {
-  if (response.response && response.response.total) {
+  if (response.response && !!response.response.total !== null) {
     return response.response.total;
   }
 

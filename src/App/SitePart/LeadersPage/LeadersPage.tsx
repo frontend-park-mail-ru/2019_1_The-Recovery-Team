@@ -4,12 +4,12 @@ import classNames from 'libs/classNames';
 import RowLeader from './RowLeader';
 const styles = require('./LeadersPage.modules.scss');
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
-import scoreboardStore from '../../../store/scoreboardStore';
+import scoreboardStore from 'store/scoreboardStore';
 import {
   actionScoreboardLoadPage,
   scoreboardActions,
   UpdateLeadersPL,
-} from '../../../store/scoreboardStore/actions';
+} from 'store/scoreboardStore/actions';
 
 const cn = classNames(styles);
 
@@ -47,6 +47,7 @@ export default class LeadersPage extends React.Component {
 
   @onCheburevent(scoreboardStore, scoreboardActions.UPDATE_LEADERS)
   handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
+    console.log('here', this.state.leaders);
     this.setState({
       leaders: [...this.state.leaders, ...action.payload.leaders],
       offset: this.state.offset + action.payload.leaders.length,
