@@ -12,7 +12,7 @@ export interface CheburouterState {
 
 // @ts-ignore
 @cheburmodel
-class Cheburouter extends Cheburstore<CheburouterState> {
+class RouterStore extends Cheburstore<CheburouterState> {
   routes: { [name: string]: RouteParams };
   baseName: string;
 
@@ -27,7 +27,7 @@ class Cheburouter extends Cheburstore<CheburouterState> {
     };
   }
 
-  finalGo(name: string, path: string): Cheburouter {
+  finalGo(name: string, path: string): RouterStore {
     this.store.curPath = path;
     this.store.curName = name;
     if (path !== window.location.pathname) {
@@ -41,7 +41,7 @@ class Cheburouter extends Cheburstore<CheburouterState> {
     return this;
   }
 
-  go(path: string = this.store.curPath): Cheburouter {
+  go(path: string = this.store.curPath): RouterStore {
     const { safe: thisSafe } = this.store;
 
     for (const route of Object.values(this.routes)) {
@@ -103,4 +103,4 @@ class Cheburouter extends Cheburstore<CheburouterState> {
   }
 }
 
-export default new Cheburouter();
+export default new RouterStore();

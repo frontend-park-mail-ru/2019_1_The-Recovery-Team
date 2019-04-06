@@ -9,7 +9,7 @@ export default class Cheburstore<T> implements ICheburstore<T> {
 
   public emit(action: Action<any>) {
     console.log(
-      `%c action: ${action.type}`,
+      `%c${action.type}`,
       'font-weight: 700; color: green',
       action.payload
     );

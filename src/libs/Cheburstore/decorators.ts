@@ -94,7 +94,7 @@ export const cheburmodel = modelClass =>
       // noinspection TsLint
       for (const prop in prototype) {
         const property = prototype[prop];
-        if(property[ON_PROP]) {
+        if (property[ON_PROP]) {
           this.on(property[ON_PROP], property.bind(this));
         }
       }

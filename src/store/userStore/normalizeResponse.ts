@@ -14,15 +14,16 @@ export const normalizeProfileGet = (response): Profile | null => {
     return null;
   }
 
-  let {
+  const {
     id = null,
     email = null,
     nickname = null,
     loss = 0,
     record = 0,
     win = 0,
-    avatar = null,
   } = response.response;
+
+  let { avatar = null } = response.response;
 
   // TODO: Убрать, когда Арсений пофиксит
   if (
@@ -49,4 +50,12 @@ export const normalizeProfileGet = (response): Profile | null => {
     win,
     avatar,
   };
+};
+
+export const normalizeAvatar = (response): string | null => {
+  if (response.error || !response.response) {
+    return null;
+  }
+
+  return response.response.avatar || null;
 };

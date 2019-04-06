@@ -2,7 +2,7 @@ import * as React from 'libs/Cheburact';
 import { match } from 'libs/Cheburouter/utils';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import { routerActions, RouterPathPL } from '../actions';
-import routerStore from '../cheburouter';
+import routerStore from '../routerStore';
 
 // @ts-ignore
 @connectToCheburstore

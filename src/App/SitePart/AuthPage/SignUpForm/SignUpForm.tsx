@@ -31,6 +31,7 @@ interface State {
   avatar: ImageData | null;
 }
 
+// @ts-ignore
 @connectToCheburstore
 export default class SignUpForm extends React.Component {
   state: State = {

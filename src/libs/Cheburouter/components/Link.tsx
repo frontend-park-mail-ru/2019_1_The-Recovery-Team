@@ -1,6 +1,6 @@
 import * as React from 'libs/Cheburact';
 import { actionRouterPush } from '../actions';
-import routerStore from '../cheburouter';
+import routerStore from '../routerStore';
 
 export class Link extends React.Component {
   onClick = e => {

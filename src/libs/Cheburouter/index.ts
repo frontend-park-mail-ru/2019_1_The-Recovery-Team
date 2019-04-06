@@ -1,4 +1,4 @@
-export { default } from './cheburouter';
+export { default } from './routerStore';
 
 export * from './actions';
 export * from './components/Route';

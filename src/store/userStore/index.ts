@@ -6,7 +6,8 @@ import Cheburstore, {
 } from 'libs/Cheburstore';
 import Requester from 'libs/Requester';
 import {
-  actionUserCheckAuthResult,
+  actionUserEditAvatarError,
+  actionUserEditAvatarSuccess,
   actionUserEditError,
   actionUserEditPasswordError,
   actionUserLoginError,
@@ -20,7 +21,11 @@ import {
   UserLoginPL,
   UserSignupPL,
 } from './actions';
-import { normalizeProfileGet, normalizeSessionGet } from './normalizeResponse';
+import {
+  normalizeAvatar,
+  normalizeProfileGet,
+  normalizeSessionGet,
+} from './normalizeResponse';
 import { Profile, ProfileState } from './types';
 
 // @ts-ignore
@@ -176,7 +181,38 @@ class UserStore extends Cheburstore<ProfileState> {
   }
 
   @cheburhandler(userActions.EDIT_AVATAR)
-  async editAvatar(action: Action<UserEditAvatarPL>) {}
+  async editAvatar(action: Action<UserEditAvatarPL>) {
+    const { payload } = action;
+    const { user } = this.store;
+
+    if (!user) {
+      this.emit(actionUserEditAvatarError());
+      return;
+    }
+
+    const avatarResp = await Requester.put(
+      API.avatars(),
+      { avatar: payload.avatar },
+      true
+    );
+    const avatar = normalizeAvatar(avatarResp);
+
+    if (!avatar) {
+      this.emit(actionUserEditAvatarError());
+      return;
+    }
+
+    this.store.user = {
+      ...user,
+      avatar,
+    };
+
+    this.emit(
+      actionUserUpdateSuccess({
+        profile: this.store.user,
+      })
+    ).emit(actionUserEditAvatarSuccess());
+  }
 }
 
 export * from './types';
