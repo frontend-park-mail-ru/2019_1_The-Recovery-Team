@@ -20,12 +20,19 @@ export class Route extends React.Component {
 
   render() {
     // noinspection TsLint
-    const { template, exact = false, component: Comp, ...rest } = this.props;
+    const {
+      template,
+      exact = false,
+      component: Comp,
+      negative = false,
+      ...rest
+    } = this.props;
 
     const { curPath } = this.state;
 
     const result = match(template, curPath, exact);
+    const shouldRender = negative ? !!result : !result;
 
-    return !result ? null : <Comp routerParams={result} {...rest} />;
+    return shouldRender ? null : <Comp routerParams={result} {...rest} />;
   }
 }

@@ -8,6 +8,7 @@ export const routeNames = {
   PROFILE: 'PROFILE',
   PROFILE_EDIT: 'PROFILE_EDIT',
   LEADER_BOARD: 'LEADER_BOARD',
+  GAME_PART: 'GAME_PART',
 };
 
 export const routesMap = {
@@ -61,6 +62,11 @@ export const routesMap = {
     template: '/leaderboard',
     title: 'Лидеры',
   },
+  GAME_PART: {
+    name: routeNames.GAME_PART,
+    template: '/game',
+    title: 'Игра',
+  },
 };
 
 export const routeCreators = {
@@ -72,4 +78,5 @@ export const routeCreators = {
   TO_PROFILE: () => `/profile`,
   TO_PROFILE_EDIT: () => `/profile/edit`,
   TO_LEADER_BOARD: () => `/leaderboard`,
+  TO_GAME_PART: () => `/game`,
 };

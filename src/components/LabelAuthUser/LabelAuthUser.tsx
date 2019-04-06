@@ -8,22 +8,16 @@ const cn = classNames(styles);
 
 export default class LabelAuthUser extends React.Component {
   render() {
-<<<<<<< HEAD
-    const { user, className, onChangeMode, reverse = false } = this.props;
-    const onClick = () => onChangeMode(CurPage.PROFILE);
+    const { user, className, to, reverse = false } = this.props;
+
+    const avatarClassNames = cn(
+      'label-auth__container-avatar',
+      reverse && 'label-auth__container-avatar_left'
+    );
+
     return (
-      <a onClick={onClick} className={`${cn('label-auth')} ${className || ''}`}>
-        <div
-          className={`${cn('label-auth__container-avatar')} ${
-            reverse ? cn('label-auth__container-avatar_left') : ''
-          }`}
-        >
-=======
-    const { user, className, to } = this.props;
-    return (
-      <Link to={to} className={`${cn('label-auth')} ${className}`}>
-        <div className={cn('label-auth__container-avatar')}>
->>>>>>> dev
+      <Link to={to} className={`${cn('label-auth')} ${className || ''}`}>
+        <div className={avatarClassNames}>
           <img
             src={`${BASE_URL}${user.avatar}` || ''}
             className={cn('label-auth__image')}

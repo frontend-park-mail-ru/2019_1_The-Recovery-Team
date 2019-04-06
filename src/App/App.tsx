@@ -1,8 +1,11 @@
+import { routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
+import { Route } from 'libs/Cheburouter';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
-import GamePart from './GamePart';
 import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
+import GamePart from './GamePart';
 import SitePart from './SitePart';
+const styles = require('./App.modules.scss');
 
 // @ts-ignore
 @connectToCheburstore
@@ -28,7 +31,17 @@ class App extends React.Component {
   render() {
     const { user } = this.state;
 
-    return <SitePart user={user} />;
+    return (
+      <div className={styles['app']}>
+        <Route template={routesMap.GAME_PART.template} component={GamePart} />
+        <Route
+          template={routesMap.GAME_PART.template}
+          negative={true}
+          component={SitePart}
+          user={user}
+        />
+      </div>
+    );
   }
 }
 
