@@ -3,4 +3,5 @@ export interface RouteParams {
   template: string;
   safe?: boolean;
   exact?: boolean;
+  title?: string;
 }

@@ -25,30 +25,35 @@ class Cheburouter extends Cheburstore<CheburouterState> {
     };
   }
 
-  finalGo(name: string, path: string) {
-    console.log('final go: ', name, path);
+  finalGo(name: string, path: string): Cheburouter {
     this.store.curPath = path;
     if (path !== window.location.pathname) {
       window.history.pushState({}, name, path);
     }
-    document.title = this.routes[name].name;
-    this.emit(actionRouterPushOk({ path }));
+    return this.setTitle(name).emit(actionRouterPushOk({ path }));
   }
 
-  go(path: string = this.store.curPath) {
+  setTitle(name: string) {
+    console.log('set title for', name, this.routes[name]);
+    document.title = this.routes[name].title || 'SadIslands';
+    return this;
+  }
+
+  go(path: string = this.store.curPath): Cheburouter {
+    const { safe: thisSafe } = this.store;
+
     for (const route of Object.values(this.routes)) {
       const { template, exact = false, safe = false, name } = route;
 
-      if (match(template, path, exact) && this.store.safe >= safe) {
-        this.finalGo(name, path);
-        return;
+      if (match(template, path, exact) && (!safe || (safe && thisSafe))) {
+        return this.finalGo(name, path);
       }
     }
 
-    this.finalGo(this.baseName, path);
+    return this.finalGo(this.baseName, this.routes[this.baseName].template);
   }
 
-  init(routes: { [name: string]: RouteParams }, baseName: string) {
+  init(routes: { [name: string]: RouteParams }, baseName: string): Cheburouter {
     this.routes = routes;
     this.baseName = baseName;
 

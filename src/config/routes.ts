@@ -1,5 +1,3 @@
-import { RouteParams } from 'libs/Cheburouter/types';
-
 export const routeNames = {
   BASE: 'BASE',
   RULES: 'RULES',
@@ -16,44 +14,52 @@ export const routesMap = {
   BASE: {
     name: routeNames.BASE,
     template: '/',
+    title: 'SadIslands',
   },
   RULES: {
     name: routeNames.RULES,
     template: '/rules',
+    title: 'Правила',
   },
   ABOUT: {
     name: routeNames.ABOUT,
     template: '/about',
-  },
-  SIGN: {
-    name: routeNames.SIGN,
-    template: '/sign',
+    title: 'О нас',
   },
   SIGN_IN: {
     name: routeNames.SIGN_IN,
     template: '/sign/in',
     exact: true,
+    title: 'Вход',
   },
   SIGN_UP: {
     name: routeNames.SIGN_UP,
     template: '/sign/up',
     exact: true,
+    title: 'Регистрация',
+  },
+  SIGN: {
+    name: routeNames.SIGN,
+    template: '/sign',
   },
   PROFILE: {
     name: routeNames.PROFILE,
     template: '/profile/{nickname}',
     safe: true,
     exact: true,
+    title: 'Профиль',
   },
   PROFILE_EDIT: {
     name: routeNames.PROFILE_EDIT,
     template: '/profile/{nickname}/edit',
     safe: true,
     exact: true,
+    title: 'Редактирование профиля',
   },
   LEADER_BOARD: {
     name: routeNames.LEADER_BOARD,
     template: '/leaderboard/{page}',
+    title: 'Лидеры',
   },
 };
 
@@ -61,7 +67,6 @@ export const routeCreators = {
   TO_START: () => '/',
   TO_RULES: () => '/rules',
   TO_ABOUT: () => '/about',
-  TO_SIGN: () => '/sign',
   TO_SIGN_IN: () => '/sign/in',
   TO_SIGN_UP: () => '/sign/up',
   TO_PROFILE: (nickname: string) => `/nickname/${nickname}`,

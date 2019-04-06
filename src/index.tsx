@@ -5,5 +5,5 @@ import router from 'libs/Cheburouter';
 import App from './App';
 require('./styles/global.scss');
 
-CheburactDOM.render(<App />, document.getElementById('root'));
 router.init(routesMap, routeNames.BASE);
+CheburactDOM.render(<App />, document.getElementById('root'));

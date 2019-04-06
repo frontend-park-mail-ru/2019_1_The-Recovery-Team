@@ -7,14 +7,15 @@ export default class Cheburstore<T> implements ICheburstore<T> {
     [type: string]: Array<ActionListener>;
   } = {};
 
-  public emit(action: Action<any>) {
+  public emit(action: Action<any>): Cheburstore<T> {
     console.log('action: ', action.type, action.payload);
 
     if (!this.listeners[action.type]) {
-      return;
+      return this;
     }
 
     this.listeners[action.type].forEach(listener => listener(action));
+    return this;
   }
 
   private isAlreadySubscribed(type: string, listener: ActionListener): boolean {
