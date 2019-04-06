@@ -3,27 +3,48 @@ import VolumeButton from 'components/buttons/VolumeButton';
 import LabelAuthUser from 'components/LabelAuthUser';
 import { LogotypeSizes } from 'components/Logotype';
 import Logotype from 'components/Logotype/Logotype';
-import { routesMap } from 'config/routes';
+import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
-import routerStore, { actionRouterPush } from 'libs/Cheburouter';
+import routerStore, {
+  actionRouterPush,
+  match,
+  routerActions,
+} from 'libs/Cheburouter';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import { CurPage } from '../..';
 import Tabbar from './Tabbar/Tabbar';
 const styles = require('./Header.modules.scss');
 
 const cn = classNames(styles);
 
+// @ts-ignore
+@connectToCheburstore
 export default class Header extends React.Component {
+  static isStartPage = () =>
+    match(window.location.pathname, routesMap.BASE.template, true);
+
+  state = {
+    isStartPage: Header.isStartPage(),
+    path: window.location.pathname,
+  };
+
+  @onCheburevent(routerStore, routerActions.PUSH_OK)
+  handlePageChange() {
+    const isStartPage = Header.isStartPage();
+    const { path, isStartPage: curIsStartPage } = this.state;
+    if (curIsStartPage !== isStartPage || path !== window.location.pathname) {
+      this.setState({
+        isStartPage,
+        path: window.location.pathname,
+      });
+    }
+  }
+
   handleIOClick = e => {
     e.preventDefault();
     const { user, onLogout } = this.props;
     if (user) {
       onLogout();
-      routerStore.emit(
-        actionRouterPush({
-          path: routesMap.BASE.template,
-        })
-      );
     } else {
       routerStore.emit(
         actionRouterPush({
@@ -33,46 +54,45 @@ export default class Header extends React.Component {
     }
   };
 
+  get isLabelUserVisible() {
+    return !this.isIOButtonVisible;
+  }
+
+  get isIOButtonVisible() {
+    const { path } = this.state;
+    const { user } = this.props;
+    return !user || !!match(routesMap.PROFILE.template, path);
+  }
+
   render() {
-    const { user, mode, onChangeMode } = this.props;
-
-    const labelUserHidden =
-      mode === CurPage.SIGNIN ||
-      mode === CurPage.SIGNUP ||
-      mode === CurPage.PROFILE ||
-      mode === CurPage.EDIT_PROFILE ||
-      !user;
-
-    const ioButtonHidden =
-      (user && mode !== CurPage.PROFILE && mode !== CurPage.EDIT_PROFILE) ||
-      mode === CurPage.SIGNIN ||
-      mode === CurPage.SIGNUP;
+    const { user } = this.props;
+    const { isStartPage } = this.state;
 
     return (
       <div className={cn('header', 'header_main')}>
-        {mode !== CurPage.START && (
+        {!isStartPage && (
           <div className={cn('header__container-logotype')}>
             <Logotype size={LogotypeSizes.MIDDLE} />
           </div>
         )}
         <div className={cn('header__tabbar')}>
-          <Tabbar mode={mode} onChangeMode={onChangeMode} />
+          <Tabbar />
         </div>
         <div
           className={cn(
             'header__container-buttons',
-            mode === CurPage.START && 'header__container-buttons_start-page'
+            isStartPage && 'header__container-buttons_start-page'
           )}
         >
           <VolumeButton on={true} />
-          {!labelUserHidden && (
+          {this.isLabelUserVisible && (
             <LabelAuthUser
               className={cn('header__container-user-wrapper')}
               user={user}
-              onChangeMode={onChangeMode}
+              to={routeCreators.TO_PROFILE()}
             />
           )}
-          {!ioButtonHidden && (
+          {this.isIOButtonVisible && (
             <InOutButton
               isAuthenticated={!!user}
               onClick={this.handleIOClick}

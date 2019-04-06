@@ -44,21 +44,21 @@ export const routesMap = {
   },
   PROFILE: {
     name: routeNames.PROFILE,
-    template: '/profile/{nickname}',
+    template: '/profile',
     safe: true,
     exact: true,
     title: 'Профиль',
   },
   PROFILE_EDIT: {
     name: routeNames.PROFILE_EDIT,
-    template: '/profile/{nickname}/edit',
+    template: '/profile/edit',
     safe: true,
     exact: true,
     title: 'Редактирование профиля',
   },
   LEADER_BOARD: {
     name: routeNames.LEADER_BOARD,
-    template: '/leaderboard/{page}',
+    template: '/leaderboard',
     title: 'Лидеры',
   },
 };
@@ -69,7 +69,7 @@ export const routeCreators = {
   TO_ABOUT: () => '/about',
   TO_SIGN_IN: () => '/sign/in',
   TO_SIGN_UP: () => '/sign/up',
-  TO_PROFILE: (nickname: string) => `/nickname/${nickname}`,
-  TO_PROFILE_EDIT: (nickname: string) => `/nickname/${nickname}/edit`,
-  TO_LEADER_BOARD: (page: number) => `/leaderboard/${page}`,
+  TO_PROFILE: () => `/profile`,
+  TO_PROFILE_EDIT: () => `/profile/edit`,
+  TO_LEADER_BOARD: () => `/leaderboard`,
 };

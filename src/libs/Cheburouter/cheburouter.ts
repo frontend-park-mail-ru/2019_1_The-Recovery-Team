@@ -5,6 +5,7 @@ import Cheburstore from 'libs/Cheburstore/Cheburstore';
 import { actionRouterPushOk, routerActions, RouterPathPL } from './actions';
 
 export interface CheburouterState {
+  curName: string;
   curPath: string;
   safe: boolean;
 }
@@ -20,6 +21,7 @@ class Cheburouter extends Cheburstore<CheburouterState> {
     this.routes = {};
     this.baseName = '';
     this.store = {
+      curName: '',
       curPath: window.location.pathname,
       safe: false,
     };
@@ -27,6 +29,7 @@ class Cheburouter extends Cheburstore<CheburouterState> {
 
   finalGo(name: string, path: string): Cheburouter {
     this.store.curPath = path;
+    this.store.curName = name;
     if (path !== window.location.pathname) {
       window.history.pushState({}, name, path);
     }
@@ -34,7 +37,6 @@ class Cheburouter extends Cheburstore<CheburouterState> {
   }
 
   setTitle(name: string) {
-    console.log('set title for', name, this.routes[name]);
     document.title = this.routes[name].title || 'SadIslands';
     return this;
   }
@@ -53,11 +55,9 @@ class Cheburouter extends Cheburstore<CheburouterState> {
     return this.finalGo(this.baseName, this.routes[this.baseName].template);
   }
 
-  init(routes: { [name: string]: RouteParams }, baseName: string): Cheburouter {
+  init(routes: { [name: string]: RouteParams }, baseName: string) {
     this.routes = routes;
     this.baseName = baseName;
-
-    this.go(window.location.pathname);
 
     window.addEventListener('popstate', () => {
       const currentPath = window.location.pathname;
@@ -72,14 +72,24 @@ class Cheburouter extends Cheburstore<CheburouterState> {
 
   @cheburhandler(routerActions.SET_SAFE)
   setSafe() {
-    this.store.safe = true;
-    this.go();
+    if (!this.store.safe) {
+      this.store.safe = true;
+
+      if (
+        this.routes[this.store.curName] &&
+        this.routes[this.store.curName].safe
+      ) {
+        this.go();
+      }
+    }
   }
 
   @cheburhandler(routerActions.SET_UNSAFE)
   setUnsafe() {
-    this.store.safe = false;
-    this.go();
+    if (this.store.safe) {
+      this.store.safe = false;
+      this.go();
+    }
   }
 
   @cheburhandler(routerActions.BACK)

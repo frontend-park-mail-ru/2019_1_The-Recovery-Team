@@ -7,8 +7,12 @@ export default class Cheburstore<T> implements ICheburstore<T> {
     [type: string]: Array<ActionListener>;
   } = {};
 
-  public emit(action: Action<any>): Cheburstore<T> {
-    console.log('action: ', action.type, action.payload);
+  public emit(action: Action<any>) {
+    console.log(
+      `%c action: ${action.type}`,
+      'font-weight: 700; color: green',
+      action.payload
+    );
 
     if (!this.listeners[action.type]) {
       return this;

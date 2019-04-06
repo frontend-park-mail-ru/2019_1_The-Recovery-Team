@@ -1,19 +1,39 @@
 import AuthButton from 'components/buttons/AuthButton';
 import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
-import routerStore, { match, Route, routerActions } from 'libs/Cheburouter';
+import routerStore, {
+  actionRouterPush,
+  match,
+  Route,
+  routerActions,
+} from 'libs/Cheburouter';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import userStore from 'store/userStore';
 import MainBlock from '../MainBlock';
 import { AuthPageMode } from './config/modes';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
+
 const styles = require('./AuthPage.modules.scss');
 
 const cn = classNames(styles);
 
+// @ts-ignore
 @connectToCheburstore
 export default class AuthPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    if (userStore.select().user) {
+      routerStore.emit(
+        actionRouterPush({
+          path: routeCreators.TO_START(),
+        })
+      );
+    }
+  }
+
   state = {
     currentTab: AuthPageMode.SIGN_IN,
     authButtons: [

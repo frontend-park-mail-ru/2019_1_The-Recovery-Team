@@ -1,4 +1,5 @@
 import * as React from 'libs/Cheburact';
+import { Link } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
 const styles = require('./SubmitButton.modules.scss');
 
@@ -6,11 +7,21 @@ const cn = classNames(styles);
 
 export default class SubmitButton extends React.Component {
   render() {
-    const { mode, onClick, disabled, children } = this.props;
+    const { mode, onClick = null, to = null, disabled, children } = this.props;
+
+    // noinspection TsLint
+    const Component = to ? Link : 'button';
+    const props = {};
+    if (to) {
+      Object.assign(props, { to });
+    }
+    if (onClick) {
+      Object.assign(props, { onClick: !disabled && onClick });
+    }
 
     return (
-      <button
-        onClick={!disabled && onClick}
+      <Component
+        {...props}
         className={cn(
           'submit-button',
           `submit-button_${mode.theme}`,
@@ -21,7 +32,7 @@ export default class SubmitButton extends React.Component {
           <div className={cn(`submit-button__${mode.className}`)} />
         </div>
         <div className={cn('submit-button__title')}>{children}</div>
-      </button>
+      </Component>
     );
   }
 }

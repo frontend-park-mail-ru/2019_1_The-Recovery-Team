@@ -6,6 +6,7 @@ import Cheburstore, {
 } from 'libs/Cheburstore';
 import Requester from 'libs/Requester';
 import {
+  actionUserCheckAuthResult,
   actionUserEditError,
   actionUserEditPasswordError,
   actionUserLoginError,
@@ -20,8 +21,9 @@ import {
   UserSignupPL,
 } from './actions';
 import { normalizeProfileGet, normalizeSessionGet } from './normalizeResponse';
-import { ProfileState } from './types';
+import { Profile, ProfileState } from './types';
 
+// @ts-ignore
 @cheburmodel
 class UserStore extends Cheburstore<ProfileState> {
   constructor() {
@@ -31,14 +33,27 @@ class UserStore extends Cheburstore<ProfileState> {
     };
   }
 
+  finalizeAuthorization(profile: Profile) {
+    this.store.user = profile;
+    return this.emit(
+      actionUserUpdateSuccess({
+        profile,
+      })
+    );
+  }
+
+  finalizeLogout() {
+    this.store.user = null;
+    return this.emit(actionUserLogoutSuccess());
+  }
+
   @cheburhandler(userActions.LOGOUT)
   async logout() {
     // TODO error process
     const { response } = await Requester.delete(API.sessions());
 
     if (response) {
-      this.emit(actionUserLogoutSuccess());
-      return;
+      this.finalizeLogout();
     }
   }
 
@@ -47,21 +62,18 @@ class UserStore extends Cheburstore<ProfileState> {
     const sessionResp = await Requester.get(API.sessions());
     const id = normalizeSessionGet(sessionResp);
     if (id === null) {
-      this.store.user = null;
-      this.emit(actionUserLogoutSuccess());
+      this.finalizeLogout();
       return;
     }
 
     const userResp = await Requester.get(API.profileItem(id || ''));
     const profile = normalizeProfileGet(userResp);
     if (profile === null) {
-      this.store.user = null;
-      this.emit(actionUserLogoutSuccess());
+      this.finalizeLogout();
       return;
     }
 
-    this.store.user = profile;
-    this.emit(actionUserUpdateSuccess({ profile }));
+    this.finalizeAuthorization(profile);
   }
 
   @cheburhandler(userActions.LOGIN)
@@ -79,12 +91,7 @@ class UserStore extends Cheburstore<ProfileState> {
       return;
     }
 
-    this.store.user = profile;
-    this.emit(
-      actionUserUpdateSuccess({
-        profile,
-      })
-    );
+    this.finalizeAuthorization(profile);
   }
 
   @cheburhandler(userActions.SIGNUP)
@@ -107,12 +114,7 @@ class UserStore extends Cheburstore<ProfileState> {
       return;
     }
 
-    this.store.user = profile;
-    this.emit(
-      actionUserUpdateSuccess({
-        profile,
-      })
-    );
+    this.finalizeAuthorization(profile);
   }
 
   @cheburhandler(userActions.EDIT)

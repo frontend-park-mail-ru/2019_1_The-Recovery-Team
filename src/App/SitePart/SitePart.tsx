@@ -1,4 +1,4 @@
-import { routeCreators, routesMap } from 'config/routes';
+import { routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import { Route } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
@@ -17,16 +17,11 @@ export default class SitePart extends React.Component {
   handleLogout = () => userStore.emit(actionUserLogout());
 
   public render() {
-    const { user, mode, onChangeMode } = this.props;
+    const { user, mode } = this.props;
 
     return (
       <div className={cn('site-part')}>
-        <Header
-          user={user}
-          mode={mode}
-          onChangeMode={onChangeMode}
-          onLogout={this.handleLogout}
-        />
+        <Header user={user} mode={mode} onLogout={this.handleLogout} />
         <Route
           template={routesMap.BASE.template}
           exact={true}

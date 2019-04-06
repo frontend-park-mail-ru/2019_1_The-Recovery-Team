@@ -6,11 +6,14 @@ export class Link extends React.Component {
   onClick = e => {
     e.preventDefault();
 
-    routerStore.emit(
-      actionRouterPush({
-        path: this.props.to,
-      })
-    );
+    const { to } = this.props;
+    if (to) {
+      routerStore.emit(
+        actionRouterPush({
+          path: to,
+        })
+      );
+    }
   };
 
   render() {

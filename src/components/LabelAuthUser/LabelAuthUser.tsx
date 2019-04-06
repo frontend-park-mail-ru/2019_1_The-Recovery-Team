@@ -1,17 +1,16 @@
 import { BASE_URL } from 'config/API';
 import * as React from 'libs/Cheburact';
+import { Link } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
-import { CurPage } from '../../App';
 const styles = require('./LabelAuthUser.modules.scss');
 
 const cn = classNames(styles);
 
 export default class LabelAuthUser extends React.Component {
   render() {
-    const { user, className, onChangeMode } = this.props;
-    const onClick = () => onChangeMode(CurPage.PROFILE);
+    const { user, className, to } = this.props;
     return (
-      <a onClick={onClick} className={`${cn('label-auth')} ${className}`}>
+      <Link to={to} className={`${cn('label-auth')} ${className}`}>
         <div className={cn('label-auth__container-avatar')}>
           <img
             src={`${BASE_URL}${user.avatar}`}
@@ -21,7 +20,7 @@ export default class LabelAuthUser extends React.Component {
         <div className={cn('label-auth__rect')}>
           <span className={cn('label-auth__nickname')}>{user.nickname}</span>
         </div>
-      </a>
+      </Link>
     );
   }
 }

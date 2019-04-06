@@ -15,9 +15,8 @@ const extractParameter = (
 export const match = (
   template: string,
   path: string,
-  exact: boolean
+  exact: boolean = false,
 ): null | { [key: string]: string } => {
-  console.log('match:', template);
   const routeChunks = template.split('/');
   const pathChunks = path.split('/');
 
@@ -39,6 +38,5 @@ export const match = (
     }
   }
 
-  console.log('match: OK');
   return resultParams;
 };

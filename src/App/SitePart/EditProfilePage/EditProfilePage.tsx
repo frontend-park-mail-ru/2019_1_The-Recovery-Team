@@ -4,17 +4,23 @@ import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import Form from 'components/Form';
 import ModalWindow from 'components/ModalWindow';
 import API from 'config/API';
+import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
+import routerStore, { actionRouterPush } from 'libs/Cheburouter';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import debounce from 'libs/debounce';
-import userStore, { actionUserEdit, Profile } from 'store/userStore';
+import userStore, {
+  actionUserEdit,
+  Profile,
+  userActions,
+} from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
 import {
   touchField,
   validateAlreadyExists,
   validateRequired,
 } from 'utils/form/validators';
-import { CurPage } from '../..';
 import MainBlock from '../MainBlock';
 import EditAvatarForm from './EditAvatarForm';
 import EditPasswordForm from './EditPasswordForm';
@@ -24,7 +30,7 @@ const styles = require('./EditProfilePage.modules.scss');
 const cn = classNames(styles);
 
 interface State {
-  user: Profile;
+  user: Profile | null;
 
   email: InputConfig;
   nickname: InputConfig;
@@ -32,6 +38,8 @@ interface State {
   isShownModalAvatar: boolean;
 }
 
+// @ts-ignore
+@connectToCheburstore
 export default class EditProfilePage extends React.Component {
   state: State = {
     user: userStore.select().user,
@@ -60,6 +68,10 @@ export default class EditProfilePage extends React.Component {
 
   validateAlreadyExists = debounce(async (field: InputConfig) => {
     const { user } = this.state;
+    if (!user) {
+      return;
+    }
+
     if (
       field.value &&
       field.value !== '' &&
@@ -87,6 +99,15 @@ export default class EditProfilePage extends React.Component {
     this.setState({
       [name]: validateRequired(this.state[name]),
     });
+
+  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
+  handleUserUpdateSuccess() {
+    routerStore.emit(
+      actionRouterPush({
+        path: routeCreators.TO_PROFILE(),
+      })
+    );
+  }
 
   updateUser = async () => {
     if (this.saveDisabled) {
@@ -125,31 +146,18 @@ export default class EditProfilePage extends React.Component {
       isShownModalPassword,
       isShownModalAvatar,
     } = this.state;
-    const { onChangeMode, onAuthorized } = this.props;
 
     return (
       <MainBlock>
         <div className={cn('edit-profile-page')}>
           {isShownModalPassword && (
             <ModalWindow onClose={this.toggleEditModalPassword}>
-              {
-                <EditPasswordForm
-                  user={user}
-                  onAuthorized={onAuthorized}
-                  onChangeMode={onChangeMode}
-                />
-              }
+              <EditPasswordForm user={user} />
             </ModalWindow>
           )}
           {isShownModalAvatar && (
             <ModalWindow onClose={this.toggleEditModalAvatar}>
-              {
-                <EditAvatarForm
-                  onAuthorized={onAuthorized}
-                  user={user}
-                  onChangeMode={onChangeMode}
-                />
-              }
+              {<EditAvatarForm user={user} />}
             </ModalWindow>
           )}
           <div className={cn('edit-profile-page__container')}>
@@ -191,10 +199,10 @@ export default class EditProfilePage extends React.Component {
                     </SubmitButton>
                   </div>
                   <SubmitButton
-                    onClick={() => onChangeMode(CurPage.PROFILE)}
+                    to={routeCreators.TO_PROFILE()}
                     mode={modes.CANCEL}
                   >
-                    {'Отменить'}
+                    {'Закрыть'}
                   </SubmitButton>
                 </div>
               </div>

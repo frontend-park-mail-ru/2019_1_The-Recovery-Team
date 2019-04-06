@@ -3,8 +3,9 @@ import { Profile } from './types';
 
 export enum userActions {
   CHECK_AUTH = 'USER_CHECK_AUTH',
+  CHECK_AUTH_RESULT = 'USER_CHECK_AUTH_RESULT',
 
-  UPDATE_SUCCESS = 'USER_LOGIN_SUCCESS',
+  UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS',
 
   LOGIN = 'USER_LOGIN',
   LOGIN_ERROR = 'USER_LOGIN_ERROR',
@@ -31,6 +32,10 @@ export interface UserLoginPL {
 
 export interface UserUpdateSuccessPL {
   profile: Profile;
+}
+
+export interface UserCheckAuthResultPL {
+  profile: Profile | null;
 }
 
 export interface UserErrorPL {
@@ -125,4 +130,11 @@ export const actionUserEditPasswordError: ACreator<UserErrorPL> = payload => ({
 export const actionUserEditAvatar: ACreator<UserEditAvatarPL> = payload => ({
   payload,
   type: userActions.EDIT_AVATAR,
+});
+
+export const actionUserCheckAuthResult: ACreator<
+  UserCheckAuthResultPL
+> = payload => ({
+  payload,
+  type: userActions.CHECK_AUTH_RESULT,
 });
