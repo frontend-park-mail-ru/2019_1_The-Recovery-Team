@@ -1,9 +1,6 @@
 import * as React from 'libs/Cheburact';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
-import userStore, {
-  userActions,
-  UserUpdateSuccessPL,
-} from 'store/userStore';
+import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
 import SitePart from './SitePart';
 
 // @ts-ignore
