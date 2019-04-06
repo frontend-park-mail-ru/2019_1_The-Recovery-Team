@@ -6,6 +6,7 @@ import userStore, {
   UserUpdateSuccessPL,
 } from 'store/userStore';
 import { CurPage } from './config/modes';
+import GamePart from './GamePart';
 import SitePart from './SitePart';
 
 @connectToCheburstore
@@ -40,9 +41,12 @@ class App extends React.Component {
   render() {
     const { user, mode } = this.state;
 
-    return (
+/*    return (
       <SitePart user={user} mode={mode} onChangeMode={this.handleChangeMode} />
-    );
+    );*/
+  return (
+    <GamePart />
+  );
   }
 }
 

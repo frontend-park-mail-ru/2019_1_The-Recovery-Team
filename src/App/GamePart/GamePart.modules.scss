@@ -1,0 +1,46 @@
+.game-part {
+  position: relative;
+  height: 100%;
+  background-color: #FFF3E0;
+
+  &__label-container {
+    position: absolute;
+
+    &_left {
+      transform: translateY(-50%);
+      left: 0;
+      top: 50%;
+    }
+  }
+
+  &__timer-container {
+    display: inline-block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+
+  &__header {
+    height: 160px;
+    width: 100%;
+    position: relative;
+  }
+
+  &__resources {
+    display: block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 76%;
+    left: 94%;
+  }
+
+  &__container-resource {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+

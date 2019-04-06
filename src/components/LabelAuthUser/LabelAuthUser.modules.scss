@@ -5,6 +5,8 @@ $local-container-height: 70px;
 .label-auth {
   position: relative;
   cursor: pointer;
+  display: inline-block;
+
 
   &__container-avatar {
     width: $local-container-height;
@@ -17,6 +19,11 @@ $local-container-height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &_left {
+      left: 100%;
+    }
+    z-index: 1;
   }
 
   &__image {
@@ -32,6 +39,10 @@ $local-container-height: 70px;
     display: flex;
     align-items: center;
     padding: 0 20px 0 60px;
+
+    &_left {
+      padding: 0 60px 0 20px;
+    }
   }
 
   &__nickname {

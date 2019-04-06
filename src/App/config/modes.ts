@@ -7,4 +7,5 @@ export enum CurPage {
   RULES = 'RULES',
   LEADERS = 'LEADERS',
   ABOUT = 'ABOUT',
+  GAME = 'GAME',
 }

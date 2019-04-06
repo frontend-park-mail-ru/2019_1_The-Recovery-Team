@@ -47,7 +47,6 @@ export default class LeadersPage extends React.Component {
 
   @onCheburevent(scoreboardStore, scoreboardActions.UPDATE_LEADERS)
   handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
-    console.log('here', this.state.leaders);
     this.setState({
       leaders: [...this.state.leaders, ...action.payload.leaders],
       offset: this.state.offset + action.payload.leaders.length,
