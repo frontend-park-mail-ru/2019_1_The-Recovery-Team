@@ -1,8 +1,12 @@
 import LabelAuthUser from 'components/LabelAuthUser/index';
 import * as React from 'libs/Cheburact/index';
 import classNames from 'libs/classNames/index';
+import { GameModes } from '../config';
+import gameStore from '../store';
+import { actionGameInit, actionGameStop } from '../store/actions';
 import Resource from './Resource/index';
 import Timer from './Timer/index';
+
 const styles = require('./GamePart.modules.scss');
 
 const cn = classNames(styles);
@@ -19,6 +23,19 @@ export default class GamePart extends React.Component {
       { type: 'bomb', number: 0 },
     ],
   };
+
+  componentDidMount() {
+    gameStore.emit(
+      actionGameInit({
+        isOnline: false,
+        mode: GameModes.SINGLEPLAYER,
+      })
+    );
+  }
+
+  componentWillUnmount() {
+    gameStore.emit(actionGameStop());
+  }
 
   public render() {
     return (

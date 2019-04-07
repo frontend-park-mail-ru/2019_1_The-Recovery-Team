@@ -1,3 +1,10 @@
+export enum Direction {
+  LEFT = 'LEFT',
+  UP = 'UP',
+  RIGHT = 'RIGHT',
+  DOWN = 'DOWN',
+}
+
 export enum ItemType {
   LIFEBUOY = 'LIFEBUOY',
   BOMB = 'BOMB',
@@ -47,6 +54,18 @@ export interface GameState {
   activeItems: {
     [id: string]: ActiveItem;
   };
-  RoundNumber: number;
-  RoundTimer: number;
+  roundNumber: number;
+  roundTimer: number;
 }
+
+export const initialGameState: GameState = {
+  field: {
+    height: 0,
+    width: 0,
+    cells: [],
+  },
+  roundTimer: 0,
+  roundNumber: 0,
+  players: {},
+  activeItems: {},
+};

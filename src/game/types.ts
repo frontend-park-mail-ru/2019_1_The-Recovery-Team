@@ -1,7 +1,15 @@
+import { Action } from 'libs/Cheburstore';
 import { ResultPL } from './store/actions';
-import { GameModes } from './config';
+
+export type TransportCallback = (action: Action<any>) => void;
 
 export interface ITransport {
-  init(): Promise<ResultPL>;
+  init(receiver: TransportCallback): Promise<ResultPL>;
   stop(): Promise<ResultPL>;
+  send(action: Action<any>): any;
+}
+
+export interface IControllserManager {
+  connect();
+  disconnect();
 }
