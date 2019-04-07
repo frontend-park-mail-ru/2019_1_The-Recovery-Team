@@ -3,6 +3,7 @@ import gameStore, { gameStoreActions } from 'game/store';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import { Player } from '../../../../config/models';
 const styles = require('./PlayersLayer.modules.scss');
 
 const cn = classNames(styles);
@@ -19,9 +20,35 @@ export default class PlayersLayer extends React.Component {
     counter: 0,
   };
 
+  prevPlayers: { [id: string]: Player } = {};
+
   @onCheburevent(gameStore, gameStoreActions.SET_STATE)
   handleInitPlayers() {
-    this.setState({ counter: this.state.counter + 1 });
+    const { players } = gameStore.select().state;
+
+    let shouldRerender = false;
+    for (const id of Object.keys(players)) {
+      if (!this.prevPlayers[id]) {
+        shouldRerender = true;
+        break;
+      }
+      const { loseRound } = this.prevPlayers[id];
+      if (loseRound !== players[id].loseRound) {
+        shouldRerender = true;
+        break;
+      }
+    }
+
+    for (const id of Object.keys(players)) {
+      if (this.refs[id]) {
+        this.updatePlayerPosition(id, this.refs[id]);
+      }
+    }
+
+    this.prevPlayers = players;
+    if (shouldRerender) {
+      this.setState({ counter: this.state.counter + 1 });
+    }
   }
 
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
@@ -33,7 +60,7 @@ export default class PlayersLayer extends React.Component {
     this.handleInitPlayers();
   }
 
-  initPlayerRef = (id, ref: HTMLElement) => {
+  updatePlayerPosition = (id, ref: HTMLElement) => {
     const { players } = gameStore.select().state;
     const player = players[id];
 
@@ -50,6 +77,10 @@ export default class PlayersLayer extends React.Component {
 
     ref.style.top = yPos;
     ref.style.left = xPos;
+  };
+
+  initPlayerRef = (id, ref: HTMLElement) => {
+    this.updatePlayerPosition(id, ref);
 
     this.refs[id] = ref;
   };
