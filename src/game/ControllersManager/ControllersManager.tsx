@@ -1,4 +1,5 @@
 import gameStore, { actionInitPlayerMove } from 'game/store';
+import debounce from 'libs/debounce';
 import { keyCodeToDir } from './utils';
 
 export default class ControllersManager {
@@ -16,17 +17,18 @@ export default class ControllersManager {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleKeyDown = e => {
-    const direction = keyCodeToDir(e);
-    if (!direction) {
-      return;
-    }
+  handleKeyDown = e =>
+    requestAnimationFrame(() => {
+      const direction = keyCodeToDir(e);
+      if (!direction) {
+        return;
+      }
 
-    gameStore.emit(
-      actionInitPlayerMove({
-        playerId: Number.parseInt(this.myId || '0', 10),
-        move: direction,
-      })
-    );
-  };
+      gameStore.emit(
+        actionInitPlayerMove({
+          playerId: Number.parseInt(this.myId || '0', 10),
+          move: direction,
+        })
+      );
+    });
 }

@@ -132,10 +132,10 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     this.store.state = stateReducer(this.store.state, action);
     switch (action.type) {
       case gameTransportActions.SET_STATE:
-        this.emit(actionSetState());
+        window.requestAnimationFrame(() => this.emit(actionSetState()));
         return;
       default:
-        this.emit(actionSetStateUpdated());
+        window.requestAnimationFrame(() => this.emit(actionSetStateUpdated()));
     }
   };
 }

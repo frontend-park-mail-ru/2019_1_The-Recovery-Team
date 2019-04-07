@@ -3,7 +3,7 @@ import gameStore, { gameStoreActions } from 'game/store';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import { Player } from '../../../../config/models';
+import { Player } from 'game/config/models';
 const styles = require('./PlayersLayer.modules.scss');
 
 const cn = classNames(styles);
