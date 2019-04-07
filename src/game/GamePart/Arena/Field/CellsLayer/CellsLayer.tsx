@@ -8,13 +8,6 @@ const styles = require('./CellsLayer.modules.scss');
 
 const cn = classNames(styles);
 
-interface State {
-  cells: Array<{
-    ref: HTMLElement;
-    type: null | GameModels.CellType;
-  }>;
-}
-
 // @ts-ignore
 @connectToCheburstore
 export default class CellsLayer extends React.Component {
@@ -27,8 +20,6 @@ export default class CellsLayer extends React.Component {
 
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
   updateCells() {
-    this.setState({});
-
     const {
       state: {
         field: { width: colCount, height: rowCount, cells },
@@ -52,7 +43,16 @@ export default class CellsLayer extends React.Component {
     });
   }
 
+  @onCheburevent(gameStore, gameStoreActions.SET_STATE)
+  initCells(){
+    this.setState({});
+  }
+
   componentDidMount() {
+    this.updateCells();
+  }
+
+  componentDidUpdate() {
     this.updateCells();
   }
 

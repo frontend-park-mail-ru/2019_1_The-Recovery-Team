@@ -11,6 +11,7 @@ export enum gameStoreActions {
   INIT_PLAYER_READY = 'INIT_PLAYER_READY',
   INIT_PLAYER_MOVE = 'INIT_PLAYER_MOVE',
 
+  SET_STATE = 'SET_STATE',
   SET_STATE_UPDATED = 'SET_STATE_UPDATED',
 }
 
@@ -61,6 +62,11 @@ export const actionInitPlayerReady: ACreator<InitPlayerReadyPL> = payload => ({
 export const actionInitPlayerMove: ACreator<InitPlayerMovePL> = payload => ({
   payload,
   type: gameStoreActions.INIT_PLAYER_MOVE,
+});
+
+export const actionSetState: ACreatorNull = () => ({
+  payload: null,
+  type: gameStoreActions.SET_STATE,
 });
 
 export const actionSetStateUpdated: ACreatorNull = () => ({

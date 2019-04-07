@@ -1,0 +1,30 @@
+@import 'styles/mixins';
+
+.layer {
+  @include gameLayer(2);
+
+  &__player {
+    @include square(50px);
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 0.1s linear;
+
+    z-index: 1;
+
+    background: no-repeat center;
+    background-size: contain;
+
+    &_me {
+      background-image: url('./img/me.svg');
+    }
+
+    &_opponent {
+      background-image: url('./img/opponent.svg');
+    }
+
+    &_dead {
+      opacity: 0.5;
+    }
+  }
+}

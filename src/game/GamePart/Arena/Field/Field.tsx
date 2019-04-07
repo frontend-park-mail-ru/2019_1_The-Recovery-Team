@@ -5,6 +5,7 @@ import classNames from 'libs/classNames/index';
 import debounce from 'libs/debounce';
 import calcFieldSize from './utils/calcFieldSize';
 import CellsLayer from './CellsLayer/CellsLayer';
+import PlayersLayer from './PlayersLayer/PlayersLayer';
 const styles = require('./Field.modules.scss');
 
 const cn = classNames(styles);
@@ -55,6 +56,7 @@ export default class Field extends React.Component {
   render() {
     return (
       <div className={cn('field')} ref={r => (this.fieldRef = r)}>
+        <PlayersLayer />
         <CellsLayer />
       </div>
     );

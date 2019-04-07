@@ -2,6 +2,7 @@ import { Action, cheburhandler, cheburmodel } from 'libs/Cheburstore';
 import Cheburstore from 'libs/Cheburstore/Cheburstore';
 import { GameModels, GameModes } from '../config';
 import { initialGameState } from '../config/models';
+import { gameTransportActions } from '../transport/actions';
 import { actionGameOfflineInitPlayers } from '../transport/GameOfflineTransport/actions';
 import getTransport from '../transport/getTransport';
 import { ITransport } from '../types';
@@ -9,6 +10,7 @@ import {
   actionGameInitResult,
   actionGameStopResult,
   actionInitPlayerReady,
+  actionSetState,
   actionSetStateUpdated,
   GameInitPL,
   gameStoreActions,
@@ -16,7 +18,6 @@ import {
   InitPlayerReadyPL,
 } from './actions';
 import stateReducer from './stateReducer';
-import { gameTransportActions } from '../transport/actions';
 
 interface GameStoreState {
   state: GameModels.GameState;
@@ -129,6 +130,12 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     await this.receiverMiddleware(action);
 
     this.store.state = stateReducer(this.store.state, action);
-    this.emit(actionSetStateUpdated());
+    switch (action.type) {
+      case gameTransportActions.SET_STATE:
+        this.emit(actionSetState());
+        return;
+      default:
+        this.emit(actionSetStateUpdated());
+    }
   };
 }
