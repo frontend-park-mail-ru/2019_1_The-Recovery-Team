@@ -24,9 +24,7 @@ const render = (element: IElement | null, container: HTMLElement | null) => {
     rootContext.rootElement = element;
   }
 
-  window.onload = () => {
-    rootContext.referenceFiberRoot = buildTree(container, element);
-  };
+  rootContext.referenceFiberRoot = buildTree(container, element);
 };
 
 export { render };
