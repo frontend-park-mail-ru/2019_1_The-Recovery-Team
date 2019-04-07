@@ -1,6 +1,7 @@
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import Field from './Field';
 import Header from './Header';
 const styles = require('./Arena.modules.scss');
 
@@ -13,6 +14,7 @@ export default class Arena extends React.Component {
     return (
       <div className={cn('arena')}>
         <Header myId={1} />
+        <Field />
       </div>
     );
   }

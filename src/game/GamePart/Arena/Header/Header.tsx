@@ -28,7 +28,7 @@ export default class Header extends React.Component {
     const { players } = gameStore.select().state;
 
     const me = players[myId] || null;
-    let opponent = null;
+    let opponent: any = null;
 
     // TODO: Рассмотреть вариант, в котором больше двух игроков
     for (const id of Object.keys(players)) {

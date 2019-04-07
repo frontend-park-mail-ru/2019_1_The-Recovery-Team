@@ -2,6 +2,7 @@ import gameStore, { gameStoreActions } from 'game/store';
 import * as React from 'libs/Cheburact/index';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames/index';
+
 const styles = require('./Timer.modules.scss');
 
 const cn = classNames(styles);
