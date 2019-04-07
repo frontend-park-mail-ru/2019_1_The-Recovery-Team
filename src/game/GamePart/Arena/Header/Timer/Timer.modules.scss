@@ -1,9 +1,9 @@
-@import '~styles/constants';
+@import 'styles/constants';
+@import 'styles/mixins';
 
 .timer {
   position: relative;
   display: inline-block;
-
 
   &__label {
     height: 40px;
@@ -19,19 +19,15 @@
   }
 
   &__pause {
-    position: absolute;
-    top: -36%;
-    left: 40%;
-    width: 80px;
-    height: 80px;
+    @include square(80px);
+    @include absoluteCenter;
+
     border-radius: 50%;
     background-color: $global-color-game-secondary-light;
     border: 4px solid $global-color-game-primary-dark;
     display: flex;
     justify-content: center;
     align-items: center;
-
-
   }
 
   &__stick {

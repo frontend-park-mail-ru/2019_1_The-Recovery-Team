@@ -129,10 +129,6 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     await this.receiverMiddleware(action);
 
     this.store.state = stateReducer(this.store.state, action);
-    this.emit(
-      actionSetStateUpdated({
-        state: this.store.state,
-      })
-    );
+    this.emit(actionSetStateUpdated());
   };
 }

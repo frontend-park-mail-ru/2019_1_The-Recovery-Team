@@ -5,7 +5,7 @@ const PLAYERS_KEY = 'players';
 const FIELD_KEY = 'field';
 const CELLS_KEY = 'cells';
 const ROUND_NUMBER_KEY = 'roundNumber';
-const ROUND_TIMER_KEY = 'ROUND_TIMER_KEY';
+const ROUND_TIMER_KEY = 'roundTimer';
 
 const applyDiff = (state: GameModels.GameState, diff): GameModels.GameState => {
   const nextState = { ...state };
@@ -18,7 +18,7 @@ const applyDiff = (state: GameModels.GameState, diff): GameModels.GameState => {
     nextState.roundNumber = diff[ROUND_NUMBER_KEY];
   }
 
-  if (diff[ROUND_TIMER_KEY]) {
+  if (diff[ROUND_TIMER_KEY] || diff[ROUND_TIMER_KEY] === 0) {
     nextState.roundTimer = diff[ROUND_TIMER_KEY];
   }
 
@@ -38,7 +38,7 @@ const applyDiff = (state: GameModels.GameState, diff): GameModels.GameState => {
     // TODO:
   }
 
-  return state;
+  return nextState;
 };
 
 export default applyDiff;

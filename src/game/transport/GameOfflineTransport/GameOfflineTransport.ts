@@ -68,7 +68,8 @@ export default class GameOfflineTransport implements ITransport {
     }
 
     try {
-      const parsedPayload = JSON.parse(payload);
+      const hasPayload = payload && payload !== '';
+      const parsedPayload = hasPayload ? JSON.parse(payload) : null;
 
       this.receiver({
         type,

@@ -1,6 +1,6 @@
 import { GameModes } from '../config';
 import { ITransport } from '../types';
-import GameOfflineTransport from './GameOfflineTransport/GameOfflineTransport';
+import GameOfflineTransport from './GameOfflineTransport';
 
 const logErr = (isOnline: boolean, type: string) => {
   const msg = `%c [online: ${isOnline}]. transport for ${type} not implemented`;

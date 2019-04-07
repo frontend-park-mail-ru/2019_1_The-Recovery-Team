@@ -1,6 +1,5 @@
-import { ACreator, ACreatorNull } from 'store/types';
 import { GameModels, GameModes } from 'game/config';
-import extractEventName from 'libs/CheburactDOM/utils/props/extractEventName';
+import { ACreator, ACreatorNull } from 'store/types';
 
 export enum gameStoreActions {
   INIT = 'GAME_STORE_INIT',
@@ -34,10 +33,6 @@ export interface InitPlayerMovePL {
   move: GameModels.Direction;
 }
 
-export interface SetStateUpdatedPL {
-  state: GameModels.GameState;
-}
-
 export const actionGameInit: ACreator<GameInitPL> = payload => ({
   payload,
   type: gameStoreActions.INIT,
@@ -68,7 +63,7 @@ export const actionInitPlayerMove: ACreator<InitPlayerMovePL> = payload => ({
   type: gameStoreActions.INIT_PLAYER_MOVE,
 });
 
-export const actionSetStateUpdated: ACreator<SetStateUpdatedPL> = payload => ({
-  payload,
+export const actionSetStateUpdated: ACreatorNull = () => ({
+  payload: null,
   type: gameStoreActions.SET_STATE_UPDATED,
 });
