@@ -6,10 +6,13 @@ const cn = classNames(styles);
 
 export default class GameButton extends React.Component {
   render() {
-    const { type } = this.props;
+    const { type, isAuthorized = false } = this.props;
 
     return (
       <div className={cn('game-button', `game-button_${type}`)}>
+        {isAuthorized ? (
+          <div className={cn('game-button__blur')}>{'ВОЙТИ'}</div>
+        ) : null}
       </div>
     );
   }

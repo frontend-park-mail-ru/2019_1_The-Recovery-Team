@@ -9,6 +9,8 @@ export const routeNames = {
   PROFILE_EDIT: 'PROFILE_EDIT',
   LEADER_BOARD: 'LEADER_BOARD',
   GAME_PART: 'GAME_PART',
+  PAUSE_PAGE: 'PAUSE_PAGE',
+  FINISH_PAGE: 'FINISH_PAGE',
 };
 
 export const routesMap = {
@@ -67,6 +69,16 @@ export const routesMap = {
     template: '/game',
     title: 'Игра',
   },
+  PAUSE_PAGE: {
+    name: routeNames.PAUSE_PAGE,
+    template: '/game/pause',
+    title: 'Пауза',
+  },
+  FINISH_PAGE: {
+    name: routeNames.FINISH_PAGE,
+    template: '/game/finish',
+    title: 'Конец',
+  },
 };
 
 export const routeCreators = {
@@ -79,4 +91,6 @@ export const routeCreators = {
   TO_PROFILE_EDIT: () => `/profile/edit`,
   TO_LEADER_BOARD: () => `/leaderboard`,
   TO_GAME_PART: () => `/game`,
+  TO_PAUSE_PAGE: () => `/game/pause`,
+  TO_FINISH_PAGE: () => `/game/finish`,
 };

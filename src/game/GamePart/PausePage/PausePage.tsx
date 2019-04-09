@@ -1,7 +1,6 @@
 import GameButton from 'components/buttons/GameButton';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import GamePart from '../GamePart';
 import ShortcutsModule from '../ShortcutsModule/ShortcutsModule';
 const styles = require('./PausePage.modules.scss');
 

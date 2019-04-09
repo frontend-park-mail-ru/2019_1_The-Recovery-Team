@@ -1,9 +1,19 @@
+import { routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact/index';
+import { Route } from 'libs/Cheburouter';
+import StartPage from '../../App/SitePart/StartPage/StartPage';
 import { GameModes } from '../config';
 import gameStore from '../store';
 import { actionGameInit, actionGameStop } from '../store/actions';
 import Arena from './Arena/Arena';
+import FinishPage from './FinishPage/FinishPage';
 import PausePage from './PausePage';
+import classNames from 'libs/classNames';
+import {FinishTypes} from "./FinishPage/config/finishTypes";
+const styles = require('./GamePart.modules.scss');
+
+const cn = classNames(styles);
+
 
 export default class GamePart extends React.Component {
   state = {
@@ -33,8 +43,17 @@ export default class GamePart extends React.Component {
 
   public render() {
     return (
-      //<Arena />
-      <PausePage />
+      // <Arena />
+      <div className={cn('game-part')}>
+        <Route template={routesMap.PAUSE_PAGE.template} component={PausePage} />
+        <Route
+          template={routesMap.FINISH_PAGE.template}
+          component={FinishPage}
+          mode={GameModes.SINGLEPLAYER}
+          finishType={FinishTypes.WIN}
+        />
+      </div>
+
       // <div className={cn('game-part')}>
       //   <div className={cn('game-part__header')}>
       //     <div
