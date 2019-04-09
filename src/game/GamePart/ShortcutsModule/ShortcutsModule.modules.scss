@@ -1,0 +1,51 @@
+.shortcuts {
+  display: inline-flex;
+
+  &__column {
+    margin-right: 100px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__container-shortcut {
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__container-control {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__container-line {
+    display: flex;
+    margin: 0 auto;
+
+    &:first-child {
+      margin-bottom: 16px;
+    }
+  }
+
+  &__container-top-arrow {
+    content: url("img/TopArrow.svg");
+  }
+
+  &__container-bottom-arrow {
+    content: url("img/BottomArrow.svg");
+    margin: 0 16px;
+  }
+
+  &__container-left-arrow {
+    content: url("img/LeftArrow.svg");
+  }
+
+  &__container-right-arrow {
+    content: url("img/RightArrow.svg");
+  }
+}

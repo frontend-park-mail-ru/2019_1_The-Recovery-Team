@@ -3,6 +3,7 @@ import { GameModes } from '../config';
 import gameStore from '../store';
 import { actionGameInit, actionGameStop } from '../store/actions';
 import Arena from './Arena/Arena';
+import PausePage from './PausePage';
 
 export default class GamePart extends React.Component {
   state = {
@@ -32,7 +33,8 @@ export default class GamePart extends React.Component {
 
   public render() {
     return (
-      <Arena />
+      //<Arena />
+      <PausePage />
       // <div className={cn('game-part')}>
       //   <div className={cn('game-part__header')}>
       //     <div
