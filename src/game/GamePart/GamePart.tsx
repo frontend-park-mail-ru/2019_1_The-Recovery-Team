@@ -1,69 +1,51 @@
-import { routesMap } from 'config/routes';
-import { actionGameInit, actionGameStop } from 'game/store/actions';
+import { routeCreators, routesMap } from 'config/routes';
+import {
+  actionGameInit,
+  actionGameStop,
+  gameStoreActions,
+} from 'game/store/actions';
 import * as React from 'libs/Cheburact/index';
-import { Route } from 'libs/Cheburouter';
-import StartPage from '../../App/SitePart/StartPage/StartPage';
+import { actionRouterPush, Route } from 'libs/Cheburouter';
+import routerStore from 'libs/Cheburouter/routerStore';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
+import classNames from 'libs/classNames';
+import userStore from 'store/userStore';
 import { GameModes } from '../config';
 import gameStore from '../store';
 import Arena from './Arena/Arena';
 import FinishPage from './FinishPage/FinishPage';
 import PausePage from './PausePage';
-import classNames from 'libs/classNames';
-import {FinishTypes} from "./FinishPage/config/finishTypes";
+
 const styles = require('./GamePart.modules.scss');
 
 const cn = classNames(styles);
 
-
+// @ts-ignore
+@connectToCheburstore
 export default class GamePart extends React.Component {
-  componentDidMount() {
-    gameStore.emit(
-      actionGameInit({
-        isOnline: false,
-        mode: GameModes.SINGLEPLAYER,
+  @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
+  handleGameOver() {
+    routerStore.emit(
+      actionRouterPush({
+        path: routeCreators.TO_FINISH_PAGE(),
       })
     );
   }
 
-  componentWillUnmount() {
-    gameStore.emit(actionGameStop());
-  }
-
   public render() {
     return (
-      // <Arena />
       <div className={cn('game-part')}>
+        <Route
+          template={routesMap.GAME_PART.template}
+          component={Arena}
+          exact={true}
+        />
         <Route template={routesMap.PAUSE_PAGE.template} component={PausePage} />
         <Route
           template={routesMap.FINISH_PAGE.template}
           component={FinishPage}
-          mode={GameModes.SINGLEPLAYER}
-          finishType={FinishTypes.WIN}
         />
       </div>
-
-      // <div className={cn('game-part')}>
-      //   <div className={cn('game-part__header')}>
-      //     <div
-      //       className={cn(
-      //         'game-part__label-container',
-      //         'game-part__label-container_left'
-      //       )}
-      //     >
-      //       <LabelAuthUser user={this.state.user} reverse={true} />
-      //     </div>
-      //     <div className={cn('game-part__timer-container')}>
-      //       <Timer />
-      //     </div>
-      //   </div>
-      //   <div className={cn('game-part__resources')}>
-      //     {this.state.resources.map(resource => (
-      //       <div className={cn('game-part__container-resource')}>
-      //         <Resource resource={resource} />
-      //       </div>
-      //     ))}
-      //   </div>
-      // </div>
     );
   }
 }

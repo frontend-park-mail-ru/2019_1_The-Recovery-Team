@@ -1,5 +1,7 @@
+import { routeCreators } from 'config/routes';
 import gameStore, { gameStoreActions } from 'game/store';
 import * as React from 'libs/Cheburact/index';
+import { Link } from 'libs/Cheburouter';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames/index';
 
@@ -30,6 +32,7 @@ export default class Timer extends React.Component {
 
   render() {
     const { roundNumber, roundTimer } = this.state;
+    const { withPauseButton = true } = this.props;
 
     return (
       <div className={cn('timer')}>
@@ -37,10 +40,15 @@ export default class Timer extends React.Component {
           <div className={cn('timer__round')}>{`${roundNumber} раунд`}</div>
           <div className={cn('timer__time')}>{`${roundTimer}`}</div>
         </div>
-        <div className={cn('timer__pause')}>
-          <div className={cn('timer__stick')} />
-          <div className={cn('timer__stick')} />
-        </div>
+        {withPauseButton ? (
+          <Link
+            to={routeCreators.TO_PAUSE_PAGE()}
+            className={cn('timer__pause')}
+          >
+            <div className={cn('timer__stick')} />
+            <div className={cn('timer__stick')} />
+          </Link>
+        ) : null}
       </div>
     );
   }

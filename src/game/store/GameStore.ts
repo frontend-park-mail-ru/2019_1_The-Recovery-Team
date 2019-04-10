@@ -10,6 +10,7 @@ import {
   actionGameInitResult,
   actionGameStopResult,
   actionInitPlayerReady,
+  actionSetGameOver,
   actionSetState,
   actionSetStateUpdated,
   GameInitPL,
@@ -34,13 +35,17 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     this.reset();
   }
 
+  handleGameOver() {
+    this.emit(actionSetGameOver());
+  }
+
   @cheburhandler(gameStoreActions.INIT)
   async handleInit({ payload }: Action<GameInitPL>) {
     await this.disconnect();
     await this.connect(payload.isOnline, payload.mode);
   }
 
-  @cheburhandler(gameStoreActions.STOP)
+  @cheburhandler(gameStoreActions.INIT_STOP)
   async disconnect() {
     this.reset();
 
@@ -134,8 +139,11 @@ export default class GameStore extends Cheburstore<GameStoreState> {
       case gameTransportActions.SET_STATE:
         window.requestAnimationFrame(() => this.emit(actionSetState()));
         return;
-      default:
+      case gameTransportActions.SET_STATE_DIFF:
         window.requestAnimationFrame(() => this.emit(actionSetStateUpdated()));
+        return;
+      case gameTransportActions.SET_GAME_OVER:
+        this.handleGameOver();
     }
   };
 }

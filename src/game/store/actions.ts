@@ -5,7 +5,7 @@ export enum gameStoreActions {
   INIT = 'GAME_STORE_INIT',
   INIT_RESULT = 'GAME_STORE_INIT_RESULT',
 
-  STOP = 'GAME_STOP',
+  INIT_STOP = 'GAME_STOP',
   STOP_RESULT = 'STOP_RESULT',
 
   INIT_PLAYER_READY = 'INIT_PLAYER_READY',
@@ -13,6 +13,8 @@ export enum gameStoreActions {
 
   SET_STATE = 'SET_STATE',
   SET_STATE_UPDATED = 'SET_STATE_UPDATED',
+
+  SET_GAME_OVER = 'SET_GAME_OVER',
 }
 
 export interface GameInitPL {
@@ -46,7 +48,7 @@ export const actionGameInitResult: ACreator<ResultPL> = payload => ({
 
 export const actionGameStop: ACreatorNull = () => ({
   payload: null,
-  type: gameStoreActions.STOP,
+  type: gameStoreActions.INIT_STOP,
 });
 
 export const actionGameStopResult: ACreator<ResultPL> = payload => ({
@@ -57,6 +59,11 @@ export const actionGameStopResult: ACreator<ResultPL> = payload => ({
 export const actionInitPlayerReady: ACreator<InitPlayerReadyPL> = payload => ({
   payload,
   type: gameStoreActions.INIT_PLAYER_READY,
+});
+
+export const actionSetGameOver: ACreatorNull = () => ({
+  payload: null,
+  type: gameStoreActions.SET_GAME_OVER,
 });
 
 export const actionInitPlayerMove: ACreator<InitPlayerMovePL> = payload => ({
