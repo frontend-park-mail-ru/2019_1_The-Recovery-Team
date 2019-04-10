@@ -27,7 +27,7 @@ export default class FinishPage extends React.Component {
 
   render() {
     const { buttons, isAuthorized } = this.state;
-    const { mode } = gameStore.select();
+    const { mode = GameModes.SINGLEPLAYER } = gameStore.select();
     const { finishType } = this.state;
 
     const title = finishType === FinishTypes.WIN ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ';
