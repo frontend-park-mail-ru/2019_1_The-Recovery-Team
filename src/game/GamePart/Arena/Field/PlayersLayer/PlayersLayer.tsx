@@ -1,24 +1,17 @@
-import { CELL_SIZE } from 'game/config';
+import { Player } from 'game/config/models';
 import gameStore, { gameStoreActions } from 'game/store';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import { Player } from 'game/config/models';
+import { setPlayerClasses, setPlayerPosition } from './utils';
 const styles = require('./PlayersLayer.modules.scss');
 
 const cn = classNames(styles);
-
-interface State {
-  counter: 0;
-}
 
 // @ts-ignore
 @connectToCheburstore
 export default class PlayersLayer extends React.Component {
   refs = {};
-  state: State = {
-    counter: 0,
-  };
 
   prevPlayers: { [id: string]: Player } = {};
 
@@ -47,7 +40,7 @@ export default class PlayersLayer extends React.Component {
 
     this.prevPlayers = players;
     if (shouldRerender) {
-      this.setState({ counter: this.state.counter + 1 });
+      this.setState({});
     }
   }
 
@@ -69,14 +62,9 @@ export default class PlayersLayer extends React.Component {
       height: rowCount,
     } = gameStore.select().state.field;
 
-    let xPos: any = (player.x * 2 + 1) / (colCount * 2 * CELL_SIZE);
-    let yPos: any = (player.y * 2 + 1) / (rowCount * 2 * CELL_SIZE);
+    setPlayerPosition(ref, colCount, rowCount, player.x, player.y);
 
-    xPos = `${Math.floor(xPos * 1000) / 10}%`;
-    yPos = `${Math.floor(yPos * 1000) / 10}%`;
-
-    ref.style.top = yPos;
-    ref.style.left = xPos;
+    setPlayerClasses(ref, true, player.x, player.y, !!player.loseRound);
   };
 
   initPlayerRef = (id, ref: HTMLElement) => {
@@ -86,22 +74,12 @@ export default class PlayersLayer extends React.Component {
   };
 
   render() {
-    const { myId } = this.props;
     const { players } = gameStore.select().state;
 
     return (
       <div className={cn('layer')}>
         {Object.values(players).map(player => (
-          <div
-            className={cn(
-              'layer__player',
-              player.id === myId
-                ? 'layer__player_me'
-                : 'layer__player_opponent',
-              player.loseRound && 'layer__player_dead'
-            )}
-            ref={r => this.initPlayerRef(player.id, r)}
-          />
+          <div ref={r => this.initPlayerRef(player.id, r)} />
         ))}
       </div>
     );

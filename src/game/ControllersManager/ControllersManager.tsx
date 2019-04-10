@@ -1,5 +1,4 @@
 import gameStore, { actionInitPlayerMove } from 'game/store';
-import debounce from 'libs/debounce';
 import { keyCodeToDir } from './utils';
 
 export default class ControllersManager {
