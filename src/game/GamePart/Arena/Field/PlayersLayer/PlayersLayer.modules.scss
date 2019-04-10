@@ -8,7 +8,7 @@
 
     position: absolute;
     transform: translate(-50%, -50%);
-    transition: top 30ms linear, left 30ms linear;
+    transition: top 170ms linear, left 170ms linear;
 
     z-index: 1;
 
@@ -16,11 +16,55 @@
     background-size: contain;
 
     &_me {
-      background-image: url('./img/me.svg');
+      &-1 {
+        background-image: url('./img/me-1.svg');
+      }
+
+      &-2 {
+        background-image: url('./img/me-2.svg');
+      }
+
+      &-3 {
+        background-image: url('./img/me-3.svg');
+      }
+
+      &-4 {
+        background-image: url('./img/me-4.svg');
+      }
+
+      &-5 {
+        background-image: url('./img/me-3.svg');
+      }
+
+      &-6 {
+        background-image: url('./img/me-2.svg');
+      }
     }
 
     &_opponent {
-      background-image: url('./img/opponent.svg');
+      &-1 {
+        background-image: url('./img/opp-1.svg');
+      }
+
+      &-2 {
+        background-image: url('./img/opp-2.svg');
+      }
+
+      &-3 {
+        background-image: url('./img/opp-3.svg');
+      }
+
+      &-4 {
+        background-image: url('./img/opp-4.svg');
+      }
+
+      &-5 {
+        background-image: url('./img/opp-3.svg');
+      }
+
+      &-6 {
+        background-image: url('./img/opp-2.svg');
+      }
     }
 
     &_dead {

@@ -1,9 +1,9 @@
-import { GameModels } from 'game/config';
 import gameStore, { gameStoreActions } from 'game/store';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import { getImage } from './config';
+import { getCellId, setCellClass } from './utils';
+
 const styles = require('./CellsLayer.modules.scss');
 
 const cn = classNames(styles);
@@ -11,40 +11,34 @@ const cn = classNames(styles);
 // @ts-ignore
 @connectToCheburstore
 export default class CellsLayer extends React.Component {
-  cells: Array<{
-    ref: HTMLElement;
-    type: null | GameModels.CellType;
-  }> = [];
-  prevColCount = 0;
-  prevRowCount = 0;
+  cellRefs: { [id: string]: HTMLElement } = {};
 
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
   updateCells() {
     const {
-      state: {
-        field: { width: colCount, height: rowCount, cells },
-      },
-    } = gameStore.select();
+      cells,
+      height: rowCount,
+      width: colCount,
+    } = gameStore.select().state.field;
 
     const widthPercent = 100 / colCount;
     const heightPercent = 100 / rowCount;
 
-    this.prevColCount = colCount;
-    this.prevRowCount = rowCount;
+    cells.forEach(cell => {
+      const ref = this.cellRefs[getCellId(cell)];
+      if (!ref) {
+        return;
+      }
 
-    this.cells.forEach(({ ref, type }, index) => {
       ref.style.width = `${widthPercent}%`;
       ref.style.height = `${heightPercent}%`;
 
-      if (type !== cells[index].type) {
-        this.cells[index].type = cells[index].type;
-        ref.style.backgroundImage = `url(${getImage(cells[index].type)})`;
-      }
+      setCellClass(ref, cell.type);
     });
   }
 
   @onCheburevent(gameStore, gameStoreActions.SET_STATE)
-  initCells(){
+  initCells() {
     this.setState({});
   }
 
@@ -61,16 +55,8 @@ export default class CellsLayer extends React.Component {
 
     return (
       <div className={cn('layer')}>
-        {cells.map(() => (
-          <div
-            className={cn('layer__cell')}
-            ref={r =>
-              this.cells.push({
-                type: null,
-                ref: r,
-              })
-            }
-          />
+        {cells.map(cell => (
+          <div ref={r => (this.cellRefs[getCellId(cell)] = r)} />
         ))}
       </div>
     );

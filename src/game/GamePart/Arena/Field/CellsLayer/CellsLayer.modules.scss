@@ -1,14 +1,31 @@
 @import 'styles/mixins';
+@import 'styles/constants';
 
 .layer {
+  box-shadow: 0px 0px 50px -10px #BDBDBD;
+  overflow: hidden;
+  border-radius: 10px;
+
   @include gameLayer(1);
 
   &__cell {
     flex-shrink: 0;
     display: inline-block;
-    background-size: contain;
+    background-size: cover;
     background: no-repeat center;
     margin: 0;
     padding: 0;
+
+    &_sand {
+      background-image: url('./img/sand.svg');
+    }
+
+    &_water {
+      background-image: url('./img/water.svg');
+    }
+
+    &_swamp {
+      background-image: url('./img/swamp.svg');
+    }
   }
 }
