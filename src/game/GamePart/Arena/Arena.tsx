@@ -1,3 +1,4 @@
+import ControllersManager from 'game/ControllersManager';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
@@ -10,6 +11,12 @@ const cn = classNames(styles);
 // @ts-ignore
 @connectToCheburstore
 export default class Arena extends React.Component {
+  controllersManager: ControllersManager | null = null;
+  componentDidMount() {
+    this.controllersManager = new ControllersManager('1');
+    this.controllersManager.connect();
+  }
+
   render() {
     return (
       <div className={cn('arena')}>
@@ -17,5 +24,11 @@ export default class Arena extends React.Component {
         <Field />
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    if (this.controllersManager) {
+      this.controllersManager.disconnect();
+    }
   }
 }

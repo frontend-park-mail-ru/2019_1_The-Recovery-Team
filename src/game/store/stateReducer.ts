@@ -12,10 +12,8 @@ interface ReducersMap {
 }
 
 const reducersMap: ReducersMap = {
-  [gameTransportActions.SET_STATE]: (state, payload) => ({
-    ...state,
-    ...normalizeSetState(payload),
-  }),
+  [gameTransportActions.SET_STATE]: (state, payload) =>
+    normalizeSetState(payload),
 
   [gameTransportActions.SET_STATE_DIFF]: (state, payload) =>
     applyDiff(state, payload),
