@@ -7,7 +7,6 @@ export interface Leader {
 }
 
 export interface ScoreboardState {
-  leaders: Array<Leader> | null;
-  offset: number;
+  leaders: Array<Leader>;
   total: number;
 }

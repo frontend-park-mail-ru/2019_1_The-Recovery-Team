@@ -7,56 +7,43 @@ const styles = require('./LeadersPage.modules.scss');
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import scoreboardStore from 'store/scoreboardStore';
 import {
-  actionScoreboardLoadPage,
+  actionScoreboardLoad,
+  actionScoreboardReset,
   scoreboardActions,
   UpdateLeadersPL,
 } from 'store/scoreboardStore/actions';
 
 const cn = classNames(styles);
 
-const LIMIT = 6;
-
+// @ts-ignore
 @connectToCheburstore
 export default class LeadersPage extends React.Component {
   state = {
-    offset: 0,
-    total: 0,
     columns: [
       { title: '#', classesName: 'num' },
       { title: 'Игрок', classesName: 'nick' },
       { title: 'Рейтинг', classesName: 'rating' },
     ],
     leaders: [],
+    hasMore: true,
   };
 
   componentDidMount() {
-    scoreboardStore.emit(
-      actionScoreboardLoadPage({
-        offset: 0,
-        limit: LIMIT,
-      })
-    );
+    this.handleLoadNextPage();
   }
 
-  handleLoadNextPage = () =>
-    scoreboardStore.emit(
-      actionScoreboardLoadPage({
-        limit: LIMIT,
-        offset: this.state.offset,
-      })
-    );
+  handleLoadNextPage = () => scoreboardStore.emit(actionScoreboardLoad());
 
-  @onCheburevent(scoreboardStore, scoreboardActions.UPDATE_LEADERS)
+  @onCheburevent(scoreboardStore, scoreboardActions.LOAD_SUCCESS)
   handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
     this.setState({
-      leaders: [...this.state.leaders, ...action.payload.leaders],
-      offset: this.state.offset + action.payload.leaders.length,
-      total: action.payload.total,
+      leaders: action.payload.leaders,
+      hasMore: action.payload.hasMore,
     });
   }
 
   render() {
-    const { columns, leaders, total, offset } = this.state;
+    const { columns, leaders, hasMore } = this.state;
 
     return (
       <MainBlock>
@@ -99,7 +86,7 @@ export default class LeadersPage extends React.Component {
             ))}
           </div>
           <div className={cn('leaders-page__load-button')}>
-            {total !== offset && (
+            {hasMore && (
               <SubmitButton mode={modes.NEXT} onClick={this.handleLoadNextPage}>
                 {'Загрузить ещё'}
               </SubmitButton>
@@ -108,5 +95,9 @@ export default class LeadersPage extends React.Component {
         </div>
       </MainBlock>
     );
+  }
+
+  componentWillUnmount() {
+    scoreboardStore.emit(actionScoreboardReset());
   }
 }

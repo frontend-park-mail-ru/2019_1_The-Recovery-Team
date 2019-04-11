@@ -1,17 +1,30 @@
 import { Profile } from '../userStore';
 
-export const normalizeLeadersGet = (response): Array<Profile> | null => {
-  if (response.response && Array.isArray(response.response.List)) {
-    return response.response.List;
+export const normalizeLeadersGet = (
+  response
+): {
+  leaders: Array<Profile>;
+  total: number;
+} | null => {
+  const leaders =
+    response.response && Array.isArray(response.response.List)
+      ? response.response.List
+      : null;
+
+  if (!leaders) {
+    return null;
   }
 
-  return null;
-};
-
-export const normalizeTotal = (response): number | null => {
-  if (response.response && !!response.response.total !== null) {
-    return response.response.total;
+  const total =
+    response.response && !!response.response.total !== null
+      ? response.response.total
+      : null;
+  if (!total) {
+    return null;
   }
 
-  return null;
+  return {
+    leaders,
+    total,
+  };
 };
