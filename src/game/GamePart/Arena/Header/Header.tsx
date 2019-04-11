@@ -5,6 +5,7 @@ import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import Timer from './Timer';
+import { defaultAvatar } from '../../../../store/userStore/normalizeResponse';
 
 const styles = require('./Header.modules.scss');
 
@@ -54,7 +55,7 @@ export default class Header extends React.Component {
             <LabelAuthUser
               user={{
                 nickname: 'Me',
-                avatar: '',
+                avatar: defaultAvatar,
               }}
               reverse={true}
             />
@@ -63,16 +64,16 @@ export default class Header extends React.Component {
         <div className={cn('header__timer')}>
           <Timer />
         </div>
-        {opponent !== null && (
-          <div className={cn('header__opponent')}>
-            <LabelAuthUser
-              user={{
-                nickname: 'Opponent',
-                avatar: '',
-              }}
-            />
-          </div>
-        )}
+        {/*{opponent !== null && (*/}
+          {/*<div className={cn('header__opponent')}>*/}
+            {/*<LabelAuthUser*/}
+              {/*user={{*/}
+                {/*nickname: 'Opponent',*/}
+                {/*avatar: '',*/}
+              {/*}}*/}
+            {/*/>*/}
+          {/*</div>*/}
+        {/*)}*/}
       </div>
     );
   }
