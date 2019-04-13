@@ -5,12 +5,13 @@ const autoprefixer = require('autoprefixer');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const srcPath = subPath => path.join(__dirname, '../src', subPath);
+const publicDir = path.join(__dirname, '..', '/public');
 
 module.exports = {
     context: path.resolve('./src'),
     entry: './index.tsx',
     output: {
-        path: path.join(__dirname, '..', '/public'),
+        path: publicDir,
         publicPath: '/',
         filename: 'static/js/[name].[hash].js',
         chunkFilename: 'static/js/[id].[hash].chunk.js'
@@ -98,7 +99,8 @@ module.exports = {
         }),
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
-            skipWaiting: true
+            skipWaiting: true,
+            importsDirectory: `${publicDir}/static/js`,
         }),
     ]
 };
