@@ -105,14 +105,14 @@ export default class GameStore extends Cheburstore<GameStoreState> {
   }
 
   private processOfflineSpecificInit() {
-    if (!this.transport) {
+    if (!this.transport || !this.store.me) {
       return;
     }
 
     if (this.store.mode === GameModes.SINGLEPLAYER) {
       this.transport.send(
         actionGameOfflineInitPlayers({
-          playerIds: [1],
+          playerIds: [this.store.me.id],
         })
       );
     }
