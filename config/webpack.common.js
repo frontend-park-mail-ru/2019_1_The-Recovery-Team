@@ -2,7 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const srcPath = subPath => path.join(__dirname, '../src', subPath);
 
@@ -95,6 +95,10 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: 'static/css/[name]-[hash].css'
+        }),
+        new WorkboxPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true
         }),
     ]
 };
