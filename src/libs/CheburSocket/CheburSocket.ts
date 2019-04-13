@@ -48,7 +48,7 @@ export default class CheburSocket {
 
   send(message: Object) {
     if (this.connection) {
-      console.log('<<< SEND: ', message);
+      console.log('>>> SEND: ', message);
       try {
         this.connection.send(JSON.stringify(message));
       } catch {
@@ -77,11 +77,14 @@ export default class CheburSocket {
   };
 
   disconnect(): CheburSocket {
+    console.log('>>> TOTAL DISCONNECT');
     this.forseStop = true;
-    return this.resetPingInterval()
+    this.resetPingInterval()
       .resetPingTimeout()
       .resetReconnectTimeout()
       .close();
+    console.log('>>> DONE TOTAL DISCONNECT', this);
+    return this;
   }
 
   private resetPingTimeout(): CheburSocket {
@@ -171,7 +174,7 @@ export default class CheburSocket {
   private handleMessage = message => {
     this.resetPingTimeout();
 
-    console.log('message from socket: ', message, message.data);
+    console.log('>>> message from socket: ', message, message.data);
     if (message.data.includes(PONG_TYPE)) {
       return;
     }

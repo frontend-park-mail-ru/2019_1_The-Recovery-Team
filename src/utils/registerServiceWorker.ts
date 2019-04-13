@@ -10,7 +10,10 @@ const registerFunc = async () => {
 };
 
 export default () => {
-  if ('serviceWorker' in navigator) {
+  if (
+    'serviceWorker' in navigator &&
+    !window.location.host.startsWith('localhost')
+  ) {
     window.addEventListener('load', registerFunc);
   }
 };
