@@ -3,10 +3,10 @@
 .header {
   height: 140px;
   width: 100%;
-
   position: relative;
 
   &__timer {
+    width: 100%;
     @include absoluteCenter;
   }
 
