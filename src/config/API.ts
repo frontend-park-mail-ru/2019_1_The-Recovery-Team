@@ -12,6 +12,8 @@ export const HTTP_STATUS = {
   notFound: 404,
 };
 
+export const WS_URL: string = 'ws://127.0.0.1:8080/api/v1/game.ws';
+
 export default {
   avatars: () => prefixAPI('/avatars'),
   profiles: () => prefixAPI('/profiles'),

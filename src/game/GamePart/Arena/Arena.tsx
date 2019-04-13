@@ -26,7 +26,7 @@ export default class Arena extends React.Component {
     gameStore.emit(
       actionGameInit({
         me,
-        isOnline: false,
+        isOnline: window.navigator.onLine,
         mode: gameMode,
       })
     );

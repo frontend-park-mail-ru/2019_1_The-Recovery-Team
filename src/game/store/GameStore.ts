@@ -1,4 +1,5 @@
 import { GameModels, GameModes } from 'game/config';
+import { anonymousUser } from 'game/config/models';
 import getTransport, { gameTransportActions } from 'game/transport';
 import { actionGameOfflineInitPlayers } from 'game/transport/GameOfflineTransport';
 import { ITransport } from 'game/types';
@@ -18,7 +19,6 @@ import {
   InitPlayerReadyPL,
 } from './actions';
 import stateReducer from './stateReducer';
-import { anonymousUser } from '../config/models';
 
 interface GameStoreState {
   state: GameModels.GameState;
