@@ -60,7 +60,9 @@ export default class Header extends React.Component {
             />
           </div>
         )}
-        <Timer />
+        <div className={cn('header__timer')}>
+          <Timer />
+        </div>
         {opponent !== null && (
           <div className={cn('header__opponent')}>
             <LabelAuthUser

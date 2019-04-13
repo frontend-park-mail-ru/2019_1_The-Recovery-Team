@@ -2,7 +2,16 @@
 @import 'styles/mixins';
 
 .timer {
-  display: inline-flex;
+  position: relative;
+  width: 100%;
+
+  &__pause-container {
+    display: block;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    right: 31%;
+  }
 
   &__pause {
     @include square(46px);
@@ -12,18 +21,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
     box-sizing: border-box;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 67%;
+    position: relative;
 
     &:after {
       content: '';
-      position: absolute;
-      transform: translate(-50%, -50%);
-      top: 50%;
-      left: 50%;
+      @include absoluteCenter;
       height: 100%;
       width: 100%;
 
@@ -38,19 +41,14 @@
     color: $global-color-primary-light;
     background-color:  #FDE679;
     border-radius: 10px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
+    @include absoluteCenter;
     left: 36%;
   }
 
   &__time {
     color: $global-color-primary-light;
     padding: 10px 10px 20px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
     font-size: 50px;
+    @include absoluteCenter;
   }
 }

@@ -38,10 +38,12 @@ export default class Timer extends React.Component {
       <div className={cn('timer')}>
         <div className={cn('timer__round')}>{`${roundNumber} раунд`}</div>
         <div className={cn('timer__time')}>{`00:0${roundTimer}`}</div>
-        <Link
-          to={routeCreators.TO_PAUSE_PAGE()}
-          className={cn('timer__pause')}
-        />
+        <div className={cn('timer__pause-container')}>
+          <Link
+            to={routeCreators.TO_PAUSE_PAGE()}
+            className={cn('timer__pause')}
+          />
+        </div>
       </div>
     );
   }
