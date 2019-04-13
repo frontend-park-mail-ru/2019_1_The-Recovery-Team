@@ -1,11 +1,14 @@
-export interface Profile {
+export interface UserShort {
   id: number;
-  email: string;
   nickname: string;
-  loss: number;
-  record: number;
-  win: number;
   avatar: string | null;
+  record: number;
+}
+
+export interface Profile extends UserShort {
+  email: string;
+  loss: number;
+  win: number;
 }
 
 export interface ProfileState {

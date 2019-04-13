@@ -4,8 +4,10 @@ import gameStore, { actionGameInit } from 'game/store';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import userStore from 'store/userStore';
 import Field from './Field';
 import Header from './Header';
+
 const styles = require('./Arena.modules.scss');
 
 const cn = classNames(styles);
@@ -16,11 +18,15 @@ export default class Arena extends React.Component {
   controllersManager: ControllersManager | null = null;
 
   componentDidMount() {
-    console.log('APP MOUNT');
+    const {
+      routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+    } = this.props;
+    const me = userStore.select().user;
     gameStore.emit(
       actionGameInit({
+        me,
         isOnline: false,
-        mode: GameModes.SINGLEPLAYER,
+        mode: gameMode,
       })
     );
     this.controllersManager = new ControllersManager('1');
@@ -28,16 +34,19 @@ export default class Arena extends React.Component {
   }
 
   render() {
+    const {
+      routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+    } = this.props;
+
     return (
       <div className={cn('arena')}>
-        <Header myId={1} />
+        <Header mode={gameMode} myId={1} />
         <Field />
       </div>
     );
   }
 
   componentWillUnmount() {
-    console.log('APP UNMOUNT');
     if (this.controllersManager) {
       this.controllersManager.disconnect();
     }
