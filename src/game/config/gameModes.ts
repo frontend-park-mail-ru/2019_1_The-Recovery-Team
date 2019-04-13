@@ -1,4 +1,4 @@
 export enum GameModes {
-  SINGLEPLAYER = 'SINGLEPLAYER',
-  MULTIPLAYER = 'MULTIPLAYER',
+  SINGLEPLAYER = 'singleplayer',
+  MULTIPLAYER = 'multiplayer',
 }

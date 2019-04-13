@@ -1,19 +1,12 @@
 import { routeCreators, routesMap } from 'config/routes';
-import {
-  actionGameInit,
-  actionGameStop,
-  gameStoreActions,
-} from 'game/store/actions';
+import gameStore from 'game/store';
+import { gameStoreActions } from 'game/store/actions';
 import * as React from 'libs/Cheburact/index';
-import { actionRouterPush, Route } from 'libs/Cheburouter';
-import routerStore from 'libs/Cheburouter/routerStore';
+import routerStore, { actionRouterPush, Route } from 'libs/Cheburouter';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import userStore from 'store/userStore';
-import { GameModes } from '../config';
-import gameStore from '../store';
-import Arena from './Arena/Arena';
-import FinishPage from './FinishPage/FinishPage';
+import Arena from './Arena';
+import FinishPage from './FinishPage';
 import PausePage from './PausePage';
 
 const styles = require('./GamePart.modules.scss');

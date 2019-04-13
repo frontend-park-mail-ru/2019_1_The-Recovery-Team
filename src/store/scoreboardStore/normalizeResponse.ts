@@ -1,4 +1,4 @@
-import { Profile } from '../userStore';
+import { Profile } from 'store/userStore';
 
 export const normalizeLeadersGet = (
   response

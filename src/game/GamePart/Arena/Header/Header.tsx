@@ -5,7 +5,6 @@ import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import Timer from './Timer';
-import { defaultAvatar } from '../../../../store/userStore/normalizeResponse';
 
 const styles = require('./Header.modules.scss');
 
@@ -25,19 +24,7 @@ export default class Header extends React.Component {
 
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
   updatePlayers() {
-    const { myId } = this.props;
-    const { players } = gameStore.select().state;
-
-    const me = players[myId] || null;
-    let opponent: any = null;
-
-    // TODO: Рассмотреть вариант, в котором больше двух игроков
-    for (const id of Object.keys(players)) {
-      if (id !== myId) {
-        opponent = players[id];
-        break;
-      }
-    }
+    const { me, opponent } = gameStore.select();
 
     this.setState({
       me,
@@ -46,34 +33,30 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const { me, opponent } = this.props;
+    const { mode } = this.props;
+    const { me = null, opponent = null } = this.state;
 
     return (
       <div className={cn('header')}>
-        {me !== null && (
-          <div className={cn('header__me')}>
-            <LabelAuthUser
-              user={{
-                nickname: 'Me',
-                avatar: defaultAvatar,
-              }}
-              reverse={true}
-            />
-          </div>
+        {me && (
+          <LabelAuthUser
+            className={cn('header__me')}
+            user={me}
+            reverse={true}
+          />
         )}
         <div className={cn('header__timer')}>
-          <Timer />
+          <Timer mode={mode} />
         </div>
-        {/*{opponent !== null && (*/}
-          {/*<div className={cn('header__opponent')}>*/}
-            {/*<LabelAuthUser*/}
-              {/*user={{*/}
-                {/*nickname: 'Opponent',*/}
-                {/*avatar: '',*/}
-              {/*}}*/}
-            {/*/>*/}
-          {/*</div>*/}
-        {/*)}*/}
+        {opponent && (
+          <LabelAuthUser
+            className={cn('header__opponent')}
+            user={{
+              nickname: 'Opponent',
+              avatar: '',
+            }}
+          />
+        )}
       </div>
     );
   }

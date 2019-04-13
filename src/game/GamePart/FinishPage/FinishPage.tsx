@@ -27,19 +27,21 @@ export default class FinishPage extends React.Component {
 
   render() {
     const { buttons, isAuthorized } = this.state;
-    const { mode = GameModes.SINGLEPLAYER } = gameStore.select();
+    const {
+      routeParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+    } = this.props;
     const { finishType } = this.state;
 
     const title = finishType === FinishTypes.WIN ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ';
     const modeClassName =
-      mode === GameModes.SINGLEPLAYER
+      gameMode === GameModes.SINGLEPLAYER
         ? 'finish-page__title_single'
         : 'finish-page__title_multi';
 
     return (
       <div className={cn('finish-page')}>
         <div className={cn('finish-page__title', modeClassName)}>{title}</div>
-        {mode === GameModes.MULTIPLAYER ? (
+        {gameMode === GameModes.MULTIPLAYER ? (
           <div className={cn('finish-page__rating')}>{`РЕЙТИНГ ...`}</div>
         ) : null}
         <div className={cn('finish-page__buttons-container')}>

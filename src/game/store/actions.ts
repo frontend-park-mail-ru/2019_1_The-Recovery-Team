@@ -1,5 +1,6 @@
 import { GameModels, GameModes } from 'game/config';
 import { ACreator, ACreatorNull } from 'store/types';
+import { UserShort } from '../../store/userStore';
 
 export enum gameStoreActions {
   INIT = 'GAME_STORE_INIT',
@@ -20,6 +21,7 @@ export enum gameStoreActions {
 export interface GameInitPL {
   isOnline: boolean;
   mode: GameModes;
+  me: UserShort | null; // null в случае offline singleplayer
 }
 
 export interface ResultPL {
