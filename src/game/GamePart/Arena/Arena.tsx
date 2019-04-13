@@ -1,6 +1,7 @@
 import { GameModes } from 'game/config';
 import ControllersManager from 'game/ControllersManager';
 import gameStore, { actionGameInit } from 'game/store';
+import { IControllersManager } from 'game/types';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
@@ -15,7 +16,7 @@ const cn = classNames(styles);
 // @ts-ignore
 @connectToCheburstore
 export default class Arena extends React.Component {
-  controllersManager: ControllersManager | null = null;
+  controllersManager: IControllersManager | null = null;
 
   componentDidMount() {
     const {
@@ -29,7 +30,8 @@ export default class Arena extends React.Component {
         mode: gameMode,
       })
     );
-    this.controllersManager = new ControllersManager('1');
+
+    this.controllersManager = new ControllersManager();
     this.controllersManager.connect();
   }
 
@@ -40,7 +42,7 @@ export default class Arena extends React.Component {
 
     return (
       <div className={cn('arena')}>
-        <Header mode={gameMode} myId={1} />
+        <Header mode={gameMode} />
         <Field />
       </div>
     );

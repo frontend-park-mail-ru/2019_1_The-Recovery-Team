@@ -18,6 +18,7 @@ import {
   InitPlayerReadyPL,
 } from './actions';
 import stateReducer from './stateReducer';
+import { anonymousUser } from '../config/models';
 
 interface GameStoreState {
   state: GameModels.GameState;
@@ -150,4 +151,8 @@ export default class GameStore extends Cheburstore<GameStoreState> {
         this.handleGameOver();
     }
   };
+
+  public selectMyId(): number {
+    return this.store.me ? this.store.me.id : anonymousUser.id;
+  }
 }
