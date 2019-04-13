@@ -101,8 +101,7 @@ module.exports = {
             clientsClaim: true,
             skipWaiting: true,
             importsDirectory: `${publicDir}/static/js`,
-            navigateFallback: '/',
-            navigateFallbackWhitelist: [/^\/game/, /^\/about/, /^\/rules/]
+            navigateFallback: '/index.html',
         }),
     ]
 };
