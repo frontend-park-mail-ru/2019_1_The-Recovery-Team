@@ -8,9 +8,12 @@ const cn = classNames(styles);
 export default class PlayButton extends React.Component {
   render() {
     const { mode, className, to, isMultiActive = false } = this.props;
-    const blurMultiClass = isMultiActive ? 'play-button_multi-blur' : null;
-    let classes = cn('play-button', `play-button_${mode}`, blurMultiClass);
-    console.log(classes, isMultiActive);
+    let classes = cn(
+      'play-button',
+      `play-button_${mode}`,
+      isMultiActive && 'play-button_multi-blur'
+    );
+
     if (className) {
       classes = `${classes} ${className}`;
     }

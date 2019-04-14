@@ -1,4 +1,4 @@
-import GameButton from 'components/buttons/GameButton';
+ import GameButton from 'components/buttons/GameButton';
 import { routeCreators } from 'config/routes';
 import { GameModes } from 'game/config';
 import gameStore, { actionGameStop } from 'game/store';

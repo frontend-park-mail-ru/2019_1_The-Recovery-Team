@@ -14,10 +14,9 @@ export default class StartPage extends React.Component {
   render() {
     const { user = false } = userStore.select();
     const isMultiActive = !user;
-    const multiRef = user
+    const multiButtonRoute = user
       ? routeCreators.TO_GAME_PART(GameModes.MULTIPLAYER)
       : routeCreators.TO_SIGN_IN();
-    console.log('user', user);
 
     return (
       <div className={cn('start-page')}>
@@ -32,7 +31,7 @@ export default class StartPage extends React.Component {
             className={cn('start-page__play-button')}
             isMultiActive={isMultiActive}
             mode={PlayButtonModes.MULTIPLAYER}
-            to={multiRef}
+            to={multiButtonRoute}
           />
         </div>
       </div>
