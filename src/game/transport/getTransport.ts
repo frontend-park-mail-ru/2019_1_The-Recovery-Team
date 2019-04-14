@@ -13,6 +13,9 @@ const logErr = (isOnline: boolean, type: string) => {
 export default (isOnline: boolean, mode: GameModes): ITransport => {
   switch (mode) {
     case GameModes.MULTIPLAYER:
+      if (isOnline) {
+        return new GameOnlineTransport();
+      }
       throw new Error(logErr(isOnline, mode));
     case GameModes.SINGLEPLAYER:
       if (!isOnline) {

@@ -1,5 +1,5 @@
+import { defaultAvatar } from 'config/images';
 import { Profile } from './types';
-export const defaultAvatar = require('./img/nouser.png');
 
 export const normalizeSessionGet = (response): number | null => {
   if (response.response && response.response.id) {

@@ -1,4 +1,5 @@
 import { BASE_URL } from 'config/API';
+import { defaultAvatar } from 'config/images';
 import * as React from 'libs/Cheburact';
 import { Link } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
@@ -19,7 +20,7 @@ export default class LabelAuthUser extends React.Component {
       <Link to={to} className={`${cn('label-auth')} ${className}`}>
         <div className={avatarClassNames}>
           <img
-            src={`${BASE_URL}${user.avatar}` || ''}
+            src={`${BASE_URL}${user.avatar}` || defaultAvatar}
             className={cn('label-auth__image')}
           />
         </div>

@@ -1,4 +1,4 @@
-import Cheburstore, { Action } from 'libs/Cheburstore';
+import Cheburstore from 'libs/Cheburstore';
 import {
   actionCheburSocketConnected,
   actionCheburSocketDisonnected,
@@ -9,10 +9,10 @@ const PING_INTERVAL = 2000;
 const PING_TIMEOUT = 1000;
 const RECONNECT_TIMEOUT = 1000;
 
-const PING_ACTION: Action<null> = {
+const PING_ACTION = JSON.stringify({
   type: 'INIT_PING',
   payload: null,
-};
+});
 
 const PONG_TYPE = 'SET_PONG';
 
@@ -46,12 +46,12 @@ export default class CheburSocket {
     return this;
   }
 
-  send(message: Object) {
+  send(message: string) {
     if (this.connection) {
       try {
-        this.connection.send(JSON.stringify(message));
+        this.connection.send(message);
       } catch {
-        console.warn('can not send message');
+        console.log('>>> can not send message');
       }
     }
 
@@ -133,6 +133,7 @@ export default class CheburSocket {
   };
 
   private handleOpen = () => {
+    console.log('>>> connected');
     if (this.dispatcher) {
       this.dispatcher.emit(actionCheburSocketConnected());
     }
@@ -141,6 +142,7 @@ export default class CheburSocket {
   };
 
   private handleClose = () => {
+    console.log('>>> disconnected');
     this.close();
 
     this.resetPingTimeout();

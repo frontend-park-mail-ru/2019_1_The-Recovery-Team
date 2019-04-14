@@ -1,6 +1,6 @@
 import { GameModels, GameModes } from 'game/config';
 import { ACreator, ACreatorNull } from 'store/types';
-import { UserShort } from '../../store/userStore';
+import { UserShort } from 'store/userStore';
 
 export enum gameStoreActions {
   INIT = 'GAME_STORE_INIT',
@@ -14,6 +14,8 @@ export enum gameStoreActions {
 
   SET_STATE = 'SET_STATE',
   SET_STATE_UPDATED = 'SET_STATE_UPDATED',
+
+  SET_OPPONENT = 'SET_OPPONENT',
 
   SET_GAME_OVER = 'SET_GAME_OVER',
 }
@@ -81,4 +83,9 @@ export const actionSetState: ACreatorNull = () => ({
 export const actionSetStateUpdated: ACreatorNull = () => ({
   payload: null,
   type: gameStoreActions.SET_STATE_UPDATED,
+});
+
+export const actionSetOpponent: ACreatorNull = () => ({
+  payload: null,
+  type: gameStoreActions.SET_OPPONENT,
 });

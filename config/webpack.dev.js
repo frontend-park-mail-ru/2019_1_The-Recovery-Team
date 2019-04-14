@@ -6,6 +6,7 @@ module.exports = webpackMerge(commonConfig, {
     devtool: 'eval-source-map',
     devServer: {
         publicPath: '/',
+        host: '0.0.0.0',
         port: 5000,
         historyApiFallback: true,
         compress: true,

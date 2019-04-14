@@ -22,6 +22,13 @@ export default class Header extends React.Component {
     this.updatePlayers();
   }
 
+  @onCheburevent(gameStore, gameStoreActions.SET_OPPONENT)
+  handleSetOpponent() {
+    const { opponent } = gameStore.select();
+
+    this.setState({ opponent });
+  }
+
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
   updatePlayers() {
     const { me, opponent } = gameStore.select();
@@ -49,13 +56,7 @@ export default class Header extends React.Component {
           <Timer mode={mode} />
         </div>
         {opponent && (
-          <LabelAuthUser
-            className={cn('header__opponent')}
-            user={{
-              nickname: 'Opponent',
-              avatar: '',
-            }}
-          />
+          <LabelAuthUser className={cn('header__opponent')} user={opponent} />
         )}
       </div>
     );

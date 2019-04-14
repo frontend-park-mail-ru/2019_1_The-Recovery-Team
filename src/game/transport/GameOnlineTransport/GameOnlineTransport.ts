@@ -10,6 +10,7 @@ import Cheburstore, {
   cheburhandler,
   cheburmodel,
 } from 'libs/Cheburstore';
+import { gameTransportActions } from '../actions';
 
 // @ts-ignore
 @cheburmodel
@@ -31,6 +32,10 @@ export default class GameOnlineTransport extends Cheburstore<null>
   }
 
   async stop(): Promise<ResultPL> {
+    if (!this.isConnected) {
+      return;
+    }
+
     this.receiver = null;
     if (this.connection) {
       this.connection.disconnect();
@@ -63,8 +68,15 @@ export default class GameOnlineTransport extends Cheburstore<null>
   }
 
   @cheburhandler(cheburSocketActions.DISCONNECTED)
-  handleDisconnected() {
-    this.isConnected = false;
+  async handleDisconnected() {
+    if (this.receiver) {
+      this.receiver({
+        type: gameTransportActions.SET_DISCONNECTED,
+        payload: null,
+      });
+    }
+
+    await this.stop();
   }
 
   @cheburhandler(cheburSocketActions.CONNECTED)
@@ -80,11 +92,7 @@ export default class GameOnlineTransport extends Cheburstore<null>
 
     try {
       const { type, payload = null } = JSON.parse(message);
-      const parsedPayload = JSON.parse(payload);
-      this.receiver({
-        type,
-        payload: parsedPayload,
-      });
+      this.receiver({ type, payload });
     } catch (e) {
       // noinspection TsLint
       console.warn('JSON parse error for type: ', message, e);

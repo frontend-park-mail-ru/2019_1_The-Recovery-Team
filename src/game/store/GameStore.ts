@@ -11,6 +11,7 @@ import {
   actionGameStopResult,
   actionInitPlayerReady,
   actionSetGameOver,
+  actionSetOpponent,
   actionSetState,
   actionSetStateUpdated,
   GameInitPL,
@@ -152,6 +153,11 @@ export default class GameStore extends Cheburstore<GameStoreState> {
         return;
       case gameTransportActions.SET_GAME_OVER:
         this.handleGameOver();
+        return;
+      case gameStoreActions.SET_OPPONENT:
+        this.store.opponent = action.payload;
+        this.emit(actionSetOpponent());
+        return;
     }
   };
 

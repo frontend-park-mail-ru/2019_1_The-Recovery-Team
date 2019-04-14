@@ -24,6 +24,11 @@ export default class Field extends React.Component {
     window.addEventListener('resize', this.debouncedResize);
   }
 
+  @onCheburevent(gameStore, gameStoreActions.SET_STATE)
+  handleSetState() {
+    this.recalcField();
+  }
+
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
   recalcField() {
     const {

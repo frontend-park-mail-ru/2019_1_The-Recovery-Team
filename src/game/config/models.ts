@@ -1,5 +1,5 @@
+import { anonymousAvatar } from 'config/images';
 import { UserShort } from 'store/userStore';
-const anonymousAvatar = require('./img/anonymousAvatar.jpg');
 
 export enum Direction {
   LEFT = 'LEFT',

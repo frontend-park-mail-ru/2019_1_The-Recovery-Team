@@ -25,6 +25,7 @@ export default class SitePart extends React.Component {
         <Route
           template={routesMap.BASE.template}
           exact={true}
+          authorized={!!user}
           component={StartPage}
         />
         <Route template={routesMap.SIGN.template} component={AuthPage} />

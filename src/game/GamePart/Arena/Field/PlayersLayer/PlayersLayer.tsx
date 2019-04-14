@@ -44,6 +44,11 @@ export default class PlayersLayer extends React.Component {
     }
   }
 
+  @onCheburevent(gameStore, gameStoreActions.SET_OPPONENT)
+  handleSetOpponent() {
+    this.handleInitPlayers();
+  }
+
   @onCheburevent(gameStore, gameStoreActions.SET_STATE)
   handleSetState() {
     this.setState({});
@@ -63,7 +68,10 @@ export default class PlayersLayer extends React.Component {
   }
 
   updatePlayerPosition = (id, ref: HTMLElement) => {
-    const { players } = gameStore.select().state;
+    const {
+      state: { players },
+      me,
+    } = gameStore.select();
     const player = players[id];
 
     const {
@@ -73,7 +81,13 @@ export default class PlayersLayer extends React.Component {
 
     setPlayerPosition(ref, colCount, rowCount, player.x, player.y);
 
-    setPlayerClasses(ref, true, player.x, player.y, !!player.loseRound);
+    setPlayerClasses(
+      ref,
+      player.id === (me as any).id,
+      player.x,
+      player.y,
+      !!player.loseRound
+    );
   };
 
   initPlayerRef = (id, ref: HTMLElement) => {
