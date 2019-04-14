@@ -3,6 +3,7 @@
 .profile-page {
   height: 100%;
   position: relative;
+  padding-bottom: 30px;
 
   &__container-information {
     padding-top: 30px;
@@ -15,6 +16,7 @@
     margin-bottom: 200px;
 
     &-avatar {
+      display: inline;
       position: relative;
     }
 
@@ -28,9 +30,8 @@
 
   &__container-label {
     position: absolute;
-    transform: translateY(-100%);
-    right: 492px;
-    bottom: 0;
+    transform: translateX(-28%);
+    top: 100%;
   }
 
   &__field {
