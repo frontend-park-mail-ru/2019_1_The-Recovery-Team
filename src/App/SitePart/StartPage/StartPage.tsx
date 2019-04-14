@@ -4,6 +4,7 @@ import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import { GameModes } from 'game/config';
+import userStore from 'store/userStore';
 
 const styles = require('./StartPage.modules.scss');
 
@@ -11,6 +12,12 @@ const cn = classNames(styles);
 
 export default class StartPage extends React.Component {
   render() {
+    const { user = false } = userStore.select();
+    const isMultiActive = !user;
+    const multiButtonRoute = user
+      ? routeCreators.TO_GAME_PART(GameModes.MULTIPLAYER)
+      : routeCreators.TO_SIGN_IN();
+
     return (
       <div className={cn('start-page')}>
         <Logotype size={LogotypeSizes.LARGE} />
@@ -22,8 +29,9 @@ export default class StartPage extends React.Component {
           />
           <PlayButton
             className={cn('start-page__play-button')}
+            isMultiActive={isMultiActive}
             mode={PlayButtonModes.MULTIPLAYER}
-            to={routeCreators.TO_GAME_PART(GameModes.MULTIPLAYER)}
+            to={multiButtonRoute}
           />
         </div>
       </div>

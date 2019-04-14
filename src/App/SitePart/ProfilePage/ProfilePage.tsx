@@ -41,6 +41,9 @@ export default class ProfilePage extends React.Component {
           <div className={cn('profile-page__container')}>
             <div className={cn('profile-page__container-avatar')}>
               <AvatarProfile user={user} />
+              <div className={cn('profile-page__container-label')}>
+                <LabelProfile user={user} />
+              </div>
             </div>
             <div className={cn('profile-page__container-information')}>
               <div
@@ -65,9 +68,6 @@ export default class ProfilePage extends React.Component {
               >
                 {'Редактировать'}
               </SubmitButton>
-            </div>
-            <div className={cn('profile-page__container-label')}>
-              <LabelProfile user={user} />
             </div>
           </div>
         </div>

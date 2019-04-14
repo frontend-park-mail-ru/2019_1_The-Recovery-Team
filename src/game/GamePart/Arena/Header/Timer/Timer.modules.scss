@@ -26,12 +26,11 @@
 
     &:after {
       content: '';
-      @include absoluteCenter;
       height: 100%;
       width: 100%;
-
       background: url("img/Pause.svg") no-repeat center;
       z-index: 1;
+      @include absoluteCenter;
     }
   }
   &__round {
