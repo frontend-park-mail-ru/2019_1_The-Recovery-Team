@@ -1,9 +1,18 @@
 import { WS_URL } from 'config/API';
 import { ResultPL } from 'game/store';
 import { ITransport, TransportCallback } from 'game/types';
-import CheburSocket, { cheburSocketActions } from 'libs/CheburSocket';
-import Cheburstore, { Action, cheburhandler } from 'libs/Cheburstore';
+import CheburSocket, {
+  cheburSocketActions,
+  CheburSocketMessagePL,
+} from 'libs/CheburSocket';
+import Cheburstore, {
+  Action,
+  cheburhandler,
+  cheburmodel,
+} from 'libs/Cheburstore';
 
+// @ts-ignore
+@cheburmodel
 export default class GameOnlineTransport extends Cheburstore<null>
   implements ITransport {
   isConnected: boolean = false;
@@ -11,6 +20,8 @@ export default class GameOnlineTransport extends Cheburstore<null>
   connection: CheburSocket | null = null;
 
   async init(receiver: TransportCallback): Promise<ResultPL> {
+    await this.stop();
+
     this.receiver = receiver;
     this.connection = new CheburSocket(WS_URL).setDispatcher(this).connect();
     return {
@@ -62,13 +73,13 @@ export default class GameOnlineTransport extends Cheburstore<null>
   }
 
   @cheburhandler(cheburSocketActions.MESSAGE)
-  receive(message: string) {
+  receive({ payload: { message } }: Action<CheburSocketMessagePL>) {
     if (!this.receiver) {
       return;
     }
 
     try {
-      const { type, payload } = JSON.parse(message);
+      const { type, payload = null } = JSON.parse(message);
       const parsedPayload = JSON.parse(payload);
       this.receiver({
         type,

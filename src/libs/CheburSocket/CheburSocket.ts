@@ -48,7 +48,6 @@ export default class CheburSocket {
 
   send(message: Object) {
     if (this.connection) {
-      console.log('>>> SEND: ', message);
       try {
         this.connection.send(JSON.stringify(message));
       } catch {
@@ -66,10 +65,9 @@ export default class CheburSocket {
 
     this.forseStop = false;
     this.connection = new WebSocket(this.url);
-    console.log('>>> CONNECTED');
 
     this.connection.addEventListener('open', this.handleOpen);
-    this.connection.addEventListener('close', () => this.handleClose(false));
+    this.connection.addEventListener('close', this.handleClose);
     this.connection.addEventListener('message', this.handleMessage);
     this.connection.addEventListener('error', () => null);
 
@@ -77,13 +75,11 @@ export default class CheburSocket {
   };
 
   disconnect(): CheburSocket {
-    console.log('>>> TOTAL DISCONNECT');
     this.forseStop = true;
     this.resetPingInterval()
       .resetPingTimeout()
       .resetReconnectTimeout()
       .close();
-    console.log('>>> DONE TOTAL DISCONNECT', this);
     return this;
   }
 
@@ -132,13 +128,11 @@ export default class CheburSocket {
   private doPing = () => {
     this.resetPingTimeout().send(PING_ACTION);
     if (this.connection && !this.forseStop) {
-      this.pingTimeout = setTimeout(() => this.handleClose(true), PING_TIMEOUT);
+      this.pingTimeout = setTimeout(this.handleClose, PING_TIMEOUT);
     }
   };
 
   private handleOpen = () => {
-    console.log('>>> OPEN');
-
     if (this.dispatcher) {
       this.dispatcher.emit(actionCheburSocketConnected());
     }
@@ -146,14 +140,8 @@ export default class CheburSocket {
     this.resetPingTimeout().startPingInterval();
   };
 
-  private handleClose = (withClose?: boolean) => {
-    console.log('>>> CLOSE');
-
-    if (withClose) {
-      this.close();
-    } else {
-      this.connection = null;
-    }
+  private handleClose = () => {
+    this.close();
 
     this.resetPingTimeout();
 
@@ -164,7 +152,6 @@ export default class CheburSocket {
   };
 
   private reconnect(): CheburSocket {
-    console.log('>>> TRY TO RECONNECT');
     if (!this.forseStop) {
       this.reconnectTimeout = setTimeout(this.connect, RECONNECT_TIMEOUT);
     }
@@ -174,7 +161,6 @@ export default class CheburSocket {
   private handleMessage = message => {
     this.resetPingTimeout();
 
-    console.log('>>> message from socket: ', message, message.data);
     if (message.data.includes(PONG_TYPE)) {
       return;
     }

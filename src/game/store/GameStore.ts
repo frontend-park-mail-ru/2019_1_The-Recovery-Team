@@ -25,6 +25,7 @@ interface GameStoreState {
   mode: GameModes | null;
   me: UserShort | null;
   opponent: UserShort | null;
+  isPlayingNow: boolean;
 }
 
 // @ts-ignore
@@ -46,6 +47,7 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     await this.disconnect();
     this.store.me = payload.me || GameModels.anonymousUser;
     await this.connect(payload.isOnline, payload.mode);
+    this.store.isPlayingNow = true;
   }
 
   @cheburhandler(gameStoreActions.INIT_STOP)
@@ -89,6 +91,7 @@ export default class GameStore extends Cheburstore<GameStoreState> {
       mode: null,
       me: null,
       opponent: null,
+      isPlayingNow: false,
     };
     return this;
   }
