@@ -133,7 +133,7 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     if (action.type === gameTransportActions.SET_STATE && this.transport) {
       await this.transport.send(
         actionInitPlayerReady({
-          playerId: 1,
+          playerId: (this.store.me as any).id,
         })
       );
     }
