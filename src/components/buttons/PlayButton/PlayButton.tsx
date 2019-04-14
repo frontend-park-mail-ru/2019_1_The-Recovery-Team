@@ -7,11 +7,11 @@ const cn = classNames(styles);
 
 export default class PlayButton extends React.Component {
   render() {
-    const { mode, className, to, isBlur = false } = this.props;
+    const { mode, className, to, isBlur = false, title = null } = this.props;
     let classes = cn(
       'play-button',
       `play-button_${mode}`,
-      isBlur && 'play-button_multi-blur'
+      isBlur && 'play-button_blur'
     );
 
     if (className) {
@@ -19,8 +19,16 @@ export default class PlayButton extends React.Component {
     }
 
     if (!to) {
-      return <div className={classes} />;
+      return (
+        <div className={classes}>
+          <div className={cn('play-button__title')}>{title}</div>
+        </div>
+      );
     }
-    return <Link className={classes} to={to} />;
+    return (
+      <Link className={classes} to={to}>
+        <div className={cn('play-button__title')}>{title}</div>
+      </Link>
+    );
   }
 }

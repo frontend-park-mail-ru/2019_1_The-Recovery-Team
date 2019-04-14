@@ -25,6 +25,7 @@ export default class StartPage extends React.Component {
           <PlayButton
             className={cn('start-page__play-button')}
             isBlur={!authorized}
+            title={'ВОЙТИ'}
             mode={PlayButtonModes.MULTIPLAYER}
             to={
               authorized
