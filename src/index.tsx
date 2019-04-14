@@ -6,8 +6,11 @@ import router, {
   actionRouterSetUnsafe,
 } from 'libs/Cheburouter';
 import userStore, { actionUserCheckAuth, userActions } from 'store/userStore';
+import registerServiceWorker from 'utils/registerServiceWorker';
 import App from './App';
 require('./styles/global.scss');
+
+registerServiceWorker();
 
 const init = renderFunc => {
   let first = true;

@@ -1,3 +1,6 @@
+import { UserShort } from 'store/userStore';
+const anonymousAvatar = require('./img/anonymousAvatar.jpg');
+
 export enum Direction {
   LEFT = 'LEFT',
   UP = 'UP',
@@ -68,4 +71,11 @@ export const initialGameState: GameState = {
   roundNumber: 0,
   players: {},
   activeItems: {},
+};
+
+export const anonymousUser: UserShort = {
+  id: 1,
+  nickname: 'Краб Крабыч',
+  avatar: anonymousAvatar,
+  record: 0,
 };

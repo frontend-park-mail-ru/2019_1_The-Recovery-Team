@@ -2,6 +2,7 @@ import { GameModes } from 'game/config';
 import { ResultPL } from 'game/store/actions';
 import { ITransport, TransportCallback } from 'game/types';
 import { Action } from 'libs/Cheburstore';
+import { actionInitGameStop } from './actions';
 
 const {
   initEngine,
@@ -34,12 +35,13 @@ export default class GameOfflineTransport implements ITransport {
   }
 
   async stop(): Promise<ResultPL> {
-    // TODO: send to sender stop action
+    this.send(actionInitGameStop());
+
     this.receiver = null;
     this.sender = null;
     return Promise.resolve({
-      success: false,
-      message: 'GameOfflineTransport not implemented',
+      success: true,
+      message: 'Successfully stopped engine',
     });
   }
 

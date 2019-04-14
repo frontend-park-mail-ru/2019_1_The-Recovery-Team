@@ -44,9 +44,18 @@ export default class PlayersLayer extends React.Component {
     }
   }
 
+  @onCheburevent(gameStore, gameStoreActions.SET_STATE)
+  handleSetState() {
+    this.setState({});
+  }
+
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
   handleUpdatePlayers() {
     this.handleInitPlayers();
+  }
+
+  componentDidUpdate() {
+    this.handleUpdatePlayers();
   }
 
   componentDidMount() {

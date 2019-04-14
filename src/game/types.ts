@@ -9,7 +9,7 @@ export interface ITransport {
   send(action: Action<any>): any;
 }
 
-export interface IControllserManager {
+export interface IControllersManager {
   connect();
   disconnect();
 }

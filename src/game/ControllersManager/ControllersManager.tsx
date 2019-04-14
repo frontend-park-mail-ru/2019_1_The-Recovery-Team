@@ -1,13 +1,8 @@
 import gameStore, { actionInitPlayerMove } from 'game/store';
+import { IControllersManager } from 'game/types';
 import { keyCodeToDir } from './utils';
 
-export default class ControllersManager {
-  myId = null;
-
-  constructor(myId) {
-    this.myId = myId;
-  }
-
+export default class ControllersManager implements IControllersManager {
   connect() {
     window.addEventListener('keydown', this.handleKeyDown);
   }
@@ -25,7 +20,7 @@ export default class ControllersManager {
 
       gameStore.emit(
         actionInitPlayerMove({
-          playerId: Number.parseInt(this.myId || '0', 10),
+          playerId: gameStore.selectMyId(),
           move: direction,
         })
       );

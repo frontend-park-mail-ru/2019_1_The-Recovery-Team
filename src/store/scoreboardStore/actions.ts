@@ -1,37 +1,37 @@
-import { ACreator, ACreatorNull } from '../types';
+import { ACreator, ACreatorNull } from 'store/types';
 import { Leader } from './types';
 
 export enum scoreboardActions {
-  LOAD_LEADERS = 'BOARD_LOAD_LEADERS',
-  LOAD_LEADERS_SUCCESS = 'BOARD_LOAD_LEADERS_SUCCESS',
-  LOAD_LEADERS_ERROR = 'BOARD_LOAD_LEADERS_ERROR',
+  LOAD = 'BOARD_LOAD_LEADERS',
+  LOAD_SUCCESS = 'BOARD_LOAD_SUCCESS',
+  LOAD_ERROR = 'BOARD_LOAD_LEADERS_ERROR',
 
-  UPDATE_LEADERS = 'BOARD_UPDATE_LEADERS',
-}
-
-export interface LoadScoreboardPL {
-  offset: number;
-  limit: number;
+  RESET = 'BOARS_RESET',
 }
 
 export interface UpdateLeadersPL {
   leaders: Array<Leader>;
-  total: number;
+  hasMore: boolean;
 }
 
-export const actionScoreboardLoadPage: ACreator<
-  LoadScoreboardPL
+export const actionScoreboardLoad: ACreatorNull = () => ({
+  payload: null,
+  type: scoreboardActions.LOAD,
+});
+
+export const actionScoreboardLoadSuccess: ACreator<
+  UpdateLeadersPL
 > = payload => ({
   payload,
-  type: scoreboardActions.LOAD_LEADERS,
+  type: scoreboardActions.LOAD_SUCCESS,
+});
+
+export const actionScoreboardReset: ACreatorNull = () => ({
+  payload: null,
+  type: scoreboardActions.RESET,
 });
 
 export const actionScoreboardLoadPageError: ACreatorNull = () => ({
   payload: null,
-  type: scoreboardActions.LOAD_LEADERS_ERROR,
-});
-
-export const actionUpdateLeaders: ACreator<UpdateLeadersPL> = payload => ({
-  payload,
-  type: scoreboardActions.UPDATE_LEADERS,
+  type: scoreboardActions.LOAD_ERROR,
 });

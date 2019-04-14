@@ -1,6 +1,11 @@
 import * as React from 'libs/Cheburact';
+import classNames from 'libs/classNames';
 import { actionRouterPush } from '../actions';
 import routerStore from '../routerStore';
+
+const styles = require('./Link.modules.scss');
+
+const cn = classNames(styles);
 
 export class Link extends React.Component {
   onClick = e => {
@@ -17,10 +22,12 @@ export class Link extends React.Component {
   };
 
   render() {
-    const { children, ...rest } = this.props;
+    const { children, className, to, ...rest } = this.props;
+
+    const linkStyles = `${cn('link')} ${className || ''}`;
 
     return (
-      <a {...rest} onClick={this.onClick}>
+      <a className={linkStyles} {...rest} onClick={this.onClick}>
         {children}
       </a>
     );

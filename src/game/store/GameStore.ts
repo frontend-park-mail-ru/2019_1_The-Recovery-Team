@@ -1,15 +1,15 @@
+import { GameModels, GameModes } from 'game/config';
+import getTransport, { gameTransportActions } from 'game/transport';
+import { actionGameOfflineInitPlayers } from 'game/transport/GameOfflineTransport';
+import { ITransport } from 'game/types';
 import { Action, cheburhandler, cheburmodel } from 'libs/Cheburstore';
 import Cheburstore from 'libs/Cheburstore/Cheburstore';
-import { GameModels, GameModes } from '../config';
-import { initialGameState } from '../config/models';
-import { gameTransportActions } from '../transport/actions';
-import { actionGameOfflineInitPlayers } from '../transport/GameOfflineTransport/actions';
-import getTransport from '../transport/getTransport';
-import { ITransport } from '../types';
+import { UserShort } from 'store/userStore';
 import {
   actionGameInitResult,
   actionGameStopResult,
   actionInitPlayerReady,
+  actionSetGameOver,
   actionSetState,
   actionSetStateUpdated,
   GameInitPL,
@@ -18,10 +18,13 @@ import {
   InitPlayerReadyPL,
 } from './actions';
 import stateReducer from './stateReducer';
+import { anonymousUser } from '../config/models';
 
 interface GameStoreState {
   state: GameModels.GameState;
   mode: GameModes | null;
+  me: UserShort | null;
+  opponent: UserShort | null;
 }
 
 // @ts-ignore
@@ -34,13 +37,18 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     this.reset();
   }
 
+  handleGameOver() {
+    this.emit(actionSetGameOver());
+  }
+
   @cheburhandler(gameStoreActions.INIT)
   async handleInit({ payload }: Action<GameInitPL>) {
     await this.disconnect();
+    this.store.me = payload.me || GameModels.anonymousUser;
     await this.connect(payload.isOnline, payload.mode);
   }
 
-  @cheburhandler(gameStoreActions.STOP)
+  @cheburhandler(gameStoreActions.INIT_STOP)
   async disconnect() {
     this.reset();
 
@@ -77,8 +85,10 @@ export default class GameStore extends Cheburstore<GameStoreState> {
 
   private reset() {
     this.store = {
-      state: initialGameState,
+      state: GameModels.initialGameState,
       mode: null,
+      me: null,
+      opponent: null,
     };
     return this;
   }
@@ -96,14 +106,14 @@ export default class GameStore extends Cheburstore<GameStoreState> {
   }
 
   private processOfflineSpecificInit() {
-    if (!this.transport) {
+    if (!this.transport || !this.store.me) {
       return;
     }
 
     if (this.store.mode === GameModes.SINGLEPLAYER) {
       this.transport.send(
         actionGameOfflineInitPlayers({
-          playerIds: [1],
+          playerIds: [this.store.me.id],
         })
       );
     }
@@ -134,8 +144,15 @@ export default class GameStore extends Cheburstore<GameStoreState> {
       case gameTransportActions.SET_STATE:
         window.requestAnimationFrame(() => this.emit(actionSetState()));
         return;
-      default:
+      case gameTransportActions.SET_STATE_DIFF:
         window.requestAnimationFrame(() => this.emit(actionSetStateUpdated()));
+        return;
+      case gameTransportActions.SET_GAME_OVER:
+        this.handleGameOver();
     }
   };
+
+  public selectMyId(): number {
+    return this.store.me ? this.store.me.id : anonymousUser.id;
+  }
 }

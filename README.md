@@ -9,17 +9,17 @@
 - [Зорин Арсений](https://github.com/ZorinArsenij)
 - [Биличенко Фёдор](https://github.com/FedorBilichenko)
 
-Ментор - [Голубев Юрий](github.com/Ansile)
+Ментор - [Голубев Юрий](https://github.com/Ansile)
 
 ## Описание
 
 ## Ссылка на игру
 
-[sadislands.ru](http://sadislands.ru/)
+[sadislands.ru](https://sadislands.ru/)
 
 ## Доукментация API
 
-[sadislands.ru/swagger/index.html](http://sadislands.ru/swagger/index.html)
+[sadislands.ru/swagger/index.html](https://sadislands.ru/swagger/index.html)
 
 ## Репозиторий бекенда
  
