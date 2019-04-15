@@ -18,13 +18,6 @@ export default class PlayButton extends React.Component {
       classes = `${classes} ${className}`;
     }
 
-    if (!to) {
-      return (
-        <div className={classes}>
-          <div className={cn('play-button__title')}>{title}</div>
-        </div>
-      );
-    }
     return (
       <Link className={classes} to={to}>
         <div className={cn('play-button__title')}>{title}</div>
