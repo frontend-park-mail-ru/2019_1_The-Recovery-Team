@@ -1,0 +1,9 @@
+@import 'styles/constants';
+
+.arena {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  background-color: $global-color-game-primary-light;
+}

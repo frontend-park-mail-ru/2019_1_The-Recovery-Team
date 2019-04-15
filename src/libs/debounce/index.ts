@@ -1,5 +1,5 @@
 export default (f: Function, ms: number) => {
-  let timer: number | null = null;
+  let timer: any = null;
 
   return (...args) => {
     const onComplete = () => {

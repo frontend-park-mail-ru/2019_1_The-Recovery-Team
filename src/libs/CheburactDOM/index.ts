@@ -1,7 +1,7 @@
 import { IElement } from 'libs/Cheburact/types';
-import { rootContext, getTreeBuilder } from './utils';
-import updateTree from './updateTree';
 import Updater from './Updater';
+import updateTree from './updateTree';
+import { getTreeBuilder, rootContext } from './utils';
 
 let buildTree: any = null;
 
@@ -12,7 +12,7 @@ const render = (element: IElement | null, container: HTMLElement | null) => {
 
   rootContext.updater = new Updater();
   buildTree = getTreeBuilder(rootContext);
-  rootContext.updater.setUpdateTreeFunc((q) => {
+  rootContext.updater.setUpdateTreeFunc(q => {
     rootContext.referenceFiberRoot = updateTree(rootContext, q);
   });
 
@@ -24,11 +24,7 @@ const render = (element: IElement | null, container: HTMLElement | null) => {
     rootContext.rootElement = element;
   }
 
-  window.onload = () => {
-    rootContext.referenceFiberRoot = buildTree(container, element);
-  };
+  rootContext.referenceFiberRoot = buildTree(container, element);
 };
 
-export {
-  render,
-};
+export { render };

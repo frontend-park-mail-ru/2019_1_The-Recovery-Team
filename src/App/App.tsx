@@ -1,68 +1,48 @@
-import API from 'config/API';
+import { routesMap } from 'config/routes';
+import GamePart from 'game/GamePart';
 import * as React from 'libs/Cheburact';
-import Requester from 'libs/Requester';
-import {CurPage} from './config/modes';
+import { Route } from 'libs/Cheburouter';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
+import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
 import SitePart from './SitePart';
-const defaultAvatar = require('./img/nouser.png');
+const styles = require('./App.modules.scss');
 
-export default class App extends React.Component {
+// @ts-ignore
+@connectToCheburstore
+class App extends React.Component {
   state = {
-    user: null,
-    mode: CurPage.START,
+    user: userStore.select().user,
   };
 
-  componentDidMount() {
-    Requester
-        .get(API.sessions())
-        .then(({ response, error }) => {
-          if (response && response.id) {
-            return Requester.get(API.profileItem(response.id || ''));
-          }
-          return { response, error };
-        })
-        .then(({ response, error }) => {
-          if (response) {
-            this.handleAuthorized(response);
-          }
-        });
+  @onCheburevent(userStore, userActions.LOGOUT_SUCCESS)
+  handleLogout() {
+    this.setState({
+      user: null,
+    });
   }
 
-  handleChangeMode = (mode: CurPage) => this.setState({ mode });
-
-  handleLogout = () =>
-    Requester.delete(API.sessions())
-        .then(({response, error}) => {
-          if (response) {
-            this.setState({
-              mode: CurPage.START,
-              user: null,
-            });
-          }
-        });
-
-  handleAuthorized = (user) => {
+  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
+  handleAuthorized(action: Action<UserUpdateSuccessPL>) {
     this.setState({
-      user: user ? {
-        ...user,
-        avatar: user.avatar && user.avatar.length !== 0
-            ? user.avatar
-            : defaultAvatar,
-      } : null,
-      mode: CurPage.PROFILE,
+      user: action.payload.profile,
     });
-  };
+  }
 
   render() {
-    const { user, mode, } = this.state;
+    const { user } = this.state;
 
     return (
-        <SitePart
-            user={user}
-            mode={mode}
-            onChangeMode={this.handleChangeMode}
-            onLogout={this.handleLogout}
-            onAuthorized={this.handleAuthorized}
+      <div className={styles.app}>
+        <Route template={routesMap.GAME_PART.template} component={GamePart} />
+        <Route
+          template={routesMap.GAME_PART.template}
+          negative={true}
+          component={SitePart}
+          user={user}
         />
+      </div>
     );
   }
 }
+
+export default App;

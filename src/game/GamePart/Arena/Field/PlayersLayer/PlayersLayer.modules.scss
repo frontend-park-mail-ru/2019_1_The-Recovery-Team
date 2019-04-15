@@ -1,0 +1,74 @@
+@import 'styles/mixins';
+
+.layer {
+  @include gameLayer(2);
+
+  &__player {
+    @include square(50px);
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: top 50ms linear, left 50ms linear;
+
+    z-index: 1;
+
+    background: no-repeat center;
+    background-size: contain;
+
+    &_me {
+      &-1 {
+        background-image: url('./img/me-1.svg');
+      }
+
+      &-2 {
+        background-image: url('./img/me-2.svg');
+      }
+
+      &-3 {
+        background-image: url('./img/me-3.svg');
+      }
+
+      &-4 {
+        background-image: url('./img/me-4.svg');
+      }
+
+      &-5 {
+        background-image: url('./img/me-3.svg');
+      }
+
+      &-6 {
+        background-image: url('./img/me-2.svg');
+      }
+    }
+
+    &_opponent {
+      &-1 {
+        background-image: url('./img/opp-1.svg');
+      }
+
+      &-2 {
+        background-image: url('./img/opp-2.svg');
+      }
+
+      &-3 {
+        background-image: url('./img/opp-3.svg');
+      }
+
+      &-4 {
+        background-image: url('./img/opp-4.svg');
+      }
+
+      &-5 {
+        background-image: url('./img/opp-3.svg');
+      }
+
+      &-6 {
+        background-image: url('./img/opp-2.svg');
+      }
+    }
+
+    &_dead {
+      opacity: 0.5;
+    }
+  }
+}

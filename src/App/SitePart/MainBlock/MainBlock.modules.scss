@@ -1,12 +1,12 @@
 @import '~styles/constants';
 
 .main-block {
-  flex-grow: 1;
+  height: 100%;
   background: $global-color-secondary-dark;
   padding-top: 60px;
+  position: relative;
 
   &__content {
-    height: 100%;
     width: 900px;
     background: #FFFFFF;
     margin: 0 auto;

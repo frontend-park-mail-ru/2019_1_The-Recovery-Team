@@ -1,10 +1,14 @@
 import { IElement, isIVirtualNode, IVirtualNode } from 'libs/Cheburact/types';
-import { isEventProp, isClassNameProp, setBooleanProp, setEventProp } from './props';
+import { BOUND_EVENT_LISTENERS } from '../config/customFields';
 import { IFiberNode } from '../types';
 import Updater from '../Updater';
 import getFiberTypeOfElement from '../updateTree/getFiberTypeOfElement';
-import { BOUND_EVENT_LISTENERS } from '../config/customFields';
-
+import {
+  isClassNameProp,
+  isEventProp,
+  setBooleanProp,
+  setEventProp,
+} from './props';
 
 export interface IRootContext {
   rootHTMLContainer: HTMLElement | null;
@@ -18,7 +22,10 @@ export interface IRootContext {
   areEqual: (fiber: IFiberNode, element: IElement) => boolean;
 
   updateTextFiber: (fiber: IFiberNode, element: string) => IFiberNode;
-  updateVNodeFiber: (fiber: IFiberNode, element: IVirtualNode) => IFiberNode | null;
+  updateVNodeFiber: (
+    fiber: IFiberNode,
+    element: IVirtualNode
+  ) => IFiberNode | null;
 }
 
 export const rootContext: IRootContext = {
@@ -37,9 +44,12 @@ export const rootContext: IRootContext = {
     return null;
   },
 
-  finalizeCreateInstance: ($target: HTMLElement, element: IVirtualNode): any => {
+  finalizeCreateInstance: (
+    $target: HTMLElement,
+    element: IVirtualNode
+  ): any => {
     const props = element.props || {};
-    Object.keys(props).map((name) => {
+    Object.keys(props).map(name => {
       const value = props[name];
 
       if (isEventProp(name)) {
@@ -54,9 +64,8 @@ export const rootContext: IRootContext = {
         setBooleanProp($target, name, value as any);
         return;
       }
-      else {
-        $target.setAttribute(name, value as any);
-      }
+
+      $target.setAttribute(name, value as any);
     });
   },
 
@@ -81,11 +90,14 @@ export const rootContext: IRootContext = {
     return fiber;
   },
 
-  updateVNodeFiber: (fiber: IFiberNode, element: IVirtualNode): IFiberNode | null => {
+  updateVNodeFiber: (
+    fiber: IFiberNode,
+    element: IVirtualNode
+  ): IFiberNode | null => {
     if (!fiber.ref || !fiber.stateNode) {
       return null;
     }
-    const { props: oldProps } = (fiber.stateNode as IVirtualNode);
+    const { props: oldProps } = fiber.stateNode as IVirtualNode;
     const { props: newProps } = element;
 
     const nextEventListenersMap = {};
@@ -104,8 +116,9 @@ export const rootContext: IRootContext = {
         }
         if (isEventProp(key)) {
           const listeners = htmlRef[BOUND_EVENT_LISTENERS] || {};
-          (listeners[key] || []).map((listener) =>
-              htmlRef.removeEventListener(key, listener));
+          (listeners[key] || []).map(listener =>
+            htmlRef.removeEventListener(key, listener)
+          );
           delete listeners[key];
           return;
         }
@@ -116,8 +129,7 @@ export const rootContext: IRootContext = {
         if (oldValue !== nextEventListenersMap[key]) {
           try {
             htmlRef.removeEventListener(key, oldValue as any);
-          }
-          catch (e) {
+          } catch (e) {
             // если нет такого события, ничо не произойдет
           }
           const listeners = htmlRef[BOUND_EVENT_LISTENERS] || {};
@@ -151,5 +163,5 @@ export const rootContext: IRootContext = {
 
     fiber.stateNode = element;
     return fiber;
-  }
+  },
 };

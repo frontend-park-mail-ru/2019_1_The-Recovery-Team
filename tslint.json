@@ -1,72 +1,35 @@
 {
+  "extends": [
+    "tslint:latest",
+    "tslint-config-airbnb",
+    "tslint-config-prettier",
+    "tslint-react",
+    "tslint-plugin-prettier"
+  ],
   "rules": {
-    "no-reference": true,
-    "only-arrow-functions": [
-      true,
-      "allow-declarations"
-    ],
-    "no-namespace": [
-      true,
-      "allow-declarations"
-    ],
-    "class-name": true,
-    "curly": true,
-    "eofline": true,
-    "forin": true,
-    "indent": [
-      true,
-      "spaces",
-      2
-    ],
-    "label-position": true,
-    "no-arg": true,
-    "no-var-keyword": true,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
-    "no-construct": true,
-    "no-debugger": true,
-    "no-duplicate-variable": true,
-    "no-empty": false,
-    "no-eval": true,
-    "no-trailing-whitespace": true,
-    "no-unused-expression": true,
-    "no-use-before-declare": true,
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-whitespace"
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "radix": true,
-    "semicolon": [
-      true,
-      "always",
-      "ignore-interfaces"
-    ],
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
-    "variable-name": false,
-    "whitespace": [
-      true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator",
-      "check-type"
-    ],
+    "no-implicit-dependencies": false,
+    "no-submodule-imports": false,
+    "no-var-requires": false,
+    "object-literal-sort-keys": false,
+    "interface-name": [false],
+    "jsx-no-multiline-js": false,
+    "no-shadowed-variable": false,
+    "jsx-no-lambda": false,
+    "member-access": false,
+    "member-ordering": false,
     "prefer-array-literal": false,
-    "arrow-parens": true,
-    "array-type": [true, "generic"]
+    "array-type": false,
+    "ban-types": false,
+    "no-empty": false,
+    "prettier": [true, {
+      "jsxBracketSameLine": false,
+      "bracketSpacing": true,
+      "singleQuote": true,
+      "trailingComma": true
+    }],
+    "max-line-length": [true, 120],
+    "max-classes-per-file": false,
+    "no-increment-decrement": false,
+    "import-name": false
   }
 }

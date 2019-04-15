@@ -1,9 +1,9 @@
-import debounce from 'libs/debounce';
 import { IComponent, IUpdater } from 'libs/Cheburact/types';
-import { UpdateQueueItem } from '../types';
+import debounce from 'libs/debounce';
 import { COMPONENT_FIBER } from '../config/customFields';
+import { UpdateQueueItem } from '../types';
 
-const UPDATE_DELAY = 16; // ms
+const UPDATE_DELAY = 8; // ms
 
 export default class Updater implements IUpdater {
   updateQueue: Array<UpdateQueueItem> = [];
@@ -25,7 +25,9 @@ export default class Updater implements IUpdater {
   }, UPDATE_DELAY);
 
   canStartUpdate() {
-    return this.updateQueue.length === 0 && this.waitingUpdateQueue.length !== 0;
+    return (
+      this.updateQueue.length === 0 && this.waitingUpdateQueue.length !== 0
+    );
   }
 
   enqueueUpdate(element: IComponent, nextState?: Object) {
@@ -33,7 +35,7 @@ export default class Updater implements IUpdater {
       const relatedFiber: any = element[COMPONENT_FIBER];
       this.waitingUpdateQueue.push({
         fiberNode: relatedFiber,
-        nextState
+        nextState,
       });
 
       if (this.canStartUpdate()) {
@@ -43,11 +45,16 @@ export default class Updater implements IUpdater {
   }
 
   beforeUpdate() {
-    [ this.updateQueue, this.waitingUpdateQueue ]
-        = [ this.waitingUpdateQueue, this.updateQueue ];
+    [this.updateQueue, this.waitingUpdateQueue] = [
+      this.waitingUpdateQueue,
+      this.updateQueue,
+    ];
   }
 
   afterUpdate() {
+    if (this.waitingUpdateQueue.length !== 0) {
+      this.reconcile();
+    }
     this.updateQueue = [];
   }
 }

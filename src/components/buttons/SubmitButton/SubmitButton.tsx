@@ -1,4 +1,5 @@
 import * as React from 'libs/Cheburact';
+import { Link } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
 const styles = require('./SubmitButton.modules.scss');
 
@@ -6,19 +7,32 @@ const cn = classNames(styles);
 
 export default class SubmitButton extends React.Component {
   render() {
-    const {mode, onClick, disabled} = this.props;
+    const { mode, onClick = null, to = null, disabled, children } = this.props;
+
+    // noinspection TsLint
+    const Component = to ? Link : 'button';
+    const props = {};
+    if (to) {
+      Object.assign(props, { to });
+    }
+    if (onClick) {
+      Object.assign(props, { onClick: !disabled && onClick });
+    }
 
     return (
-        <button onClick={!disabled && onClick} className={cn(
-            'submit-button',
-            `submit-button_${mode.theme}`,
-            disabled && 'submit-button_disabled',
-        )}>
-          <div className={cn('submit-button__container-icon')}>
-            <div className={cn(`submit-button__${mode.className}`)} />
-          </div>
-            <div className={cn('submit-button__title')}>{mode.title}</div>
-        </button>
+      <Component
+        {...props}
+        className={cn(
+          'submit-button',
+          `submit-button_${mode.theme}`,
+          disabled && 'submit-button_disabled'
+        )}
+      >
+        <div className={cn('submit-button__container-icon')}>
+          <div className={cn(`submit-button__${mode.className}`)} />
+        </div>
+        <div className={cn('submit-button__title')}>{children}</div>
+      </Component>
     );
   }
 }

@@ -8,12 +8,15 @@ export default class ModalWindow extends React.Component {
   render() {
     const { onClose, children } = this.props;
     return (
-        <div className={cn('modal-window')}>
-          <div className={cn('modal-window__content')}>
-              <button onClick={onClose} className={cn('modal-window__exit-button')} />
-              {children}
-          </div>
+      <div className={cn('modal-window')}>
+        <div className={cn('modal-window__content')}>
+          <button
+            onClick={onClose}
+            className={cn('modal-window__exit-button')}
+          />
+          {children}
         </div>
+      </div>
     );
   }
 }

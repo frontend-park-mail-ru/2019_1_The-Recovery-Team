@@ -1,6 +1,9 @@
 {
   "presets": [
-    "@babel/preset-env",
+    ["@babel/preset-env", {
+      "targets": { "browsers": ["last 2 chrome versions"] },
+      "useBuiltIns": "usage"
+    }],
     ["@babel/preset-react", {
       "pragma": "React.createElement",
       "pragmaFrag": "default is React.Fragment",
@@ -11,12 +14,12 @@
   ],
   "plugins": [
     "@babel/plugin-proposal-export-default-from",
+    ["@babel/plugin-proposal-decorators", {
+      "legacy": true
+    }],
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-syntax-jsx",
-    "@babel/plugin-transform-async-to-generator",
-    ["@babel/plugin-syntax-decorators", {
-      "decoratorsBeforeExport": true
-    }]
+    "@babel/plugin-transform-async-to-generator"
   ]
 }

@@ -1,2 +1,1 @@
-export default (name: string): boolean =>
-    /^on/.test(name);
+export default (name: string): boolean => /^on/.test(name);

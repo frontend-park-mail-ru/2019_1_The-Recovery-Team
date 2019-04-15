@@ -5,45 +5,51 @@ import {
   isIVirtualNode,
   IVirtualNode,
 } from 'libs/Cheburact/types';
-import { IRootContext } from './hostContext';
-import createFiberNode from './createFiberNode';
-import { FiberTypes, IFiberNode } from '../types';
 import { COMPONENT_FIBER } from '../config/customFields';
-
+import { FiberTypes, IFiberNode } from '../types';
+import createFiberNode from './createFiberNode';
+import { IRootContext } from './hostContext';
 
 export const getTreeBuilder = (rootContext: IRootContext) => {
-
   /*
-  *  Возвращает метод, который использует забинденные значения для вызова buildTree,
-  *  в который достаточно лишь передать child.
-  * */
+   *  Возвращает метод, который использует забинденные значения для вызова buildTree,
+   *  в который достаточно лишь передать child.
+   * */
   const getSubBuildTree = (
-      $target: HTMLElement,
-      container: Array<IFiberNode>,
-  ) =>
-      (child) =>
-          container.push(...(buildTree($target, child) || []));
+    $target: HTMLElement,
+    container: Array<IFiberNode>
+  ) => child => container.push(...(buildTree($target, child) || []));
 
-  const buildTextNode = (node: string, $parent: HTMLElement): Array<IFiberNode> => {
+  const buildTextNode = (
+    node: string,
+    $parent: HTMLElement
+  ): Array<IFiberNode> => {
     const $textNode = rootContext.createInstance(node);
     rootContext.appendChild($parent, $textNode);
 
-    return [createFiberNode({
-      stateNode: node,
-      type: FiberTypes.STRING,
-      ref: $textNode,
-    })];
+    return [
+      createFiberNode({
+        stateNode: node,
+        type: FiberTypes.STRING,
+        ref: $textNode,
+      }),
+    ];
   };
 
-  const buildIComponentNode = (node: IComponent, $parent: HTMLElement, buildTree): Array<IFiberNode> => {
+  const buildIComponentNode = (
+    node: IComponent,
+    $parent: HTMLElement,
+    buildTree
+  ): Array<IFiberNode> => {
     const curFiberNode = createFiberNode({
       stateNode: node,
       type: FiberTypes.COMPONENT,
-      key: node['key'] !== 0 ? node['key'] || null : 0,
+      key: node.key !== 0 ? node.key || null : 0,
     });
     node[COMPONENT_FIBER] = curFiberNode;
     node.setUpdater(rootContext.updater as any); // updater should be not null
-    const subChildren: Array<IFiberNode> = buildTree($parent, node.render(), curFiberNode) || [];
+    const subChildren: Array<IFiberNode> =
+      buildTree($parent, node.render(), curFiberNode) || [];
 
     curFiberNode.children.push(...subChildren);
     node.componentDidMount();
@@ -51,7 +57,10 @@ export const getTreeBuilder = (rootContext: IRootContext) => {
     return [curFiberNode];
   };
 
-  const buildIVirtualNode = (node: IVirtualNode, $parent: HTMLElement): Array<IFiberNode> => {
+  const buildIVirtualNode = (
+    node: IVirtualNode,
+    $parent: HTMLElement
+  ): Array<IFiberNode> => {
     const $node = rootContext.createInstance(node) as HTMLElement;
     if (node.ref) {
       node.ref($node);
@@ -75,7 +84,7 @@ export const getTreeBuilder = (rootContext: IRootContext) => {
 
   const buildTree = (
     $target: HTMLElement,
-    child: IElement | null | Array<IElement | null>,
+    child: IElement | null | Array<IElement | null>
   ): Array<IFiberNode> | null => {
 
     if (!child) {
