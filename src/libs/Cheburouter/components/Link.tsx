@@ -11,7 +11,7 @@ export class Link extends React.Component {
   onClick = e => {
     e.preventDefault();
 
-    const { to } = this.props;
+    const { to = null } = this.props;
     if (to) {
       routerStore.emit(
         actionRouterPush({
