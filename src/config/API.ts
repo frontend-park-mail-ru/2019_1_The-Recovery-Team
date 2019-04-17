@@ -12,7 +12,11 @@ export const HTTP_STATUS = {
   notFound: 404,
 };
 
-export const WS_URL: string = `ws://${window.location.host}/api/v1/game.ws`;
+const isSecure = window.location.host === 'sadislands.ru';
+
+export const WS_URL: string = `${isSecure ? 'wss' : 'ws'}://${
+  window.location.host
+}/api/v1/game.ws`;
 
 export default {
   avatars: () => prefixAPI('/avatars'),
