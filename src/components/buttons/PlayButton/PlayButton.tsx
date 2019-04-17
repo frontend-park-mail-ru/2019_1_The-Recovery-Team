@@ -8,6 +8,7 @@ const cn = classNames(styles);
 export default class PlayButton extends React.Component {
   render() {
     const { mode, className, to, isBlur = false, title = null } = this.props;
+
     let classes = cn(
       'play-button',
       `play-button_${mode}`,

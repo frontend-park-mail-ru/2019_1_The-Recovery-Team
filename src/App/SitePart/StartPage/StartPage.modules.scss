@@ -1,7 +1,7 @@
 @import "~styles/constants";
 
 .start-page {
-  height: 100%;
+  flex-grow: 1;
   background-color: $global-color-primary-light;
 
   &__play-buttons {
