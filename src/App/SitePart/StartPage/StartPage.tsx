@@ -12,7 +12,7 @@ const cn = classNames(styles);
 export default class StartPage extends React.Component {
   render() {
     const { authorized = false } = this.props;
-    console.log('authorized', authorized);
+
     return (
       <div className={cn('start-page')}>
         <Logotype size={LogotypeSizes.LARGE} />
