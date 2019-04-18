@@ -1,19 +1,41 @@
-const defaultImg = require('./img/Arsen.jpg');
+const fieldImg = require('../RuleSection/img/Field.svg');
+const cellsTypesImg = require('../RuleSection/img/CellTypes.svg');
+const waterBarrierImg = require('../RuleSection/img/WaterBarrier.svg');
+const timerImg = require('../RuleSection/img/Timer.svg');
+const roundImg = require('../RuleSection/img/Round.svg');
+const controllersImg = require('../RuleSection/img/Controllers.svg');
 
 export const rules = [
   {
     title: 'Title',
-    description: 'Description',
-    img: defaultImg,
+    description:
+      'Играйте за краба на побережье острова,старайтесь выжить во время наводнения!',
+    img: fieldImg,
   },
   {
     title: 'Title',
-    description: 'Description',
-    img: defaultImg,
+    description: 'Побережье состоит из случайно появляющихся ячеек.',
+    img: cellsTypesImg,
   },
   {
     title: 'Title',
-    description: 'Description',
-    img: defaultImg,
+    description: 'Избегайте ячеек с водой! При попадании на них вы проиграете.',
+    img: waterBarrierImg,
+  },
+  {
+    title: 'Title',
+    description:
+      'Следите за таймером! По истечении времени игровое поле изменится. Болото превратится в воду, появятся новые ячейки с болотом.',
+    img: timerImg,
+  },
+  {
+    title: 'Title',
+    description: 'Старайтесь продержаться как можно дольше!',
+    img: roundImg,
+  },
+  {
+    title: 'Title',
+    description: 'Управляйте вашим крабом с помощью клавиш.',
+    img: controllersImg,
   },
 ];

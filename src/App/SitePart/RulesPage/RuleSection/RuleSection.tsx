@@ -19,14 +19,14 @@ export default class RuleSection extends React.Component {
           <img src={`${BASE_URL}${rule.img}`} className={cn('rule__image')} />
         </div>
         <div className={cn('rule__info')}>
-          <div className={cn('rule__title')}>{rule.title}</div>
+          {/*<div className={cn('rule__title')}>{rule.title}</div>*/}
           <div className={cn('rule__description')}>{rule.description}</div>
         </div>
       </div>
     ) : (
       <div className={ruleClasses}>
         <div className={cn('rule__info')}>
-          <div className={cn('rule__title')}>{rule.title}</div>
+          {/*<div className={cn('rule__title')}>{rule.title}</div>*/}
           <div className={cn('rule__description')}>{rule.description}</div>
         </div>
         <div className={cn('rule__container-img')}>
