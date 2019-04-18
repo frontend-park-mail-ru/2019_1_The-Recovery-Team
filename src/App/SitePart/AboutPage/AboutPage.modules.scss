@@ -1,0 +1,11 @@
+.about-page {
+  padding: 80px 80px 30px;
+  width: 1100px;
+  text-align: center;
+
+  &__member-container {
+    width: 25%;
+    min-width: 200px;
+    margin-bottom: 50px;
+  }
+}

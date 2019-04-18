@@ -3,6 +3,7 @@ import * as React from 'libs/Cheburact';
 import { Route } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
 import userStore, { actionUserLogout } from 'store/userStore';
+import AboutPage from './AboutPage/AboutPage';
 import AuthPage from './AuthPage';
 import EditProfilePage from './EditProfilePage';
 import Header from './Header';
@@ -42,6 +43,7 @@ export default class SitePart extends React.Component {
           template={routesMap.PROFILE_EDIT.template}
           component={EditProfilePage}
         />
+        <Route template={routesMap.ABOUT_PAGE.template} component={AboutPage} />
       </div>
     );
   }
