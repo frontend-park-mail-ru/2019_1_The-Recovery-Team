@@ -1,9 +1,9 @@
- import GameButton from 'components/buttons/GameButton';
-import { routeCreators } from 'config/routes';
+import GameButton from 'components/buttons/GameButton';
 import { GameModes } from 'game/config';
 import gameStore, { actionGameStop } from 'game/store';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
+import { buttons } from './config/buttons';
 import { FinishTypes } from './config/finishTypes';
 
 const styles = require('./FinishPage.modules.scss');
@@ -12,11 +12,6 @@ const cn = classNames(styles);
 
 export default class FinishPage extends React.Component {
   state = {
-    buttons: [
-      { type: 'reload', to: routeCreators.TO_GAME_PART() },
-      { type: 'profile', to: routeCreators.TO_PROFILE() },
-      { type: 'home', to: routeCreators.TO_START() },
-    ],
     isAuthorized: false,
     finishType: FinishTypes.DEFEAT,
   };
@@ -26,7 +21,7 @@ export default class FinishPage extends React.Component {
   }
 
   render() {
-    const { buttons, isAuthorized } = this.state;
+    const { isAuthorized } = this.state;
     const {
       routeParams: { gameMode = GameModes.SINGLEPLAYER } = {},
     } = this.props;
@@ -49,6 +44,7 @@ export default class FinishPage extends React.Component {
             <GameButton
               className={cn('finish-page__game-button-container')}
               type={button.type}
+              img={button.img}
               isAuthorized={button.type === 'profile' && isAuthorized}
               to={button.to}
             />

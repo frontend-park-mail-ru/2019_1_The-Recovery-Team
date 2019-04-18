@@ -2,7 +2,7 @@ import GameButton from 'components/buttons/GameButton';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import ShortcutsModule from '../ShortcutsModule/ShortcutsModule';
-import { buttonsConfig } from './config';
+import { buttonsConfig } from './config/buttons';
 import Timer from '../Arena/Header/Timer/Timer';
 const styles = require('./PausePage.modules.scss');
 
@@ -22,6 +22,7 @@ export default class PausePage extends React.Component {
             <GameButton
               className={cn('pause-page__game-button-container')}
               type={button.type}
+              img={button.img}
               to={button.to}
             />
           ))}
