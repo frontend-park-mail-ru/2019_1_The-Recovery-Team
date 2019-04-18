@@ -13,7 +13,6 @@ export const routeNames = {
   GAME_PART: 'GAME_PART',
   PAUSE_PAGE: 'PAUSE_PAGE',
   FINISH_PAGE: 'FINISH_PAGE',
-  ABOUT_PAGE: 'ABOUT_PAGE',
 };
 
 export const routesMap = {
@@ -81,11 +80,6 @@ export const routesMap = {
     name: routeNames.FINISH_PAGE,
     template: '/game/{gameMode}/finish',
     title: 'Конец',
-  },
-  ABOUT_PAGE: {
-    name: routeNames.ABOUT_PAGE,
-    template: '/about',
-    title: 'О нас',
   },
 };
 

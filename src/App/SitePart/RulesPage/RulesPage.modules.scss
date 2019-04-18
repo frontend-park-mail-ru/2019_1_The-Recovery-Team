@@ -1,0 +1,11 @@
+.rules-page {
+  padding: 40px;
+
+  &__rule-container {
+    padding-bottom: 50px;
+
+    &:last-child {
+     padding-bottom: 0;
+    }
+  }
+}

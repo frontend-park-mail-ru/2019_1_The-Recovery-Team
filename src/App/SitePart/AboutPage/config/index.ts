@@ -1,4 +1,3 @@
-import { defaultAvatar } from 'config/images';
 const vitalyaFoto = require('./img/Vitalya.jpg');
 const arsenFoto = require('./img/Arsen.jpg');
 const fedyaFoto = require('./img/Fedya.jpg');

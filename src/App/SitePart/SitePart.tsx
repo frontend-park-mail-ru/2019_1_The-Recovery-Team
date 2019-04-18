@@ -3,13 +3,14 @@ import * as React from 'libs/Cheburact';
 import { Route } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
 import userStore, { actionUserLogout } from 'store/userStore';
-import AboutPage from './AboutPage/AboutPage';
+import AboutPage from './AboutPage';
 import AuthPage from './AuthPage';
 import EditProfilePage from './EditProfilePage';
 import Header from './Header';
 import LeadersPage from './LeadersPage';
 import ProfilePage from './ProfilePage';
-import StartPage from './StartPage/StartPage';
+import RulesPage from './RulesPage';
+import StartPage from './StartPage';
 const styles = require('./SitePart.modules.scss');
 
 const cn = classNames(styles);
@@ -43,7 +44,8 @@ export default class SitePart extends React.Component {
           template={routesMap.PROFILE_EDIT.template}
           component={EditProfilePage}
         />
-        <Route template={routesMap.ABOUT_PAGE.template} component={AboutPage} />
+        <Route template={routesMap.ABOUT.template} component={AboutPage} />
+        <Route template={routesMap.RULES.template} component={RulesPage} />
       </div>
     );
   }
