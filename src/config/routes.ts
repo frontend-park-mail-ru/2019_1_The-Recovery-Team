@@ -23,7 +23,7 @@ export const routesMap = {
   },
   RULES: {
     name: routeNames.RULES,
-    template: '/config',
+    template: '/rules',
     title: 'Правила',
   },
   ABOUT: {
@@ -85,7 +85,7 @@ export const routesMap = {
 
 export const routeCreators = {
   TO_START: () => '/',
-  TO_RULES: () => '/config',
+  TO_RULES: () => '/rules',
   TO_ABOUT: () => '/about',
   TO_SIGN_IN: () => '/sign/in',
   TO_SIGN_UP: () => '/sign/up',

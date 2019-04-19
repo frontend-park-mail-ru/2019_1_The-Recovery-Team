@@ -1,13 +1,12 @@
 import GameButton from 'components/buttons/GameButton';
+import { buttonTypes } from 'components/buttons/GameButton/config';
+import { homeImg, profileImg, reloadImg } from 'config/images';
 import { routeCreators } from 'config/routes';
 import { GameModes } from 'game/config';
 import gameStore, { actionGameStop } from 'game/store';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import { FinishTypes } from './config/finishTypes';
-export const reloadImg = require('config/img/Reload.svg');
-export const profileImg = require('config/img/Profile.svg');
-export const homeImg = require('config/img/Home.svg');
 
 const styles = require('./FinishPage.modules.scss');
 
@@ -44,21 +43,21 @@ export default class FinishPage extends React.Component {
         ) : null}
         <div className={cn('finish-page__buttons-container')}>
           <GameButton
-            buttonClass={cn('finish-page__game-button-container')}
-            type={'reload'}
+            className={cn('finish-page__game-button-container')}
+            type={buttonTypes.RELOAD}
             img={reloadImg}
             to={routeCreators.TO_GAME_PART()}
           />
           <GameButton
-            buttonClass={cn('finish-page__game-button-container')}
-            type={'profile'}
+            className={cn('finish-page__game-button-container')}
+            type={buttonTypes.PROFILE}
             img={profileImg}
             isAuthorized={isAuthorized}
             to={routeCreators.TO_PROFILE()}
           />
           <GameButton
-            buttonClass={cn('finish-page__game-button-container')}
-            type={'home'}
+            className={cn('finish-page__game-button-container')}
+            type={buttonTypes.HOME}
             img={homeImg}
             to={routeCreators.TO_START()}
           />

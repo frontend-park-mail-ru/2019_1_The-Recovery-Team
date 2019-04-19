@@ -160,7 +160,7 @@ export default class SignUpForm extends React.Component {
               onClick={this.toSecondStage}
               disabled={this.nextDisabled}
             >
-              {'Продолжить регистрацию'}
+              Продолжить регистрацию
             </SubmitButton>
           </div>
         ) : (
@@ -176,7 +176,7 @@ export default class SignUpForm extends React.Component {
                 disabled={readyDisabled}
                 onClick={this.handleSubmit}
               >
-                {'Зарегистрироваться'}
+                Зарегистрироваться
               </SubmitButton>
             </div>
           </div>

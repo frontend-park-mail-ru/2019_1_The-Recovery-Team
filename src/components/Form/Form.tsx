@@ -10,8 +10,8 @@ export default class Form extends React.Component {
   handleBlur = name => this.props.onBlur(name);
 
   render() {
-    const { inputs, formClass = '' } = this.props;
-    const formClasses = `${formClass} ${cn('form')}`;
+    const { inputs, className = '' } = this.props;
+    const formClasses = `${className} ${cn('form')}`;
 
     return (
       <div className={formClasses}>

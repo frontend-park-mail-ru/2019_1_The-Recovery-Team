@@ -12,10 +12,10 @@ export default class GameButton extends React.Component {
       type,
       isAuthorized = false,
       to,
-      buttonClass = '',
+      className = '',
     } = this.props;
 
-    const buttonClasses = `${buttonClass} ${cn('game-button')}`;
+    const buttonClasses = `${className} ${cn('game-button')}`;
 
     const iconClasses = cn('game-button__icon', `game-button_${type}-size`);
 

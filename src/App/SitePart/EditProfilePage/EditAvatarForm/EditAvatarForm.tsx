@@ -56,7 +56,7 @@ export default class EditAvatarForm extends React.Component {
             onClick={this.updateAvatar}
             mode={modes.SAVE}
           >
-            {'Сохранить'}
+            Сохранить
           </SubmitButton>
         </div>
       </div>

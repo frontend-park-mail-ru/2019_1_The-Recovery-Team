@@ -6,8 +6,8 @@ const cn = classNames(styles);
 
 export default class EditButton extends React.Component {
   render() {
-    const { onClick, buttonClass = '' } = this.props;
-    const buttonClasses = `${buttonClass} ${cn('edit-button')}`;
+    const { onClick, className = '' } = this.props;
+    const buttonClasses = `${className} ${cn('edit-button')}`;
 
     return <button onClick={onClick} className={buttonClasses} />;
   }

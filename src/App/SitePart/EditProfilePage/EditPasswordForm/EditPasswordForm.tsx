@@ -118,7 +118,7 @@ export default class EditPasswordForm extends React.Component {
             disabled={saveDisabled}
             mode={modes.SAVE}
           >
-            {'Сохранить'}
+            Сохранить
           </SubmitButton>
         </div>
       </div>

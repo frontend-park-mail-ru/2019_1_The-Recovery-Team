@@ -1,5 +1,5 @@
-import * as React from 'libs/Cheburact';
-import classNames from 'libs/classNames';
+import * as React from 'libs/Cheburact/index';
+import classNames from 'libs/classNames/index';
 const styles = require('./MainBlock.modules.scss');
 
 const cn = classNames(styles);
@@ -12,7 +12,7 @@ export default class MainBlock extends React.Component {
 
     return (
       <div className={cn('main-block')}>
-        <div class={contentClasses}>{children}</div>
+        <div className={contentClasses}>{children}</div>
       </div>
     );
   }

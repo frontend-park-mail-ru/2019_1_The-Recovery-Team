@@ -24,8 +24,8 @@ export default class ShortcutsModule extends React.Component {
 
   render() {
     const { shortcuts } = this.state;
-    const { shortcutsClass = '' } = this.props;
-    const shortcutsClasses = `${shortcutsClass} ${cn('shortcuts')}`;
+    const { className = '' } = this.props;
+    const shortcutsClasses = `${className} ${cn('shortcuts')}`;
 
     return (
       <div className={shortcutsClasses}>

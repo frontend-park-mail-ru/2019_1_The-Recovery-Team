@@ -21,7 +21,7 @@ import {
   validateAlreadyExists,
   validateRequired,
 } from 'utils/form/validators';
-import MainBlock from '../MainBlock';
+import MainBlock from '../../../components/MainBlock';
 import EditAvatarForm from './EditAvatarForm';
 import EditPasswordForm from './EditPasswordForm';
 
@@ -164,14 +164,14 @@ export default class EditProfilePage extends React.Component {
             <div className={cn('edit-profile-page__container-avatar')}>
               <AvatarProfile user={user} />
               <EditButton
-                buttonClass={cn('edit-profile-page__container-edit-button')}
+                className={cn('edit-profile-page__container-edit-button')}
                 onClick={this.toggleEditModalAvatar}
               />
             </div>
           </div>
           <div className={cn('edit-profile-page__container-edit')}>
             <Form
-              formClass={cn('edit-profile-page__container-form')}
+              className={cn('edit-profile-page__container-form')}
               onChangeValue={this.handleChangeValue}
               onBlur={this.handleBlur}
               inputs={[email, nickname]}
@@ -181,24 +181,24 @@ export default class EditProfilePage extends React.Component {
                 onClick={this.toggleEditModalPassword}
                 mode={modes.SETTINGS}
               >
-                {'Изменить пароль'}
+                Изменить пароль
               </SubmitButton>
               <div
                 className={cn('edit-profile-page__container-submit-buttons')}
               >
                 <SubmitButton
-                  buttonClass={cn('edit-profile-page__container-save-button')}
+                  className={cn('edit-profile-page__container-save-button')}
                   onClick={this.updateUser}
                   mode={modes.SAVE}
                   disabled={this.saveDisabled}
                 >
-                  {'Сохранить'}
+                  Сохранить
                 </SubmitButton>
                 <SubmitButton
                   to={routeCreators.TO_PROFILE()}
                   mode={modes.CANCEL}
                 >
-                  {'Закрыть'}
+                  Закрыть
                 </SubmitButton>
               </div>
             </div>

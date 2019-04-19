@@ -38,9 +38,9 @@ export default class Tabbar extends React.Component {
 
   render() {
     const { tabs } = this.state;
-    const { tabbarClass } = this.props;
+    const { className } = this.props;
     const { pathname } = window.location;
-    const tabbarClasses = `${tabbarClass} ${cn('tabbar')}`;
+    const tabbarClasses = `${className} ${cn('tabbar')}`;
 
     return (
       <div className={tabbarClasses}>

@@ -11,11 +11,11 @@ export default class SubmitButton extends React.Component {
       mode,
       onClick = null,
       to = null,
-      disabled,
+      disabled = false,
       children,
-      buttonClass = '',
+      className = '',
     } = this.props;
-    const buttonClasses = `${buttonClass} ${cn(
+    const buttonClasses = `${className} ${cn(
       'submit-button',
       `submit-button_${mode.theme}`,
       disabled && 'submit-button_disabled'

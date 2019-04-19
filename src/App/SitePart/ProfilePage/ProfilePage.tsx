@@ -1,3 +1,4 @@
+import MainBlock from 'components/MainBlock';
 import AvatarProfile from 'components/AvatarProfile';
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import LabelProfile from 'components/LabelProfile';
@@ -10,7 +11,6 @@ import userStore, {
   userActions,
   UserUpdateSuccessPL,
 } from 'store/userStore';
-import MainBlock from '../MainBlock/MainBlock';
 
 const styles = require('./ProfilePage.modules.scss');
 
@@ -66,7 +66,7 @@ export default class ProfilePage extends React.Component {
               to={routeCreators.TO_PROFILE_EDIT()}
               mode={modes.SETTINGS}
             >
-              {'Редактировать'}
+              Редактировать
             </SubmitButton>
           </div>
         </div>

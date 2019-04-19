@@ -9,6 +9,7 @@
 
   &__column {
     padding-top: 20px;
+    text-align: center;
     color: var(--global-color-primary-dark);
   }
 
@@ -16,16 +17,14 @@
     flex-grow: 0;
     flex-shrink: 0;
     width: 120px;
-    padding-left: 52px;
   }
 
   &_nick {
     flex-grow: 1;
-    padding-left: 160px;
+    text-align: center;
   }
 
   &_rating {
-    padding-left: 120px;
     width: 300px;
     flex-grow: 0;
     flex-shrink: 0;

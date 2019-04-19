@@ -10,7 +10,7 @@ import routerStore, {
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
-import MainBlock from '../MainBlock';
+import MainBlock from '../../../components/MainBlock';
 import { AuthPageMode } from './config/modes';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
@@ -58,7 +58,7 @@ export default class AuthPage extends React.Component {
         <div className={cn('sign-auth-page__container-buttons')}>
           {authButtons.map(({ title, to }) => (
             <AuthButton
-              buttonClass={cn('sign-auth-page__button')}
+              className={cn('sign-auth-page__button')}
               isActive={match(pathname, to, false)}
               to={to}
             >

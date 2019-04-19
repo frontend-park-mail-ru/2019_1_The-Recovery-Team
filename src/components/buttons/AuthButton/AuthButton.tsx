@@ -7,11 +7,11 @@ const cn = classNames(styles);
 
 export default class AuthButton extends React.Component {
   render() {
-    const { isActive, children, buttonClass = '', to } = this.props;
+    const { isActive, children, className = '', to } = this.props;
     const classes = `${cn(
       'auth-button',
       isActive && 'auth-button_active'
-    )} ${buttonClass}`;
+    )} ${className}`;
 
     return (
       <Link to={to} className={classes}>

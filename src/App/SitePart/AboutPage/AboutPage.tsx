@@ -1,6 +1,6 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import MainBlock from '../MainBlock/MainBlock';
+import MainBlock from '../../../components/MainBlock/MainBlock';
 import { members } from './config';
 import MemberInfo from './MemberInfo/MemberInfo';
 
@@ -15,7 +15,7 @@ export default class AboutPage extends React.Component {
         {members.map(member => (
           <MemberInfo
             member={member}
-            memberClass={cn('about-page__member-container')}
+            className={cn('about-page__member-container')}
           />
         ))}
       </MainBlock>
