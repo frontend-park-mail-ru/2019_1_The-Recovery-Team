@@ -2,8 +2,6 @@
 @import 'styles/mixins';
 
 .game-button {
-  width: 160px;
-  height: 160px;
   padding: 5px;
   background-color: $global-color-game-secondary-light;
   border-radius: 50%;
@@ -12,6 +10,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @include square(160px);
 
   &_size-m {
     width: 100px;

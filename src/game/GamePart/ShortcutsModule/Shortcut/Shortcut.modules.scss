@@ -11,12 +11,11 @@
     border-radius: 10px;
     border: 3px $global-color-primary-light solid;
     font-weight: bold;
-    font-size: 20px;
-
+    font-size: $global-font-size-l;
   }
 
   &__title {
-    font-size: 18px;
+    font-size: $global-font-size-m;
     padding: 6px 16px;
   }
 }

@@ -54,22 +54,20 @@ export default class AuthPage extends React.Component {
     const { pathname } = window.location;
 
     return (
-      <MainBlock>
-        <div className={cn('sign-auth-page')}>
-          <div className={cn('sign-auth-page__container-buttons')}>
-            {authButtons.map(({ title, to }) => (
-              <AuthButton
-                className={cn('sign-auth-page__button')}
-                isActive={match(pathname, to, false)}
-                to={to}
-              >
-                {title}
-              </AuthButton>
-            ))}
-          </div>
-          <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
-          <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
+      <MainBlock className={cn('sign-auth-page')}>
+        <div className={cn('sign-auth-page__container-buttons')}>
+          {authButtons.map(({ title, to }) => (
+            <AuthButton
+              buttonClass={cn('sign-auth-page__button')}
+              isActive={match(pathname, to, false)}
+              to={to}
+            >
+              {title}
+            </AuthButton>
+          ))}
         </div>
+        <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
+        <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
       </MainBlock>
     );
   }

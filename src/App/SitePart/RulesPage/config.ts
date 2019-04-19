@@ -1,9 +1,9 @@
-const fieldImg = require('../RuleSection/img/Field.svg');
-const cellsTypesImg = require('../RuleSection/img/CellTypes.svg');
-const waterBarrierImg = require('../RuleSection/img/WaterBarrier.svg');
-const timerImg = require('../RuleSection/img/Timer.svg');
-const roundImg = require('../RuleSection/img/Round.svg');
-const controllersImg = require('../RuleSection/img/Controllers.svg');
+const fieldImg = require('./img/Field.svg');
+const cellsTypesImg = require('./img/CellTypes.svg');
+const waterBarrierImg = require('./img/WaterBarrier.svg');
+const timerImg = require('./img/Timer.svg');
+const roundImg = require('./img/Round.svg');
+const controllersImg = require('./img/Controllers.svg');
 
 export const rules = [
   {

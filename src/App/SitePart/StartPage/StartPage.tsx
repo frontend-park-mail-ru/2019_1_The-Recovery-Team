@@ -18,12 +18,12 @@ export default class StartPage extends React.Component {
         <Logotype size={LogotypeSizes.LARGE} />
         <div className={cn('start-page__play-buttons')}>
           <PlayButton
-            className={cn('start-page__play-button')}
+            buttonClass={cn('start-page__play-button')}
             mode={PlayButtonModes.SINGLEPLAYER}
             to={routeCreators.TO_GAME_PART(GameModes.SINGLEPLAYER)}
           />
           <PlayButton
-            className={cn('start-page__play-button')}
+            buttonClass={cn('start-page__play-button')}
             isBlur={!authorized}
             title={'ВОЙТИ'}
             mode={PlayButtonModes.MULTIPLAYER}

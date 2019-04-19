@@ -2,12 +2,10 @@
 
 .leaders-page {
   height: 100%;
+  padding-bottom: 20px;
 
   &__load-button {
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0 auto;
   }
 
   &__header-table {

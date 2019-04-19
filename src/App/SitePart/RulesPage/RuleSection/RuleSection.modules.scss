@@ -4,46 +4,30 @@
 .rule {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 
-  &__container-img {
-    width: 400px;
+  &__img {
+    width: calc(50% - 15px);
     height: 240px;
-    margin-right: 20px;
     flex-shrink: 0;
+    object-fit: cover;
+    object-position: center;
   }
 
   &_reverse {
-    justify-content: space-between;
-  }
-
-  &_reverse &__container-img {
-    margin-right: 0;
-  }
-
-  &__image {
-    object-fit: cover;
-    object-position: center;
-
-    @include square(100%);
+    flex-direction: row-reverse;
   }
 
   &__info {
     display: flex;
-    flex-grow: 1;
+    width: calc(50% - 15px);
     justify-content: center;
     align-items: center;
   }
 
-  &__title {
-
-    color: #006064;
-    font-size: $global-font-size-l;
-    font-weight: 700;
-  }
-
   &__description {
     display: block;
-    color: #006064;
+    color: $global-color-primary-dark;
     font-size: $global-font-size-m;
   }
 }

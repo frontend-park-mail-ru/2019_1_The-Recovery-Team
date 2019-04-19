@@ -20,9 +20,9 @@ const cn = classNames(styles);
 export default class LeadersPage extends React.Component {
   state = {
     columns: [
-      { title: '#', classesName: 'num' },
-      { title: 'Игрок', classesName: 'nick' },
-      { title: 'Рейтинг', classesName: 'rating' },
+      { title: '#', type: 'num' },
+      { title: 'Игрок', type: 'nick' },
+      { title: 'Рейтинг', type: 'rating' },
     ],
     leaders: [],
     hasMore: true,
@@ -46,53 +46,47 @@ export default class LeadersPage extends React.Component {
     const { columns, leaders, hasMore } = this.state;
 
     return (
-      <MainBlock>
-        <div className={cn('leaders-page')}>
-          <div className={cn('leaders-page__header-table')}>
-            {columns.map(({ title, classesName }) => {
-              if (title === 'Рейтинг') {
-                return (
-                  <div
-                    className={cn(
-                      'leaders-page__header-column',
-                      `leaders-page__header-column_${classesName}`
-                    )}
-                  >
-                    <div className={cn('leaders-page__container-trophy-icon')}>
-                      <div className={cn('leaders-page__trophy-icon')} />
-                    </div>
-                    <div className={cn('leaders-page__rating-title')}>
-                      {title}
-                    </div>
-                  </div>
-                );
-              }
+      <MainBlock className={cn('leaders-page')}>
+        <div className={cn('leaders-page__header-table')}>
+          {columns.map(({ title, type }) => {
+            const columnClasses = cn(
+              'leaders-page__header-column',
+              `leaders-page__header-column_${type}`
+            );
+
+            if (title === 'Рейтинг') {
               return (
-                <div
-                  key={title}
-                  className={cn(
-                    'leaders-page__header-column',
-                    `leaders-page__header-column_${classesName}`
-                  )}
-                >
-                  {title}
+                <div className={columnClasses}>
+                  <div className={cn('leaders-page__container-trophy-icon')}>
+                    <div className={cn('leaders-page__trophy-icon')} />
+                  </div>
+                  <div className={cn('leaders-page__rating-title')}>
+                    {title}
+                  </div>
                 </div>
               );
-            })}
-          </div>
-          <div className={cn('leaders-page__content-table')}>
-            {leaders.map((leader, index) => (
-              <RowLeader leader={leader} index={index + 1} />
-            ))}
-          </div>
-          <div className={cn('leaders-page__load-button')}>
-            {hasMore && (
-              <SubmitButton mode={modes.NEXT} onClick={this.handleLoadNextPage}>
-                {'Загрузить ещё'}
-              </SubmitButton>
-            )}
-          </div>
+            }
+            return (
+              <div key={title} className={columnClasses}>
+                {title}
+              </div>
+            );
+          })}
         </div>
+        <div className={cn('leaders-page__content-table')}>
+          {leaders.map((leader, index) => (
+            <RowLeader leader={leader} index={index + 1} />
+          ))}
+        </div>
+        {hasMore && (
+          <SubmitButton
+            buttonClass={cn('leaders-page__load-button')}
+            mode={modes.NEXT}
+            onClick={this.handleLoadNextPage}
+          >
+            {'Загрузить ещё'}
+          </SubmitButton>
+        )}
       </MainBlock>
     );
   }

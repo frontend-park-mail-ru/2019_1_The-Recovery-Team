@@ -10,10 +10,11 @@ export default class Form extends React.Component {
   handleBlur = name => this.props.onBlur(name);
 
   render() {
-    const { inputs } = this.props;
+    const { inputs, formClass = '' } = this.props;
+    const formClasses = `${formClass} ${cn('form')}`;
 
     return (
-      <div className={cn('form')}>
+      <div className={formClasses}>
         <div className={cn('form__container-inputs')}>
           {inputs.map(
             ({

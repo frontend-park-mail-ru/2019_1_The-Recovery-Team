@@ -3,14 +3,14 @@
 
 .play-button {
   display: inline-block;
-  width: 240px;
-  height: 240px;
   border: 5px solid #FFFFFF;
   border-radius: 50%;
   background-color: $global-color-primary-light;
   cursor: pointer;
   position: relative;
   background-size: contain;
+
+  @include square(240px);
 
   &:before {
     width: 100%;
@@ -46,7 +46,7 @@
     opacity: 0;
     color: #FFFFFF;
     padding-top: 84px;
-    font-size: 44px;
+    font-size: $global-font-size-xl;
     font-weight: bold;
     width: 100%;
     height: 100%;

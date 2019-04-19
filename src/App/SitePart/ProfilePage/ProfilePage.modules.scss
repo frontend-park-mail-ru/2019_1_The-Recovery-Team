@@ -39,13 +39,13 @@
 
     &_nickname {
       color: $global-color-primary-dark;
-      font-size: 40px;
+      font-size: $global-font-size-xl;
       font-weight: 700;
     }
 
     &_email {
       color: $global-color-primary-dark;
-      font-size: 25px;
+      font-size: $global-font-size-l;
     }
 
   }

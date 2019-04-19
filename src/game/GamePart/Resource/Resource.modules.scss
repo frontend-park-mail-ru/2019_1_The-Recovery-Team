@@ -5,12 +5,11 @@ $local-counter-size: 40px;
 $local-resource-size: 86px;
 
 .resource {
-  @include square($local-resource-size);
   position: relative;
 
-  &__counter {
-    @include square($local-counter-size);
+  @include square($local-resource-size);
 
+  &__counter {
     border-radius: 50%;
     background-color: $global-color-game-secondary-dark;
     color: $global-color-game-secondary-light;
@@ -20,17 +19,19 @@ $local-resource-size: 86px;
     transform: translate(-50%, -50%);
     left: 88%;
     top: 88%;
+
+    @include square($local-counter-size);
   }
 
   &__container-icon {
-    @include square(100%);
-
     border-radius: 50%;
     background-color: $global-color-game-secondary-light;
     border: 3px $global-color-game-secondary-dark solid;
     background-size: contain;
     cursor: pointer;
     position: relative;
+
+    @include square(100%);
 
     &:after {
       content: '';

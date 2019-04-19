@@ -15,7 +15,7 @@ export default class AboutPage extends React.Component {
         {members.map(member => (
           <MemberInfo
             member={member}
-            className={cn('about-page__member-container')}
+            memberClass={cn('about-page__member-container')}
           />
         ))}
       </MainBlock>

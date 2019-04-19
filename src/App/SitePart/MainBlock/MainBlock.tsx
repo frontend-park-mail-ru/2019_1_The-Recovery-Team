@@ -6,7 +6,7 @@ const cn = classNames(styles);
 
 export default class MainBlock extends React.Component {
   render() {
-    const { children, className } = this.props;
+    const { children, className = '' } = this.props;
 
     const contentClasses = `${className} ${cn('main-block__content')}`;
 

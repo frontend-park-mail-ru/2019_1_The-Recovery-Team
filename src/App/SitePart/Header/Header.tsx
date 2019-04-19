@@ -87,7 +87,7 @@ export default class Header extends React.Component {
           <VolumeButton on={true} />
           {this.isLabelUserVisible && (
             <LabelAuthUser
-              className={cn('header__container-user-wrapper')}
+              labelClass={cn('header__container-user-wrapper')}
               user={user}
               to={routeCreators.TO_PROFILE()}
             />

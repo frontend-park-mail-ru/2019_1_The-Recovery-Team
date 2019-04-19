@@ -5,24 +5,24 @@
   display: inline-block;
   text-align: center;
 
+  &__avatar {
+    @include square(180px);
+    display: inline-block;
+  }
+
   &__info {
     padding-top: 20px;
   }
 
   &__name {
-    color: #006064;
+    color: $global-color-primary-dark;
     font-size: $global-font-size-l;
     font-weight: 700;
     margin-bottom: 10px;
   }
 
   &__description {
-    color: #006064;
+    color: $global-color-primary-dark;
     font-size: $global-font-size-m;
-  }
-
-  &__avatar {
-    @include square(180px);
-    display: inline-block;
   }
 }

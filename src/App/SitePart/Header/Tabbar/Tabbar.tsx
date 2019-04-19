@@ -38,11 +38,12 @@ export default class Tabbar extends React.Component {
 
   render() {
     const { tabs } = this.state;
-    const { className } = this.props;
+    const { tabbarClass } = this.props;
     const { pathname } = window.location;
+    const tabbarClasses = `${tabbarClass} ${cn('tabbar')}`;
 
     return (
-      <div className={`${cn('tabbar')} ${className}`}>
+      <div className={tabbarClasses}>
         {tabs.map(({ title, to }) => (
           <Tab isActive={match(to, pathname, false)} to={to}>
             {title}

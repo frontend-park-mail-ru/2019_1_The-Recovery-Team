@@ -1,25 +1,23 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import MainBlock from '../MainBlock/MainBlock';
-import { rules } from './config/rules';
+import { rules } from './config';
 import RuleSection from './RuleSection';
+import MainBlock from '../MainBlock/MainBlock';
 const styles = require('./RulesPage.modules.scss');
 
 const cn = classNames(styles);
 
 export default class RulesPage extends React.Component {
   render() {
-    let reverse = true;
-
     return (
       <MainBlock className={cn('rules-page')}>
-        {rules.map(rule => {
-          reverse = !reverse;
+        {rules.map((rule, idx) => {
+          const reverse = idx % 2 !== 0;
           return (
             <RuleSection
               rule={rule}
               reverse={reverse}
-              className={cn('rules-page__rule-container')}
+              ruleClass={cn('rules-page__rule-container')}
             />
           );
         })}
