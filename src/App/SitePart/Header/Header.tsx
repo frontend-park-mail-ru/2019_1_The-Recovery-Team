@@ -10,9 +10,16 @@ import routerStore, {
   match,
   routerActions,
 } from 'libs/Cheburouter';
-import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import musicStore, {
+  actionMusicOff,
+  actionMusicOn,
+  musicActions,
+  MusicChangedPL,
+} from 'store/musicStore';
 import Tabbar from './Tabbar/Tabbar';
+
 const styles = require('./Header.modules.scss');
 
 const cn = classNames(styles);
@@ -26,7 +33,15 @@ export default class Header extends React.Component {
   state = {
     isStartPage: Header.isStartPage(),
     path: window.location.pathname,
+    isMusicOn: musicStore.select().isOn,
   };
+
+  @onCheburevent(musicStore, musicActions.CHANGED)
+  handleChangeSound({ payload }: Action<MusicChangedPL>) {
+    this.setState({
+      isMusicOn: payload.isOn,
+    });
+  }
 
   @onCheburevent(routerStore, routerActions.PUSH_OK)
   handlePageChange() {
@@ -54,6 +69,14 @@ export default class Header extends React.Component {
     }
   };
 
+  toggleMusic = () => {
+    if (this.state.isMusicOn) {
+      musicStore.emit(actionMusicOff());
+    } else {
+      musicStore.emit(actionMusicOn());
+    }
+  };
+
   get isLabelUserVisible() {
     return !this.isIOButtonVisible;
   }
@@ -66,7 +89,7 @@ export default class Header extends React.Component {
 
   render() {
     const { user } = this.props;
-    const { isStartPage } = this.state;
+    const { isStartPage, isMusicOn } = this.state;
 
     return (
       <div className={cn('header', 'header_main')}>
@@ -84,7 +107,7 @@ export default class Header extends React.Component {
             isStartPage && 'header__container-buttons_start-page'
           )}
         >
-          <VolumeButton on={true} />
+          <VolumeButton on={isMusicOn} onClick={this.toggleMusic} />
           {this.isLabelUserVisible && (
             <LabelAuthUser
               className={cn('header__container-user-wrapper')}

@@ -1,13 +1,14 @@
 import { GameModes } from 'game/config';
 import ControllersManager from 'game/ControllersManager';
-import gameStore, { actionGameInit } from 'game/store';
+import gameStore, { actionGameInit, gameStoreActions } from 'game/store';
 import { IControllersManager } from 'game/types';
 import * as React from 'libs/Cheburact';
-import { connectToCheburstore } from 'libs/Cheburstore';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
 import Field from './Field';
 import Header from './Header';
+import SearchPage from './SearchPage/SearchPage';
 
 const styles = require('./Arena.modules.scss');
 
@@ -18,11 +19,23 @@ const cn = classNames(styles);
 export default class Arena extends React.Component {
   controllersManager: IControllersManager | null = null;
 
+  state = {
+    gameStarted: false,
+  };
+
+  @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
+  handleGameChanged() {
+    if (!this.state.gameStarted) {
+      this.setState({ gameStarted: true });
+    }
+  }
+
   componentDidMount() {
     const {
       routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
     } = this.props;
-    const me = userStore.select().user;
+    const { user: me } = userStore.select();
+
     gameStore.emit(
       actionGameInit({
         me,
@@ -39,9 +52,11 @@ export default class Arena extends React.Component {
     const {
       routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
     } = this.props;
+    const { gameStarted } = this.state;
 
     return (
       <div className={cn('arena')}>
+        {!gameStarted && gameMode !== GameModes.SINGLEPLAYER && <SearchPage />}
         <Header mode={gameMode} />
         <Field />
       </div>

@@ -70,7 +70,7 @@ module.exports = {
                 sideEffects: true
             },
             {
-                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|mp3)$/,
                 use: {
                     loader: 'file-loader',
                     query: {

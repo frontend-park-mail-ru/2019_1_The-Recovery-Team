@@ -7,11 +7,17 @@ const styles = require('./PausePage.modules.scss');
 import { buttonTypes } from 'components/buttons/GameButton/config';
 import { giveUpImg, playImg, reloadImg } from 'config/images';
 import { routeCreators } from 'config/routes';
+import {GameModes} from 'game/config';
 
 const cn = classNames(styles);
 
 export default class PausePage extends React.Component {
   render() {
+    const {
+      routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+    } = this.props;
+    console.log('pause: ', this.props);
+
     return (
       <div className={cn('pause-page')}>
         <div className={cn('pause-page__title')}>{'Информация'}</div>
@@ -22,13 +28,13 @@ export default class PausePage extends React.Component {
             className={cn('pause-page__game-button-container')}
             type={buttonTypes.RELOAD}
             img={reloadImg}
-            to={routeCreators.TO_GAME_PART()}
+            to={routeCreators.TO_GAME_PART(gameMode)}
           />
           <GameButton
             className={cn('pause-page__game-button-container')}
             type={buttonTypes.PLAY}
             img={playImg}
-            to={routeCreators.TO_GAME_PART()}
+            to={routeCreators.TO_GAME_PART(gameMode)}
           />
           <GameButton
             className={cn('pause-page__game-button-container')}

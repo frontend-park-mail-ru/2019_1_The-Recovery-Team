@@ -13,6 +13,7 @@ export const routeNames = {
   GAME_PART: 'GAME_PART',
   PAUSE_PAGE: 'PAUSE_PAGE',
   FINISH_PAGE: 'FINISH_PAGE',
+  SEARCH_PAGE: 'SEARCH_PAGE',
 };
 
 export const routesMap = {
@@ -81,6 +82,11 @@ export const routesMap = {
     template: '/game/{gameMode}/finish',
     title: 'Конец',
   },
+  SEARCH_PAGE: {
+    name: routeNames.SEARCH_PAGE,
+    template: '/game/multiplayer/search',
+    title: 'Поиск',
+  },
 };
 
 export const routeCreators = {
@@ -97,4 +103,5 @@ export const routeCreators = {
     `/game/${mode}/pause`,
   TO_FINISH_PAGE: (mode: GameModes = GameModes.SINGLEPLAYER) =>
     `/game/${mode}/finish`,
+  TO_SEARCH_PAGE: () => '/game/multiplayer/search',
 };
