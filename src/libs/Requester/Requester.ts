@@ -47,24 +47,30 @@ export default class Requester {
     if (data) {
       options.body = data;
     }
+    try {
+      const r = await fetch(url, options);
 
-    const r = await fetch(url, options);
+      if (!r.ok) {
+        return {
+          error: r,
+          response: null,
+        };
+      }
 
-    if (!r.ok) {
+      const contentLength = r.headers.get('Content-Length');
+      const response =
+        contentLength === '0' || !contentLength ? {} : await r.json();
+
       return {
-        error: r,
+        response,
+        error: null,
+      };
+    } catch (e) {
+      return {
+        error: e,
         response: null,
       };
     }
-
-    const contentLength = r.headers.get('Content-Length');
-    const response =
-      contentLength === '0' || !contentLength ? {} : await r.json();
-
-    return {
-      response,
-      error: null,
-    };
   }
 
   static post(url: string, data: Object = {}, multipart: boolean = false) {
@@ -92,7 +98,7 @@ export default class Requester {
     return Requester.doRequest(`${url}${query}`, HTTPMethods.GET);
   }
 
-  static async put(url: string, data: Object = {}, multipart: boolean = false) {
+  static put(url: string, data: Object = {}, multipart: boolean = false) {
     return Requester.doRequest(
       url,
       HTTPMethods.PUT,
