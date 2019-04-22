@@ -64,14 +64,18 @@ export default class CheburSocket {
     }
 
     this.forseStop = false;
-    this.connection = new WebSocket(this.url);
+    try {
+      this.connection = new WebSocket(this.url);
 
-    this.connection.addEventListener('open', this.handleOpen);
-    this.connection.addEventListener('close', this.handleClose);
-    this.connection.addEventListener('message', this.handleMessage);
-    this.connection.addEventListener('error', () => null);
+      this.connection.addEventListener('open', this.handleOpen);
+      this.connection.addEventListener('close', this.handleClose);
+      this.connection.addEventListener('message', this.handleMessage);
+      this.connection.addEventListener('error', () => null);
 
-    return this;
+      return this;
+    } catch {
+      return this.handleClose();
+    }
   };
 
   disconnect(): CheburSocket {
@@ -150,7 +154,7 @@ export default class CheburSocket {
     if (this.dispatcher) {
       this.dispatcher.emit(actionCheburSocketDisonnected());
     }
-    this.reconnect();
+    return this.reconnect();
   };
 
   private reconnect(): CheburSocket {
