@@ -102,6 +102,16 @@ module.exports = {
             skipWaiting: true,
             importsDirectory: `${publicDir}/static/js`,
             navigateFallback: '/index.html',
+            runtimeCaching: [
+                {
+                    urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
+                    handler: 'cacheFirst'
+                },
+                {
+                    urlPattern: /.*/,
+                    handler: 'networkFirst'
+                }
+            ]
         }),
     ]
 };
