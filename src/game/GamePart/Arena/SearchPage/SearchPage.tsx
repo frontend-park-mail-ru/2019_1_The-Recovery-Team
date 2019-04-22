@@ -1,5 +1,5 @@
-import * as React from 'libs/Cheburact/index';
-import classNames from 'libs/classNames/index';
+import * as React from 'libs/Cheburact';
+import classNames from 'libs/classNames';
 const loader = require('./img/Loader.svg');
 const styles = require('./SearchPage.modules.scss');
 

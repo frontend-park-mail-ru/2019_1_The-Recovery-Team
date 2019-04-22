@@ -1,4 +1,4 @@
-import AvatarProfile from 'components/AvatarProfile/AvatarProfile';
+import AvatarProfile from 'components/AvatarProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 
