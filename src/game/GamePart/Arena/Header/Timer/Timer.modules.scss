@@ -34,7 +34,7 @@
     }
   }
   &__round {
-    font-size: 20px;
+    font-size: $global-font-size-l;
     padding: 7px 20px 15px 22px;
     text-align: center;
     color: $global-color-primary-light;
@@ -47,7 +47,7 @@
   &__time {
     color: $global-color-primary-light;
     padding: 10px 10px 20px;
-    font-size: 50px;
+    font-size: $global-font-size-xl;
     @include absoluteCenter;
   }
 }

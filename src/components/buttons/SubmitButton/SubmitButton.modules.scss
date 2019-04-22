@@ -48,6 +48,10 @@
     background: url('img/Cancel.svg');
   }
 
+  &_disabled {
+    cursor: not-allowed;
+  }
+
   &_light {
     border: 1px solid $global-color-primary-dark;
     background: #ffffff;

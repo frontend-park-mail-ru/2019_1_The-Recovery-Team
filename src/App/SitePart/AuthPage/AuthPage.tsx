@@ -1,4 +1,5 @@
 import AuthButton from 'components/buttons/AuthButton';
+import MainBlock from 'components/MainBlock';
 import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import routerStore, {
@@ -10,7 +11,6 @@ import routerStore, {
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
-import MainBlock from '../MainBlock';
 import { AuthPageMode } from './config/modes';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
@@ -54,22 +54,20 @@ export default class AuthPage extends React.Component {
     const { pathname } = window.location;
 
     return (
-      <MainBlock>
-        <div className={cn('sign-auth-page')}>
-          <div className={cn('sign-auth-page__container-buttons')}>
-            {authButtons.map(({ title, to }) => (
-              <AuthButton
-                className={cn('sign-auth-page__button')}
-                isActive={match(pathname, to, false)}
-                to={to}
-              >
-                {title}
-              </AuthButton>
-            ))}
-          </div>
-          <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
-          <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
+      <MainBlock className={cn('sign-auth-page')}>
+        <div className={cn('sign-auth-page__container-buttons')}>
+          {authButtons.map(({ title, to }) => (
+            <AuthButton
+              className={cn('sign-auth-page__button')}
+              isActive={match(pathname, to, false)}
+              to={to}
+            >
+              {title}
+            </AuthButton>
+          ))}
         </div>
+        <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
+        <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
       </MainBlock>
     );
   }

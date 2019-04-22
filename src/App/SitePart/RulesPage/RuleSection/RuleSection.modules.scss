@@ -1,0 +1,33 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+.rule {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__img {
+    width: calc(50% - 15px);
+    height: 240px;
+    flex-shrink: 0;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &_reverse {
+    flex-direction: row-reverse;
+  }
+
+  &__info {
+    display: flex;
+    width: calc(50% - 15px);
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__description {
+    display: block;
+    color: $global-color-primary-dark;
+    font-size: $global-font-size-m;
+  }
+}

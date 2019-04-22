@@ -2,12 +2,10 @@
 
 .leaders-page {
   height: 100%;
+  padding-bottom: 20px;
 
   &__load-button {
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0 auto;
   }
 
   &__header-table {
@@ -20,8 +18,9 @@
   }
 
   &__header-column {
-    text-align: center;
-    padding-top: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &_num {
       width: 120px;
@@ -35,7 +34,6 @@
 
     &_rating {
       width: 300px;
-      padding: 10px;
       flex-grow: 0;
       flex-shrink: 0;
       display: flex;
@@ -51,6 +49,7 @@
     width: 40px;
     height: 40px;
     background: url("img/Trophy.svg") no-repeat center;
+    margin-right: 10px;
   }
 
   &__content-table {

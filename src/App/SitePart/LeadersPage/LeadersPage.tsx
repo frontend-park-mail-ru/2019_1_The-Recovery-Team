@@ -1,7 +1,7 @@
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
+import MainBlock from 'components/MainBlock';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import MainBlock from '../MainBlock';
 import RowLeader from './RowLeader';
 const styles = require('./LeadersPage.modules.scss');
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
@@ -12,6 +12,7 @@ import {
   scoreboardActions,
   UpdateLeadersPL,
 } from 'store/scoreboardStore/actions';
+import { columnTypes } from './config';
 
 const cn = classNames(styles);
 
@@ -20,9 +21,13 @@ const cn = classNames(styles);
 export default class LeadersPage extends React.Component {
   state = {
     columns: [
-      { title: '#', classesName: 'num' },
-      { title: 'Игрок', classesName: 'nick' },
-      { title: 'Рейтинг', classesName: 'rating' },
+      { title: '#', type: columnTypes.COLUMN_NUM },
+      { title: 'Игрок', type: columnTypes.COLUMN_NICK },
+      {
+        title: 'Рейтинг',
+        type: columnTypes.COLUMN_RATING,
+        iconClass: 'trophy-icon',
+      },
     ],
     leaders: [],
     hasMore: true,
@@ -46,53 +51,46 @@ export default class LeadersPage extends React.Component {
     const { columns, leaders, hasMore } = this.state;
 
     return (
-      <MainBlock>
-        <div className={cn('leaders-page')}>
-          <div className={cn('leaders-page__header-table')}>
-            {columns.map(({ title, classesName }) => {
-              if (title === 'Рейтинг') {
-                return (
-                  <div
-                    className={cn(
-                      'leaders-page__header-column',
-                      `leaders-page__header-column_${classesName}`
-                    )}
-                  >
-                    <div className={cn('leaders-page__container-trophy-icon')}>
-                      <div className={cn('leaders-page__trophy-icon')} />
-                    </div>
-                    <div className={cn('leaders-page__rating-title')}>
-                      {title}
-                    </div>
-                  </div>
-                );
-              }
+      <MainBlock className={cn('leaders-page')}>
+        <div className={cn('leaders-page__header-table')}>
+          {columns.map(({ title, type, iconClass = false }) => {
+            const columnClasses = cn(
+              'leaders-page__header-column',
+              `leaders-page__header-column_${type}`
+            );
+            const iconComp = iconClass ? (
+              <div className={cn('leaders-page__trophy-icon')} />
+            ) : null;
+
+            if (type === columnTypes.COLUMN_RATING) {
               return (
-                <div
-                  key={title}
-                  className={cn(
-                    'leaders-page__header-column',
-                    `leaders-page__header-column_${classesName}`
-                  )}
-                >
+                <div key={title} className={columnClasses}>
+                  {iconComp}
                   {title}
                 </div>
               );
-            })}
-          </div>
-          <div className={cn('leaders-page__content-table')}>
-            {leaders.map((leader, index) => (
-              <RowLeader leader={leader} index={index + 1} />
-            ))}
-          </div>
-          <div className={cn('leaders-page__load-button')}>
-            {hasMore && (
-              <SubmitButton mode={modes.NEXT} onClick={this.handleLoadNextPage}>
-                {'Загрузить ещё'}
-              </SubmitButton>
-            )}
-          </div>
+            }
+            return (
+              <div key={title} className={columnClasses}>
+                {title}
+              </div>
+            );
+          })}
         </div>
+        <div className={cn('leaders-page__content-table')}>
+          {leaders.map((leader, index) => (
+            <RowLeader leader={leader} index={index + 1} />
+          ))}
+        </div>
+        {hasMore && (
+          <SubmitButton
+            className={cn('leaders-page__load-button')}
+            mode={modes.NEXT}
+            onClick={this.handleLoadNextPage}
+          >
+            Загрузить ещё
+          </SubmitButton>
+        )}
       </MainBlock>
     );
   }

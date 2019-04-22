@@ -2,6 +2,7 @@ import AvatarProfile from 'components/AvatarProfile';
 import EditButton from 'components/buttons/EditButton';
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import Form from 'components/Form';
+import MainBlock from 'components/MainBlock';
 import ModalWindow from 'components/ModalWindow';
 import API from 'config/API';
 import { routeCreators } from 'config/routes';
@@ -21,7 +22,6 @@ import {
   validateAlreadyExists,
   validateRequired,
 } from 'utils/form/validators';
-import MainBlock from '../MainBlock';
 import EditAvatarForm from './EditAvatarForm';
 import EditPasswordForm from './EditPasswordForm';
 
@@ -148,63 +148,58 @@ export default class EditProfilePage extends React.Component {
     } = this.state;
 
     return (
-      <MainBlock>
-        <div className={cn('edit-profile-page')}>
-          {isShownModalPassword && (
-            <ModalWindow onClose={this.toggleEditModalPassword}>
-              <EditPasswordForm user={user} />
-            </ModalWindow>
-          )}
-          {isShownModalAvatar && (
-            <ModalWindow onClose={this.toggleEditModalAvatar}>
-              {<EditAvatarForm user={user} />}
-            </ModalWindow>
-          )}
-          <div className={cn('edit-profile-page__container')}>
-            <div className={cn('edit-profile-page__left-container')}>
-              <div className={cn('edit-profile-page__container-avatar')}>
-                <AvatarProfile user={user} />
-                <div className={cn('edit-profile-page__container-edit-button')}>
-                  <EditButton onClick={this.toggleEditModalAvatar} />
-                </div>
-              </div>
+      <MainBlock className={cn('edit-profile-page')}>
+        {isShownModalPassword && (
+          <ModalWindow onClose={this.toggleEditModalPassword}>
+            <EditPasswordForm user={user} />
+          </ModalWindow>
+        )}
+        {isShownModalAvatar && (
+          <ModalWindow onClose={this.toggleEditModalAvatar}>
+            {<EditAvatarForm user={user} />}
+          </ModalWindow>
+        )}
+        <div className={cn('edit-profile-page__container')}>
+          <div className={cn('edit-profile-page__left-container')}>
+            <div className={cn('edit-profile-page__container-avatar')}>
+              <AvatarProfile user={user} />
+              <EditButton
+                className={cn('edit-profile-page__container-edit-button')}
+                onClick={this.toggleEditModalAvatar}
+              />
             </div>
-            <div className={cn('edit-profile-page__container-edit')}>
-              <div className={cn('edit-profile-page__container-form')}>
-                <Form
-                  onChangeValue={this.handleChangeValue}
-                  onBlur={this.handleBlur}
-                  inputs={[email, nickname]}
-                />
-              </div>
-              <div className={cn('edit-profile-page__container-buttons')}>
+          </div>
+          <div className={cn('edit-profile-page__container-edit')}>
+            <Form
+              className={cn('edit-profile-page__container-form')}
+              onChangeValue={this.handleChangeValue}
+              onBlur={this.handleBlur}
+              inputs={[email, nickname]}
+            />
+            <div className={cn('edit-profile-page__container-buttons')}>
+              <SubmitButton
+                onClick={this.toggleEditModalPassword}
+                mode={modes.SETTINGS}
+              >
+                Изменить пароль
+              </SubmitButton>
+              <div
+                className={cn('edit-profile-page__container-submit-buttons')}
+              >
                 <SubmitButton
-                  onClick={this.toggleEditModalPassword}
-                  mode={modes.SETTINGS}
+                  className={cn('edit-profile-page__container-save-button')}
+                  onClick={this.updateUser}
+                  mode={modes.SAVE}
+                  disabled={this.saveDisabled}
                 >
-                  {'Изменить пароль'}
+                  Сохранить
                 </SubmitButton>
-                <div
-                  className={cn('edit-profile-page__container-submit-buttons')}
+                <SubmitButton
+                  to={routeCreators.TO_PROFILE()}
+                  mode={modes.CANCEL}
                 >
-                  <div
-                    className={cn('edit-profile-page__container-save-button')}
-                  >
-                    <SubmitButton
-                      onClick={this.updateUser}
-                      mode={modes.SAVE}
-                      disabled={this.saveDisabled}
-                    >
-                      {'Сохранить'}
-                    </SubmitButton>
-                  </div>
-                  <SubmitButton
-                    to={routeCreators.TO_PROFILE()}
-                    mode={modes.CANCEL}
-                  >
-                    {'Закрыть'}
-                  </SubmitButton>
-                </div>
+                  Закрыть
+                </SubmitButton>
               </div>
             </div>
           </div>

@@ -25,6 +25,7 @@ interface State {
   password: InputConfig;
 }
 
+// @ts-ignore
 @connectToCheburstore
 export default class SignInForm extends React.Component {
   state: State = {
@@ -97,7 +98,7 @@ export default class SignInForm extends React.Component {
             disabled={nextDisabled}
             onClick={this.handleSubmit}
           >
-            {'Далее'}
+            Далее
           </SubmitButton>
         </div>
       </div>

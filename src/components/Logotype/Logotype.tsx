@@ -5,8 +5,9 @@ const cn = classNames(styles);
 
 export default class Logotype extends React.Component {
   render() {
-    const { size } = this.props;
+    const { size, className = '' } = this.props;
+    const logotypeClass = `${className} ${cn('logotype', `logotype_${size}`)}`;
 
-    return <div className={cn('logotype', `logotype_${size}`)} />;
+    return <div className={logotypeClass} />;
   }
 }

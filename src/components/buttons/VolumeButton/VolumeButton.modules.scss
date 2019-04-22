@@ -1,9 +1,12 @@
+@import 'styles/mixins';
+
 .volume-button {
-  width: 60px;
-  height: 60px;
+  @include square(60px);
+
   display: flex;
   background: transparent url('img/VolumeOff.svg') no-repeat center;
   background-size: contain;
+  cursor: pointer;
 
   &_on {
     background: url('img/VolumeOn.svg') no-repeat center;

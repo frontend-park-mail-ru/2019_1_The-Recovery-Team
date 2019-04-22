@@ -1,3 +1,4 @@
+import MainBlock from 'components/MainBlock';
 import AvatarProfile from 'components/AvatarProfile';
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import LabelProfile from 'components/LabelProfile';
@@ -5,8 +6,11 @@ import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import userStore, { Profile, userActions, UserUpdateSuccessPL } from 'store/userStore';
-import MainBlock from '../MainBlock/MainBlock';
+import userStore, {
+  Profile,
+  userActions,
+  UserUpdateSuccessPL,
+} from 'store/userStore';
 
 const styles = require('./ProfilePage.modules.scss');
 
@@ -36,39 +40,34 @@ export default class ProfilePage extends React.Component {
     const { user }: { user: Profile } = this.state as any;
 
     return user ? (
-      <MainBlock>
-        <div className={cn('profile-page')}>
-          <div className={cn('profile-page__container')}>
-            <div className={cn('profile-page__container-avatar')}>
-              <AvatarProfile user={user} />
-              <div className={cn('profile-page__container-label')}>
-                <LabelProfile user={user} />
-              </div>
+      <MainBlock className={cn('profile-page')}>
+        <div className={cn('profile-page__container')}>
+          <div className={cn('profile-page__container-avatar')}>
+            <AvatarProfile user={user} />
+            <div className={cn('profile-page__container-label')}>
+              <LabelProfile user={user} />
             </div>
-            <div className={cn('profile-page__container-information')}>
-              <div
-                className={cn(
-                  'profile-page__field',
-                  'profile-page__field_nickname'
-                )}
-              >
-                {user.nickname}
-              </div>
-              <div
-                className={cn(
-                  'profile-page__field',
-                  'profile-page__field_email'
-                )}
-              >
-                {user.email}
-              </div>
-              <SubmitButton
-                to={routeCreators.TO_PROFILE_EDIT()}
-                mode={modes.SETTINGS}
-              >
-                {'Редактировать'}
-              </SubmitButton>
+          </div>
+          <div className={cn('profile-page__container-information')}>
+            <div
+              className={cn(
+                'profile-page__field',
+                'profile-page__field_nickname'
+              )}
+            >
+              {user.nickname}
             </div>
+            <div
+              className={cn('profile-page__field', 'profile-page__field_email')}
+            >
+              {user.email}
+            </div>
+            <SubmitButton
+              to={routeCreators.TO_PROFILE_EDIT()}
+              mode={modes.SETTINGS}
+            >
+              Редактировать
+            </SubmitButton>
           </div>
         </div>
       </MainBlock>

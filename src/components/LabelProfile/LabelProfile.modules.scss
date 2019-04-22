@@ -1,3 +1,5 @@
+@import 'styles/constants';
+
 .label-profile {
   width: 427px;
   height: 85px;
@@ -27,7 +29,7 @@
   }
 
   &__rating {
-    font-size: 20px;
+    font-size: $global-font-size-l;
     font-weight: 700;
   }
 }

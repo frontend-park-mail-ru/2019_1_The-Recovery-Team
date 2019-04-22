@@ -1,4 +1,5 @@
 import { routeCreators, routesMap } from 'config/routes';
+import { GameModes } from 'game/config';
 import gameStore from 'game/store';
 import { gameStoreActions } from 'game/store/actions';
 import * as React from 'libs/Cheburact/index';
@@ -18,9 +19,13 @@ const cn = classNames(styles);
 export default class GamePart extends React.Component {
   @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
   handleGameOver() {
+    const {
+      routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+    } = this.props;
+
     routerStore.emit(
       actionRouterPush({
-        path: routeCreators.TO_FINISH_PAGE(),
+        path: routeCreators.TO_FINISH_PAGE(gameMode),
       })
     );
   }

@@ -46,7 +46,7 @@ $local-container-height: 70px;
   }
 
   &__nickname {
-    font-size: 25px;
+    font-size: $global-font-size-l;
     line-height: 25px;
     display: inline-block;
     color: $global-color-primary-dark;
