@@ -23,7 +23,7 @@ export default class Requester {
     return JSON.stringify(data);
   }
 
-  private static doRequest(
+  private static async doRequest(
     url: string,
     method: HTTPMethods,
     data: string | FormData | null = null,
@@ -48,26 +48,23 @@ export default class Requester {
       options.body = data;
     }
 
-    return fetch(url, options)
-      .then((r: Response) => (r.ok ? r : Promise.reject(r)))
-      .then((r: Response) =>
-        // Перелавливаем, если пустое тело ответа
-        r.json().catch(() => {
-          return {};
-        })
-      )
-      .then((response: Response) => {
-        return {
-          response,
-          error: null,
-        };
-      })
-      .catch(error => {
-        return {
-          error,
-          response: null,
-        };
-      });
+    const r = await fetch(url, options);
+
+    if (!r.ok) {
+      return {
+        error: r,
+        response: null,
+      };
+    }
+
+    const contentLength = r.headers.get('Content-Length');
+    const response =
+      contentLength === '0' || !contentLength ? {} : await r.json();
+
+    return {
+      response,
+      error: null,
+    };
   }
 
   static post(url: string, data: Object = {}, multipart: boolean = false) {
@@ -95,7 +92,7 @@ export default class Requester {
     return Requester.doRequest(`${url}${query}`, HTTPMethods.GET);
   }
 
-  static put(url: string, data: Object = {}, multipart: boolean = false) {
+  static async put(url: string, data: Object = {}, multipart: boolean = false) {
     return Requester.doRequest(
       url,
       HTTPMethods.PUT,
