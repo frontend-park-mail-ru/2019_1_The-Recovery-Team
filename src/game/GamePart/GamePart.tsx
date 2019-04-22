@@ -19,8 +19,6 @@ const cn = classNames(styles);
 export default class GamePart extends React.Component {
   @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
   handleGameOver() {
-    console.log('game: ', this.props);
-
     const {
       routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
     } = this.props;

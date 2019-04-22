@@ -1,8 +1,8 @@
+import MainBlock from 'components/MainBlock';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import MainBlock from '../../../components/MainBlock/MainBlock';
 import { members } from './config';
-import MemberInfo from './MemberInfo/MemberInfo';
+import MemberInfo from './MemberInfo';
 
 const styles = require('./AboutPage.modules.scss');
 

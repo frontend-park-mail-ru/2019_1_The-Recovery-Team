@@ -18,7 +18,7 @@ import musicStore, {
   musicActions,
   MusicChangedPL,
 } from 'store/musicStore';
-import Tabbar from './Tabbar/Tabbar';
+import Tabbar from './Tabbar';
 
 const styles = require('./Header.modules.scss');
 

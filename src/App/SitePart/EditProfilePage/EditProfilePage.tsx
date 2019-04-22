@@ -2,6 +2,7 @@ import AvatarProfile from 'components/AvatarProfile';
 import EditButton from 'components/buttons/EditButton';
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import Form from 'components/Form';
+import MainBlock from 'components/MainBlock';
 import ModalWindow from 'components/ModalWindow';
 import API from 'config/API';
 import { routeCreators } from 'config/routes';
@@ -21,7 +22,6 @@ import {
   validateAlreadyExists,
   validateRequired,
 } from 'utils/form/validators';
-import MainBlock from '../../../components/MainBlock';
 import EditAvatarForm from './EditAvatarForm';
 import EditPasswordForm from './EditPasswordForm';
 

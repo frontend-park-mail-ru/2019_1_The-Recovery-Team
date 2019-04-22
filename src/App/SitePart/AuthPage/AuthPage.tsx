@@ -1,4 +1,5 @@
 import AuthButton from 'components/buttons/AuthButton';
+import MainBlock from 'components/MainBlock';
 import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import routerStore, {
@@ -10,7 +11,6 @@ import routerStore, {
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
-import MainBlock from '../../../components/MainBlock';
 import { AuthPageMode } from './config/modes';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';

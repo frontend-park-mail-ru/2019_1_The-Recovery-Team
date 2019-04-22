@@ -1,6 +1,4 @@
-// @ts-ignore
-import { cheburhandler, cheburmodel } from 'libs/Cheburstore';
-import Cheburstore from 'libs/Cheburstore/Cheburstore';
+import Cheburstore, { cheburhandler, cheburmodel } from 'libs/Cheburstore';
 import { actionMusicChanged, musicActions } from './actions';
 
 interface MusicState {

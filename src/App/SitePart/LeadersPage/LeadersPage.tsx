@@ -1,7 +1,7 @@
 import SubmitButton, { modes } from 'components/buttons/SubmitButton';
+import MainBlock from 'components/MainBlock';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import MainBlock from '../../../components/MainBlock';
 import RowLeader from './RowLeader';
 const styles = require('./LeadersPage.modules.scss');
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';

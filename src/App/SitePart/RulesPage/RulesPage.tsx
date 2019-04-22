@@ -1,8 +1,8 @@
+import MainBlock from 'components/MainBlock';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import { rules } from './config';
 import RuleSection from './RuleSection';
-import MainBlock from '../../../components/MainBlock/MainBlock';
 const styles = require('./RulesPage.modules.scss');
 
 const cn = classNames(styles);

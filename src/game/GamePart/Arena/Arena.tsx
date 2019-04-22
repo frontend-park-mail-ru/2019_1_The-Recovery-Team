@@ -8,7 +8,7 @@ import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
 import Field from './Field';
 import Header from './Header';
-import SearchPage from './SearchPage/SearchPage';
+import SearchPage from './SearchPage';
 
 const styles = require('./Arena.modules.scss');
 
