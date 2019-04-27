@@ -44,20 +44,14 @@ textarea {
     border-bottom: 1px solid $global-color-primary-dark;
   }
 
-  &__new-message {
+  &__scroll {
     position: absolute;
-    transform: translateX(-50%);
-    left: 50%;
+    right: 10%;
     bottom: 64px;
-    width: 70%;
-    padding: 8px;
-    border-radius: 12px;
-    font-size: $global-font-size-xs;
-    background-color: $global-color-secondary-dark;
-    color: $global-color-primary-dark;
+    background-size: contain;
+    @include square(36px);
+    background: url("./img/Arrow.svg") no-repeat center;
     z-index: 1;
-    text-align: center;
     cursor: pointer;
-    letter-spacing: 0.02em;
   }
 }

@@ -98,19 +98,41 @@ export default class Chat extends React.Component {
     console.log(userStore.select());
   }
 
+  handleScroll = () => {
+    if (this.messagesRef) {
+      this.messagesRef.scrollTo(
+        0,
+        this.messagesRef.scrollHeight - this.messagesRef.clientHeight
+      );
+    }
+  };
+
   componentDidMount() {
     chatStore.emit(actionChatInitialize());
     this.selectMe();
     this.handleMessagesUpdated();
-    this.messagesRef.addEventListener('scroll', () =>
-      this.messagesRef.scrollTop !== 0
-        ? (this.state.isScrolled = true)
-        : (this.state.isScrolled = false)
-    );
+
+    if (this.messagesRef) {
+      this.messagesRef.addEventListener('scroll', () => {
+        if (this.messagesRef) {
+          this.messagesRef.scrollTop !==
+          this.messagesRef.scrollHeight - this.messagesRef.clientHeight
+            ? this.setState({ isScrolled: true })
+            : this.setState({ isScrolled: false });
+        }
+      });
+    }
   }
 
   render() {
-    const { currentMessage, messages, users, mySessionId, myId } = this.state;
+    const {
+      currentMessage,
+      messages,
+      users,
+      mySessionId,
+      myId,
+      isScrolled,
+    } = this.state;
 
     return (
       <div className={cn('chat')}>
@@ -141,7 +163,11 @@ export default class Chat extends React.Component {
             onClick={this.handleSendMessage}
           />
         </div>
-        <div className={cn('chat__new-message')}>Новое сообщение</div>
+        {isScrolled ? (
+          <div className={cn('chat__scroll')} onClick={this.handleScroll}></div>
+        ) : (
+          ''
+        )}
       </div>
     );
   }
