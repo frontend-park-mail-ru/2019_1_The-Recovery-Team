@@ -32,7 +32,7 @@ const CHAT_URL = isProd
   ? 'wss://hackathon.sadislands.ru/api/v1/chat.ws'
   : 'ws://localhost:9000/api/v1/chat.ws';
 
-const MESSAGE_LIST_LIMIT = 50;
+const MESSAGE_LIST_LIMIT = 2;
 
 // @ts-ignore
 @cheburmodel
@@ -82,7 +82,7 @@ class ChatStore extends Cheburstore<ChatState> {
     const { oldestMsgId } = this.store;
     const payload = oldestMsgId
       ? {
-          since: oldestMsgId,
+          start: oldestMsgId,
           limit: MESSAGE_LIST_LIMIT,
         }
       : {
@@ -106,7 +106,6 @@ class ChatStore extends Cheburstore<ChatState> {
   @cheburhandler(cheburSocketActions.MESSAGE)
   async handleWSMessage(action: Action<CheburSocketMessagePL>) {
     const { message } = action.payload;
-
     try {
       const { type, payload = null } = JSON.parse(message);
 
@@ -164,6 +163,8 @@ class ChatStore extends Cheburstore<ChatState> {
 
     // @ts-ignore
     this.store.messageIds = [...ids, ...this.store.messageIds];
+    console.log(ids, this.store.messageIds);
+
     // @ts-ignore
     this.store.oldestMsgId = !ids.length ? null : ids[0];
 
@@ -171,7 +172,7 @@ class ChatStore extends Cheburstore<ChatState> {
 
     this.emit(
       actionChatSetGlobalMessages({
-        messages,
+        messages: this.store.messageIds.map(id => this.store.messages[id]),
       })
     );
   };

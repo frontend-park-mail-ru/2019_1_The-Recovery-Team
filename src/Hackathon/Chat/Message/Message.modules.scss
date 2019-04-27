@@ -17,6 +17,11 @@
     @include square(40px);
     margin: 4px 8px 0 0;
     vertical-align: top;
+
+    &_container {
+      display: inline-block;
+      vertical-align: top;
+    }
   }
 
   &__text {
