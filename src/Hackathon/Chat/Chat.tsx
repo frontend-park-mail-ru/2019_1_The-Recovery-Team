@@ -86,6 +86,7 @@ export default class Chat extends React.Component {
 
   @onCheburevent(chatStore, chatActions.SET_MESSAGE)
   handleMessagesUpdated() {
+    console.log(this.state);
     const { messageIds, messages, users } = chatStore.select();
     const messageList = messageIds.map(id => messages[id]);
     this.setState({

@@ -76,7 +76,7 @@ class ChatStore extends Cheburstore<ChatState> {
   }
 
   @cheburhandler(cheburSocketActions.MESSAGE)
-  handleWSMessage(action: Action<CheburSocketMessagePL>) {
+  async handleWSMessage(action: Action<CheburSocketMessagePL>) {
     const { message } = action.payload;
 
     try {
@@ -85,11 +85,11 @@ class ChatStore extends Cheburstore<ChatState> {
       switch (type) {
         case wsActions.SET_CHAT_MESSAGE:
           // don't await
-          this.processSetMessage(normalizeMessageSetPayload(payload));
+          await this.processSetMessage(normalizeMessageSetPayload(payload));
           break;
         case wsActions.SET_CHAT_SESSION:
           // don't await
-          this.processSetSession(normalizeSetSessionPayload(payload));
+          await this.processSetSession(normalizeSetSessionPayload(payload));
       }
     } catch (e) {
       console.log('chat error: ', action);
@@ -97,7 +97,7 @@ class ChatStore extends Cheburstore<ChatState> {
   }
 
   async processSetMessage(message: ChatMessage) {
-    if (message.authorId !== null && this.store.users[message.authorId]) {
+    if (message.authorId !== null && !this.store.users[message.authorId]) {
       await this.loadUser(message.authorId);
     }
 
@@ -110,26 +110,24 @@ class ChatStore extends Cheburstore<ChatState> {
     this.emit(actionChatSetMessage(message));
   }
 
-  async loadUser(userId) {
-    const { user } = userStore.select();
-    if (user && user.id === userId) {
-      // не грузим себя
-      return;
-    }
+  loadUser = async userId => {
+    console.log('load user');
 
-    const { response } = await Requester.get(API.profileItem(userId));
+    const response = await Requester.get(API.profileItem(userId));
+    console.log('user loaded: ', response);
     if (response) {
       const user: UserShort | null = normalizeProfileGet(response);
+      console.log('user parsed: ', user);
       if (user) {
         this.store.users[userId] = user;
       }
     }
-  }
+  };
 
-  async processSetSession(mySessionId) {
+  processSetSession = async mySessionId => {
     this.store.mySessionId = mySessionId;
     this.emit(actionChatSetSession({ sessionId: this.store.mySessionId }));
-  }
+  };
 }
 
 export default new ChatStore();

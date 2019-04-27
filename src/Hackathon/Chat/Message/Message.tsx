@@ -2,6 +2,7 @@ import AvatarProfile from 'components/AvatarProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import { formatDate } from './utils/reformatDate';
+import chatStore from '../../store/chatStore';
 const styles = require('./Message.modules.scss');
 
 const anonymousUser = {
@@ -16,6 +17,8 @@ export default class Message extends React.Component {
   render() {
     const { text, isMine = false, created } = this.props;
     const user = this.props.user || anonymousUser;
+
+    console.log('user here: ', user, this.props.user, chatStore.select().users);
 
     return (
       <div className={cn('message', isMine && 'message_mine')}>
