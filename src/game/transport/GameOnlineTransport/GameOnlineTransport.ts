@@ -33,7 +33,7 @@ export default class GameOnlineTransport extends Cheburstore<null>
 
   async stop(): Promise<ResultPL> {
     if (!this.isConnected) {
-      return;
+      return { success: false, message: '' };
     }
 
     this.receiver = null;

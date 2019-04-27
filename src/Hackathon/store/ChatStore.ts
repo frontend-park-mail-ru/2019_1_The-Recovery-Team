@@ -1,10 +1,18 @@
-import { cheburSocketActions, CheburSocketMessagePL } from 'libs/CheburSocket';
-import CheburSocket from 'libs/CheburSocket/CheburSocket';
-import { Action, cheburhandler, cheburmodel } from 'libs/Cheburstore';
-import Cheburstore from 'libs/Cheburstore/Cheburstore';
+import API from 'config/API';
+import CheburSocket, {
+  cheburSocketActions,
+  CheburSocketMessagePL,
+} from 'libs/CheburSocket';
+import Cheburstore, {
+  Action,
+  cheburhandler,
+  cheburmodel,
+} from 'libs/Cheburstore';
+import Requester from 'libs/Requester/Requester';
+import userStore, { normalizeProfileGet, UserShort } from 'store/userStore';
 import {
   actionChatConnected,
-  actionChatDisconnected,
+  actionChatDisconnected, actionChatSetMessage,
   chatActions,
   ChatInitMessagePL,
 } from './actions';
@@ -67,6 +75,7 @@ class ChatStore extends Cheburstore<ChatState> {
 
       switch (type) {
         case wsActions.SET_CHAT_MESSAGE:
+          // don't await
           this.processGetMessage(normalizeMessageSetPyload(payload));
       }
     } catch (e) {
@@ -74,9 +83,35 @@ class ChatStore extends Cheburstore<ChatState> {
     }
   }
 
-  processGetMessage(message: ChatMessage) {}
+  async processGetMessage(message: ChatMessage) {
+    if (message.authorId !== null && this.store.users[message.authorId]) {
+      await this.loadUser(message.authorId);
+    }
 
-  async loadUser() {}
+    if (!this.store.messages[message.messageId]) {
+      // @ts-ignore
+      this.store.messageIds.push(message.messageId);
+    }
+    this.store.messages[message.messageId] = message;
+
+    this.emit(actionChatSetMessage(message));
+  }
+
+  async loadUser(userId) {
+    const { user } = userStore.select();
+    if (user && user.id === userId) {
+      // не грузим себя
+      return;
+    }
+
+    const { response } = await Requester.get(API.profileItem(userId));
+    if (response) {
+      const user: UserShort | null = normalizeProfileGet(response);
+      if (user) {
+        this.store.users[userId] = user;
+      }
+    }
+  }
 }
 
 export default new ChatStore();

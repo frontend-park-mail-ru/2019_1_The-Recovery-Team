@@ -6,10 +6,11 @@ export interface ChatMessageData {
 
 export interface ChatMessage {
   messageId: number;
-  authorId: number;
+  authorId: null | number;
   toId: null | number;
   created: string;
   isEdited: boolean;
+  sessionId: string;
   data: ChatMessageData;
 }
 
