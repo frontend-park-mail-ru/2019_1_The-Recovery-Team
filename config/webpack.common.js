@@ -27,6 +27,7 @@ module.exports = {
             styles: srcPath('styles'),
             store: srcPath('store'),
             game: srcPath('game'),
+            Hackathon: srcPath('Hackathon'),
         }
     },
     module: {
