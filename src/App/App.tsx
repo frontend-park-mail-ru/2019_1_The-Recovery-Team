@@ -6,6 +6,7 @@ import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
 import Music from './Music';
 import SitePart from './SitePart';
+import Chat from './Chat/Chat';
 const styles = require('./App.modules.scss');
 
 // @ts-ignore
@@ -42,6 +43,7 @@ class App extends React.Component {
           user={user}
         />
         <Music />
+        <Chat />
       </div>
     );
   }
