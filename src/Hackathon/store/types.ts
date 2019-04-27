@@ -17,6 +17,7 @@ export interface ChatMessage {
 export interface ChatState {
   messageIds: Array<number>;
   mySessionId: string | null;
+  oldestMsgId: number | null;
   messages: {
     [messageId: number]: ChatMessage;
   };
