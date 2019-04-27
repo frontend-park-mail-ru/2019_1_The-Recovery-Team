@@ -22,7 +22,7 @@
   &__text {
     display: inline-block;
     width: calc(100% - 48px);
-    padding: 8px 2px 8px 8px ;
+    padding: 8px;
     background: $global-color-primary-dark;
     border-radius: 12px;
     color: #FFFFFF;
@@ -40,5 +40,10 @@
     font-size: $global-font-size-s;
     letter-spacing: 0.02em;
     font-weight: 700;
+  }
+
+  &__created {
+    text-align: right;
+    font-size: $global-font-size-xs;
   }
 }

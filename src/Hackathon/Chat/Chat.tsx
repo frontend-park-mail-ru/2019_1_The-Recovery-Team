@@ -99,6 +99,7 @@ export default class Chat extends React.Component {
               user={users[msg.authorId as any] || null}
               key={msg.messageId}
               text={msg.data.text}
+              created={msg.created}
               isMine={msg.authorId === myId}
               className={cn('chat__message')}
             />

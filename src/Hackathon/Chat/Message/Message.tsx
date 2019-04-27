@@ -1,6 +1,7 @@
 import AvatarProfile from 'components/AvatarProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
+import { formatDate } from './utils/reformatDate';
 const styles = require('./Message.modules.scss');
 
 const anonymousUser = {
@@ -8,12 +9,12 @@ const anonymousUser = {
   avatar: require('config/img/anonymousAvatar.jpg'),
 };
 
+
 const cn = classNames(styles);
 
 export default class Message extends React.Component {
   render() {
-
-    const { text, isMine = false } = this.props;
+    const { text, isMine = false, created } = this.props;
     const user = this.props.user || anonymousUser;
 
     return (
@@ -26,6 +27,7 @@ export default class Message extends React.Component {
             <div className={cn('message__nickname')}>{user.nickname}</div>
           )}
           {text}
+          <div className={cn('message__created')}>{formatDate(created)}</div>
         </div>
       </div>
     );
