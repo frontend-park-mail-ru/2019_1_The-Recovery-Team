@@ -12,8 +12,6 @@ import Button from './Button';
 import Message from './Message/Message';
 
 const styles = require('./Chat.modules.scss');
-const anonAvatar = require('config/img/anonymousAvatar.jpg');
-
 
 const cn = classNames(styles);
 
