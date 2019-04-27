@@ -1,4 +1,5 @@
 import API from 'config/API';
+import isProd from 'config/isProd';
 import CheburSocket, {
   cheburSocketActions,
   CheburSocketMessagePL,
@@ -12,7 +13,8 @@ import Requester from 'libs/Requester/Requester';
 import userStore, { normalizeProfileGet, UserShort } from 'store/userStore';
 import {
   actionChatConnected,
-  actionChatDisconnected, actionChatSetMessage,
+  actionChatDisconnected,
+  actionChatSetMessage,
   chatActions,
   ChatInitMessagePL,
 } from './actions';
@@ -20,7 +22,9 @@ import { ChatMessage, ChatState } from './types';
 import { normalizeMessageSetPyload } from './utils/normalizeWSAction';
 import { wsActions } from './wsActions';
 
-const CHAT_URL = 'wss://hackathon.sadislands.ru/api/v1/chat.ws';
+const CHAT_URL = isProd
+  ? 'wss://hackathon.sadislands.ru/api/v1/chat.ws'
+  : 'ws://localhost:9000/api/v1/chat.ws';
 
 // @ts-ignore
 @cheburmodel
@@ -99,6 +103,7 @@ class ChatStore extends Cheburstore<ChatState> {
 
   async loadUser(userId) {
     const { user } = userStore.select();
+    console.log(user);
     if (user && user.id === userId) {
       // не грузим себя
       return;

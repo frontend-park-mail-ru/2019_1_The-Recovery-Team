@@ -1,1 +1,1 @@
-export default window.location.host === 'sadislands.ru';
+export default window.location.host.indexOf('sadislands.ru') >= 0;
