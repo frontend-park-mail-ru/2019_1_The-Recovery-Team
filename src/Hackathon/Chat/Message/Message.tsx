@@ -1,8 +1,9 @@
 import AvatarProfile from 'components/AvatarProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import chatStore from '../../store/chatStore';
 import { formatDate } from './utils/reformatDate';
+import userStore from 'store/userStore';
+
 const styles = require('./Message.modules.scss');
 
 const anonymousUser = {

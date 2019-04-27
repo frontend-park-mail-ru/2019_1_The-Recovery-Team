@@ -16,7 +16,6 @@ export default class PausePage extends React.Component {
     const {
       routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
     } = this.props;
-    console.log('pause: ', this.props);
 
     return (
       <div className={cn('pause-page')}>

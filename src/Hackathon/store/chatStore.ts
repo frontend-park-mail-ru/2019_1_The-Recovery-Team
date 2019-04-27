@@ -163,7 +163,6 @@ class ChatStore extends Cheburstore<ChatState> {
 
     // @ts-ignore
     this.store.messageIds = [...ids, ...this.store.messageIds];
-    console.log(ids, this.store.messageIds);
 
     // @ts-ignore
     this.store.oldestMsgId = !ids.length ? null : ids[0];

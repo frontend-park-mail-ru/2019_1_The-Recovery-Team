@@ -10,8 +10,6 @@ const pluginsConfig = isMain
         ...webpackPlugins.pluginConfigs.hackathon,
     };
 
-console.log('plugins config: ', pluginsConfig, process.env.ENTRY);
-
 module.exports = webpackMerge(commonConfig, {
     mode: 'development',
     devtool: 'eval-source-map',

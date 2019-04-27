@@ -132,7 +132,6 @@ export default class Chat extends React.Component {
 
   @onCheburevent(chatStore, chatActions.SET_GLOBAL_MESSAGES)
   handleOldLoaded({ payload }: Action<ChatSetGlobalMessagesPL>) {
-    console.log(payload.messages);
     this.setState({
       messages: payload.messages,
     });
@@ -157,17 +156,26 @@ export default class Chat extends React.Component {
           >
             Загрузить старые сообщения
           </div>
-          {messages.map((msg: ChatMessage) => (
-            <Message
-              user={users[msg.authorId as any] || null}
-              text={msg.data.text}
-              isMine={
-                myId ? myId === msg.authorId : msg.sessionId === mySessionId
-              }
-              created={msg.created}
-              className={cn('chat__message')}
-            />
-          ))}
+          {messages.map((msg: ChatMessage) => {
+            console.log(
+              'MESSAGE: ',
+              myId,
+              msg.authorId,
+              userStore.select().user
+            );
+
+            return (
+              <Message
+                user={users[msg.authorId as any] || null}
+                text={msg.data.text}
+                isMine={
+                  (userStore.select().user || ({} as any)).id ===
+                    msg.authorId || msg.sessionId === mySessionId}
+                created={msg.created}
+                className={cn('chat__message')}
+              />
+            );
+          })}
         </div>
         <div className={cn('chat__footer')}>
           <textarea
@@ -183,7 +191,7 @@ export default class Chat extends React.Component {
           />
         </div>
         {isScrolled ? (
-          <div className={cn('chat__scroll')} onClick={this.handleScroll}></div>
+          <div className={cn('chat__scroll')} onClick={this.handleScroll} />
         ) : (
           ''
         )}
