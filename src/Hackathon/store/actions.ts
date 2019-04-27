@@ -7,11 +7,16 @@ export enum chatActions {
   DISCONNECTED = 'DISCONNECTED',
   SET_MESSAGE = 'CHAT_SET_MESSAGE',
   INIT_MESSAGE = 'CHAT_INIT_MESSAGE',
+  SET_SESSION = 'CHAT_SET_SESSION',
 }
 
 export interface ChatInitMessagePL {
   data: ChatMessageData;
   toId: null | number;
+}
+
+export interface ChatSetSessionPL {
+  sessionId: string | null;
 }
 
 export const actionChatInitialize: ACreatorNull = () => ({
@@ -37,4 +42,9 @@ export const actionChatSetMessage: ACreator<ChatMessage> = payload => ({
 export const actionChatInitMessage: ACreator<ChatInitMessagePL> = payload => ({
   payload,
   type: chatActions.INIT_MESSAGE,
+});
+
+export const actionChatSetSession: ACreator<ChatSetSessionPL> = payload => ({
+  payload,
+  type: chatActions.SET_SESSION,
 });

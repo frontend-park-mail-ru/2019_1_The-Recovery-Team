@@ -15,11 +15,15 @@ import {
   actionChatConnected,
   actionChatDisconnected,
   actionChatSetMessage,
+  actionChatSetSession,
   chatActions,
   ChatInitMessagePL,
 } from './actions';
 import { ChatMessage, ChatState } from './types';
-import { normalizeMessageSetPyload } from './utils/normalizeWSAction';
+import {
+  normalizeMessageSetPayload,
+  normalizeSetSessionPayload,
+} from './utils/normalizeWSAction';
 import { wsActions } from './wsActions';
 
 const CHAT_URL = isProd
@@ -33,6 +37,7 @@ class ChatStore extends Cheburstore<ChatState> {
     messageIds: [],
     messages: {},
     users: {},
+    mySessionId: null,
   };
   connection: CheburSocket | null = null;
   isConnected: boolean = false;
@@ -80,14 +85,18 @@ class ChatStore extends Cheburstore<ChatState> {
       switch (type) {
         case wsActions.SET_CHAT_MESSAGE:
           // don't await
-          this.processGetMessage(normalizeMessageSetPyload(payload));
+          this.processSetMessage(normalizeMessageSetPayload(payload));
+          break;
+        case wsActions.SET_CHAT_SESSION:
+          // don't await
+          this.processSetSession(normalizeSetSessionPayload(payload));
       }
     } catch (e) {
       console.log('chat error: ', action);
     }
   }
 
-  async processGetMessage(message: ChatMessage) {
+  async processSetMessage(message: ChatMessage) {
     if (message.authorId !== null && this.store.users[message.authorId]) {
       await this.loadUser(message.authorId);
     }
@@ -103,7 +112,6 @@ class ChatStore extends Cheburstore<ChatState> {
 
   async loadUser(userId) {
     const { user } = userStore.select();
-    console.log(user);
     if (user && user.id === userId) {
       // не грузим себя
       return;
@@ -116,6 +124,11 @@ class ChatStore extends Cheburstore<ChatState> {
         this.store.users[userId] = user;
       }
     }
+  }
+
+  async processSetSession(mySessionId) {
+    this.store.mySessionId = mySessionId;
+    this.emit(actionChatSetSession({ sessionId: this.store.mySessionId }));
   }
 }
 

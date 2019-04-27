@@ -12,7 +12,6 @@ const cn = classNames(styles);
 
 export default class Message extends React.Component {
   render() {
-
     const { text, isMine = false } = this.props;
     const user = this.props.user || anonymousUser;
 

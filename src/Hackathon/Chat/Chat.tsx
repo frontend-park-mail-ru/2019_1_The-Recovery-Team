@@ -1,11 +1,11 @@
-import chatStore, { ChatMessage } from 'Hackathon/store';
+import chatStore, { ChatMessage, ChatSetSessionPL } from 'Hackathon/store';
 import {
   actionChatInitialize,
   actionChatInitMessage,
   chatActions,
 } from 'Hackathon/store';
 import * as React from 'libs/Cheburact';
-import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore, { userActions } from 'store/userStore';
 import Button from './Button';
@@ -23,6 +23,7 @@ export default class Chat extends React.Component {
     users: {},
     currentMessage: '',
     myId: null,
+    mySessionId: null,
   };
   textareaRef: HTMLTextAreaElement | null = null;
 
@@ -51,12 +52,16 @@ export default class Chat extends React.Component {
 
   selectMe() {
     const { user } = userStore.select();
+    const { mySessionId } = chatStore.select();
+    console.log('ne:', user);
     if (!user) {
       this.setState({
+        mySessionId,
         myId: null,
       });
     } else {
       this.setState({
+        mySessionId,
         myId: user.id,
       });
     }
@@ -72,6 +77,13 @@ export default class Chat extends React.Component {
     this.selectMe();
   }
 
+  @onCheburevent(chatStore, chatActions.SET_SESSION)
+  handleSetSession(action: Action<ChatSetSessionPL>) {
+    this.setState({
+      mySessionId: action.payload.sessionId,
+    });
+  }
+
   @onCheburevent(chatStore, chatActions.SET_MESSAGE)
   handleMessagesUpdated() {
     const { messageIds, messages, users } = chatStore.select();
@@ -80,6 +92,7 @@ export default class Chat extends React.Component {
       users,
       messages: messageList,
     });
+    console.log(userStore.select());
   }
 
   componentDidMount() {
@@ -89,7 +102,7 @@ export default class Chat extends React.Component {
   }
 
   render() {
-    const { currentMessage, messages, myId, users } = this.state;
+    const { currentMessage, messages, users, mySessionId, myId } = this.state;
 
     return (
       <div className={cn('chat')}>
@@ -99,7 +112,9 @@ export default class Chat extends React.Component {
               user={users[msg.authorId as any] || null}
               key={msg.messageId}
               text={msg.data.text}
-              isMine={msg.authorId === myId}
+              isMine={
+                myId ? myId === msg.authorId : msg.sessionId === mySessionId
+              }
               className={cn('chat__message')}
             />
           ))}
