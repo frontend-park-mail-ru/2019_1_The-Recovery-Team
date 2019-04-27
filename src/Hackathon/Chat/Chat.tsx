@@ -24,8 +24,10 @@ export default class Chat extends React.Component {
     currentMessage: '',
     myId: null,
     mySessionId: null,
+    isScrolled: false,
   };
   textareaRef: HTMLTextAreaElement | null = null;
+  messagesRef: HTMLTextAreaElement | null = null;
 
   handleTypedMessage = e => {
     this.setState({ currentMessage: e.target.value });
@@ -100,6 +102,11 @@ export default class Chat extends React.Component {
     chatStore.emit(actionChatInitialize());
     this.selectMe();
     this.handleMessagesUpdated();
+    this.messagesRef.addEventListener('scroll', () =>
+      this.messagesRef.scrollTop !== 0
+        ? (this.state.isScrolled = true)
+        : (this.state.isScrolled = false)
+    );
   }
 
   render() {
@@ -107,7 +114,7 @@ export default class Chat extends React.Component {
 
     return (
       <div className={cn('chat')}>
-        <div className={cn('chat__messages')}>
+        <div className={cn('chat__messages')} ref={r => (this.messagesRef = r)}>
           {messages.map((msg: ChatMessage) => (
             <Message
               user={users[msg.authorId as any] || null}
@@ -134,6 +141,7 @@ export default class Chat extends React.Component {
             onClick={this.handleSendMessage}
           />
         </div>
+        <div className={cn('chat__new-message')}>Новое сообщение</div>
       </div>
     );
   }
