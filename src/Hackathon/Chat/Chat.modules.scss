@@ -43,6 +43,7 @@ textarea {
   }
 
   &__textarea {
+    font-family: 'Exo 2', serif;
     width: calc(100% - 28px);
     overflow: hidden;
     color: $global-color-primary-dark;

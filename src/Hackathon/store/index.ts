@@ -1,3 +1,5 @@
-export { default } from './ChatStore';
+export { default } from './chatStore';
 
 export * from './types';
+
+export * from './actions';
