@@ -115,6 +115,7 @@ export default class Chat extends React.Component {
               isMine={
                 myId ? myId === msg.authorId : msg.sessionId === mySessionId
               }
+              created={msg.created}
               className={cn('chat__message')}
             />
           ))}
