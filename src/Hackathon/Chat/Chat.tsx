@@ -1,4 +1,9 @@
-import chatStore, { ChatMessage, ChatSetSessionPL } from 'Hackathon/store';
+import chatStore, {
+  actionChatInitGlobalMessages,
+  ChatMessage,
+  ChatSetGlobalMessagesPL,
+  ChatSetSessionPL,
+} from 'Hackathon/store';
 import {
   actionChatInitialize,
   actionChatInitMessage,
@@ -55,7 +60,6 @@ export default class Chat extends React.Component {
   selectMe() {
     const { user } = userStore.select();
     const { mySessionId } = chatStore.select();
-    console.log('ne:', user);
     if (!user) {
       this.setState({
         mySessionId,
@@ -88,14 +92,12 @@ export default class Chat extends React.Component {
 
   @onCheburevent(chatStore, chatActions.SET_MESSAGE)
   handleMessagesUpdated() {
-    console.log(this.state);
     const { messageIds, messages, users } = chatStore.select();
     const messageList = messageIds.map(id => messages[id]);
     this.setState({
       users,
       messages: messageList,
     });
-    console.log(userStore.select());
   }
 
   handleScroll = () => {
@@ -124,6 +126,18 @@ export default class Chat extends React.Component {
     }
   }
 
+  handleLoadOld = () => {
+    chatStore.emit(actionChatInitGlobalMessages());
+  };
+
+  @onCheburevent(chatStore, chatActions.SET_GLOBAL_MESSAGES)
+  handleOldLoaded({ payload }: Action<ChatSetGlobalMessagesPL>) {
+    console.log(payload.messages);
+    this.setState({
+      messages: payload.messages,
+    });
+  }
+
   render() {
     const {
       currentMessage,
@@ -137,10 +151,15 @@ export default class Chat extends React.Component {
     return (
       <div className={cn('chat')}>
         <div className={cn('chat__messages')} ref={r => (this.messagesRef = r)}>
+          <div
+            className={cn('chat__new-message', 'chat__old-message')}
+            onClick={this.handleLoadOld}
+          >
+            Загрузить старые сообщения
+          </div>
           {messages.map((msg: ChatMessage) => (
             <Message
               user={users[msg.authorId as any] || null}
-              key={msg.messageId}
               text={msg.data.text}
               isMine={
                 myId ? myId === msg.authorId : msg.sessionId === mySessionId

@@ -54,4 +54,10 @@ textarea {
     z-index: 1;
     cursor: pointer;
   }
+
+  &__old-message {
+    position: relative;
+    bottom: 0;
+    margin: 20px 0;
+  }
 }
