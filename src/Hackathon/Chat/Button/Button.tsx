@@ -6,9 +6,9 @@ const cn = classNames(styles);
 
 export default class Button extends React.Component {
   render() {
-    const { className } = this.props;
+    const { className, onClick = () => null } = this.props;
     const classes = `${className} ${cn('button')}`;
 
-    return <div className={classes} />;
+    return <div className={classes} onClick={onClick} />;
   }
 }
