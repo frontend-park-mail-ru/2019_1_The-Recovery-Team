@@ -1,0 +1,22 @@
+@import 'styles/constants';
+
+.message {
+  max-width: 80%;
+
+  &_mine {
+    align-self: flex-end;
+  }
+
+  &__text {
+    padding: 8px 2px 8px 8px ;
+    background: $global-color-primary-dark;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 14px;
+    word-break: break-all;
+
+    &_mine {
+      background-color: $global-color-primary-light;
+    }
+  }
+}
