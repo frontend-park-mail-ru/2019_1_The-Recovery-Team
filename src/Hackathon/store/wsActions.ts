@@ -1,0 +1,4 @@
+export enum wsActions {
+  SET_CHAT_MESSAGE = 'SET_CHAT_MESSAGE',
+  INIT_CHAT_MESSAGE = 'INIT_CHAT_MESSAGE',
+}
