@@ -1,0 +1,16 @@
+@import 'styles/mixins';
+
+.button {
+  width: 25px;
+  height: 32px;
+  position: relative;
+  cursor: pointer;
+
+  &:after {
+    content: '';
+    @include square(100%);
+    @include absoluteCenter;
+    background: url("./img/Send.svg") no-repeat center;
+    z-index: 1;
+  }
+}

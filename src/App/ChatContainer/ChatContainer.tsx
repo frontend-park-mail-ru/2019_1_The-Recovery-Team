@@ -1,7 +1,7 @@
 import isProd from 'config/isProd';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-const styles = require('./Chat.modules.scss');
+const styles = require('./ChatContainer.modules.scss');
 
 const cn = classNames(styles);
 
@@ -9,7 +9,7 @@ const hackathonUrl = isProd
   ? 'https://hackathon.sadislands.ru'
   : 'http://localhost:9000';
 
-export default class Chat extends React.Component {
+export default class ChatContainer extends React.Component {
   state = {
     isOpen: false,
   };
