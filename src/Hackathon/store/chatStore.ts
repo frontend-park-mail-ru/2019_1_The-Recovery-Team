@@ -10,10 +10,11 @@ import Cheburstore, {
   cheburmodel,
 } from 'libs/Cheburstore';
 import Requester from 'libs/Requester/Requester';
-import userStore, { normalizeProfileGet, UserShort } from 'store/userStore';
+import { normalizeProfileGet, UserShort } from 'store/userStore';
 import {
   actionChatConnected,
   actionChatDisconnected,
+  actionChatSetGlobalMessages,
   actionChatSetMessage,
   actionChatSetSession,
   chatActions,
@@ -22,6 +23,7 @@ import {
 import { ChatMessage, ChatState } from './types';
 import {
   normalizeMessageSetPayload,
+  normalizeSetGlobalMessages,
   normalizeSetSessionPayload,
 } from './utils/normalizeWSAction';
 import { wsActions } from './wsActions';
@@ -29,6 +31,8 @@ import { wsActions } from './wsActions';
 const CHAT_URL = isProd
   ? 'wss://hackathon.sadislands.ru/api/v1/chat.ws'
   : 'ws://localhost:9000/api/v1/chat.ws';
+
+const MESSAGE_LIST_LIMIT = 50;
 
 // @ts-ignore
 @cheburmodel
@@ -38,7 +42,9 @@ class ChatStore extends Cheburstore<ChatState> {
     messages: {},
     users: {},
     mySessionId: null,
+    oldestMsgId: null,
   };
+  messagesListRequested: boolean = false;
   connection: CheburSocket | null = null;
   isConnected: boolean = false;
 
@@ -51,16 +57,38 @@ class ChatStore extends Cheburstore<ChatState> {
     this.connection = new CheburSocket(CHAT_URL).setDispatcher(this).connect();
   }
 
-  @cheburhandler(chatActions.INIT_MESSAGE)
-  handleInitMessage(action: Action<ChatInitMessagePL>) {
+  sendPlToWS(type, payload) {
     if (this.isConnected && this.connection) {
       this.connection.send(
         JSON.stringify({
-          type: wsActions.INIT_CHAT_MESSAGE,
-          payload: JSON.stringify(action.payload),
+          type,
+          payload: JSON.stringify(payload),
         })
       );
     }
+  }
+
+  @cheburhandler(chatActions.INIT_MESSAGE)
+  handleInitMessage(action: Action<ChatInitMessagePL>) {
+    this.sendPlToWS(wsActions.INIT_CHAT_MESSAGE, action.payload);
+  }
+
+  @cheburhandler(chatActions.INIT_GLOBAL_MESSAGES)
+  handleInitGlobalMessages() {
+    if (this.messagesListRequested) {
+      return;
+    }
+
+    const { oldestMsgId } = this.store;
+    const payload = oldestMsgId
+      ? {
+          since: oldestMsgId,
+          limit: MESSAGE_LIST_LIMIT,
+        }
+      : {
+          limit: MESSAGE_LIST_LIMIT,
+        };
+    this.sendPlToWS(wsActions.INIT_CHAT_GLOBAL_MESSAGES, payload);
   }
 
   @cheburhandler(cheburSocketActions.CONNECTED)
@@ -84,12 +112,15 @@ class ChatStore extends Cheburstore<ChatState> {
 
       switch (type) {
         case wsActions.SET_CHAT_MESSAGE:
-          // don't await
           await this.processSetMessage(normalizeMessageSetPayload(payload));
           break;
         case wsActions.SET_CHAT_SESSION:
-          // don't await
           await this.processSetSession(normalizeSetSessionPayload(payload));
+          break;
+        case wsActions.SET_CHAT_GLOBAL_MESSAGES:
+          await this.processSetGlobalMessages(
+            normalizeSetGlobalMessages(payload)
+          );
       }
     } catch (e) {
       console.log('chat error: ', action);
@@ -111,13 +142,9 @@ class ChatStore extends Cheburstore<ChatState> {
   }
 
   loadUser = async userId => {
-    console.log('load user');
-
     const response = await Requester.get(API.profileItem(userId));
-    console.log('user loaded: ', response);
     if (response) {
       const user: UserShort | null = normalizeProfileGet(response);
-      console.log('user parsed: ', user);
       if (user) {
         this.store.users[userId] = user;
       }
@@ -127,6 +154,26 @@ class ChatStore extends Cheburstore<ChatState> {
   processSetSession = async mySessionId => {
     this.store.mySessionId = mySessionId;
     this.emit(actionChatSetSession({ sessionId: this.store.mySessionId }));
+  };
+
+  processSetGlobalMessages = async (messages: Array<ChatMessage>) => {
+    const ids = messages.reverse().map(msg => {
+      this.store.messages[msg.messageId] = msg;
+      return msg.messageId;
+    });
+
+    // @ts-ignore
+    this.store.messageIds = [...ids, ...this.store.messageIds];
+    // @ts-ignore
+    this.store.oldestMsgId = !ids.length ? null : ids[0];
+
+    this.messagesListRequested = false;
+
+    this.emit(
+      actionChatSetGlobalMessages({
+        messages,
+      })
+    );
   };
 }
 
