@@ -18,14 +18,6 @@ textarea {
     overflow-y: auto;
   }
 
-  &__message {
-    margin-bottom: 12px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
   &__footer {
     width: 100%;
     height: 56px;

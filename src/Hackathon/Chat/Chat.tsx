@@ -12,6 +12,8 @@ import Button from './Button';
 import Message from './Message/Message';
 
 const styles = require('./Chat.modules.scss');
+const anonAvatar = require('config/img/anonymousAvatar.jpg');
+
 
 const cn = classNames(styles);
 
@@ -20,6 +22,7 @@ const cn = classNames(styles);
 export default class Chat extends React.Component {
   state = {
     messages: [],
+    users: {},
     currentMessage: '',
     myId: null,
   };
@@ -73,9 +76,10 @@ export default class Chat extends React.Component {
 
   @onCheburevent(chatStore, chatActions.SET_MESSAGE)
   handleMessagesUpdated() {
-    const { messageIds, messages } = chatStore.select();
+    const { messageIds, messages, users } = chatStore.select();
     const messageList = messageIds.map(id => messages[id]);
     this.setState({
+      users,
       messages: messageList,
     });
   }
@@ -87,13 +91,14 @@ export default class Chat extends React.Component {
   }
 
   render() {
-    const { currentMessage, messages, myId } = this.state;
+    const { currentMessage, messages, myId, users } = this.state;
 
     return (
       <div className={cn('chat')}>
         <div className={cn('chat__messages')}>
           {messages.map((msg: ChatMessage) => (
             <Message
+              user={users[msg.authorId as any] || null}
               key={msg.messageId}
               text={msg.data.text}
               isMine={msg.authorId === myId}
