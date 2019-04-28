@@ -20,6 +20,11 @@ class IndicatorsLayer extends React.Component {
     this.updateItemIndicator();
   }
 
+  @onCheburevent(gameStore, gameStoreActions.SET_STATE)
+  handleSetState() {
+    this.updateItemIndicator();
+  }
+
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
   handleChangeState() {
     this.updateItemIndicator();
@@ -29,6 +34,7 @@ class IndicatorsLayer extends React.Component {
     const { activeItems } = gameStore.select().state;
     const myId = gameStore.selectMyId();
 
+    console.log('>>>: ', activeItems);
     let curItemId: null | number = null;
     let curItem: null | GameModels.ActiveItem = null;
     for (const [id, item] of Object.entries(activeItems)) {
@@ -39,9 +45,7 @@ class IndicatorsLayer extends React.Component {
       }
     }
 
-    // this.updateIndicatorLine({
-    //   duration: roundTimer,
-    // });
+    console.log('>>>: ', curItem);
     this.updateIndicatorLine(curItem);
     if (curItemId !== this.state.curActiveItemId) {
       this.setState({
@@ -65,7 +69,6 @@ class IndicatorsLayer extends React.Component {
     ) / 10}%`;
 
     const durationRatio = item.duration / ITEM_MAX_DURATION;
-    console.log(durationRatio);
 
     this.indicatorLineRef.className = cn(
       'indicators-layer__line-content',

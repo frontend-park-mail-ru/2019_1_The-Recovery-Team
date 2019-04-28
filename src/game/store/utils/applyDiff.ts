@@ -1,5 +1,4 @@
 import { GameModels } from 'game/config';
-import { ActiveItem } from '../../config/models';
 
 const ACTIVE_ITEMS_KEY = 'activeItems';
 const PLAYERS_KEY = 'players';
@@ -10,6 +9,10 @@ const ROUND_TIMER_KEY = 'roundTimer';
 
 const applyDiff = (state: GameModels.GameState, diff): GameModels.GameState => {
   const nextState = { ...state };
+  // TODO: Валидация для бэкенда
+  if (diff.activeItems) {
+    console.log('>>>!', diff.activeItems);
+  }
 
   if (diff[PLAYERS_KEY]) {
     nextState.players = { ...nextState.players, ...diff[PLAYERS_KEY] };

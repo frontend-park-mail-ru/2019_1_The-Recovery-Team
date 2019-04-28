@@ -47,7 +47,6 @@ class Resources extends React.Component {
   }
 
   componentDidMount() {
-    console.log('call mount');
     this.updateItems();
   }
 

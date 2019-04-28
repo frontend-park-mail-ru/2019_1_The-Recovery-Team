@@ -10,6 +10,8 @@ const pluginsConfig = isMain
         ...webpackPlugins.pluginConfigs.hackathon,
     };
 
+const devBack = '10.9.0.184';
+
 module.exports = webpackMerge(commonConfig, {
     mode: 'development',
     devtool: 'eval-source-map',
@@ -31,15 +33,15 @@ module.exports = webpackMerge(commonConfig, {
         },
         proxy: {
             '/api/v1/chat.ws': {
-                target: 'ws://127.0.0.1:8082',
+                target: `ws://${devBack}:8082`,
                 ws: true,
             },
             '/api/v1/game.ws': {
-                target: 'ws://127.0.0.1:8081',
+                target: `ws://${devBack}:8081`,
                 ws: true,
             },
-            '/api/v1': 'http://127.0.0.1:8080',
-            '/upload': 'http://127.0.0.1:8080',
+            '/api/v1': `http://${devBack}:8080`,
+            '/upload': `http://${devBack}:8080`,
         }
     },
 });

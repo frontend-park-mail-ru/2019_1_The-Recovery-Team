@@ -7,26 +7,31 @@ import { keyCodeToDir, keyCodeToItem } from './utils';
 
 export default class ControllersManager implements IControllersManager {
   connect() {
-    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keydown', this.handleUseItem);
+    window.addEventListener('keydown', this.handleMovePlayer);
   }
 
   disconnect() {
-    window.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('keydown', this.handleUseItem);
+    window.removeEventListener('keydown', this.handleMovePlayer);
   }
 
-  handleKeyDown = e =>
+  handleUseItem = e =>
     requestAnimationFrame(() => {
       const itemType = keyCodeToItem(e);
-      if (itemType) {
-        gameStore.emit(
-          actionGameInitItemUse({
-            itemType,
-            playerId: gameStore.selectMyId(),
-          })
-        );
+      if (!itemType) {
         return;
       }
+      gameStore.emit(
+        actionGameInitItemUse({
+          itemType,
+          playerId: gameStore.selectMyId(),
+        })
+      );
+    });
 
+  handleMovePlayer = e =>
+    requestAnimationFrame(() => {
       const move = keyCodeToDir(e);
       if (!move) {
         return;
