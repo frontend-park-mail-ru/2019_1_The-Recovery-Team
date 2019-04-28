@@ -19,6 +19,16 @@ class Resources extends React.Component {
     },
   };
 
+  shouldUpdate = newItems => {
+    const { items } = this.state;
+    for (const type of Object.values(GameModels.ItemType)) {
+      if (items[type] !== newItems[type]) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   updateItems() {
     const {
       state: { players },
@@ -29,7 +39,7 @@ class Resources extends React.Component {
     }
 
     const me = players[myId];
-    if (me && this.state.items !== me.items) {
+    if (me && this.shouldUpdate(me.items)) {
       this.setState({
         items: me.items,
       });
@@ -37,6 +47,7 @@ class Resources extends React.Component {
   }
 
   componentDidMount() {
+    console.log('call mount');
     this.updateItems();
   }
 
@@ -50,19 +61,45 @@ class Resources extends React.Component {
     this.updateItems();
   }
 
-  handleSelectItem = (item: GameModels.ItemType) => () => {
-    console.log('call', item);
+  emitUseLifebuoy = () => {
     gameStore.emit(
       actionGameInitItemUse({
         playerId: gameStore.selectMyId(),
-        itemType: item,
+        itemType: GameModels.ItemType.LIFEBUOY,
       })
     );
   };
 
+  emitUseBomb = () => {
+    gameStore.emit(
+      actionGameInitItemUse({
+        playerId: gameStore.selectMyId(),
+        itemType: GameModels.ItemType.BOMB,
+      })
+    );
+  };
+
+  emitUseSand = () => {
+    gameStore.emit(
+      actionGameInitItemUse({
+        playerId: gameStore.selectMyId(),
+        itemType: GameModels.ItemType.SAND,
+      })
+    );
+  };
+
+  handleSelectItem = (item: GameModels.ItemType) => {
+    switch (item) {
+      case GameModels.ItemType.BOMB:
+        return this.emitUseBomb;
+      case GameModels.ItemType.LIFEBUOY:
+        return this.emitUseLifebuoy;
+      default:
+        return this.emitUseSand;
+    }
+  };
   render() {
     const { items } = this.state;
-    console.log('render');
 
     return (
       <div class={cn('items-container')}>

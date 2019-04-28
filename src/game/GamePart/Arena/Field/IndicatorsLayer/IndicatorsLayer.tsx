@@ -26,13 +26,13 @@ class IndicatorsLayer extends React.Component {
   }
 
   updateItemIndicator = () => {
-    const { activeItems, roundTimer } = gameStore.select().state;
+    const { activeItems } = gameStore.select().state;
     const myId = gameStore.selectMyId();
 
     let curItemId: null | number = null;
     let curItem: null | GameModels.ActiveItem = null;
     for (const [id, item] of Object.entries(activeItems)) {
-      if (item.playerId === myId) {
+      if (item && item.playerId === myId) {
         curItemId = id as any;
         curItem = item;
         break;
