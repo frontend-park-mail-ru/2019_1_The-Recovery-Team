@@ -2,7 +2,7 @@ import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import routerStore, { match, routerActions } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
-import Tab from './Tab';
+import Tab from '../Tab';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 const styles = require('./Tabbar.modules.scss');
 const cn = classNames(styles);

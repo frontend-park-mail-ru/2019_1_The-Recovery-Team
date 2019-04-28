@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Exo+2');
 @import url('https://fonts.googleapis.com/css?family=Passion+One');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 :global {
   * {
@@ -16,7 +17,7 @@
 
   body {
     height: 100%;
-    font-family: 'Exo 2', serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 25px;
     letter-spacing: 0.13em;
   }
@@ -24,12 +25,12 @@
   button {
     outline: none;
     background: transparent;
-    font-family: 'Exo 2', serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 25px;
     letter-spacing: 0.13em;
   }
   input {
-    font-family: 'Exo 2', serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 25px;
     letter-spacing: 0.13em;
     outline: none;

@@ -1,0 +1,12 @@
+@import 'styles/constants';
+
+.tab {
+  font-size: $global-font-size-medium;
+  display: inline-block;
+  color: #FFFFFF;
+  cursor: pointer;
+
+  &_active {
+    color: $global-color-sad;
+  }
+}

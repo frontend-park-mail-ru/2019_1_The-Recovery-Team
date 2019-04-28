@@ -1,0 +1,51 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+.circle-button {
+  box-sizing: border-box;
+  border: 1px solid #FFFFFF;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  @include square(40px);
+
+  &:after {
+    content: '';
+    z-index: 1;
+
+    @include square(100%);
+    @include absoluteCenter;
+  }
+
+  &_volume-on {
+    &:after {
+      mask: url("./img/volumeOn.svg") no-repeat center;
+      background-color: #FFFFFF;
+    }
+  }
+
+  &_volume-off {
+    &:after {
+      mask: url("./img/volumeOff.svg") no-repeat center;
+      background-color: #FFFFFF;
+      left: 36%;
+    }
+  }
+
+  &_profile {
+    &:after {
+      mask: url("./img/profile.svg") no-repeat center;
+      top: 48%;
+      background-color: #FFFFFF;
+    }
+  }
+
+  &_active {
+    border-color: $global-color-sad;
+
+    &:after {
+      background-color: $global-color-sad;
+    }
+  }
+}
