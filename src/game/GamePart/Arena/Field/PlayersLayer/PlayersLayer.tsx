@@ -20,6 +20,7 @@ export default class PlayersLayer extends React.Component {
     const { players } = gameStore.select().state;
 
     let shouldRerender = false;
+    // Если добавился новый игрок или один из игроков проиграл
     for (const id of Object.keys(players)) {
       if (!this.prevPlayers[id]) {
         shouldRerender = true;

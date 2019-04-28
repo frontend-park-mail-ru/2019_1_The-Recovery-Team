@@ -141,6 +141,10 @@ class ChatStore extends Cheburstore<ChatState> {
   }
 
   loadUser = async userId => {
+    if (!userId) {
+      return;
+    }
+
     const response = await Requester.get(API.profileItem(userId));
     if (response) {
       const user: UserShort | null = normalizeProfileGet(response);

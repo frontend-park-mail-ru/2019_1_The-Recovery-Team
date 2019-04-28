@@ -141,6 +141,7 @@ export default class Chat extends React.Component {
   @onCheburevent(chatStore, chatActions.SET_GLOBAL_MESSAGES)
   handleOldLoaded({ payload }: Action<ChatSetGlobalMessagesPL>) {
     this.setState({
+      users: chatStore.select().users,
       messages: payload.messages,
     });
   }

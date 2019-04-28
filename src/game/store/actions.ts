@@ -12,6 +12,8 @@ export enum gameStoreActions {
   INIT_PLAYER_READY = 'INIT_PLAYER_READY',
   INIT_PLAYER_MOVE = 'INIT_PLAYER_MOVE',
 
+  INIT_ITEM_USE = 'INIT_ITEM_USE',
+
   SET_STATE = 'SET_STATE',
   SET_STATE_UPDATED = 'SET_STATE_UPDATED',
 
@@ -38,6 +40,11 @@ export interface InitPlayerReadyPL {
 export interface InitPlayerMovePL {
   playerId: number;
   move: GameModels.Direction;
+}
+
+export interface InitItemUsePL {
+  playerId: number;
+  itemType: GameModels.ItemType;
 }
 
 export const actionGameInit: ACreator<GameInitPL> = payload => ({
@@ -88,4 +95,9 @@ export const actionSetStateUpdated: ACreatorNull = () => ({
 export const actionSetOpponent: ACreatorNull = () => ({
   payload: null,
   type: gameStoreActions.SET_OPPONENT,
+});
+
+export const actionGameInitItemUse: ACreator<InitItemUsePL> = payload => ({
+  payload,
+  type: gameStoreActions.INIT_ITEM_USE,
 });

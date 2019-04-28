@@ -1,4 +1,5 @@
 import { GameModels } from 'game/config';
+import { ActiveItem } from '../../config/models';
 
 const ACTIVE_ITEMS_KEY = 'activeItems';
 const PLAYERS_KEY = 'players';
@@ -35,7 +36,15 @@ const applyDiff = (state: GameModels.GameState, diff): GameModels.GameState => {
   }
 
   if (diff[ACTIVE_ITEMS_KEY]) {
-    // TODO:
+    const newItems = { ...state.activeItems };
+    Object.entries(diff[ACTIVE_ITEMS_KEY]).forEach(([id, item]) => {
+      if (item === null) {
+        delete newItems[id];
+      } else {
+        newItems[id] = item as ActiveItem;
+      }
+    });
+    nextState.activeItems = newItems;
   }
 
   return nextState;

@@ -1,6 +1,9 @@
-import gameStore, { actionInitPlayerMove } from 'game/store';
+import gameStore, {
+  actionGameInitItemUse,
+  actionInitPlayerMove,
+} from 'game/store';
 import { IControllersManager } from 'game/types';
-import { keyCodeToDir } from './utils';
+import { keyCodeToDir, keyCodeToItem } from './utils';
 
 export default class ControllersManager implements IControllersManager {
   connect() {
@@ -13,15 +16,26 @@ export default class ControllersManager implements IControllersManager {
 
   handleKeyDown = e =>
     requestAnimationFrame(() => {
-      const direction = keyCodeToDir(e);
-      if (!direction) {
+      const itemType = keyCodeToItem(e);
+      if (itemType) {
+        gameStore.emit(
+          actionGameInitItemUse({
+            itemType,
+            playerId: gameStore.selectMyId(),
+          })
+        );
+        return;
+      }
+
+      const move = keyCodeToDir(e);
+      if (!move) {
         return;
       }
 
       gameStore.emit(
         actionInitPlayerMove({
+          move,
           playerId: gameStore.selectMyId(),
-          move: direction,
         })
       );
     });
