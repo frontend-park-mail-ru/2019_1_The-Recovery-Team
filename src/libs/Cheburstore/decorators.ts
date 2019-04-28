@@ -7,7 +7,8 @@ type CheburstoreDecorator<T> = (
   descriptor: PropertyDescriptor
 ) => PropertyDescriptor;
 
-const ON_PROP = '__ON';
+const ON_PROP = Symbol('__ON');
+const BOUND_LISTENERS = Symbol('__BOUND');
 
 const tryOn = (owner, property) => {
   if (
@@ -17,23 +18,27 @@ const tryOn = (owner, property) => {
   ) {
     return;
   }
-  property[ON_PROP].store.on(property[ON_PROP].type, property.bind(owner));
+
+  const boundProperty = property.bind(owner);
+  owner[BOUND_LISTENERS].push(boundProperty);
+  property[ON_PROP].store.on(property[ON_PROP].type, boundProperty);
 };
 
-const tryOff = (owner, property) => {
+const tryOff = (owner, boundProperty) => {
   if (
-    !property[ON_PROP] ||
-    !property[ON_PROP].store ||
-    !property[ON_PROP].type
+    !boundProperty[ON_PROP] ||
+    !boundProperty[ON_PROP].store ||
+    !boundProperty[ON_PROP].type
   ) {
     return;
   }
-  property[ON_PROP].store.off(property[ON_PROP].type, property.bind(owner));
+  boundProperty[ON_PROP].store.off(boundProperty[ON_PROP].type, boundProperty);
 };
 
 export const connectToCheburstore = component =>
   class extends component {
     componentDidMount() {
+      this[BOUND_LISTENERS] = [];
       const prototype = Object.getPrototypeOf(this);
 
       // noinspection TsLint
@@ -45,11 +50,9 @@ export const connectToCheburstore = component =>
     }
 
     componentWillUnmount() {
-      const prototype = Object.getPrototypeOf(this);
-
-      // noinspection TsLint
-      for (const prop in prototype) {
-        tryOff(this, prototype[prop]);
+      // @ts-ignore
+      for (const prop of this[BOUND_LISTENERS]) {
+        tryOff(this, prop);
       }
 
       super.componentWillUnmount();
