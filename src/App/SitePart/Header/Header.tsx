@@ -17,9 +17,11 @@ import musicStore, {
   MusicChangedPL,
 } from 'store/musicStore';
 import userStore, {
+  Profile,
   userActions,
   UserUpdateSuccessPL,
-} from '../../../store/userStore';
+} from 'store/userStore';
+import Avatar from './Avatar';
 import Tab from './Tab';
 
 const styles = require('./Header.modules.scss');
@@ -29,9 +31,6 @@ const cn = classNames(styles);
 // @ts-ignore
 @connectToCheburstore
 export default class Header extends React.Component {
-  static isStartPage = () =>
-    match(window.location.pathname, routesMap.BASE.template, true);
-
   state = {
     path: window.location.pathname,
     isMusicOn: musicStore.select().isOn,
@@ -60,11 +59,9 @@ export default class Header extends React.Component {
 
   @onCheburevent(routerStore, routerActions.PUSH_OK)
   handlePageChange() {
-    const isStartPage = Header.isStartPage();
-    const { path, isStartPage: curIsStartPage } = this.state;
-    if (curIsStartPage !== isStartPage || path !== window.location.pathname) {
+    const { path } = this.state;
+    if (path !== window.location.pathname) {
       this.setState({
-        isStartPage,
         path: window.location.pathname,
       });
     }
@@ -73,7 +70,6 @@ export default class Header extends React.Component {
   handleEntrance = e => {
     if (!this.isEntryActive) {
       e.preventDefault();
-      console.log('ВХОД');
       routerStore.emit(
         actionRouterPush({
           path: routesMap.SIGN_IN.template,
@@ -85,7 +81,6 @@ export default class Header extends React.Component {
   handleProfile = e => {
     if (!this.isEntryActive) {
       e.preventDefault();
-      console.log('ПРОФИЛЬ', this.state.user);
       routerStore.emit(
         actionRouterPush({
           path: routesMap.PROFILE.template,
@@ -94,20 +89,6 @@ export default class Header extends React.Component {
     }
   };
 
-  /*  handleIOClick = e => {
-    e.preventDefault();
-    const { user, onLogout } = this.props;
-    if (user) {
-      onLogout();
-    } else {
-      routerStore.emit(
-        actionRouterPush({
-          path: routesMap.SIGN_IN.template,
-        })
-      );
-    }
-  };*/
-
   toggleMusic = () => {
     if (this.state.isMusicOn) {
       musicStore.emit(actionMusicOff());
@@ -115,18 +96,6 @@ export default class Header extends React.Component {
       musicStore.emit(actionMusicOn());
     }
   };
-
-  /*
-  get isLabelUserVisible() {
-    return !this.isIOButtonVisible;
-  }
-
-  get isIOButtonVisible() {
-    const { path } = this.state;
-    const { user } = this.props;
-    return !user || !!match(routesMap.PROFILE.template, path);
-  }
-*/
 
   get isEntryActive() {
     const { path } = this.state;
@@ -142,7 +111,8 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const { path, isMusicOn, user } = this.state;
+    const { user }: { user: Profile } = this.state as any;
+    const { path, isMusicOn } = this.state;
     const isRulesActive = match(routeCreators.TO_RULES(), path, false);
     const isLeadersActive = match(routeCreators.TO_LEADER_BOARD(), path, false);
     const isAboutActive = match(routeCreators.TO_ABOUT(), path, false);
@@ -150,7 +120,6 @@ export default class Header extends React.Component {
     const volumeButtonType = isMusicOn
       ? circleButtonTypes.volumeOn
       : circleButtonTypes.volumeOff;
-    console.log('user', user);
 
     return (
       <div className={cn('header')}>
@@ -189,24 +158,23 @@ export default class Header extends React.Component {
             </div>
           </div>
           {!!user ? (
-            <div onClick={this.handleProfile} className={cn('header__profile')}>
-              <a
+            <button className={cn('header__profile')}>
+              <div
+                onClick={this.handleProfile}
                 isActive={this.isProfileActive}
                 className={cn(
                   'header__nickname',
-                  this.isProfileActive && 'header__profile_active'
+                  this.isProfileActive && 'header__nickname_active'
                 )}
               >
-                {user.profile.nickname}
-              </a>
-              <CircleButton
-                type={circleButtonTypes.profile}
-                isActive={this.isProfileActive}
-              />
-            </div>
+                {user.nickname}
+              </div>
+              <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+            </button>
           ) : (
-            <div onClick={this.handleEntrance} className={cn('header__entry')}>
+            <div className={cn('header__entry')}>
               <a
+                onClick={this.handleEntrance}
                 className={cn(
                   'header__entry-text',
                   this.isEntryActive && 'header__entry-text_active'
@@ -215,6 +183,7 @@ export default class Header extends React.Component {
                 Вход
               </a>
               <CircleButton
+                onClick={this.handleEntrance}
                 type={circleButtonTypes.profile}
                 isActive={this.isEntryActive}
               />
@@ -225,43 +194,4 @@ export default class Header extends React.Component {
       </div>
     );
   }
-
-  /*render() {
-    const { user } = this.props;
-    const { isStartPage, isMusicOn } = this.state;
-
-    return (
-      <div className={cn('header', 'header_main')}>
-        {!isStartPage && (
-          <div className={cn('header__container-logotype')}>
-            <Logotype size={LogotypeSizes.MIDDLE} />
-          </div>
-        )}
-        <div className={cn('header__tabbar')}>
-          <Tabbar />
-        </div>
-        <div
-          className={cn(
-            'header__container-buttons',
-            isStartPage && 'header__container-buttons_start-page'
-          )}
-        >
-          <VolumeButton on={isMusicOn} onClick={this.toggleMusic} />
-          {this.isLabelUserVisible && (
-            <LabelAuthUser
-              className={cn('header__container-user-wrapper')}
-              user={user}
-              to={routeCreators.TO_PROFILE()}
-            />
-          )}
-          {this.isIOButtonVisible && (
-            <InOutButton
-              isAuthenticated={!!user}
-              onClick={this.handleIOClick}
-            />
-          )}
-        </div>
-      </div>
-    );
-  }*/
 }

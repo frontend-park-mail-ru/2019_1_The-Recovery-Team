@@ -1,0 +1,15 @@
+@import 'styles/mixins';
+
+.avatar {
+  border-radius: 50%;
+
+  @include square(40px);
+
+  &__img {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+
+    @include square(100%);
+  }
+}
