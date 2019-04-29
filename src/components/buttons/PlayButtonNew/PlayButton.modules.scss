@@ -1,0 +1,34 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+.play-button {
+  background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  @include square(200px);
+
+  &:after {
+    content: '';
+    z-index: 1;
+
+    @include square(100%);
+    @include absoluteCenter;
+  }
+
+  &_single {
+    &:after {
+      mask: url("./img/single.svg") no-repeat center;
+      background-color: #FFFFFF;
+    }
+  }
+
+  &_multi {
+    &:after {
+      mask: url("./img/multi.svg") no-repeat center;
+      background-color: #FFFFFF;
+    }
+  }
+
+}

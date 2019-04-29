@@ -6,6 +6,7 @@ import userStore, { actionUserLogout } from 'store/userStore';
 import AboutPage from './AboutPage';
 import AuthPage from './AuthPage';
 import EditProfilePage from './EditProfilePage';
+import Footer from './Footer';
 import Header from './Header';
 import LeadersPage from './LeadersPage';
 import ProfilePage from './ProfilePage';
@@ -19,11 +20,11 @@ export default class SitePart extends React.Component {
   handleLogout = () => userStore.emit(actionUserLogout());
 
   public render() {
-    const { user, mode } = this.props;
+    const { user } = this.props;
 
     return (
       <div className={cn('site-part')}>
-        <Header user={user} mode={mode} onLogout={this.handleLogout} />
+        <Header onLogout={this.handleLogout} />
         <Route
           template={routesMap.BASE.template}
           exact={true}

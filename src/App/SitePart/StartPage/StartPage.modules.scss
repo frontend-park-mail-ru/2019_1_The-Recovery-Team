@@ -1,6 +1,26 @@
-@import "~styles/constants";
+@import 'styles/constants';
+@import 'styles/mixins';
 
 .start-page {
+  display: flex;
+  justify-content: center;
+
+  &__play-buttons {
+    display: inline-block;
+    margin-top: 140px;
+  }
+
+  &__play-button {
+    display: inline-block;
+    margin-right: 50px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+/*.start-page {
   flex-grow: 1;
   background-color: $global-color-primary-light;
 
@@ -16,4 +36,4 @@
       margin-right: 0;
     }
   }
-}
+}*/

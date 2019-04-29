@@ -1,6 +1,19 @@
 @import '~styles/constants';
 
 .main-block {
+  flex-grow: 1;
+  background: url("./img/Background.png") no-repeat center;
+  background-size: cover;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+
+  &__children {
+   flex-grow: 1;
+  }
+}
+
+/*.main-block {
   background: $global-color-secondary-dark;
   padding: 60px 0;
   position: relative;
@@ -12,4 +25,4 @@
     margin: 0 auto;
     position: relative;
   }
-}
+}*/

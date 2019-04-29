@@ -4,6 +4,8 @@
 .header {
   height: 90px;
   background-color: $global-color-blue;
+  flex-grow: 0;
+  flex-shrink: 0;
 
   &__content {
     margin: 0 auto;
@@ -147,6 +149,7 @@
     position: absolute;
     left: 50%;
     top: 80%;
+    z-index: 1;
   }
 
   &__volume {

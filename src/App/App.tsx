@@ -44,7 +44,7 @@ class App extends React.Component {
           user={user}
         />
         <Music />
-        <ChatContainer />
+        {/*<ChatContainer />*/}
       </div>
     );
   }

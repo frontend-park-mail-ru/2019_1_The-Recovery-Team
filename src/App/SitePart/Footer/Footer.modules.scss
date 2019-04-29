@@ -1,0 +1,8 @@
+@import 'styles/constants';
+
+.footer {
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 90px;
+  background: $global-color-blue;
+}
