@@ -15,7 +15,7 @@ import {
   actionSetState,
   actionSetStateUpdated,
   GameInitPL,
-  gameStoreActions,
+  gameStoreActions, InitItemUsePL,
   InitPlayerMovePL,
   InitPlayerReadyPL,
 } from './actions';
@@ -79,6 +79,15 @@ export default class GameStore extends Cheburstore<GameStoreState> {
 
   @cheburhandler(gameStoreActions.INIT_PLAYER_MOVE)
   initPlayerMove(action: Action<InitPlayerMovePL>) {
+    if (!this.transport) {
+      return;
+    }
+
+    this.transport.send(action);
+  }
+
+  @cheburhandler(gameStoreActions.INIT_ITEM_USE)
+  initItemUse(action: Action<InitItemUsePL>) {
     if (!this.transport) {
       return;
     }

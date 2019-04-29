@@ -8,6 +8,7 @@ import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
 import Field from './Field';
 import Header from './Header';
+import Resources from './Resources';
 import SearchPage from './SearchPage';
 
 const styles = require('./Arena.modules.scss');
@@ -59,6 +60,7 @@ export default class Arena extends React.Component {
         {!gameStarted && gameMode !== GameModes.SINGLEPLAYER && <SearchPage />}
         <Header mode={gameMode} />
         <Field />
+        <Resources />
       </div>
     );
   }

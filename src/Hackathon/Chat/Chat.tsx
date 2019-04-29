@@ -32,7 +32,7 @@ export default class Chat extends React.Component {
     isScrolled: false,
   };
   textareaRef: HTMLTextAreaElement | null = null;
-  messagesRef: HTMLTextAreaElement | null = null;
+  messagesRef: HTMLElement | null = null;
 
   handleTypedMessage = e => {
     this.setState({ currentMessage: e.target.value });
@@ -100,12 +100,27 @@ export default class Chat extends React.Component {
     });
   }
 
-  handleScroll = () => {
+  handleScrollClick = () => {
     if (this.messagesRef) {
       this.messagesRef.scrollTo(
         0,
         this.messagesRef.scrollHeight - this.messagesRef.clientHeight
       );
+    }
+  };
+
+  handleMessagesScroll = () => {
+    if (!this.messagesRef) {
+      return;
+    }
+
+    const { scrollTop, scrollHeight, clientHeight } = this.messagesRef;
+    const isScrolled = scrollTop !== scrollHeight - clientHeight;
+
+    if (this.state.isScrolled !== isScrolled) {
+      this.setState({
+        isScrolled,
+      });
     }
   };
 
@@ -115,14 +130,7 @@ export default class Chat extends React.Component {
     this.handleMessagesUpdated();
 
     if (this.messagesRef) {
-      this.messagesRef.addEventListener('scroll', () => {
-        if (this.messagesRef) {
-          this.messagesRef.scrollTop !==
-          this.messagesRef.scrollHeight - this.messagesRef.clientHeight
-            ? this.setState({ isScrolled: true })
-            : this.setState({ isScrolled: false });
-        }
-      });
+      this.messagesRef.addEventListener('scroll', this.handleMessagesScroll);
     }
   }
 
@@ -133,6 +141,7 @@ export default class Chat extends React.Component {
   @onCheburevent(chatStore, chatActions.SET_GLOBAL_MESSAGES)
   handleOldLoaded({ payload }: Action<ChatSetGlobalMessagesPL>) {
     this.setState({
+      users: chatStore.select().users,
       messages: payload.messages,
     });
   }
@@ -143,7 +152,6 @@ export default class Chat extends React.Component {
       messages,
       users,
       mySessionId,
-      myId,
       isScrolled,
     } = this.state;
 
@@ -156,26 +164,17 @@ export default class Chat extends React.Component {
           >
             Загрузить старые сообщения
           </div>
-          {messages.map((msg: ChatMessage) => {
-            console.log(
-              'MESSAGE: ',
-              myId,
-              msg.authorId,
-              userStore.select().user
-            );
-
-            return (
-              <Message
-                user={users[msg.authorId as any] || null}
-                text={msg.data.text}
-                isMine={
-                  (userStore.select().user || ({} as any)).id ===
-                    msg.authorId || msg.sessionId === mySessionId}
-                created={msg.created}
-                className={cn('chat__message')}
-              />
-            );
-          })}
+          {messages.map((msg: ChatMessage) => (
+            <Message
+              user={users[msg.authorId as any] || null}
+              text={msg.data.text}
+              isMine={
+                (userStore.select().user || ({} as any)).id === msg.authorId ||
+                msg.sessionId === mySessionId
+              }
+              created={msg.created}
+            />
+          ))}
         </div>
         <div className={cn('chat__footer')}>
           <textarea
@@ -190,12 +189,19 @@ export default class Chat extends React.Component {
             onClick={this.handleSendMessage}
           />
         </div>
-        {isScrolled ? (
-          <div className={cn('chat__scroll')} onClick={this.handleScroll} />
-        ) : (
-          ''
+        {isScrolled && (
+          <div
+            className={cn('chat__scroll')}
+            onClick={this.handleScrollClick}
+          />
         )}
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    if (this.messagesRef) {
+      this.messagesRef.removeEventListener('scroll', this.handleMessagesScroll);
+    }
   }
 }
