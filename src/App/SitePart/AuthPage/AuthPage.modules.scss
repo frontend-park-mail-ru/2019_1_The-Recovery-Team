@@ -1,9 +1,14 @@
 @import 'styles/mixins';
 @import 'styles/constants';
+@import 'styles/includeMedia';
 
 .sign-auth-page {
   height: 100%;
-  padding: 50px;
+  padding: #{$global-spacing-big * 2};
+
+  @include media('<=phone') {
+    padding: #{$global-spacing-big * 2} $global-spacing-medium;
+  }
 
   &__content {
     max-width: 500px;

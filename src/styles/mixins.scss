@@ -1,4 +1,5 @@
 @import './constants';
+@import './includeMedia';
 
 @mixin  square($size) {
   width: $size;
@@ -47,6 +48,10 @@ $transition-normal: .2s ease-out;
   padding: $global-spacing-big #{$global-spacing-big * 2};
   border-radius: $global-border-radius;
   margin: 0 auto;
+
+  @include media('<tablet') {
+    padding: $global-spacing-medium-big;
+  }
 }
 
 @mixin text-medium($color: $global-color-blue) {

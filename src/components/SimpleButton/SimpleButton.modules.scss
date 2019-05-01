@@ -1,14 +1,18 @@
 @import 'styles/constants';
+@import 'styles/includeMedia';
 @import 'styles/mixins';
 
 .simple-button {
+  $local-addon-size: 32px;
+  $local-padding: 14px;
+
   width: 100%;
   text-align: center;
   background-color: $global-color-blue;
   font-weight: 600;
   font-size: $global-font-size-medium;
   color: #ffffff;
-  padding: 14px;
+  padding: $local-padding;
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
@@ -38,6 +42,10 @@
     }
   }
 
+  &_has-addon {
+    padding: $local-padding #{$local-padding * 2 + $local-addon-size};
+  }
+
   &__addon {
     position: absolute;
     transform: translateY(-50%);
@@ -46,6 +54,6 @@
     object-fit: contain;
     object-position: center;
 
-    @include square(30px);
+    @include square($local-addon-size);
   }
 }

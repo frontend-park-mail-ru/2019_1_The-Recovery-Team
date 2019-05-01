@@ -33,7 +33,8 @@ export default class SimpleButton extends React.Component {
         className={`${className} ${cn(
           'simple-button',
           air && 'simple-button_air',
-          disabled && 'simple-button_disabled'
+          disabled && 'simple-button_disabled',
+          addonImage && 'simple-button_has-addon'
         )}`}
       >
         {addonImage && (

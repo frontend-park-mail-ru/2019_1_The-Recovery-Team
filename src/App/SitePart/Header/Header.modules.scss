@@ -23,7 +23,7 @@ $padding-m: 8px;
     position: relative;
   }
 
-  @include media(">=phone", "<tablet") {
+  @include media("<tablet") {
     &__tabbar {
       display: none;
     }

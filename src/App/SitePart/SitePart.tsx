@@ -23,7 +23,7 @@ export default class SitePart extends React.Component {
 
   handleLogout = () => userStore.emit(actionUserLogout());
 
-  handleSideBarOpen = () => {
+  toggleSidebar = () => {
     this.setState({ isSideBarOpen: !this.state.isSideBarOpen });
     console.log('TOGGLED');
   };
@@ -33,17 +33,12 @@ export default class SitePart extends React.Component {
     const { isSideBarOpen } = this.state;
 
     return (
-      <div className={cn('site-part', isSideBarOpen && 'site-part_shifted')}>
-        <SideBar isOpen={isSideBarOpen} />
-        <div
-          className={cn(
-            'site-part__content',
-            isSideBarOpen && 'site-part__content_shifted'
-          )}
-        >
+      <div className={cn('site-part')}>
+        <SideBar isOpen={isSideBarOpen} onClose={this.toggleSidebar} />
+        <div className={cn('site-part__content')}>
           <Header
             onLogout={this.handleLogout}
-            onOpenSideBar={this.handleSideBarOpen}
+            onOpenSideBar={this.toggleSidebar}
           />
           <Route
             template={routesMap.BASE.template}
