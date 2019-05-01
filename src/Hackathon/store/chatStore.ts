@@ -37,7 +37,7 @@ const MESSAGE_LIST_LIMIT = 2;
 // @ts-ignore
 @cheburmodel
 class ChatStore extends Cheburstore<ChatState> {
-  store = {
+  store: ChatState = {
     messageIds: [],
     messages: {},
     users: {},
@@ -141,6 +141,10 @@ class ChatStore extends Cheburstore<ChatState> {
   }
 
   loadUser = async userId => {
+    if (!userId) {
+      return;
+    }
+
     const response = await Requester.get(API.profileItem(userId));
     if (response) {
       const user: UserShort | null = normalizeProfileGet(response);
@@ -161,13 +165,13 @@ class ChatStore extends Cheburstore<ChatState> {
       return msg.messageId;
     });
 
-    // @ts-ignore
     this.store.messageIds = [...ids, ...this.store.messageIds];
-
-    // @ts-ignore
     this.store.oldestMsgId = !ids.length ? null : ids[0];
-
     this.messagesListRequested = false;
+
+    for (const msg of messages) {
+      await this.loadUser(msg.authorId);
+    }
 
     this.emit(
       actionChatSetGlobalMessages({

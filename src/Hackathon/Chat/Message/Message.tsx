@@ -1,8 +1,7 @@
 import AvatarProfile from 'components/AvatarProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import { formatDate } from './utils/reformatDate';
-import userStore from 'store/userStore';
+import reformatDate from './utils/reformatDate';
 
 const styles = require('./Message.modules.scss');
 
@@ -30,7 +29,7 @@ export default class Message extends React.Component {
             <div className={cn('message__nickname')}>{user.nickname}</div>
           )}
           {text}
-          <div className={cn('message__created')}>{formatDate(created)}</div>
+          <div className={cn('message__created')}>{reformatDate(created)}</div>
         </div>
       </div>
     );

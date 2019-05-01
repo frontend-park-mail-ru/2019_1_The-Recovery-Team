@@ -1,13 +1,25 @@
-@import '~styles/constants';
-@import '~styles/mixins';
+@import 'styles/constants';
+@import 'styles/mixins';
 
 $local-counter-size: 40px;
 $local-resource-size: 86px;
 
+.items-container {
+  position: absolute;
+  right: 20px;
+  bottom: 0px;
+}
+
 .resource {
   position: relative;
+  margin-bottom: 20px;
+  cursor: pointer;
 
   @include square($local-resource-size);
+
+  &_disabled {
+    filter: grayscale(100%);
+  }
 
   &__counter {
     border-radius: 50%;
@@ -16,9 +28,8 @@ $local-resource-size: 86px;
     text-align: center;
     padding: 4px 0 0 4px;
     position: absolute;
-    transform: translate(-50%, -50%);
-    left: 88%;
-    top: 88%;
+    right: 0;
+    bottom: 0;
 
     @include square($local-counter-size);
   }
@@ -35,28 +46,25 @@ $local-resource-size: 86px;
 
     &:after {
       content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      transform: translate(-50%, -50%);
       z-index: 1;
+
+      @include square(100%);
+      @include absoluteCenter;
     }
 
-    &_sand {
+    &_SAND {
       &:after {
         background: url("img/Sand.svg") no-repeat center;
       }
     }
 
-    &_bomb {
+    &_BOMB {
       &:after {
         background: url("img/Bomb.svg") no-repeat center;
       }
     }
 
-    &_lifebuoy {
+    &_LIFEBUOY {
       &:after {
         background: url("img/Lifebuoy.svg") no-repeat center;
       }
