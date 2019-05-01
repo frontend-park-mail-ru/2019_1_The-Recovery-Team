@@ -1,3 +1,5 @@
+@import './constants';
+
 @mixin  square($size) {
   width: $size;
   height: $size;
@@ -20,4 +22,37 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+
+$transition-normal: .2s ease-out;
+@mixin animate($property...){
+  $animatedProperty: #{''};
+  @if length($property) > 1 {
+    @for $i from 1 through length($property)-1  {
+      $animatedProperty: $animatedProperty nth($property, $i) $transition-normal #{', '}
+    }
+  }
+  transition: $animatedProperty nth($property, length($property)) $transition-normal;
+}
+
+@mixin hover {
+  &:hover {
+    @content;
+  }
+}
+
+@mixin pane() {
+  background-color: #ffffff;
+  padding: $global-spacing-big #{$global-spacing-big * 2};
+  border-radius: $global-border-radius;
+  margin: 0 auto;
+}
+
+@mixin text-medium($color: $global-color-blue) {
+  font-size: $global-font-size-medium;
+  font-weight: 600;
+  color: $color;
+
+  @content
 }

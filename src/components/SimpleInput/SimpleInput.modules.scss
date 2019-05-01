@@ -1,0 +1,63 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+
+.simple-input {
+  $local-input-height: 50px;
+
+  height: $local-input-height;
+  border-radius: $global-border-radius;
+  border: 1px solid $global-color-borders;
+  width: 100%;
+  position: relative;
+
+  @include animate(border);
+
+  &_active {
+    border: 1px solid $global-color-blue;
+    color: $global-color-blue;
+  }
+
+  &_error {
+    border: 1px solid $global-color-dangerous;
+    color: $global-color-dangerous;
+  }
+
+  &__field {
+    width: 100%;
+    height: 100%;
+    line-height: $local-input-height;
+    padding: 0 $global-spacing-medium;
+    outline: none;
+    border: none;
+    font-size: $global-font-size-medium;
+    color: $global-color-blue;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__label {
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: $global-spacing-medium;
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-size: $global-font-size-medium;
+    color: $global-color-borders;
+    background-color: #ffffff;
+    z-index: 1;
+
+    @include animate(top, font-size, color);
+
+    &_active {
+      color: $global-color-blue;
+      font-size: $global-font-size-small;
+      top: 0;
+    }
+
+    &_error {
+      color: $global-color-dangerous;
+    }
+  }
+}

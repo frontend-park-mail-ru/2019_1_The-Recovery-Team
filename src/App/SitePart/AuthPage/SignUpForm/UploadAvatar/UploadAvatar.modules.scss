@@ -1,0 +1,62 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+.upload-avatar {
+
+  &__preview-container {
+    margin: 0 auto $global-spacing-medium;
+    position: relative;
+
+    @include square(124px);
+  }
+
+  &__preview-reset {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    background: $global-color-blue;
+    border-radius: 50%;
+
+    @include animate(background);
+    @include square(32px);
+    @include hover {
+      background: lighten($global-color-blue, 10%);
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      background: url('./img/cancel.svg') no-repeat center;
+      background-size: contain;
+
+      @include square(50%);
+      @include absoluteCenter();
+    }
+  }
+
+  &__preview {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: $global-color-borders;
+  }
+
+  &__label {
+    cursor: pointer;
+
+    @include text-medium() {
+      @include hover {
+        color: lighten($global-color-blue, 10%);
+      }
+    };
+  }
+
+  &__input {
+    position: absolute;
+    @include square(1px);
+    //visibility: hidden;
+  }
+}

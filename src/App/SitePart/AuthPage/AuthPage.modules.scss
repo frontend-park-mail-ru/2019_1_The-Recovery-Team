@@ -1,20 +1,24 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
 .sign-auth-page {
   height: 100%;
   padding: 50px;
 
-  &__container-buttons {
-    display: flex;
+  &__content {
+    max-width: 500px;
+    text-align: center;
+    @include pane();
   }
 
-  &__button {
-    margin-right: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  &__title {
+    color: $global-color-blue;
+    font-size: $global-font-size-header;
+    margin-bottom: $global-spacing-big;
+    font-weight: 600;
+  }
 
-    &:last-child {
-      margin-right: 0;
-    }
+  &__link {
+    margin-top: $global-spacing-medium;
   }
 }

@@ -1,6 +1,5 @@
-import SubmitButton, { modes } from 'components/buttons/SubmitButton';
-import VkButton from 'components/buttons/VkButton';
 import Form from 'components/Form';
+import SimpleButton from 'components/SimpleButton/SimpleButton';
 import * as React from 'libs/Cheburact';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
@@ -15,6 +14,7 @@ import {
   touchField,
   validateRequired,
 } from 'utils/form/validators';
+import ContinueWithVK from '../ContinueWithVK';
 
 const styles = require('./SignInForm.modules.scss');
 
@@ -87,20 +87,15 @@ export default class SignInForm extends React.Component {
     return (
       <div className={cn('sign-in-form')}>
         <Form
+          className={cn('sign-in-form__form')}
           onChangeValue={this.handleChangeValue}
           onBlur={this.handleBlur}
           inputs={[email, password]}
         />
-        <div className={cn('sign-in-form__container-submits')}>
-          <VkButton />
-          <SubmitButton
-            mode={modes.NEXT}
-            disabled={nextDisabled}
-            onClick={this.handleSubmit}
-          >
-            Далее
-          </SubmitButton>
-        </div>
+        <SimpleButton disabled={nextDisabled} onClick={this.handleSubmit}>
+          Продолжить
+        </SimpleButton>
+        <ContinueWithVK />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import AuthButton from 'components/buttons/AuthButton';
 import MainBlock from 'components/MainBlock';
+import SimpleButton from 'components/SimpleButton/SimpleButton';
 import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import routerStore, {
@@ -49,25 +50,42 @@ export default class AuthPage extends React.Component {
 
   toMode = (mode: AuthPageMode) => this.setState({ currentTab: mode });
 
-  render() {
-    const { authButtons } = this.state;
-    const { pathname } = window.location;
+  get isSignInPage(): boolean {
+    return match(window.location.pathname, routesMap.SIGN_IN.template, false);
+  }
 
+  get modeTitle(): string {
+    return this.isSignInPage ? 'Вход' : 'Регистрация';
+  }
+
+  render() {
     return (
       <MainBlock className={cn('sign-auth-page')}>
-        <div className={cn('sign-auth-page__container-buttons')}>
-          {authButtons.map(({ title, to }) => (
-            <AuthButton
-              className={cn('sign-auth-page__button')}
-              isActive={match(pathname, to, false)}
-              to={to}
+        <div className={cn('sign-auth-page__content')}>
+          <p className={cn('sign-auth-page__title')}>{this.modeTitle}</p>
+          <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
+          <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
+
+          {this.isSignInPage ? (
+            <SimpleButton
+              className={cn('sign-auth-page__link')}
+              key="to-sign-up"
+              air={true}
+              to={routeCreators.TO_SIGN_UP()}
             >
-              {title}
-            </AuthButton>
-          ))}
+              Еще не зарегистрировались? Регистрация
+            </SimpleButton>
+          ) : (
+            <SimpleButton
+              className={cn('sign-auth-page__link')}
+              key="to-sign-in"
+              air={true}
+              to={routeCreators.TO_SIGN_IN()}
+            >
+              Уже есть аккаунт? Войти
+            </SimpleButton>
+          )}
         </div>
-        <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
-        <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
       </MainBlock>
     );
   }

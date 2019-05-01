@@ -1,4 +1,4 @@
-import Input from 'components/Form/Input/Input';
+import SimpleInput from 'components/SimpleInput';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 const styles = require('./Form.modules.scss');
@@ -15,29 +15,27 @@ export default class Form extends React.Component {
 
     return (
       <div className={formClasses}>
-        <div className={cn('form__container-inputs')}>
-          {inputs.map(
-            ({
-              placeholder,
-              isError,
-              value,
-              name,
-              type,
-              currentPlaceholder = null,
-            }) => (
-              <div className={cn('form__input-container')}>
-                <Input
-                  type={type}
-                  placeholder={currentPlaceholder || placeholder}
-                  isError={isError}
-                  value={value}
-                  onChange={value => this.handleChange(name, value)}
-                  onBlur={() => this.handleBlur(name)}
-                />
-              </div>
-            )
-          )}
-        </div>
+        {inputs.map(
+          ({
+            placeholder,
+            isError,
+            value,
+            name,
+            type,
+            currentPlaceholder = null,
+          }) => (
+            <div className={cn('form__input-container')}>
+              <SimpleInput
+                type={type}
+                placeholder={currentPlaceholder || placeholder}
+                isError={isError}
+                value={value}
+                onChange={value => this.handleChange(name, value)}
+                onBlur={() => this.handleBlur(name)}
+              />
+            </div>
+          )
+        )}
       </div>
     );
   }

@@ -1,0 +1,51 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+.simple-button {
+  width: 100%;
+  text-align: center;
+  background-color: $global-color-blue;
+  font-weight: 600;
+  font-size: $global-font-size-medium;
+  color: #ffffff;
+  padding: 14px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  border-radius: $global-border-radius;
+
+  @include hover {
+    background-color: lighten($global-color-blue, 10%);
+  }
+  @include animate(background-color, border);
+
+  &_disabled {
+    background-color: $global-color-borders;
+    cursor: not-allowed;
+
+    @include hover {
+      background-color: $global-color-borders;
+    }
+  }
+
+  &_air {
+    background-color: transparent;
+    color: $global-color-blue;
+    border: 1px solid transparent;
+
+    @include hover {
+      background: darken(#ffffff, 5%);
+    }
+  }
+
+  &__addon {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    left: $global-spacing-medium;
+    object-fit: contain;
+    object-position: center;
+
+    @include square(30px);
+  }
+}

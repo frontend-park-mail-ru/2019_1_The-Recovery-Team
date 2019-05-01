@@ -10,7 +10,7 @@ const pluginsConfig = isMain
         ...webpackPlugins.pluginConfigs.hackathon,
     };
 
-const devBack = '10.9.0.184';
+const devBack = '0.0.0.0';
 
 module.exports = webpackMerge(commonConfig, {
     mode: 'development',
