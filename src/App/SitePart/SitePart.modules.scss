@@ -1,5 +1,19 @@
 .site-part {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  transition: all 0.5s ease;
+  overflow-x: hidden;
+
+  &_shifted {
+    padding-left: 250px;
+  }
+
+  &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &_shifted {
+      margin-right: -250px;
+    }
+  }
 }

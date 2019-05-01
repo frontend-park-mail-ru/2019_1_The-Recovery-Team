@@ -1,5 +1,10 @@
-@import '~styles/constants';
+@import 'styles/constants';
 @import 'styles/mixins';
+@import 'styles/includeMedia.scss';
+
+$margin-l: 52px;
+$margin-m: 16px;
+$padding-m: 8px;
 
 .header {
   height: 90px;
@@ -9,162 +14,165 @@
 
   &__content {
     margin: 0 auto;
+    padding: 0 20px;
     height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     position: relative;
   }
 
-  @media (min-width: 760px) {
-    .header__content {
-      width: 720px;
+  @include media(">=phone", "<tablet") {
+    &__tabbar {
+      display: none;
     }
 
-    .header__logotype {
-      transform: translate(-50%, -10%);
+    &__volume {
+      display: none;
     }
 
-    .header__tabbar {
-      width: 400px;
+    &__entry {
+      display: none;
     }
 
-    .header__volume {
-      width: calc((100% - 400px)/2);
+    &__profile {
+      display: none;
     }
 
-    .header__entry {
-      width: calc((100% - 400px)/2);
-    }
-
-    .header__profile {
-      width: calc((100% - 400px)/2);
-    }
-
-    .header__tab {
-      &_left {
-        margin-right: 28px;
-      }
-
-      &_right {
-        margin-left: 28px;
-      }
+    &__logotype {
+      width: 222px;
+      height: 67px;
     }
   }
 
-  @media (min-width: 1040px) {
-    .header__content {
+  @include media(">=tablet") {
+    &__content {
+      width: 760px;
+    }
+
+    &__nav-bar {
+      display: none;
+    }
+
+    &__tabbar {
+      width: 540px;
+      left: 48%;
+      display: flex;
+    }
+
+    &__nickname {
+      display: none;
+    }
+
+    &__profile {
+      display: flex;
+    }
+
+    &__tab {
+      &_left {
+        margin-right: $margin-m;
+      }
+
+      &_right {
+        margin-left: $margin-m;
+      }
+    }
+
+    &__entry {
+      display: flex;
+    }
+  }
+
+  @include media(">=tablet", "<desktop") {
+    &__logotype {
+      width: 280px;
+      height: 86px;
+    }
+  }
+
+  @include media(">=desktop") {
+    &__content {
       width: 1000px;
     }
 
-    .header__logotype {
-      transform: translate(-50%, -50%);
-    }
-
-    .header__tabbar {
+    &__tabbar {
+      @include absoluteCenter;
       width: 708px;
     }
 
-    .header__volume {
-      width: calc((100% - 708px)/2);
+    &__logotype {
+      width: 331px;
+      height: 102px;
     }
 
-    .header__entry {
-      width: calc((100% - 708px)/2);
+    &__nickname {
+      display: block;
     }
 
-    .header__profile {
-      width: calc((100% - 708px)/2);
-    }
-
-    .header__tab {
+    &__tab {
       &_left {
-        margin-right: 52px;
+        margin-right: $margin-l;
       }
 
       &_right {
-        margin-left: 52px;
+        margin-left: $margin-l;
       }
     }
   }
 
-  @media (min-width: 1300px) {
+  @include media(">=1300px") {
     .header__content {
       width: 1260px;
     }
+  }
 
-    .header__tabbar {
-      width: 708px;
-    }
-
-    .header__volume {
-      width: calc((100% - 708px)/2);
-    }
-
-    .header__entry {
-      width: calc((100% - 708px)/2);
-    }
-
-    .header__profile {
-      width: calc((100% - 708px)/2);
-    }
-
-    .header__tab {
-      &_left {
-        margin-right: 52px;
-      }
-
-      &_right {
-        margin-left: 52px;
-      }
-    }
+  &__nav-bar {
+    width: 28px;
+    height: 18px;
+    background: url("./img/navBarIcon.svg") no-repeat center;
+    cursor: pointer;
   }
 
   &__tabbar {
-    align-self: center;
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
 
   &__left-part {
-    padding-bottom: 8px;
+    padding-bottom: $padding-m;
   }
 
   &__right-part {
-    padding-bottom: 8px;
+    padding-bottom: $padding-m;
   }
 
   &__tab {
     &_left {
-      margin-right: 52px;
     }
 
     &_right {
-      margin-left: 52px;
     }
   }
 
   &__logotype {
     position: absolute;
+    transform: translate(-50%, -50%);
     left: 50%;
     top: 80%;
     z-index: 1;
   }
 
-  &__volume {
-    width: calc((100% - 708px)/2);
-  }
+  &__volume {}
 
   &__entry {
-    width: calc((100% - 708px)/2);
-    display: flex;
     align-items: center;
     justify-content: flex-end;
     cursor: pointer;
   }
 
   &__entry-text {
+    letter-spacing: 0.02rem;
     color: #FFFFFF;
     font-size: $global-font-size-medium;
     margin-right: 12px;
@@ -175,14 +183,13 @@
   }
 
   &__profile {
-    width: calc((100% - 708px)/2);
-    display: flex;
     align-items: center;
     justify-content: flex-end;
     cursor: pointer;
   }
 
   &__nickname {
+    letter-spacing: 0.02rem;
     color: #FFFFFF;
     font-size: $global-font-size-medium;
     margin-right: 12px;

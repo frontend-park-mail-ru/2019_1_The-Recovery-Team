@@ -6,47 +6,68 @@ import userStore, { actionUserLogout } from 'store/userStore';
 import AboutPage from './AboutPage';
 import AuthPage from './AuthPage';
 import EditProfilePage from './EditProfilePage';
-import Footer from './Footer';
 import Header from './Header';
 import LeadersPage from './LeadersPage';
 import ProfilePage from './ProfilePage';
 import RulesPage from './RulesPage';
+import SideBar from './SideBar/SideBar';
 import StartPage from './StartPage';
 const styles = require('./SitePart.modules.scss');
 
 const cn = classNames(styles);
 
 export default class SitePart extends React.Component {
+  state = {
+    isSideBarOpen: false,
+  };
+
   handleLogout = () => userStore.emit(actionUserLogout());
+
+  handleSideBarOpen = () => {
+    this.setState({ isSideBarOpen: !this.state.isSideBarOpen });
+    console.log('TOGGLED');
+  };
 
   public render() {
     const { user } = this.props;
+    const { isSideBarOpen } = this.state;
 
     return (
-      <div className={cn('site-part')}>
-        <Header onLogout={this.handleLogout} />
-        <Route
-          template={routesMap.BASE.template}
-          exact={true}
-          authorized={!!user}
-          component={StartPage}
-        />
-        <Route template={routesMap.SIGN.template} component={AuthPage} />
-        <Route
-          template={routesMap.PROFILE.template}
-          component={ProfilePage}
-          exact={true}
-        />
-        <Route
-          template={routesMap.LEADER_BOARD.template}
-          component={LeadersPage}
-        />
-        <Route
-          template={routesMap.PROFILE_EDIT.template}
-          component={EditProfilePage}
-        />
-        <Route template={routesMap.ABOUT.template} component={AboutPage} />
-        <Route template={routesMap.RULES.template} component={RulesPage} />
+      <div className={cn('site-part', isSideBarOpen && 'site-part_shifted')}>
+        <SideBar isOpen={isSideBarOpen} />
+        <div
+          className={cn(
+            'site-part__content',
+            isSideBarOpen && 'site-part__content_shifted'
+          )}
+        >
+          <Header
+            onLogout={this.handleLogout}
+            onOpenSideBar={this.handleSideBarOpen}
+          />
+          <Route
+            template={routesMap.BASE.template}
+            exact={true}
+            authorized={!!user}
+            component={StartPage}
+          />
+          <Route template={routesMap.SIGN.template} component={AuthPage} />
+          <Route
+            template={routesMap.PROFILE.template}
+            component={ProfilePage}
+            exact={true}
+          />
+          <Route
+            template={routesMap.LEADER_BOARD.template}
+            component={LeadersPage}
+          />
+          <Route
+            template={routesMap.PROFILE_EDIT.template}
+            component={EditProfilePage}
+          />
+          <Route template={routesMap.ABOUT.template} component={AboutPage} />
+          <Route template={routesMap.RULES.template} component={RulesPage} />
+        </div>
       </div>
     );
   }

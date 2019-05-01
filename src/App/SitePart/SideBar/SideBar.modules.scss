@@ -1,0 +1,15 @@
+.side-bar {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  height: 100%;
+  width: 0;
+  margin-left: -250px;
+  overflow-y: auto;
+  background-color: #FFFFFF;
+  transition: all 0.5s ease;
+
+  &_open {
+    width: 250px;
+  }
+}

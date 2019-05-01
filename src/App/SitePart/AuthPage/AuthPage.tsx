@@ -1,4 +1,3 @@
-import AuthButton from 'components/buttons/AuthButton';
 import MainBlock from 'components/MainBlock';
 import SimpleButton from 'components/SimpleButton/SimpleButton';
 import { routeCreators, routesMap } from 'config/routes';
@@ -47,8 +46,6 @@ export default class AuthPage extends React.Component {
   selfUpdate() {
     this.setState({});
   }
-
-  toMode = (mode: AuthPageMode) => this.setState({ currentTab: mode });
 
   get isSignInPage(): boolean {
     return match(window.location.pathname, routesMap.SIGN_IN.template, false);
