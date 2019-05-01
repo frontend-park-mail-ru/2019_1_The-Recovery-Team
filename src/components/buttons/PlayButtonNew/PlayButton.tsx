@@ -1,6 +1,6 @@
 import * as React from 'libs/Cheburact';
-import classNames from 'libs/classNames';
 import { Link } from 'libs/Cheburouter';
+import classNames from 'libs/classNames';
 const styles = require('./PlayButton.modules.scss');
 
 const cn = classNames(styles);

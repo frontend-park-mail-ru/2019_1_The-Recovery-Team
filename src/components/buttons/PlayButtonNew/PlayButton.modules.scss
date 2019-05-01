@@ -1,5 +1,6 @@
 @import 'styles/mixins';
 @import 'styles/constants';
+@import 'styles/includeMedia.scss';
 
 .play-button {
   background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
@@ -8,6 +9,24 @@
   cursor: pointer;
 
   @include square(200px);
+
+  @include media(">=phone", "<500px") {
+    &_multi {
+      &:after {
+        mask: url("./img/multiSmall.svg") no-repeat center;
+        background-color: #FFFFFF;
+      }
+    }
+  }
+
+  @include media(">=500px") {
+    &_multi {
+      &:after {
+        mask: url("./img/multi.svg") no-repeat center;
+        background-color: #FFFFFF;
+      }
+    }
+  }
 
   &:after {
     content: '';
@@ -23,12 +42,4 @@
       background-color: #FFFFFF;
     }
   }
-
-  &_multi {
-    &:after {
-      mask: url("./img/multi.svg") no-repeat center;
-      background-color: #FFFFFF;
-    }
-  }
-
 }

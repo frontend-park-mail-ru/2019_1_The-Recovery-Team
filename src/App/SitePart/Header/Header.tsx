@@ -39,7 +39,7 @@ export default class Header extends React.Component {
 
   componentDidMount() {
     this.setState({
-      user: userStore.select().user || null,
+      user: userStore.select().user,
     });
   }
 
@@ -113,6 +113,7 @@ export default class Header extends React.Component {
   render() {
     const { user }: { user: Profile } = this.state as any;
     const { path, isMusicOn } = this.state;
+    const { onOpenSideBar } = this.props;
     const isRulesActive = match(routeCreators.TO_RULES(), path, false);
     const isLeadersActive = match(routeCreators.TO_LEADER_BOARD(), path, false);
     const isAboutActive = match(routeCreators.TO_ABOUT(), path, false);
@@ -124,10 +125,10 @@ export default class Header extends React.Component {
     return (
       <div className={cn('header')}>
         <div className={cn('header__content')}>
+          <button className={cn('header__nav-bar')} onClick={onOpenSideBar} />
           <div className={cn('header__volume')}>
             <CircleButton type={volumeButtonType} onClick={this.toggleMusic} />
           </div>
-
           <div className={cn('header__tabbar')}>
             <div className={cn('header__left-part')}>
               <Tab
@@ -167,9 +168,12 @@ export default class Header extends React.Component {
                   this.isProfileActive && 'header__nickname_active'
                 )}
               >
-                {user.nickname}
+                {user.profile.nickname}
               </div>
-              <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+              <Avatar
+                to={routeCreators.TO_PROFILE()}
+                avatar={user.profile.avatar}
+              />
             </button>
           ) : (
             <div className={cn('header__entry')}>
