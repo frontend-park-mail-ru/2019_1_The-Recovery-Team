@@ -4,11 +4,10 @@
 .circle-button {
   box-sizing: border-box;
   border: 1px solid #FFFFFF;
-  border-radius: 50%;
   position: relative;
   cursor: pointer;
 
-  @include square(40px);
+  @include square(40px, 50%);
 
   &:after {
     content: '';

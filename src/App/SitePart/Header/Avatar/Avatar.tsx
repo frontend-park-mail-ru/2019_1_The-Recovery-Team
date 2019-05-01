@@ -9,14 +9,10 @@ const cn = classNames(styles);
 export default class Avatar extends React.Component {
   render() {
     const { to, avatar } = this.props;
-    console.log(avatar);
 
     return (
       <Link to={to} className={cn('avatar')}>
-        <img
-          src={`${avatar}`}
-          className={cn('avatar__img')}
-        />
+        <img src={`${avatar}`} className={cn('avatar__img')} />
       </Link>
     );
   }

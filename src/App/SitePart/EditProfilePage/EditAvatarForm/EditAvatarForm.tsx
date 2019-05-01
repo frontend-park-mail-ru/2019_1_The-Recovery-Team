@@ -1,4 +1,4 @@
-import SubmitButton, { modes } from 'components/buttons/SubmitButton';
+import SimpleButton from 'components/SimpleButton/SimpleButton';
 import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import { actionRouterPush } from 'libs/Cheburouter';
@@ -10,6 +10,7 @@ import userStore, {
   actionUserEditAvatarError,
   userActions,
 } from 'store/userStore';
+import UploadAvatar from '../../AuthPage/SignUpForm/UploadAvatar/UploadAvatar';
 const styles = require('./EditAvatarForm.modules.scss');
 
 const cn = classNames(styles);
@@ -21,10 +22,7 @@ export default class EditAvatarForm extends React.Component {
     avatar: null,
   };
 
-  handleSelectPhoto = e =>
-    this.setState({
-      avatar: e.target.files[0] || null,
-    });
+  handleSelectPhoto = avatar => this.setState({ avatar });
 
   @onCheburevent(userStore, userActions.EDIT_AVATAR_SUCCESS)
   handlerChangePage() {
@@ -45,20 +43,19 @@ export default class EditAvatarForm extends React.Component {
   };
 
   render() {
-    const savedDisabled = !this.state.avatar;
+    const { avatar } = this.state;
+    const savedDisabled = !avatar;
 
     return (
       <div className={cn('edit-avatar-form')}>
-        <input type="file" accept="image/*" onChange={this.handleSelectPhoto} />
-        <div className={cn('edit-avatar-form__button')}>
-          <SubmitButton
-            disabled={savedDisabled}
-            onClick={this.updateAvatar}
-            mode={modes.SAVE}
-          >
-            Сохранить
-          </SubmitButton>
-        </div>
+        <UploadAvatar
+          avatar={avatar}
+          className={cn('edit-avatar-form__input')}
+          onChange={this.handleSelectPhoto}
+        />
+        <SimpleButton disabled={savedDisabled} onClick={this.updateAvatar}>
+          Сохранить
+        </SimpleButton>
       </div>
     );
   }

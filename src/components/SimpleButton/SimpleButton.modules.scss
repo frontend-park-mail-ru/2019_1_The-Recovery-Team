@@ -8,20 +8,15 @@
 
   width: 100%;
   text-align: center;
-  background-color: $global-color-blue;
   font-weight: 600;
   font-size: $global-font-size-medium;
   color: #ffffff;
   padding: $local-padding;
   box-sizing: border-box;
   position: relative;
-  cursor: pointer;
   border-radius: $global-border-radius;
 
-  @include hover {
-    background-color: lighten($global-color-blue, 10%);
-  }
-  @include animate(background-color, border);
+  @include buttonBase();
 
   &_disabled {
     background-color: $global-color-borders;

@@ -46,7 +46,7 @@ export default class Header extends React.Component {
   @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
   updateUser(action: Action<UserUpdateSuccessPL>) {
     this.setState({
-      user: action.payload,
+      user: action.payload.profile,
     });
   }
 
@@ -168,12 +168,9 @@ export default class Header extends React.Component {
                   this.isProfileActive && 'header__nickname_active'
                 )}
               >
-                {user.profile.nickname}
+                {user.nickname}
               </div>
-              <Avatar
-                to={routeCreators.TO_PROFILE()}
-                avatar={user.profile.avatar}
-              />
+              <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
             </button>
           ) : (
             <div className={cn('header__entry')}>

@@ -14,8 +14,7 @@
   }
 
   &__pause {
-    @include square(46px);
-    border-radius: 50%;
+    @include square(46px, 50%);
     background-color: $global-color-game-secondary-light;
     border: 4px solid $global-color-primary-light;
     display: flex;

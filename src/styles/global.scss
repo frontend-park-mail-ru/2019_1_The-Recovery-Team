@@ -21,6 +21,8 @@
     height: 100%;
     font-family: 'Open Sans', sans-serif;
     font-size: $global-font-size-medium;
+    background: url("./img/Background.png") no-repeat center;
+    background-size: cover;
   }
 
   button {

@@ -1,52 +1,74 @@
-@import '~styles/constants';
+@import 'styles/constants';
+@import 'styles/mixins';
 
 .profile-page {
-  height: 100%;
   position: relative;
-  padding-bottom: 30px;
+  padding: #{$global-spacing-big * 2} $global-spacing-big $global-spacing-big;
 
-  &__container-information {
-    padding-top: 30px;
+  @include media('<=phone') {
+    padding: #{$global-spacing-big * 2} $global-spacing-medium $global-spacing-medium;
   }
 
   &__container {
-    padding: 80px 100px 0;
+    max-width: 500px;
+    text-align: center;
+    @include pane();
+  }
+
+  &__title {
+    margin-bottom: $global-spacing-big;
+
+    @include text-header();
+  }
+
+  &__header {
+    position: relative;
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 200px;
+    margin-bottom: $global-spacing-big;
+  }
 
-    &-avatar {
-      display: inline;
-      position: relative;
-    }
-
-    &-edit-button {
-      position: absolute;
-      transform: translateY(-100%);
-      left: 68%;
-      top: 96%;
+  &__avatar-edit-icon {
+    &:after {
+      background-image: url('./img/Pencil.svg');
     }
   }
 
-  &__container-label {
-    position: absolute;
-    transform: translateX(-28%);
-    top: 100%;
+  &__item {
+    margin-bottom: $global-spacing-medium;
+  }
+}
+
+.heading-item {
+  margin-bottom: $global-spacing-medium;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  &__field {
-    margin-bottom: 30px;
+  &_tiny {
+    width: 80px;
+  }
 
-    &_nickname {
-      color: $global-color-primary-dark;
-      font-size: $global-font-size-xl;
-      font-weight: 700;
-    }
+  &_left {
+    text-align: left;
+  }
 
-    &_email {
-      color: $global-color-primary-dark;
-      font-size: $global-font-size-l;
-    }
+  &_right {
+    text-align: right;
+  }
 
+  &__title {
+    @include text-medium($global-color-borders) {
+      font-weight: 400;
+    };
+
+    margin-bottom: $global-spacing-small;
+  }
+
+  &__text {
+    @include text-medium();
   }
 }

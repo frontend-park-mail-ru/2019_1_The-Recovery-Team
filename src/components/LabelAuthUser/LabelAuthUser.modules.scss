@@ -1,4 +1,5 @@
-@import '~styles/constants';
+@import 'styles/constants';
+@import 'styles/mixins';
 
 $local-container-height: 70px;
 
@@ -9,9 +10,6 @@ $local-container-height: 70px;
 
 
   &__container-avatar {
-    width: $local-container-height;
-    height: $local-container-height;
-    border-radius: 50%;
     box-shadow: 0px 0px 0px 3px #ffffff, 0px 0px 0px 5px #0097a7 inset;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -20,6 +18,8 @@ $local-container-height: 70px;
     justify-content: center;
     align-items: center;
 
+    @include square($local-container-height, 50%);
+
     &_left {
       left: 100%;
     }
@@ -27,10 +27,9 @@ $local-container-height: 70px;
   }
 
   &__image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
     object-fit: cover;
+
+    @include square(60px, 50%)
   }
 
   &__rect {

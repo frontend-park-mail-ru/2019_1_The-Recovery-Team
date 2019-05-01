@@ -4,13 +4,12 @@
 .play-button {
   display: inline-block;
   border: 5px solid #FFFFFF;
-  border-radius: 50%;
   background-color: $global-color-primary-light;
   cursor: pointer;
   position: relative;
   background-size: contain;
 
-  @include square(240px);
+  @include square(240px, 50%);
 
   &:before {
     width: 100%;

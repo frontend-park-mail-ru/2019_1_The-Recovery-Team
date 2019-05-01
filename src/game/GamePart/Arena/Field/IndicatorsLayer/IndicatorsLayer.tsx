@@ -34,7 +34,6 @@ class IndicatorsLayer extends React.Component {
     const { activeItems } = gameStore.select().state;
     const myId = gameStore.selectMyId();
 
-    console.log('>>>: ', activeItems);
     let curItemId: null | number = null;
     let curItem: null | GameModels.ActiveItem = null;
     for (const [id, item] of Object.entries(activeItems)) {
@@ -45,7 +44,6 @@ class IndicatorsLayer extends React.Component {
       }
     }
 
-    console.log('>>>: ', curItem);
     this.updateIndicatorLine(curItem);
     if (curItemId !== this.state.curActiveItemId) {
       this.setState({

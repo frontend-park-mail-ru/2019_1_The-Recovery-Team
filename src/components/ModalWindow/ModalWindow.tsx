@@ -5,11 +5,25 @@ const styles = require('./ModalWindow.modules.scss');
 const cn = classNames(styles);
 
 export default class ModalWindow extends React.Component {
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.onClose();
+    }
+  };
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleClickContent = e => {
+    e.stopPropagation();
+  };
+
   render() {
     const { onClose, children } = this.props;
     return (
-      <div className={cn('modal-window')}>
-        <div className={cn('modal-window__content')}>
+      <div className={cn('modal-window')} onClick={onClose}>
+        <div className={cn('modal-window__content')} onClick={this.handleClickContent}>
           <button
             onClick={onClose}
             className={cn('modal-window__exit-button')}
@@ -18,5 +32,9 @@ export default class ModalWindow extends React.Component {
         </div>
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 }

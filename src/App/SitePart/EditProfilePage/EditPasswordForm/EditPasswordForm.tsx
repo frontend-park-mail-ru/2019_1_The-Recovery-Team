@@ -1,5 +1,5 @@
-import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import Form, { InputConfig } from 'components/Form';
+import SimpleButton from 'components/SimpleButton/SimpleButton';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import userStore, { actionUserEditPassword } from 'store/userStore';
@@ -113,13 +113,9 @@ export default class EditPasswordForm extends React.Component {
           onBlur={this.handleBlur}
         />
         <div className={cn('edit-password-form__button')}>
-          <SubmitButton
-            onClick={this.updatePassword}
-            disabled={saveDisabled}
-            mode={modes.SAVE}
-          >
+          <SimpleButton onClick={this.updatePassword} disabled={saveDisabled}>
             Сохранить
-          </SubmitButton>
+          </SimpleButton>
         </div>
       </div>
     );

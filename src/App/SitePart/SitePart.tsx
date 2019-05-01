@@ -25,7 +25,6 @@ export default class SitePart extends React.Component {
 
   toggleSidebar = () => {
     this.setState({ isSideBarOpen: !this.state.isSideBarOpen });
-    console.log('TOGGLED');
   };
 
   public render() {

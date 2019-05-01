@@ -17,10 +17,9 @@
   }
 
   &__title {
-    color: $global-color-blue;
-    font-size: $global-font-size-header;
+    @include text-medium();
+
     margin-bottom: $global-spacing-big;
-    font-weight: 600;
   }
 
   &__link {

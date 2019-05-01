@@ -22,7 +22,6 @@ $local-resource-size: 86px;
   }
 
   &__counter {
-    border-radius: 50%;
     background-color: $global-color-game-secondary-dark;
     color: $global-color-game-secondary-light;
     text-align: center;
@@ -31,18 +30,17 @@ $local-resource-size: 86px;
     right: 0;
     bottom: 0;
 
-    @include square($local-counter-size);
+    @include square($local-counter-size, 50%);
   }
 
   &__container-icon {
-    border-radius: 50%;
     background-color: $global-color-game-secondary-light;
     border: 3px $global-color-game-secondary-dark solid;
     background-size: contain;
     cursor: pointer;
     position: relative;
 
-    @include square(100%);
+    @include square(100%, 50%);
 
     &:after {
       content: '';

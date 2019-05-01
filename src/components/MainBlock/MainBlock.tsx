@@ -16,13 +16,5 @@ export default class MainBlock extends React.Component {
         <Footer />
       </div>
     );
-
-    /*const contentClasses = `${className} ${cn('main-block__content')}`;
-
-    return (
-      <div className={cn('main-block')}>
-        <div className={contentClasses}>{children}</div>
-      </div>
-    );*/
   }
 }

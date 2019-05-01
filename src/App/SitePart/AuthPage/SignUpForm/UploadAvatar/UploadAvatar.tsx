@@ -1,3 +1,4 @@
+import AvatarProfile from 'components/AvatarProfile/AvatarProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 
@@ -42,7 +43,6 @@ export default class UploadAvatar extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps, this.props);
     if (prevProps.avatar !== this.props.avatar) {
       this.updateAvatar();
     }
@@ -56,15 +56,12 @@ export default class UploadAvatar extends React.Component {
 
     return (
       <div className={`${className} ${cn('upload-avatar')}`}>
-        <div className={cn('upload-avatar__preview-container')}>
-          <img src={src || noavatar} className={cn('upload-avatar__preview')} />
-          {src && (
-            <div
-              className={cn('upload-avatar__preview-reset')}
-              onClick={this.handleAvatarReset}
-            />
-          )}
-        </div>
+        <AvatarProfile
+          src={src || noavatar}
+          className={cn('upload-avatar__preview-container')}
+          buttonClass={cn('upload-avatar__preview-reset')}
+          onButtonClick={src ? this.handleAvatarReset : null}
+        />
         <label
           type="file"
           className={cn('upload-avatar__label')}

@@ -1,7 +1,7 @@
-.edit-avatar-form {
-  width: 500px;
+@import 'styles/constants';
 
-  &__button {
-    margin-top: 40px;
+.edit-avatar-form {
+  &__input {
+    margin-bottom: $global-spacing-big;
   }
 }

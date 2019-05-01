@@ -4,14 +4,13 @@
 .game-button {
   padding: 5px;
   background-color: $global-color-game-secondary-light;
-  border-radius: 50%;
   border: 5px solid $global-color-primary-light;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  @include square(160px);
+  @include square(160px, 50%);
 
   &_size-m {
     width: 100px;

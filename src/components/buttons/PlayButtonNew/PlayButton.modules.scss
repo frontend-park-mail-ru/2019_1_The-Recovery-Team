@@ -4,11 +4,10 @@
 
 .play-button {
   background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
-  border-radius: 50%;
   position: relative;
   cursor: pointer;
 
-  @include square(200px);
+  @include square(200px, 50%);
 
   @include media(">=phone", "<500px") {
     &_multi {
