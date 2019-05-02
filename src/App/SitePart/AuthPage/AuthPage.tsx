@@ -1,5 +1,5 @@
 import MainBlock from 'components/MainBlock';
-import SimpleButton from 'components/SimpleButton/SimpleButton';
+import SimpleButton from 'components/SimpleButton';
 import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import routerStore, {

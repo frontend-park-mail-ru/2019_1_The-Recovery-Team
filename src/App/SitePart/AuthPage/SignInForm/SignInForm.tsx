@@ -1,5 +1,5 @@
 import Form from 'components/Form';
-import SimpleButton from 'components/SimpleButton/SimpleButton';
+import SimpleButton from 'components/SimpleButton';
 import * as React from 'libs/Cheburact';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';

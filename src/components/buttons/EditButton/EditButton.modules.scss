@@ -1,9 +1,0 @@
-@import 'styles/constants';
-@import 'styles/mixins';
-
-.edit-button {
-  background: $global-color-primary-light url("./img/Pencil.svg") no-repeat center;
-  cursor: pointer;
-
-  @include square(76px, 50%);
-}
