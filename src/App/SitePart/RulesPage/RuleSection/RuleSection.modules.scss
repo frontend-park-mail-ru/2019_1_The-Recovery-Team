@@ -1,33 +1,50 @@
 @import 'styles/mixins';
 @import 'styles/constants';
+@import 'styles/includeMedia';
 
 .rule {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
-  &__img {
-    width: calc(50% - 15px);
-    height: 240px;
-    flex-shrink: 0;
-    object-fit: cover;
-    object-position: center;
-  }
+  align-items: center;
+  flex-wrap: wrap;
+  padding: $global-spacing-small;
+  margin-bottom: $global-spacing-big;
 
   &_reverse {
     flex-direction: row-reverse;
   }
 
-  &__info {
-    display: flex;
-    width: calc(50% - 15px);
-    justify-content: center;
-    align-items: center;
+  &__img {
+    height: 240px;
+    object-fit: cover;
+    object-position: center;
+    flex-shrink: 0;
+    border-radius: $global-border-radius;
+    width: 50%;
+
+    @include media('<=tablet') {
+      width: 60%;
+    }
+    @include media('<=phone') {
+      width: 100%;
+    }
   }
 
-  &__description {
-    display: block;
-    color: $global-color-primary-dark;
-    font-size: $global-font-size-m;
+  &__info {
+    text-align: left;
+    box-sizing: border-box;
+    padding: $global-spacing-medium;
+
+    width: 50%;
+
+    @include text-medium();
+
+    @include media('<=tablet') {
+      width: 40%;
+    }
+    @include media('<=phone') {
+      width: 100%;
+    }
   }
 }
