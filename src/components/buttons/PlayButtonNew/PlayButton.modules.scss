@@ -9,21 +9,10 @@
 
   @include square(200px, 50%);
 
-  @include media(">=phone", "<500px") {
-    &_multi {
-      &:after {
-        mask: url("./img/multiSmall.svg") no-repeat center;
-        background-color: #FFFFFF;
-      }
-    }
-  }
-
-  @include media(">=500px") {
-    &_multi {
-      &:after {
-        mask: url("./img/multi.svg") no-repeat center;
-        background-color: #FFFFFF;
-      }
+  &_multi {
+    &:after {
+      mask: url("./img/multi.svg") no-repeat center;
+      background-color: #FFFFFF;
     }
   }
 
@@ -39,6 +28,15 @@
     &:after {
       mask: url("./img/single.svg") no-repeat center;
       background-color: #FFFFFF;
+    }
+  }
+
+  @include media("<=phone") {
+    &_multi {
+      &:after {
+        mask: url("./img/multiSmall.svg") no-repeat center;
+        background-color: #FFFFFF;
+      }
     }
   }
 }

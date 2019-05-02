@@ -5,46 +5,29 @@
 .start-page {
   display: flex;
   justify-content: center;
+  align-items: center;
 
   &__play-buttons {
     display: inline-block;
   }
 
-  @include media(">=phone", "<500px") {
-    &__play-buttons {
-      margin-top: 40px;
+  &__play-button {
+    display: inline-block;
+    margin-right: 44px;
+
+    &:last-child {
+      margin: 0;
     }
 
-    &__play-button {
-      display: block;
-      margin-bottom: 20px;
-
-      @include square(150px);
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  @include media(">500px") {
-    &__play-buttons {
-      margin-top: 140px;
-    }
-
-    &__play-button {
-      display: inline-block;
-      margin-right: 50px;
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      @include square(200px);
-    }
+    @include square(200px);
   }
 
   &__play-button {
+    @include media("<=phone") {
+      display: block;
+      margin: 0 0 20px 0;
 
+      @include square(150px);
+    }
   }
 }
