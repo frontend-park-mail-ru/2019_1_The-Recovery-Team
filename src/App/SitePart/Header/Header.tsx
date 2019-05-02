@@ -43,6 +43,13 @@ export default class Header extends React.Component {
     });
   }
 
+  @onCheburevent(userStore, userActions.LOGOUT_SUCCESS)
+  handleLogout() {
+    this.setState({
+      user: null,
+    });
+  }
+
   @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
   updateUser(action: Action<UserUpdateSuccessPL>) {
     this.setState({
