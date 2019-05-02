@@ -29,7 +29,9 @@ export default class SideBar extends React.Component {
               className={cn('side-bar__el')}
             >
               <div className={cn('side-bar__profile')}>
-                <Avatar avatar={user.avatar} />
+                <div>
+                  <Avatar avatar={user.avatar} />
+                </div>
                 <div className={cn('side-bar__nickname')}>{user.nickname}</div>
               </div>
             </Link>
@@ -39,10 +41,12 @@ export default class SideBar extends React.Component {
               className={cn('side-bar__el')}
             >
               <div className={cn('side-bar__entry')}>
-                <CircleButton
-                  type={circleButtonTypes.profile}
-                  className={cn('side-bar__entry-icon')}
-                />
+                <div>
+                  <CircleButton
+                    type={circleButtonTypes.profile}
+                    className={cn('side-bar__entry-icon')}
+                  />
+                </div>
                 <div className={cn('side-bar__entry-text')}>Вход</div>
               </div>
             </Link>
