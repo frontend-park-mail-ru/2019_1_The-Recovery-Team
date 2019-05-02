@@ -13,10 +13,12 @@ export default class MemberInfo extends React.Component {
 
     return (
       <div className={memberClasses}>
-        <AvatarProfile user={member} className={cn('member__avatar')} />
+        <AvatarProfile src={member.avatar} className={cn('member__avatar')} />
         <div className={cn('member__info')}>
-          <div className={cn('member__name')}>{member.name}</div>
-          <div className={cn('member__description')}>{member.description}</div>
+          <a href={member.link} target="_blank" className={cn('member__name')}>
+            {member.name}
+          </a>
+          <p className={cn('member__description')}>{member.description}</p>
         </div>
       </div>
     );

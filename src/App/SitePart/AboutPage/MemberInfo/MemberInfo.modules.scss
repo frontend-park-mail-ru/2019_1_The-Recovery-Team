@@ -7,7 +7,7 @@
   text-align: center;
 
   &__avatar {
-    @include square(180px);
+    @include square(124px);
     display: inline-block;
   }
 
@@ -16,14 +16,21 @@
   }
 
   &__name {
-    color: $global-color-primary-dark;
-    font-size: $global-font-size-l;
-    font-weight: 700;
-    margin-bottom: 10px;
+    display: inline-block;
+    margin-bottom: $global-spacing-small;
+    padding: 5px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+
+    @include text-medium();
+    @include animate(color, border);
+    @include hover {
+      border-bottom: 2px solid $global-color-blue;
+    }
   }
 
   &__description {
-    color: $global-color-primary-dark;
-    font-size: $global-font-size-m;
+    display: block;
+    @include text-medium($global-color-borders);
   }
 }

@@ -12,12 +12,14 @@ export default class AboutPage extends React.Component {
   render() {
     return (
       <MainBlock className={cn('about-page')}>
-        {members.map(member => (
-          <MemberInfo
-            member={member}
-            className={cn('about-page__member-container')}
-          />
-        ))}
+        <div className={cn('about-page__members')}>
+          {members.map(member => (
+            <MemberInfo
+              member={member}
+              className={cn('about-page__member-container')}
+            />
+          ))}
+        </div>
       </MainBlock>
     );
   }
