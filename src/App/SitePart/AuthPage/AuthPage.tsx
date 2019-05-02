@@ -11,7 +11,6 @@ import routerStore, {
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
-import { AuthPageMode } from './config/modes';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
@@ -33,14 +32,6 @@ export default class AuthPage extends React.Component {
       );
     }
   }
-
-  state = {
-    currentTab: AuthPageMode.SIGN_IN,
-    authButtons: [
-      { title: 'Вход', to: routeCreators.TO_SIGN_IN() },
-      { title: 'Регистрация', to: routeCreators.TO_SIGN_UP() },
-    ],
-  };
 
   @onCheburevent(routerStore, routerActions.PUSH_OK)
   selfUpdate() {

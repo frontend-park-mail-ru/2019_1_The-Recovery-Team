@@ -15,6 +15,6 @@ export interface IFiberNode {
 }
 
 export interface UpdateQueueItem {
-  fiberNode: IFiberNode,
-  nextState?: Object,
+  fiberNode: IFiberNode;
+  nextState?: Object;
 }
