@@ -1,13 +1,13 @@
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 const styles = require('./AvatarProfile.modules.scss');
+const noavatar = require('./img/noavatar.svg');
 
 const cn = classNames(styles);
 
 export default class AvatarProfile extends React.Component {
   render() {
     const {
-      user,
       className = '',
       src,
       buttonClass = '',
@@ -19,7 +19,7 @@ export default class AvatarProfile extends React.Component {
     return (
       <div className={classes}>
         <img
-          src={`${src || user.avatar}`}
+          src={`${src || noavatar}`}
           className={cn('avatar-profile__image')}
         />
         {onButtonClick && (

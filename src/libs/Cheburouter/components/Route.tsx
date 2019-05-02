@@ -31,8 +31,8 @@ export class Route extends React.Component {
     const { curPath } = this.state;
 
     const result = match(template, curPath, exact);
-    const shouldRender = negative ? !!result : !result;
+    const shouldRender = negative ? !result : !!result;
 
-    return shouldRender ? null : <Comp routerParams={result} {...rest} />;
+    return shouldRender ? <Comp routerParams={result} {...rest} /> : null;
   }
 }
