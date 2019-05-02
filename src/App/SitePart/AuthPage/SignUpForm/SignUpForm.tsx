@@ -1,5 +1,6 @@
 import Form from 'components/Form';
 import SimpleButton from 'components/SimpleButton';
+import UploadAvatar from 'components/UploadAvatar';
 import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
@@ -17,7 +18,6 @@ import {
   validateRequired,
 } from 'utils/form/validators';
 import ContinueWithVK from '../ContinueWithVK';
-import UploadAvatar from './UploadAvatar/UploadAvatar';
 
 const styles = require('./SignUpForm.modules.scss');
 

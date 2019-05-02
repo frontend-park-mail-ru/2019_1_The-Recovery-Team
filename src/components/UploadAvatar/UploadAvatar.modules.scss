@@ -1,5 +1,5 @@
-@import 'styles/mixins';
-@import 'styles/constants';
+@import '../../styles/mixins';
+@import '../../styles/constants';
 
 .upload-avatar {
 
@@ -9,7 +9,7 @@
 
   &__preview-reset {
     &:after {
-      background-image: url('./img/cancel.svg');
+      background-image: url('img/cancel.svg');
     }
   }
 

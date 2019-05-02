@@ -1,6 +1,6 @@
-import AvatarProfile from 'components/AvatarProfile';
-import * as React from 'libs/Cheburact';
-import classNames from 'libs/classNames';
+import AvatarProfile from 'components/AvatarProfile/index';
+import * as React from 'libs/Cheburact/index';
+import classNames from 'libs/classNames/index';
 
 const styles = require('./UploadAvatar.modules.scss');
 const cn = classNames(styles);
