@@ -49,7 +49,7 @@ export default class LeadersPage extends React.Component {
 
   render() {
     const { leaders, hasMore } = this.state;
-    const { user } = userStore.select();
+    const { user: me } = userStore.select();
 
     return (
       <MainBlock className={cn('leaders-page')}>
@@ -61,39 +61,40 @@ export default class LeadersPage extends React.Component {
           <div className={cn('row__col', 'row__col_rating')}>Рейтинг</div>
         </div>
 
-        {user && (
+        {me && (
           <div className={cn('rows-block', 'rows-block_me')}>
             <div className={cn('row')}>
               <div className={cn('row__col', 'row__col_index')}>
-                <span className={cn('circle', 'circle_me')}>
-                  {`${user.id}`}
-                </span>
+                <span className={cn('circle', 'circle_me')}>{`${me.id}`}</span>
               </div>
               <div className={cn('row__col', 'row__col_user')}>
-                {user.nickname}
+                {me.nickname}
               </div>
               <div className={cn('row__col', 'row__col_rating')}>
-                {`${user.record}`}
+                {`${me.record}`}
               </div>
             </div>
           </div>
         )}
 
         <div className={cn('rows-block', 'rows-block', 'leaders-page__users')}>
-          {leaders.map((user, index) => (
-            <div className={cn('row')}>
-              <div className={cn('row__col', 'row__col_index')}>
-                <span className={cn('circle')}>{`${index + 1}`}</span>
-              </div>
-              <div className={cn('row__col', 'row__col_user')}>
-                {user.nickname}
-              </div>
-              <div className={cn('row__col', 'row__col_rating')}>
-                {`${user.record}`}
-              </div>
-            </div>
-          ))}
-          {!hasMore && (
+          {leaders.map(
+            (user, index) =>
+              user.id !== (me || {}).id && (
+                <div className={cn('row')}>
+                  <div className={cn('row__col', 'row__col_index')}>
+                    <span className={cn('circle')}>{`${index + 1}`}</span>
+                  </div>
+                  <div className={cn('row__col', 'row__col_user')}>
+                    {user.nickname}
+                  </div>
+                  <div className={cn('row__col', 'row__col_rating')}>
+                    {`${user.record}`}
+                  </div>
+                </div>
+              )
+          )}
+          {hasMore && (
             <SimpleButton
               className={cn('leaders-page__load-button')}
               onClick={this.handleLoadNextPage}
