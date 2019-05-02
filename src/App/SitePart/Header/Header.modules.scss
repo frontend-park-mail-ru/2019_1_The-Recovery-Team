@@ -23,111 +23,9 @@ $padding-m: 8px;
     position: relative;
   }
 
-  @include media("<tablet") {
-    &__tabbar {
-      display: none;
-    }
-
-    &__volume {
-      display: none;
-    }
-
-    &__entry {
-      display: none;
-    }
-
-    &__profile {
-      display: none;
-    }
-
-    &__logotype {
-      width: 222px;
-      height: 67px;
-    }
-  }
-
-  @include media(">=tablet") {
-    &__content {
-      width: 760px;
-    }
-
-    &__nav-bar {
-      display: none;
-    }
-
-    &__tabbar {
-      width: 540px;
-      left: 48%;
-      display: flex;
-    }
-
-    &__nickname {
-      display: none;
-    }
-
-    &__profile {
-      display: flex;
-    }
-
-    &__tab {
-      &_left {
-        margin-right: $margin-m;
-      }
-
-      &_right {
-        margin-left: $margin-m;
-      }
-    }
-
-    &__entry {
-      display: flex;
-    }
-  }
-
-  @include media(">=tablet", "<desktop") {
-    &__logotype {
-      width: 280px;
-      height: 86px;
-    }
-  }
-
-  @include media(">=desktop") {
-    &__content {
-      width: 1000px;
-    }
-
-    &__tabbar {
-      @include absoluteCenter;
-      width: 708px;
-    }
-
-    &__logotype {
-      width: 331px;
-      height: 102px;
-    }
-
-    &__nickname {
-      display: block;
-    }
-
-    &__tab {
-      &_left {
-        margin-right: $margin-l;
-      }
-
-      &_right {
-        margin-left: $margin-l;
-      }
-    }
-  }
-
-  @include media(">=1300px") {
-    .header__content {
-      width: 1260px;
-    }
-  }
 
   &__nav-bar {
+    display: none;
     width: 28px;
     height: 18px;
     background: url("./img/navBarIcon.svg") no-repeat center;
@@ -135,6 +33,7 @@ $padding-m: 8px;
   }
 
   &__tabbar {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -163,6 +62,7 @@ $padding-m: 8px;
   &__volume {}
 
   &__entry {
+    display: flex;
     align-items: center;
     justify-content: flex-end;
     cursor: pointer;
@@ -180,12 +80,14 @@ $padding-m: 8px;
   }
 
   &__profile {
+    display: flex;
     align-items: center;
     justify-content: flex-end;
     cursor: pointer;
   }
 
   &__nickname {
+    display: none;
     letter-spacing: 0.02rem;
     color: #FFFFFF;
     font-size: $global-font-size-medium;
@@ -193,6 +95,97 @@ $padding-m: 8px;
 
     &_active {
       color: $global-color-sad;
+    }
+  }
+
+  @include media("<tablet") {
+    &__tabbar {
+      display: none;
+    }
+
+    &__volume {
+      display: none;
+    }
+
+    &__entry {
+      display: none;
+    }
+
+    &__profile {
+      display: none;
+    }
+
+    &__nav-bar {
+      display: block;
+    }
+
+    &__logotype {
+      width: 222px;
+      height: 67px;
+    }
+  }
+
+  @include media(">=tablet") {
+    &__content {
+      width: 760px;
+    }
+
+    &__tabbar {
+      width: 540px;
+      left: 48%;
+    }
+
+    &__tab {
+      &_left {
+        margin-right: $margin-m;
+      }
+
+      &_right {
+        margin-left: $margin-m;
+      }
+    }
+  }
+
+  @include media(">=tablet", "<desktop") {
+    &__logotype {
+      width: 280px;
+      height: 86px;
+    }
+  }
+
+  @include media(">=desktop") {
+    &__content {
+      width: 1000px;
+    }
+
+    &__tabbar {
+      @include absoluteCenter;
+      width: 708px;
+    }
+
+    &__logotype {
+      width: 331px;
+      height: 102px;
+    }
+
+    &__tab {
+      &_left {
+        margin-right: $margin-l;
+      }
+
+      &_right {
+        margin-left: $margin-l;
+      }
+    }
+  }
+
+  @include media(">=1300px") {
+    &__content {
+      width: 1260px;
+    }
+
+    &__nickname {
+      display: block;
     }
   }
 }

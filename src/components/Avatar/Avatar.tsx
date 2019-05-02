@@ -1,6 +1,6 @@
-import * as React from 'libs/Cheburact';
-import { Link } from 'libs/Cheburouter';
-import classNames from 'libs/classNames';
+import * as React from 'libs/Cheburact/index';
+import { Link } from 'libs/Cheburouter/index';
+import classNames from 'libs/classNames/index';
 
 const styles = require('./Avatar.modules.scss');
 

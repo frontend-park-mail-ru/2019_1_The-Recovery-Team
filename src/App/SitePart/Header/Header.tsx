@@ -21,7 +21,7 @@ import userStore, {
   userActions,
   UserUpdateSuccessPL,
 } from 'store/userStore';
-import Avatar from './Avatar';
+import Avatar from '../../../components/Avatar';
 import Tab from './Tab';
 
 const styles = require('./Header.modules.scss');

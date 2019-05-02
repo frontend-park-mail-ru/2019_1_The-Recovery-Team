@@ -32,7 +32,11 @@ export default class SitePart extends React.Component {
 
     return (
       <div className={cn('site-part')}>
-        <SideBar isOpen={isSideBarOpen} onClose={this.toggleSidebar} />
+        <SideBar
+          isOpen={isSideBarOpen}
+          onClose={this.toggleSidebar}
+          user={user}
+        />
         <div className={cn('site-part__content')}>
           <Header
             onLogout={this.handleLogout}

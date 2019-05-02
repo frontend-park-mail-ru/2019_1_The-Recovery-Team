@@ -1,3 +1,7 @@
+@import 'styles/constants';
+
+$local-height: 90px;
+
 .side-bar {
   &__container {
     width: 0;
@@ -25,5 +29,48 @@
 
   &_open {
     width: 250px;
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+  }
+
+  &__entry {
+    display: flex;
+    align-items: center;
+  }
+
+  &__nickname {
+    color: $global-color-blue;
+    font-size: $global-font-size-medium;
+    margin-left: 10px;
+  }
+
+  &__el {
+    height: 90px;
+    box-sizing: border-box;
+    border-bottom: 1px solid $global-color-grey;
+    padding: 0 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    color: $global-color-blue;
+    font-size: $global-font-size-medium;
+  }
+
+  &__entry-text {
+    font-size: $global-font-size-medium;
+    color: $global-color-blue;
+    margin-left: 10px;
+  }
+
+  &__entry-icon {
+    border-color: $global-color-blue;
+
+    &:after {
+      background-color: $global-color-blue;
+    }
   }
 }
