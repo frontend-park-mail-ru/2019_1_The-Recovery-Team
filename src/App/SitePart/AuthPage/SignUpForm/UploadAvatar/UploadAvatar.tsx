@@ -1,8 +1,7 @@
-import AvatarProfile from 'components/AvatarProfile/AvatarProfile';
+import AvatarProfile from 'components/AvatarProfile';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 
-const noavatar = require('./img/noavatar.svg');
 const styles = require('./UploadAvatar.modules.scss');
 const cn = classNames(styles);
 
@@ -57,7 +56,7 @@ export default class UploadAvatar extends React.Component {
     return (
       <div className={`${className} ${cn('upload-avatar')}`}>
         <AvatarProfile
-          src={src || noavatar}
+          src={src}
           className={cn('upload-avatar__preview-container')}
           buttonClass={cn('upload-avatar__preview-reset')}
           onButtonClick={src ? this.handleAvatarReset : null}

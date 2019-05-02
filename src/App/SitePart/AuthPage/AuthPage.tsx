@@ -47,23 +47,23 @@ export default class AuthPage extends React.Component {
     this.setState({});
   }
 
-  get isSignInPage(): boolean {
-    return match(window.location.pathname, routesMap.SIGN_IN.template, false);
+  static get isSignInPage(): boolean {
+    return !!match(window.location.pathname, routesMap.SIGN_IN.template, false);
   }
 
-  get modeTitle(): string {
-    return this.isSignInPage ? 'Вход' : 'Регистрация';
+  static get modeTitle(): string {
+    return AuthPage.isSignInPage ? 'Вход' : 'Регистрация';
   }
 
   render() {
     return (
       <MainBlock className={cn('sign-auth-page')}>
         <div className={cn('sign-auth-page__content')}>
-          <p className={cn('sign-auth-page__title')}>{this.modeTitle}</p>
+          <p className={cn('sign-auth-page__title')}>{AuthPage.modeTitle}</p>
           <Route template={routesMap.SIGN_IN.template} component={SignInForm} />
           <Route template={routesMap.SIGN_UP.template} component={SignUpForm} />
 
-          {this.isSignInPage ? (
+          {AuthPage.isSignInPage ? (
             <SimpleButton
               className={cn('sign-auth-page__link')}
               key="to-sign-up"
