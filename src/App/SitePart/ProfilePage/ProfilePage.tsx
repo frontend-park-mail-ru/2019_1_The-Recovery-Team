@@ -11,11 +11,7 @@ import routerStore, {
 } from 'libs/Cheburouter';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import userStore, {
-  Profile,
-  userActions,
-  UserUpdateSuccessPL,
-} from 'store/userStore';
+import userStore, { userActions } from 'store/userStore';
 import EditAvatarForm from './EditAvatarForm';
 import EditSection from './EditSection';
 import ViewSection from './ViewSection';
@@ -26,7 +22,6 @@ const cn = classNames(styles);
 
 interface State {
   isEditMode: boolean;
-  user: Profile | null;
   isShownModalAvatar: boolean;
 }
 
@@ -35,21 +30,12 @@ interface State {
 export default class ProfilePage extends React.Component {
   state: State = {
     isEditMode: false,
-    user: null,
     isShownModalAvatar: false,
   };
 
-  componentDidMount() {
-    this.setState({
-      user: userStore.select().user,
-    });
-  }
-
   @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
-  handleUserUpdated(action: Action<UserUpdateSuccessPL>) {
-    this.setState({
-      user: action.payload.profile,
-    });
+  handleUserUpdated() {
+    this.setState({});
   }
 
   @onCheburevent(routerStore, routerActions.PUSH_OK)
@@ -67,7 +53,8 @@ export default class ProfilePage extends React.Component {
     this.setState({ isShownModalAvatar: !this.state.isShownModalAvatar });
 
   render() {
-    const { user, isEditMode, isShownModalAvatar } = this.state;
+    const { isEditMode, isShownModalAvatar } = this.state;
+    const { user } = userStore.select();
 
     return user ? (
       <MainBlock className={cn('profile-page')}>

@@ -1,4 +1,4 @@
-import SimpleButton from 'components/SimpleButton/SimpleButton';
+import SimpleButton from 'components/SimpleButton';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 

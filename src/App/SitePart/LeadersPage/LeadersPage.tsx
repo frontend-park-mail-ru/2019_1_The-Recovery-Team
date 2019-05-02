@@ -1,9 +1,9 @@
-import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import MainBlock from 'components/MainBlock';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import RowLeader from './RowLeader';
 const styles = require('./LeadersPage.modules.scss');
+import SimpleButton from 'components/SimpleButton';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import scoreboardStore from 'store/scoreboardStore';
 import {
@@ -83,13 +83,12 @@ export default class LeadersPage extends React.Component {
           ))}
         </div>
         {hasMore && (
-          <SubmitButton
+          <SimpleButton
             className={cn('leaders-page__load-button')}
-            mode={modes.NEXT}
             onClick={this.handleLoadNextPage}
           >
             Загрузить ещё
-          </SubmitButton>
+          </SimpleButton>
         )}
       </MainBlock>
     );
