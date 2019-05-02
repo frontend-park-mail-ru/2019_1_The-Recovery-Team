@@ -5,12 +5,11 @@ import classNames from 'libs/classNames';
 import userStore, { actionUserLogout } from 'store/userStore';
 import AboutPage from './AboutPage';
 import AuthPage from './AuthPage';
-import EditProfilePage from './EditProfilePage';
 import Header from './Header';
 import LeadersPage from './LeadersPage';
 import ProfilePage from './ProfilePage';
 import RulesPage from './RulesPage';
-import SideBar from './SideBar/SideBar';
+import SideBar from './SideBar';
 import StartPage from './StartPage';
 const styles = require('./SitePart.modules.scss');
 
@@ -49,15 +48,10 @@ export default class SitePart extends React.Component {
           <Route
             template={routesMap.PROFILE.template}
             component={ProfilePage}
-            exact={true}
           />
           <Route
             template={routesMap.LEADER_BOARD.template}
             component={LeadersPage}
-          />
-          <Route
-            template={routesMap.PROFILE_EDIT.template}
-            component={EditProfilePage}
           />
           <Route template={routesMap.ABOUT.template} component={AboutPage} />
           <Route template={routesMap.RULES.template} component={RulesPage} />

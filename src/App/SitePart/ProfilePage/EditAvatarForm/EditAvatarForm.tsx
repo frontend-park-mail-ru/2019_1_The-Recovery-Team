@@ -1,8 +1,8 @@
-import SimpleButton from 'components/SimpleButton/SimpleButton';
+import SimpleButton from 'components/SimpleButton';
+import UploadAvatar from 'components/UploadAvatar';
 import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
-import { actionRouterPush } from 'libs/Cheburouter';
-import routerStore from 'libs/Cheburouter/routerStore';
+import routerStore, { actionRouterPush } from 'libs/Cheburouter';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore, {
@@ -10,7 +10,6 @@ import userStore, {
   actionUserEditAvatarError,
   userActions,
 } from 'store/userStore';
-import UploadAvatar from '../../AuthPage/SignUpForm/UploadAvatar/UploadAvatar';
 const styles = require('./EditAvatarForm.modules.scss');
 
 const cn = classNames(styles);
