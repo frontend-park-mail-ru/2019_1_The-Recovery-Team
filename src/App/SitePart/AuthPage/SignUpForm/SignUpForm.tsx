@@ -31,6 +31,9 @@ interface State {
   avatar: ImageData | null;
 }
 
+const MIN_PASSWORD_LENGTH = 4;
+const MAX_PASSWORD_LENGTH = 32;
+
 // @ts-ignore
 @connectToCheburstore
 export default class SignUpForm extends React.Component {
@@ -103,12 +106,46 @@ export default class SignUpForm extends React.Component {
     }
   }, 500);
 
+  validatePassword = (field: InputConfig) => {
+    if (field.value && field.value !== '') {
+      if (field.value.length < MIN_PASSWORD_LENGTH) {
+        this.setState({
+          password: {
+            ...field,
+            currentPlaceholder: 'Слишком короткий пароль',
+            isError: true,
+          },
+        });
+      } else if (field.value.length > MAX_PASSWORD_LENGTH) {
+        this.setState({
+          password: {
+            ...field,
+            currentPlaceholder: 'Слишком длинный пароль',
+            isError: true,
+          },
+        });
+      } else {
+        this.setState({
+          password: {
+            ...field,
+            currentPlaceholder: 'Пароль',
+            isError: false,
+          },
+        });
+      }
+    }
+  };
+
   handleChangeValue = (name: string, value: string) => {
     const nextField = touchField(this.state[name], value);
 
     this.setState({
       [name]: nextField,
     });
+
+    if (name === 'password') {
+      this.validatePassword(nextField);
+    }
 
     this.validateAlreadyExists(nextField);
   };
