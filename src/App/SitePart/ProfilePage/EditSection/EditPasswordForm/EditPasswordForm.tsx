@@ -1,8 +1,13 @@
 import Form, { InputConfig } from 'components/Form';
 import SimpleButton from 'components/SimpleButton';
 import * as React from 'libs/Cheburact';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import userStore, { actionUserEditPassword } from 'store/userStore';
+import userStore, {
+  actionUserEditPassword,
+  userActions,
+  UserErrorPL,
+} from 'store/userStore';
 import { touchField, validateRequired } from 'utils/form/validators';
 import validatePasswords from './utils/validatePasswords';
 
@@ -16,6 +21,8 @@ interface State {
   repeatNewPassword: InputConfig;
 }
 
+// @ts-ignore
+@connectToCheburstore
 export default class EditPasswordForm extends React.Component {
   state: State = {
     oldPassword: {
@@ -49,6 +56,9 @@ export default class EditPasswordForm extends React.Component {
 
   handleChangeValue = (name: string, value: string) => {
     const nextField = touchField(this.state[name], value);
+    this.setState({
+      [name]: nextField,
+    });
     const { newPassword, repeatNewPassword } = this.state;
     if (name === newPassword.name || name === repeatNewPassword.name) {
       let nextNewP: null | InputConfig = null;
@@ -61,22 +71,12 @@ export default class EditPasswordForm extends React.Component {
       } else {
         [nextNewP, nextNewRepeatP] = validatePasswords(newPassword, nextField);
       }
+
       this.setState({
-        [newPassword.name]: nextNewP,
-        [repeatNewPassword.name]: nextNewRepeatP,
+        newPassword: nextNewP,
+        repeatNewPassword: nextNewRepeatP,
       });
     }
-
-    const field: InputConfig = this.state[name];
-    this.setState({
-      [name]: {
-        ...field,
-        value,
-        placeholder: value.length ? field.label : field.placeholder,
-        isError: value.length ? false : field.isError,
-        touched: true,
-      },
-    });
   };
 
   handleBlur = (name: string) =>
@@ -93,6 +93,17 @@ export default class EditPasswordForm extends React.Component {
       })
     );
   };
+
+  @onCheburevent(userStore, userActions.EDIT_PASSWORD_ERROR)
+  handleFailUpdate(action: Action<UserErrorPL>) {
+    this.setState({
+      oldPassword: {
+        ...this.state.oldPassword,
+        currentPlaceholder: action.payload.errorMessage,
+        isError: true,
+      },
+    });
+  }
 
   render() {
     const { oldPassword, newPassword, repeatNewPassword } = this.state;
