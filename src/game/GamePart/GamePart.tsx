@@ -19,15 +19,15 @@ const cn = classNames(styles);
 export default class GamePart extends React.Component {
   @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
   handleGameOver() {
-    const {
-      routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
-    } = this.props;
-
-    routerStore.emit(
-      actionRouterPush({
-        path: routeCreators.TO_FINISH_PAGE(gameMode),
-      })
-    );
+    // const {
+    //   routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+    // } = this.props;
+    //
+    // routerStore.emit(
+    //   actionRouterPush({
+    //     path: routeCreators.TO_FINISH_PAGE(gameMode),
+    //   })
+    // );
   }
 
   public render() {
