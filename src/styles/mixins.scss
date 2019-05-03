@@ -10,11 +10,16 @@
   }
 }
 
-@mixin absoluteCenter {
+@mixin absoluteCenter($rotate: null) {
   position: absolute;
-  transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
+
+  @if $rotate {
+    transform: translate(-50%, -50%) rotate($rotate);
+  } @else {
+    transform: translate(-50%, -50%);
+  }
 }
 
 @mixin gameLayer($z-index) {
@@ -81,4 +86,9 @@ $transition-normal: .2s ease-out;
   @include hover {
     background-color: lighten($background, 10%);
   }
+}
+
+@mixin svgBackground($url, $size) {
+  background-image: url("#{$url}");
+  background-size: $size $size;
 }

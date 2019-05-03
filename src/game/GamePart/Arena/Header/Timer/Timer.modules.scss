@@ -1,11 +1,16 @@
 @import 'styles/constants';
 @import 'styles/mixins';
+@import 'styles/includeMedia';
 
 .timer {
   position: relative;
   height: $global-input-height;
   background-color: $global-color-blue;
   border-radius: $global-border-radius;
+
+  :global(.isMobile) & {
+    height: $global-input-height-small;
+  }
 
   @include animate(background-color);
 
@@ -30,8 +35,11 @@
   }
 
   &__pause {
-    @include square(34px, 50%);
     @include buttonBase($global-color-sad);
+    @include square(34px, 50%);
+    :global(.isMobile) &  {
+      @include square(20px, 50%);
+    }
 
     &:after {
       content: '';
@@ -55,6 +63,9 @@
     padding: 0 10px;
     border-radius: $global-border-radius;
 
+    :global(.isMobile) &  {
+      font-size: $global-font-size-header;
+    }
     @include absoluteCenter;
     @include text-medium(#ffffff, 32px);
   }

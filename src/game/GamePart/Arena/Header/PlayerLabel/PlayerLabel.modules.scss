@@ -12,6 +12,11 @@ $local-avatar-size: 70px;
   justify-content: flex-end;
   height: $local-avatar-size;
 
+  :global(.isMobile) & {
+    width: 100px;
+    height: #{$local-avatar-size / 2};
+  }
+
   &_enemy {
     flex-direction: row-reverse;
   }
@@ -26,6 +31,12 @@ $local-avatar-size: 70px;
     background-color: $global-color-sad;
     padding: 5px;
     box-sizing: border-box;
+
+    :global(.isMobile) & {
+      @include square(#{$local-avatar-size / 2}, 50%);
+      padding: 3px;
+    }
+
     @include square($local-avatar-size, 50%);
 
     &_enemy {
@@ -63,6 +74,16 @@ $local-avatar-size: 70px;
     &_enemy {
       background-color: $global-color-dangerous;
       padding: 0 $global-spacing-big 0 $global-spacing-medium;
+    }
+
+    :global(.isMobile) & {
+      line-height: $global-input-height-small;
+      width: calc(100% - #{$local-avatar-size / 4});
+      padding: 0 $global-spacing-small 0 $global-spacing-medium;
+
+      &_enemy {
+        padding: 0 $global-spacing-medium 0 $global-spacing-small;
+      }
     }
   }
 }

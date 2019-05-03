@@ -1,6 +1,16 @@
 @import 'styles/mixins';
 @import 'styles/constants';
 
+
+.field__container {
+  flex-grow: 1;
+  position: relative;
+
+  :global(.isMobile) & {
+    margin: -30px 0;
+  }
+}
+
 .field {
   @include absoluteCenter;
 }

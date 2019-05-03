@@ -1,12 +1,19 @@
 @import 'styles/mixins';
 
 .header {
-  height: 140px;
+  margin: $global-spacing-big auto 0;
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
+  z-index: 2;
+
+  min-width: 400px;
+
+  :global(.isMobile) & {
+    margin: $global-spacing-small auto 0;
+  }
 
   &__timer {
     flex-grow: 1;

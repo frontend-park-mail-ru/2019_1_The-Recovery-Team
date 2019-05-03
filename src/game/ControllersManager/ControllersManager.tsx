@@ -3,6 +3,7 @@ import gameStore, {
   actionInitPlayerMove,
 } from 'game/store';
 import { IControllersManager } from 'game/types';
+import { GameModels } from '../config';
 import { keyCodeToDir, keyCodeToItem } from './utils';
 
 export default class ControllersManager implements IControllersManager {
@@ -30,6 +31,22 @@ export default class ControllersManager implements IControllersManager {
       );
     });
 
+  emitMoveTo = (dir: GameModels.Direction) =>
+    gameStore.emit(
+      actionInitPlayerMove({
+        move: dir,
+        playerId: gameStore.selectMyId(),
+      })
+    );
+
+  emitUp = () => this.emitMoveTo(GameModels.Direction.UP);
+
+  emitLeft = () => this.emitMoveTo(GameModels.Direction.LEFT);
+
+  emitDown = () => this.emitMoveTo(GameModels.Direction.DOWN);
+
+  emitRight = () => this.emitMoveTo(GameModels.Direction.RIGHT);
+
   handleMovePlayer = e =>
     requestAnimationFrame(() => {
       const move = keyCodeToDir(e);
@@ -37,11 +54,6 @@ export default class ControllersManager implements IControllersManager {
         return;
       }
 
-      gameStore.emit(
-        actionInitPlayerMove({
-          move,
-          playerId: gameStore.selectMyId(),
-        })
-      );
+      this.emitMoveTo(move);
     });
 }

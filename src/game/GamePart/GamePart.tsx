@@ -17,6 +17,14 @@ const cn = classNames(styles);
 // @ts-ignore
 @connectToCheburstore
 export default class GamePart extends React.Component {
+  root: HTMLElement | null = null;
+
+  componentDidMount() {
+    if (this.root) {
+      this.root.requestFullscreen();
+    }
+  }
+
   @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
   handleGameOver() {
     // const {
@@ -32,7 +40,7 @@ export default class GamePart extends React.Component {
 
   public render() {
     return (
-      <div className={cn('game-part')}>
+      <div className={cn('game-part')} ref={r => (this.root = r)}>
         <Route
           template={routesMap.GAME_PART.template}
           component={Arena}
