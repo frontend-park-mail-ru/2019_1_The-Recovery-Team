@@ -33,17 +33,30 @@ export default class Timer extends React.Component {
   render() {
     const { roundNumber, roundTimer } = this.state;
     const { withPauseButton = true, mode, className = '' } = this.props;
-    const timerClasses = `${className} ${cn('timer')}`;
+
+    const time = Number(roundTimer);
+    const timeOk = time === 3;
+    const warning = time === 2;
+    const dangerous = time < 2;
+
+    const timerClasses = `${className} ${cn(
+      'timer',
+      timeOk && 'timer_time-ok',
+      warning && 'timer_warning',
+      dangerous && 'timer_dangerous'
+    )}`;
 
     return (
       <div className={timerClasses}>
         <div className={cn('timer__round')}>{`${roundNumber} раунд`}</div>
         <div className={cn('timer__time')}>{`00:0${roundTimer}`}</div>
         <div className={cn('timer__pause-container')}>
-          <Link
-            to={routeCreators.TO_PAUSE_PAGE(mode)}
-            className={cn('timer__pause')}
-          />
+          {withPauseButton && (
+            <Link
+              to={routeCreators.TO_PAUSE_PAGE(mode)}
+              className={cn('timer__pause')}
+            />
+          )}
         </div>
       </div>
     );

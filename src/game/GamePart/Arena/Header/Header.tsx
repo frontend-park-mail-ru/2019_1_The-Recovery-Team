@@ -1,10 +1,10 @@
-import LabelAuthUser from 'components/LabelAuthUser';
 import gameStore from 'game/store';
 import { gameStoreActions } from 'game/store/actions';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import Timer from './Timer';
+import PlayerLabel from './PlayerLabel';
 
 const styles = require('./Header.modules.scss');
 
@@ -45,17 +45,13 @@ export default class Header extends React.Component {
 
     return (
       <div className={cn('header')}>
-        {me && (
-          <LabelAuthUser
-            className={cn('header__me')}
-            user={me}
-            reverse={true}
-          />
-        )}
-        <Timer className={cn('header__timer')} mode={mode} />
-        {opponent && (
-          <LabelAuthUser className={cn('header__opponent')} user={opponent} />
-        )}
+        <div className={cn('header__me')}>
+          <PlayerLabel user={me} />
+        </div>
+        <div className={cn('header__timer')}>
+          <Timer mode={mode} />
+        </div>
+        <PlayerLabel user={opponent} isEnemy={true} />
       </div>
     );
   }

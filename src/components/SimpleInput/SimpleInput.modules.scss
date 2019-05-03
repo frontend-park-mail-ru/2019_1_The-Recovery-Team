@@ -3,7 +3,7 @@
 
 
 .simple-input {
-  $local-input-height: 50px;
+  $local-input-height: $global-input-height;
 
   height: $local-input-height;
   border-radius: $global-border-radius;

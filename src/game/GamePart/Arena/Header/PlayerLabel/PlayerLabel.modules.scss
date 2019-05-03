@@ -1,0 +1,68 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+$local-avatar-size: 70px;
+
+.player-label {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  align-items: center;
+  justify-content: flex-end;
+  height: $local-avatar-size;
+
+  &_enemy {
+    flex-direction: row-reverse;
+  }
+
+  &__avatar-container {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 0;
+    top: 50%;
+    z-index: 1;
+
+    background-color: $global-color-sad;
+    padding: 5px;
+    box-sizing: border-box;
+    @include square($local-avatar-size, 50%);
+
+    &_enemy {
+      background-color: $global-color-dangerous;
+      left: auto;
+      right: 0;
+    }
+  }
+
+  &__avatar {
+    object-position: center;
+    object-fit: cover;
+
+    @include square(100%, 50%);
+  }
+
+  &__label {
+    background-color: $global-color-sad;
+    border-radius: $global-border-radius;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 0;
+    width: calc(100% - #{$local-avatar-size / 2});
+    text-align: center;
+    line-height: $global-input-height;
+    padding: 0 $global-spacing-medium 0 $global-spacing-big;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include text-medium(#ffffff);
+
+    &_enemy {
+      background-color: $global-color-dangerous;
+      padding: 0 $global-spacing-big 0 $global-spacing-medium;
+    }
+  }
+}
