@@ -14,6 +14,7 @@ const checkIsMobile = () => {
       document.body.classList.remove('isHorizontalMobile');
     }
   } else {
+    isMobile = false;
     document.body.classList.remove('isMobile', 'isHorizontalMobile');
   }
 };
