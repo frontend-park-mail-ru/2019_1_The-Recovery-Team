@@ -49,7 +49,7 @@ export default class Timer extends React.Component {
     return (
       <div className={timerClasses}>
         <div className={cn('timer__round')}>{`${roundNumber} раунд`}</div>
-        <div className={cn('timer__time')}>{`00:0${roundTimer}`}</div>
+        <div className={cn('timer__time')}>{`0${roundTimer}`}</div>
         <div className={cn('timer__pause-container')}>
           {withPauseButton && (
             <Link

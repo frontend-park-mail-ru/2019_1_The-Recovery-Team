@@ -57,16 +57,19 @@
     left: $global-spacing-medium;
 
     @include text-medium(#ffffff);
+    :global(.isMobile) & {
+      font-size: $global-font-size-small;
+    }
   }
 
   &__time {
     padding: 0 10px;
     border-radius: $global-border-radius;
 
-    :global(.isMobile) &  {
-      font-size: $global-font-size-header;
-    }
     @include absoluteCenter;
     @include text-medium(#ffffff, 32px);
+    :global(.isMobile) &  {
+      font-size: $global-font-size-medium;
+    }
   }
 }

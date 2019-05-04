@@ -47,11 +47,15 @@ export default class CheburSocket {
   }
 
   send(message: string) {
-    if (this.connection) {
+    if (
+      this.connection &&
+      this.connection.readyState !== this.connection.CLOSED &&
+      this.connection.readyState !== this.connection.CLOSING
+    ) {
       try {
         this.connection.send(message);
       } catch {
-        console.log('>>> can not send message');
+        console.warn('>>> can not send message');
       }
     }
 

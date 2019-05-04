@@ -1,3 +1,4 @@
+import { anonymousAvatar } from 'config/images';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 
@@ -6,10 +7,17 @@ const cn = classNames(styles);
 
 export default class PlayerLabel extends React.Component {
   render() {
-    const { user = null, isEnemy = false, className='' } = this.props;
+    const { user = null, isEnemy = false, className = '' } = this.props;
+    const avatar =
+      user && user.avatar && user.avatar.length ? user.avatar : anonymousAvatar;
 
     return user ? (
-      <div className={`${className} ${cn('player-label', isEnemy && 'player-label_enemy')}`}>
+      <div
+        className={`${className} ${cn(
+          'player-label',
+          isEnemy && 'player-label_enemy'
+        )}`}
+      >
         <div
           className={cn(
             'player-label__avatar-container',
@@ -19,7 +27,7 @@ export default class PlayerLabel extends React.Component {
           <img
             className={cn('player-label__avatar')}
             alt="avatar"
-            src={user.avatar}
+            src={avatar}
           />
         </div>
         <span
