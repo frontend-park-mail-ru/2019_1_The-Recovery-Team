@@ -21,25 +21,23 @@ export default class GamePart extends React.Component {
   root: HTMLElement | null = null;
   content: HTMLElement | null = null;
 
-  componentDidMount() {
-    this.requestFullScreen().updateContentBounds();
+  async componentDidMount() {
+    await this.updateContentBounds().requestFullScreen();
     window.addEventListener('resize', this.updateContentBounds);
   }
 
-  requestFullScreen = (): GamePart => {
+  requestFullScreen = async (): Promise<GamePart> => {
     if (!this.root) {
       return this;
     }
-    this.root
-      .requestFullscreen()
-      .then(() => {
-        // tslint:disable-next-line:no-console
-        console.log('FULLSCREEN');
-      })
-      .catch(() => {
-        // tslint:disable-next-line:no-console
-        console.log('CAN NOT OPEN FULLSCREEN');
-      });
+    try {
+      await this.root.requestFullscreen();
+      // tslint:disable-next-line:no-console
+      console.log('FULLSCREEN');
+    } catch {
+      // tslint:disable-next-line:no-console
+      console.log('CAN NOT OPEN FULLSCREEN');
+    }
     return this;
   };
 
