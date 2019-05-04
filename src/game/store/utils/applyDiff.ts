@@ -7,8 +7,12 @@ const CELLS_KEY = 'cells';
 const ROUND_NUMBER_KEY = 'roundNumber';
 const ROUND_TIMER_KEY = 'roundTimer';
 
-const applyDiff = (state: GameModels.GameState, diff): GameModels.GameState => {
+const applyDiff = (
+  state: GameModels.GameState,
+  diff: Object
+): GameModels.GameState => {
   const nextState = { ...state };
+
   // TODO: Валидация для бэкенда
   if (diff[PLAYERS_KEY]) {
     nextState.players = { ...nextState.players, ...diff[PLAYERS_KEY] };

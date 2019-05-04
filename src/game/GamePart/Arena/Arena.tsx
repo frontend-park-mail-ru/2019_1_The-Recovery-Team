@@ -59,13 +59,14 @@ export default class Arena extends React.Component {
   render() {
     const {
       routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+      onOpenInfo,
     } = this.props;
     const { gameStarted, fieldWidth } = this.state;
 
     return (
       <div className={cn('arena')}>
         {!gameStarted && gameMode !== GameModes.SINGLEPLAYER && <SearchPage />}
-        <Header mode={gameMode} width={fieldWidth} />
+        <Header onOpenInfo={onOpenInfo} mode={gameMode} width={fieldWidth} />
         <Field onWidthChanged={this.handleFieldWidthChanged} />
         <Resources />
         <Controllers manager={this.controllersManager} />

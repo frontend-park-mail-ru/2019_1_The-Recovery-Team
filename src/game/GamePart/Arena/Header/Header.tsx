@@ -54,7 +54,7 @@ export default class Header extends React.Component {
   };
 
   render() {
-    const { mode } = this.props;
+    const { mode, onOpenInfo } = this.props;
     const { me = null, opponent = null } = this.state;
 
     return (
@@ -63,7 +63,7 @@ export default class Header extends React.Component {
           <PlayerLabel user={me} />
         </div>
         <div className={cn('header__timer')}>
-          <Timer mode={mode} />
+          <Timer mode={mode} onOpenInfo={onOpenInfo} />
         </div>
         <PlayerLabel user={opponent} isEnemy={true} />
       </div>
