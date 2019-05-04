@@ -13,10 +13,6 @@
 
   &__play-button {
     display: inline-block;
-  }
-
-  &__play-button {
-    display: inline-block;
     margin-right: 50px;
 
     &:last-child {
@@ -26,12 +22,21 @@
     @include square(200px);
   }
 
-  &__play-button {
-    @include media("<=phone") {
-      display: block;
-      margin: 0 0 20px 0;
+  :global(.isMobile) &__play-button {
+    display: block;
+    margin: 0 0 20px 0;
 
-      @include square(150px);
+    @include square(150px);
+  }
+
+  :global(.isHorizontalMobile) &__play-button {
+    display: inline-block;
+    margin: 0 50px 0 0;
+
+    &:last-child {
+      margin: 0;
     }
+
+    @include square(150px);
   }
 }
