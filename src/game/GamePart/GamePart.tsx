@@ -9,6 +9,7 @@ import classNames from 'libs/classNames';
 import Arena from './Arena';
 import FinishPage from './FinishPage';
 import PausePage from './PausePage';
+import { getIsMobile } from 'utils/checkIsMobile';
 
 const styles = require('./GamePart.modules.scss');
 
@@ -18,12 +19,49 @@ const cn = classNames(styles);
 @connectToCheburstore
 export default class GamePart extends React.Component {
   root: HTMLElement | null = null;
+  content: HTMLElement | null = null;
 
   componentDidMount() {
-    if (this.root) {
-      this.root.requestFullscreen();
-    }
+    this.requestFullScreen().updateContentBounds();
+    window.addEventListener('resize', this.updateContentBounds);
   }
+
+  requestFullScreen = (): GamePart => {
+    if (!this.root) {
+      return this;
+    }
+    this.root
+      .requestFullscreen()
+      .then(() => {
+        // tslint:disable-next-line:no-console
+        console.log('FULLSCREEN');
+      })
+      .catch(() => {
+        // tslint:disable-next-line:no-console
+        console.log('CAN NOT OPEN FULLSCREEN');
+      });
+    return this;
+  };
+
+  updateContentBounds = (): GamePart => {
+    if (!this.content) {
+      return this;
+    }
+
+    const isMobile = getIsMobile();
+    if (!isMobile) {
+      return this;
+    }
+
+    const { clientHeight, clientWidth } = window.document.body;
+    const h = Math.min(clientHeight, clientWidth);
+    const w = Math.max(clientWidth, clientHeight);
+
+    this.content.style.width = `${w}px`;
+    this.content.style.height = `${h}px`;
+
+    return this;
+  };
 
   @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
   handleGameOver() {
@@ -41,17 +79,26 @@ export default class GamePart extends React.Component {
   public render() {
     return (
       <div className={cn('game-part')} ref={r => (this.root = r)}>
-        <Route
-          template={routesMap.GAME_PART.template}
-          component={Arena}
-          exact={true}
-        />
-        <Route template={routesMap.PAUSE_PAGE.template} component={PausePage} />
-        <Route
-          template={routesMap.FINISH_PAGE.template}
-          component={FinishPage}
-        />
+        <div className={cn('game-part__content')} ref={r => (this.content = r)}>
+          <Route
+            template={routesMap.GAME_PART.template}
+            component={Arena}
+            exact={true}
+          />
+          <Route
+            template={routesMap.PAUSE_PAGE.template}
+            component={PausePage}
+          />
+          <Route
+            template={routesMap.FINISH_PAGE.template}
+            component={FinishPage}
+          />
+        </div>
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateContentBounds);
   }
 }
