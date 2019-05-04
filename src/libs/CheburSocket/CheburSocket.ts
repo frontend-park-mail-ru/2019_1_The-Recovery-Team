@@ -47,7 +47,11 @@ export default class CheburSocket {
   }
 
   send(message: string) {
-    if (this.connection) {
+    if (
+      this.connection
+      // !this.connection.CLOSED &&
+      // !this.connection.CLOSING
+    ) {
       try {
         this.connection.send(message);
       } catch {
