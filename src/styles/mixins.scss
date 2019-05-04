@@ -47,8 +47,10 @@ $transition-normal: .2s ease-out;
 }
 
 @mixin hover {
-  &:hover {
-    @content;
+  :not(:global(.isMobile)) & {
+    &:hover {
+      @content;
+    }
   }
 }
 

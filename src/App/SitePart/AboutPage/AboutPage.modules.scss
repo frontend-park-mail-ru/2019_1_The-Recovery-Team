@@ -2,7 +2,7 @@
 @import 'styles/constants';
 
 .about-page {
-  padding: #{$global-spacing-big * 2} $global-spacing-small 0 $global-spacing-small;
+  padding: #{$global-spacing-big * 2} $global-spacing-small;
 
   &__members {
     width: 900px;

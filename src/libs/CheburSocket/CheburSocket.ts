@@ -22,7 +22,7 @@ export default class CheburSocket {
   private url: string | null = null;
   private dispatcher: Cheburstore<any> | null = null;
 
-  private forseStop: boolean = false;
+  private forceStop: boolean = false;
   private pingInterval: any = null;
   private pingTimeout: any = null;
   private reconnectTimeout: any = null;
@@ -67,7 +67,7 @@ export default class CheburSocket {
       return this;
     }
 
-    this.forseStop = false;
+    this.forceStop = false;
     try {
       this.connection = new WebSocket(this.url);
 
@@ -83,7 +83,7 @@ export default class CheburSocket {
   };
 
   disconnect(): CheburSocket {
-    this.forseStop = true;
+    this.forceStop = true;
     this.resetPingInterval()
       .resetPingTimeout()
       .resetReconnectTimeout()
@@ -119,7 +119,7 @@ export default class CheburSocket {
   }
 
   private startPingInterval(): CheburSocket {
-    if (this.pingInterval === null && !this.forseStop) {
+    if (this.pingInterval === null && !this.forceStop) {
       this.pingInterval = setInterval(this.doPing, PING_INTERVAL);
     }
     return this;
@@ -135,7 +135,7 @@ export default class CheburSocket {
 
   private doPing = () => {
     this.resetPingTimeout().send(PING_ACTION);
-    if (this.connection && !this.forseStop) {
+    if (this.connection && !this.forceStop) {
       this.pingTimeout = setTimeout(this.handleClose, PING_TIMEOUT);
     }
   };
@@ -162,7 +162,7 @@ export default class CheburSocket {
   };
 
   private reconnect(): CheburSocket {
-    if (!this.forseStop) {
+    if (!this.forceStop) {
       this.reconnectTimeout = setTimeout(this.connect, RECONNECT_TIMEOUT);
     }
     return this;
