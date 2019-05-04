@@ -19,30 +19,26 @@
 
   &_multi {
     &:after {
-      mask: url("./img/multi.svg") no-repeat center;
-      background-color: #FFFFFF;
+      @include svgBackground("./img/multi.svg", 160px);
     }
   }
 
   &_single {
     &:after {
-      mask: url("./img/single.svg") no-repeat center;
-      background-color: #FFFFFF;
+      @include svgBackground("./img/single.svg", 80px);
     }
   }
 
   :global(.isMobile) & {
     &_multi {
       &:after {
-        mask: url("./img/multiSmall.svg") no-repeat center;
-        background-color: #FFFFFF;
+        @include svgBackground("./img/multi.svg", 100px);
       }
     }
 
     &_single {
       &:after {
-        mask: url("./img/singleSmall.svg") no-repeat center;
-        background-color: #FFFFFF;
+        @include svgBackground("./img/single.svg", 50px);
       }
     }
   }
