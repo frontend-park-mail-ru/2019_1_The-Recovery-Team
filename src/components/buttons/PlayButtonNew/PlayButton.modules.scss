@@ -9,19 +9,19 @@
 
   @include square(200px, 50%);
 
-  &_multi {
-    &:after {
-      mask: url("./img/multi.svg") no-repeat center;
-      background-color: #FFFFFF;
-    }
-  }
-
   &:after {
     content: '';
     z-index: 1;
 
     @include square(100%);
     @include absoluteCenter;
+  }
+
+  &_multi {
+    &:after {
+      mask: url("./img/multi.svg") no-repeat center;
+      background-color: #FFFFFF;
+    }
   }
 
   &_single {
@@ -31,10 +31,17 @@
     }
   }
 
-  @include media("<=phone") {
+  :global(.isMobile) & {
     &_multi {
       &:after {
         mask: url("./img/multiSmall.svg") no-repeat center;
+        background-color: #FFFFFF;
+      }
+    }
+
+    &_single {
+      &:after {
+        mask: url("./img/singleSmall.svg") no-repeat center;
         background-color: #FFFFFF;
       }
     }
