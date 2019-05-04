@@ -89,6 +89,6 @@ $transition-normal: .2s ease-out;
 }
 
 @mixin svgBackground($url, $size) {
-  background-image: url("#{$url}");
+  background: url("#{$url}") no-repeat center;
   background-size: $size $size;
 }
