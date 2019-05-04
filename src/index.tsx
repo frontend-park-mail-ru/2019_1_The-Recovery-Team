@@ -6,7 +6,7 @@ import router, {
   actionRouterSetUnsafe,
 } from 'libs/Cheburouter';
 import userStore, { actionUserCheckAuth, userActions } from 'store/userStore';
-import { checkIsMobile } from 'utils/checkIsMobile';
+import checkIsMobile from 'utils/checkIsMobile';
 import registerServiceWorker from 'utils/registerServiceWorker';
 import App from './App';
 require('./styles/global.scss');

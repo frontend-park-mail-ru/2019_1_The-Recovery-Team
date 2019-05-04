@@ -1,8 +1,11 @@
 const MOBILE_SIDE = 550;
 
-export const checkIsMobile = () => {
+let isMobile: boolean = false;
+
+const checkIsMobile = () => {
   const { clientHeight, clientWidth } = window.document.body;
   if (Math.min(clientHeight, clientWidth) <= MOBILE_SIDE) {
+    isMobile = true;
     document.body.classList.add('isMobile');
 
     if (clientHeight < clientWidth) {
@@ -16,3 +19,5 @@ export const checkIsMobile = () => {
 };
 
 window.addEventListener('resize', checkIsMobile);
+export const getIsMobile = (): boolean => isMobile;
+export default checkIsMobile;

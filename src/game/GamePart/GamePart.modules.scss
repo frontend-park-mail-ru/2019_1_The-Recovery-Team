@@ -3,15 +3,19 @@
   height: 100%;
   width: 100%;
 
-  :global(.isMobile) & {
-    @media only screen and (orientation: portrait) {
-      width: 100vh;
-      height: 100vw;
-      transform: rotate(90deg);
-      transform-origin: right top;
-      position: absolute;
-      top: 100%;
-      right: 0;
+  &__content {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+    :global(.isMobile) & {
+      @media only screen and (orientation: portrait) {
+        transform: rotate(90deg);
+        transform-origin: right top;
+        position: absolute;
+        top: 100%;
+        right: 0;
+      }
     }
   }
 }
