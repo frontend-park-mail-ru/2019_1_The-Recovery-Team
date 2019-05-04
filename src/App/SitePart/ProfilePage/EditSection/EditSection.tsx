@@ -97,28 +97,16 @@ export default class EditSection extends React.Component {
   // toggleEditAvatarModal = () =>
   //   this.setState({ isShownModalAvatar: !this.state.isShownModalAvatar });
 
-  get saveDisabled() {
-    const { email, nickname } = this.state;
-    return (
-      email.isError ||
-      nickname.isError ||
-      email.value.length === 0 ||
-      nickname.value.length === 0
-    );
-  }
-
   updateUser = async () => {
-    if (this.saveDisabled) {
-      return;
-    }
-
     const { email, nickname } = this.state;
-    userStore.emit(
-      actionUserEdit({
-        email: email.value,
-        nickname: nickname.value,
-      })
-    );
+    if (!email.isError && !nickname.isError) {
+      userStore.emit(
+        actionUserEdit({
+          email: email.value,
+          nickname: nickname.value,
+        })
+      );
+    }
   };
 
   render() {
@@ -148,7 +136,6 @@ export default class EditSection extends React.Component {
           Изменить пароль
         </SimpleButton>
         <SimpleButton
-          disabled={this.saveDisabled}
           onClick={this.updateUser}
           className={outerCN('profile-page__item')}
         >

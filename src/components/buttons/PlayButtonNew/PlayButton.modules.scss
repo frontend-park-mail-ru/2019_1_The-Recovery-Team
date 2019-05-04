@@ -3,7 +3,7 @@
 @import 'styles/includeMedia.scss';
 
 .play-button {
-  background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
+  background: linear-gradient(180deg, $global-color-top-linear 0%, $global-color-bottom-linear 100%);
   position: relative;
   cursor: pointer;
 

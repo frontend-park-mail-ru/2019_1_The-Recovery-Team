@@ -20,13 +20,24 @@ export const touchField: InputValidator = (input, nextValue = null) => ({
   currentPlaceholder: input.placeholder,
 });
 
+export const recoverField: InputValidator = (input, nextValue = null) => {
+  const tmpPlaceholder = input.isError ? input.placeholder : input.label;
+
+  return {
+    ...input,
+    isError: false,
+    value: nextValue === null ? input.value : nextValue,
+    currentPlaceholder: tmpPlaceholder,
+  };
+};
+
 export const validateRequired: InputValidator = (input, nextValue = null) => {
   if (input.isError) {
     return input;
   }
 
   const value = nextValue === null ? input.value : nextValue;
-  const isError = input.touched && value.length === 0;
+  const isError = value.length === 0;
 
   return {
     ...input,
@@ -78,3 +89,29 @@ export const setInputError = (
   isError: true,
   currentPlaceholder: message || input.label,
 });
+
+const MIN_PASSWORD_LENGTH = 4;
+const MAX_PASSWORD_LENGTH = 32;
+
+export const validatePasswordLength  = (input: InputConfig): InputConfig => {
+  if (input.value.length < MIN_PASSWORD_LENGTH) {
+    return {
+      ...input,
+      currentPlaceholder: 'Слишком короткий пароль',
+      isError: true,
+    };
+  }
+  if (input.value.length > MAX_PASSWORD_LENGTH) {
+    return {
+      ...input,
+      currentPlaceholder: 'Слишком длинный пароль',
+      isError: true,
+    };
+  }
+
+  return {
+    ...input,
+    currentPlaceholder: 'Пароль',
+    isError: false,
+  };
+};

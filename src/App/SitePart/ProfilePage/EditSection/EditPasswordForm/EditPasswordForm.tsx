@@ -79,19 +79,40 @@ export default class EditPasswordForm extends React.Component {
     }
   };
 
+  validateRequiredAll = () => {
+    const newOldPasswrod = validateRequired(this.state.oldPassword);
+    const newNewPassword = validateRequired(this.state.newPassword);
+    const newRepeatNewPassword = validateRequired(this.state.repeatNewPassword);
+    this.setState({
+      oldPassword: newOldPasswrod,
+      newPassword: newNewPassword,
+      repeatNewPassword: newRepeatNewPassword,
+    });
+
+    return (
+      newOldPasswrod.isError ||
+      newNewPassword.isError ||
+      newRepeatNewPassword.isError
+    );
+  };
+
   handleBlur = (name: string) =>
     this.setState({
       [name]: validateRequired(this.state[name]),
     });
 
   updatePassword = () => {
-    const { oldPassword, newPassword } = this.state;
-    userStore.emit(
-      actionUserEditPassword({
-        password: newPassword.value,
-        passwordOld: oldPassword.value,
-      })
-    );
+    const isError = this.validateRequiredAll();
+
+    if (!isError) {
+      const { oldPassword, newPassword } = this.state;
+      userStore.emit(
+        actionUserEditPassword({
+          password: newPassword.value,
+          passwordOld: oldPassword.value,
+        })
+      );
+    }
   };
 
   @onCheburevent(userStore, userActions.EDIT_PASSWORD_ERROR)
@@ -107,14 +128,6 @@ export default class EditPasswordForm extends React.Component {
 
   render() {
     const { oldPassword, newPassword, repeatNewPassword } = this.state;
-    const saveDisabled =
-      oldPassword.isError ||
-      newPassword.isError ||
-      repeatNewPassword.isError ||
-      oldPassword.value.length === 0 ||
-      newPassword.value.length === 0 ||
-      repeatNewPassword.value.length === 0 ||
-      newPassword.value !== repeatNewPassword.value;
 
     return (
       <div className={cn('edit-password-form')}>
@@ -124,9 +137,7 @@ export default class EditPasswordForm extends React.Component {
           onBlur={this.handleBlur}
         />
         <div className={cn('edit-password-form__button')}>
-          <SimpleButton onClick={this.updatePassword} disabled={saveDisabled}>
-            Сохранить
-          </SimpleButton>
+          <SimpleButton onClick={this.updatePassword}>Сохранить</SimpleButton>
         </div>
       </div>
     );
