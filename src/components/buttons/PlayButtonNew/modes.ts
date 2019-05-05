@@ -1,4 +1,7 @@
-export const playButtonTypes = {
-  single: 'single',
-  multi: 'multi',
-};
+export enum playButtonTypes {
+  SINGLEPLAYER = 'single',
+  MULTIPLAYER = 'multi',
+  RESTART = 'restart',
+  PLAY = 'play',
+  FINISH = 'finish',
+}

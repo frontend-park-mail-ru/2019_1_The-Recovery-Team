@@ -1,5 +1,6 @@
-import PlayButton from 'components/buttons/PlayButtonNew';
-import { playButtonTypes } from 'components/buttons/PlayButtonNew/modes';
+import PlayButtonNew, {
+  playButtonTypes,
+} from 'components/buttons/PlayButtonNew';
 import MainBlock from 'components/MainBlock/MainBlock';
 import { routeCreators } from 'config/routes';
 import { GameModes } from 'game/config';
@@ -18,14 +19,14 @@ export default class StartPage extends React.Component {
       <MainBlock className={cn('start-page')}>
         <div>
           <div className={cn('start-page__play-buttons')}>
-            <PlayButton
+            <PlayButtonNew
               className={cn('start-page__play-button')}
-              type={playButtonTypes.single}
+              type={playButtonTypes.SINGLEPLAYER}
               to={routeCreators.TO_GAME_PART(GameModes.SINGLEPLAYER)}
             />
-            <PlayButton
+            <PlayButtonNew
               className={cn('start-page__play-button')}
-              type={playButtonTypes.multi}
+              type={playButtonTypes.MULTIPLAYER}
               to={routeCreators.TO_GAME_PART(GameModes.MULTIPLAYER)}
             />
           </div>

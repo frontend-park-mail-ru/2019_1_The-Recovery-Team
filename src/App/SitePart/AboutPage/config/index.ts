@@ -4,6 +4,7 @@ const fedyaFoto = require('./img/Fedya.jpg');
 const urijFoto = require('./img/Urij.jpg');
 const dimaFoto = require('./img/Dima.jpg');
 const alexFoto = require('./img/Alexandr.jpg');
+const veraFoto = require('./img/Vera.png');
 
 export const members = [
   {
@@ -39,7 +40,7 @@ export const members = [
   {
     name: 'Вера Биличенко',
     description: 'Дизайн',
-    avatar: null,
+    avatar: veraFoto,
     link: 'https://www.behance.net/ver_a_ver',
   },
   {

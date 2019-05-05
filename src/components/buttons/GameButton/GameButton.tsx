@@ -7,22 +7,20 @@ const cn = classNames(styles);
 
 export default class GameButton extends React.Component {
   render() {
-    const {
-      img,
-      type,
-      isAuthorized = false,
-      to,
-      className = '',
-    } = this.props;
+    const { img, type, to, onClick = () => null, className = '' } = this.props;
 
     const buttonClasses = `${className} ${cn('game-button')}`;
 
     const iconClasses = cn('game-button__icon', `game-button_${type}-size`);
 
+    // tslint:disable-next-line:variable-name
+    const Component = to ? Link : 'div';
+    const params = to ? { to } : { onClick };
+
     return (
-      <Link to={to} className={buttonClasses}>
+      <Component {...params} className={buttonClasses}>
         <img src={`${img}`} className={iconClasses} />
-      </Link>
+      </Component>
     );
   }
 }

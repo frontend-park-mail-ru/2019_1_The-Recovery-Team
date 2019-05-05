@@ -6,10 +6,10 @@ import * as React from 'libs/Cheburact/index';
 import routerStore, { actionRouterPush, Route } from 'libs/Cheburouter';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import { getIsMobile } from 'utils/checkIsMobile';
 import Arena from './Arena';
 import FinishPage from './FinishPage';
 import PausePage from './PausePage';
-import { getIsMobile } from 'utils/checkIsMobile';
 
 const styles = require('./GamePart.modules.scss');
 
@@ -20,6 +20,10 @@ const cn = classNames(styles);
 export default class GamePart extends React.Component {
   root: HTMLElement | null = null;
   content: HTMLElement | null = null;
+
+  state = {
+    isInfoState: true,
+  };
 
   async componentDidMount() {
     await this.updateContentBounds().requestFullScreen();
@@ -74,18 +78,23 @@ export default class GamePart extends React.Component {
     // );
   }
 
+  toggleInfoState = () =>
+    this.setState({ isInfoState: !this.state.isInfoState });
+
   public render() {
+    const { isInfoState } = this.state;
+    const {
+      routerParams: { gameMode },
+    } = this.props;
+
     return (
       <div className={cn('game-part')} ref={r => (this.root = r)}>
         <div className={cn('game-part__content')} ref={r => (this.content = r)}>
-          <Route
-            template={routesMap.GAME_PART.template}
-            component={Arena}
-            exact={true}
-          />
-          <Route
-            template={routesMap.PAUSE_PAGE.template}
-            component={PausePage}
+          <Arena onOpenInfo={this.toggleInfoState} />
+          <PausePage
+            mode={gameMode}
+            isOpen={isInfoState}
+            onClose={this.toggleInfoState}
           />
           <Route
             template={routesMap.FINISH_PAGE.template}

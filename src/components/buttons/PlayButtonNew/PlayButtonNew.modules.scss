@@ -1,0 +1,55 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+@import 'styles/includeMedia.scss';
+
+@mixin playButtonBase($gradientFrom, $gradientTo, $image) {
+  background: linear-gradient(180deg, $gradientFrom 0%, $gradientTo 100%);
+
+  @include animate(background);
+  @include hover {
+    background: linear-gradient(180deg, lighten($gradientFrom, 10%) 0%, lighten($gradientTo, 10%) 100%);
+  }
+
+  &:after {
+    @include svgBackground($image, 50%);
+  }
+}
+
+.play-button {
+  background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
+  position: relative;
+  cursor: pointer;
+
+  @include square(200px, 50%);
+  :global(.isMobile) & {
+    @include square(100px, 50%);
+  }
+
+  &:after {
+    content: '';
+    z-index: 1;
+
+    @include square(100%);
+    @include absoluteCenter;
+  }
+
+  &_play {
+    @include playButtonBase(#629A36, #0D6721, './img/play.svg');
+  }
+
+  &_restart {
+    @include playButtonBase(#F5BC2A, #C8661F, './img/restart.svg');
+  }
+
+  &_finish {
+    @include playButtonBase(#3BCBD1, #2062DE, './img/finish.svg');
+  }
+
+  &_multi {
+    @include playButtonBase($global-color-sad, $global-color-blue, './img/multi.svg');
+  }
+
+  &_single {
+    @include playButtonBase($global-color-sad, $global-color-blue, './img/single.svg');
+  }
+}
