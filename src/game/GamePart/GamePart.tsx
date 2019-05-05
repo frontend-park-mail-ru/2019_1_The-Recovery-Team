@@ -1,15 +1,16 @@
-import { routeCreators, routesMap } from 'config/routes';
-import { GameModes } from 'game/config';
-import gameStore from 'game/store';
+import gameStore, {actionGameInit, actionGameStop} from 'game/store';
 import { gameStoreActions } from 'game/store/actions';
 import * as React from 'libs/Cheburact/index';
-import routerStore, { actionRouterPush, Route } from 'libs/Cheburouter';
-import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
+import {
+  cheburhandler,
+  connectToCheburstore,
+  onCheburevent,
+} from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import { getIsMobile } from 'utils/checkIsMobile';
 import Arena from './Arena';
-import FinishPage from './FinishPage';
-import PausePage from './PausePage';
+import { gamePageTypes } from './gamePageTypes';
+import ModalWindow from './ModalWindow';
 
 const styles = require('./GamePart.modules.scss');
 
@@ -22,12 +23,13 @@ export default class GamePart extends React.Component {
   content: HTMLElement | null = null;
 
   state = {
-    isInfoState: true,
+    modalWindowType: null,
   };
 
   async componentDidMount() {
     await this.updateContentBounds().requestFullScreen();
     window.addEventListener('resize', this.updateContentBounds);
+    this.onCloseModal();
   }
 
   requestFullScreen = async (): Promise<GamePart> => {
@@ -67,22 +69,57 @@ export default class GamePart extends React.Component {
 
   @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
   handleGameOver() {
-    // const {
-    //   routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
-    // } = this.props;
-    //
-    // routerStore.emit(
-    //   actionRouterPush({
-    //     path: routeCreators.TO_FINISH_PAGE(gameMode),
-    //   })
-    // );
+    const { id: myId = 0 } = gameStore.select().me || {};
+    const { loseRound: isLose = false } =
+      gameStore.select().state.players[myId] || {};
+
+    this.setState({
+      modalWindowType: !!isLose ? gamePageTypes.LOSE : gamePageTypes.WIN,
+    });
   }
 
+  @onCheburevent(gameStore, gameStoreActions.SET_OPPONENT_SEARCH)
+  handleSearchModalWindow() {
+    this.setState({
+      modalWindowType: gamePageTypes.SEARCH,
+    });
+  }
+
+  @onCheburevent(gameStore, gameStoreActions.SET_OPPONENT)
+  handleCloseSearch() {
+    this.setState({
+      modalWindowType: null,
+    });
+  }
+
+  onGiveUp = () => {
+    gameStore.emit(actionGameStop());
+    this.setState({
+      modalWindowType: gamePageTypes.LOSE,
+    });
+  };
+
+  onReload = () => {
+    const {
+      routerParams: { gameMode },
+    } = this.props;
+    gameStore.emit(actionGameInit(gameMode));
+    this.setState({
+      modalWindowType: null,
+    });
+  };
+
   toggleInfoState = () =>
-    this.setState({ isInfoState: !this.state.isInfoState });
+    this.setState({ modalWindowType: gamePageTypes.INFO });
+
+  onCloseModal = () => {
+    this.setState({
+      modalWindowType: null,
+    });
+  };
 
   public render() {
-    const { isInfoState } = this.state;
+    const { modalWindowType } = this.state;
     const {
       routerParams: { gameMode },
     } = this.props;
@@ -90,15 +127,13 @@ export default class GamePart extends React.Component {
     return (
       <div className={cn('game-part')} ref={r => (this.root = r)}>
         <div className={cn('game-part__content')} ref={r => (this.content = r)}>
-          <Arena onOpenInfo={this.toggleInfoState} />
-          <PausePage
+          <Arena mode={gameMode} onOpenInfo={this.toggleInfoState} />
+          <ModalWindow
             mode={gameMode}
-            isOpen={isInfoState}
-            onClose={this.toggleInfoState}
-          />
-          <Route
-            template={routesMap.FINISH_PAGE.template}
-            component={FinishPage}
+            type={modalWindowType}
+            onClose={this.onCloseModal}
+            onGiveUp={this.onGiveUp}
+            onReload={this.onReload}
           />
         </div>
       </div>

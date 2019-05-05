@@ -1,4 +1,4 @@
-const MOBILE_SIDE = 450;
+const MOBILE_SIDE = 500;
 
 let isMobile: boolean = false;
 
