@@ -1,13 +1,25 @@
-@mixin square($size) {
+@import './constants';
+@import './includeMedia';
+
+@mixin  square($size, $border-radius: null) {
   width: $size;
   height: $size;
+
+  @if $border-radius {
+    border-radius: $border-radius;
+  }
 }
 
-@mixin absoluteCenter {
+@mixin absoluteCenter($rotate: null) {
   position: absolute;
-  transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
+
+  @if $rotate {
+    transform: translate(-50%, -50%) rotate($rotate);
+  } @else {
+    transform: translate(-50%, -50%);
+  }
 }
 
 @mixin gameLayer($z-index) {
@@ -20,4 +32,65 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+
+$transition-normal: .2s ease-out;
+@mixin animate($property...){
+  $animatedProperty: #{''};
+  @if length($property) > 1 {
+    @for $i from 1 through length($property)-1  {
+      $animatedProperty: $animatedProperty nth($property, $i) $transition-normal #{', '}
+    }
+  }
+  transition: $animatedProperty nth($property, length($property)) $transition-normal;
+}
+
+@mixin hover {
+  :not(:global(.isMobile)) & {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin pane() {
+  background-color: #ffffff;
+  padding: $global-spacing-big #{$global-spacing-big * 2};
+  border-radius: $global-border-radius;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  @include media('<tablet') {
+    padding: $global-spacing-medium-big;
+  }
+}
+
+@mixin text-medium($color: $global-color-blue, $font-size: $global-font-size-medium) {
+  font-size: $font-size;
+  font-weight: 600;
+  color: $color;
+
+  @content
+}
+
+@mixin text-header($color: $global-color-blue) {
+  @include text-medium($color, $global-font-size-header) {
+    @content
+  }
+}
+
+@mixin buttonBase($background: $global-color-blue) {
+  cursor: pointer;
+  background-color: $background;
+
+  @include animate(background-color);
+  @include hover {
+    background-color: lighten($background, 10%);
+  }
+}
+
+@mixin svgBackground($url, $size) {
+  background: url("#{$url}") no-repeat center;
+  background-size: $size $size;
 }

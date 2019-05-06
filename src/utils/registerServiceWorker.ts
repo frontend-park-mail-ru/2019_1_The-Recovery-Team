@@ -12,7 +12,7 @@ const registerFunc = async () => {
 export default () => {
   if (
     'serviceWorker' in navigator &&
-    !window.location.host.startsWith('localhost')
+    window.location.host.includes('sadislands.ru')
   ) {
     window.addEventListener('load', registerFunc);
   }

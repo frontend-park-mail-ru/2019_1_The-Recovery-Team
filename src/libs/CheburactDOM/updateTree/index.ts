@@ -142,7 +142,6 @@ export default function updateTree(
           return node;
         }
       }
-
       node.children = bypassFiber(node.children, $nextTarget);
       return node;
     });

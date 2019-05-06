@@ -29,7 +29,7 @@
 
   &__rating {
     position: absolute;
-    font-size: 80px;
+    font-size: $global-font-size-xxl;
     color: $global-color-primary-light;
     text-align: center;
     transform: translate(-50%, -50%);

@@ -1,0 +1,21 @@
+@import 'styles/mixins';
+
+.continue-with-vk {
+  $local-color-vk: #4680C2;
+
+  &__label {
+    margin: 20px auto;
+
+    @include text-medium() {
+      text-align: center;
+    };
+  }
+
+  &__button {
+    background-color: $local-color-vk;
+
+    @include hover {
+      background-color: darken($local-color-vk, 10%);
+    }
+  }
+}

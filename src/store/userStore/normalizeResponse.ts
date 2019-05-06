@@ -25,18 +25,6 @@ export const normalizeProfileGet = (response): Profile | null => {
 
   let { avatar = null } = response.response;
 
-  // TODO: Убрать, когда Арсений пофиксит
-  if (
-    id === null ||
-    email === null ||
-    nickname === null
-    // loss === null ||
-    // record === null ||
-    // win === null
-  ) {
-    return null;
-  }
-
   if (avatar === null || avatar.length === '') {
     avatar = defaultAvatar;
   }

@@ -3,9 +3,10 @@ import * as React from 'libs/Cheburact/index';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames/index';
 import debounce from 'libs/debounce';
-import calcFieldSize from './utils/calcFieldSize';
 import CellsLayer from './CellsLayer/CellsLayer';
+import IndicatorsLayer from './IndicatorsLayer/IndicatorsLayer';
 import PlayersLayer from './PlayersLayer/PlayersLayer';
+import calcFieldSize from './utils/calcFieldSize';
 const styles = require('./Field.modules.scss');
 
 const cn = classNames(styles);
@@ -14,6 +15,7 @@ const cn = classNames(styles);
 @connectToCheburstore
 export default class Field extends React.Component {
   fieldRef: null | HTMLElement = null;
+  fieldContainerRef: null | HTMLElement = null;
 
   debouncedResize = debounce(() => {
     this.recalcField();
@@ -35,15 +37,13 @@ export default class Field extends React.Component {
       field: { width: colCount, height: rowCount },
     } = gameStore.select().state;
 
-    const windowW =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
-
-    const windowH =
-      window.innerHeight ||
-      document.documentElement.clientHeight ||
-      document.body.clientHeight;
+    if (!this.fieldContainerRef) {
+      return;
+    }
+    const {
+      width: windowW,
+      height: windowH,
+    } = this.fieldContainerRef.getBoundingClientRect();
 
     const { width, height } = calcFieldSize(
       windowW,
@@ -56,13 +56,22 @@ export default class Field extends React.Component {
       this.fieldRef.style.width = `${width}px`;
       this.fieldRef.style.height = `${height}px`;
     }
+
+    const { onWidthChanged = () => null } = this.props;
+    onWidthChanged(width);
   }
 
   render() {
     return (
-      <div className={cn('field')} ref={r => (this.fieldRef = r)}>
-        <PlayersLayer />
-        <CellsLayer />
+      <div
+        className={cn('field__container')}
+        ref={r => (this.fieldContainerRef = r)}
+      >
+        <div className={cn('field')} ref={r => (this.fieldRef = r)}>
+          <PlayersLayer />
+          <IndicatorsLayer />
+          <CellsLayer />
+        </div>
       </div>
     );
   }

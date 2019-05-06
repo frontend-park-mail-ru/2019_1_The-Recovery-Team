@@ -1,0 +1,66 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+$local-controller-size: 40px;
+
+.controllers {
+  display: none;
+  :global(.isMobile) & {
+    display: block;
+  }
+
+  position: absolute;
+  left: 30px;
+  transform: translateY(-50%);
+  top: 60%;
+  @include square(#{$local-controller-size * 3});
+
+  &__button {
+    position: absolute;
+    border-radius: $global-border-radius-big;
+    @include square($local-controller-size);
+    @include buttonBase();
+
+    &:after {
+      content: '';
+      @include square(60%);
+      @include absoluteCenter();
+      @include svgBackground('./img/arrow-r.svg', 100%);
+    }
+
+    &_up {
+      transform: translateX(-50%);
+      top: 0;
+      left: 50%;
+
+      &:after {
+        @include absoluteCenter(-90deg);
+      }
+    }
+
+    &_left {
+      transform: translateY(-50%);
+      left: 0;
+      top: 50%;
+
+      &:after {
+        @include absoluteCenter(180deg);
+      }
+    }
+
+    &_down {
+      transform: translateX(-50%);
+      bottom: 0;
+      left: 50%;
+      &:after {
+        @include absoluteCenter(90deg);
+      }
+    }
+
+    &_right {
+      transform: translateY(-50%);
+      right: 0;
+      top: 50%;
+    }
+  }
+}

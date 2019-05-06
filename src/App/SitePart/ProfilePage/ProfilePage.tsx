@@ -1,75 +1,111 @@
 import AvatarProfile from 'components/AvatarProfile';
-import SubmitButton, { modes } from 'components/buttons/SubmitButton';
-import LabelProfile from 'components/LabelProfile';
-import { routeCreators } from 'config/routes';
+import MainBlock from 'components/MainBlock';
+import ModalWindow from 'components/ModalWindow';
+import { routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
+import routerStore, {
+  match,
+  Route,
+  routerActions,
+  RouterPathPL,
+} from 'libs/Cheburouter';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import userStore, { Profile, userActions, UserUpdateSuccessPL } from 'store/userStore';
-import MainBlock from '../MainBlock/MainBlock';
+import userStore, { userActions } from 'store/userStore';
+import EditAvatarForm from './EditAvatarForm';
+import EditSection from './EditSection';
+import ViewSection from './ViewSection';
 
 const styles = require('./ProfilePage.modules.scss');
 
 const cn = classNames(styles);
 
+interface State {
+  isEditMode: boolean;
+  isShownModalAvatar: boolean;
+}
+
 // @ts-ignore
 @connectToCheburstore
 export default class ProfilePage extends React.Component {
-  state = {
-    user: null,
+  state: State = {
+    isEditMode: false,
+    isShownModalAvatar: false,
   };
 
-  componentDidMount() {
+  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
+  handleUserUpdated() {
+    this.setState({});
+  }
+
+  @onCheburevent(routerStore, routerActions.PUSH_OK)
+  handlePathChanged(action: Action<RouterPathPL>) {
     this.setState({
-      user: userStore.select().user,
+      isEditMode: !!match(routesMap.PROFILE_EDIT.template, action.payload.path),
     });
   }
 
-  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
-  updateUser(action: Action<UserUpdateSuccessPL>) {
-    this.setState({
-      user: action.payload,
-    });
+  get modeTitle() {
+    return this.state.isEditMode ? 'Редактирование профиля' : 'Профиль';
   }
+
+  toggleEditAvatarModal = () =>
+    this.setState({ isShownModalAvatar: !this.state.isShownModalAvatar });
 
   render() {
-    const { user }: { user: Profile } = this.state as any;
+    const { isEditMode, isShownModalAvatar } = this.state;
+    const { user } = userStore.select();
 
     return user ? (
-      <MainBlock>
-        <div className={cn('profile-page')}>
-          <div className={cn('profile-page__container')}>
-            <div className={cn('profile-page__container-avatar')}>
-              <AvatarProfile user={user} />
-              <div className={cn('profile-page__container-label')}>
-                <LabelProfile user={user} />
-              </div>
+      <MainBlock className={cn('profile-page')}>
+        <div className={cn('profile-page__container')}>
+          <p className={cn('profile-page__title')}>{this.modeTitle}</p>
+          <div className={cn('profile-page__header')}>
+            <div
+              className={cn(
+                'heading-item',
+                'heading-item_tiny',
+                'heading-item_left'
+              )}
+            >
+              <p className={cn('heading-item__title')}>Место</p>
+              <p className={cn('heading-item__text')}>{`${user.record ||
+                0}`}</p>
             </div>
-            <div className={cn('profile-page__container-information')}>
-              <div
-                className={cn(
-                  'profile-page__field',
-                  'profile-page__field_nickname'
-                )}
-              >
-                {user.nickname}
-              </div>
-              <div
-                className={cn(
-                  'profile-page__field',
-                  'profile-page__field_email'
-                )}
-              >
-                {user.email}
-              </div>
-              <SubmitButton
-                to={routeCreators.TO_PROFILE_EDIT()}
-                mode={modes.SETTINGS}
-              >
-                {'Редактировать'}
-              </SubmitButton>
+            <AvatarProfile
+              src={user.avatar}
+              onButtonClick={isEditMode && this.toggleEditAvatarModal}
+              buttonClass={cn('profile-page__avatar-edit-icon')}
+            />
+            <div
+              className={cn(
+                'heading-item',
+                'heading-item_tiny',
+                'heading-item_right'
+              )}
+            >
+              <p className={cn('heading-item__title')}>Побед</p>
+              <p className={cn('heading-item__text')}>{`${user.win || 0}`}</p>
             </div>
           </div>
+          {isShownModalAvatar && (
+            <ModalWindow onClose={this.toggleEditAvatarModal}>
+              {<EditAvatarForm user={user} />}
+            </ModalWindow>
+          )}
+          <Route
+            template={routesMap.PROFILE.template}
+            exact={true}
+            component={ViewSection}
+            user={user}
+            outerStyles={styles}
+          />
+          <Route
+            template={routesMap.PROFILE_EDIT.template}
+            component={EditSection}
+            user={user}
+            outerStyles={styles}
+          />
         </div>
       </MainBlock>
     ) : null;

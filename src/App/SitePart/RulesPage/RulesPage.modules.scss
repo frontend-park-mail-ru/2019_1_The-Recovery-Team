@@ -1,0 +1,16 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+.rules-page {
+  &__container {
+    padding: #{$global-spacing-big * 2} $global-spacing-small;
+  }
+
+  margin: 0 auto;
+  width: 900px;
+  max-width: 100%;
+  text-align: center;
+
+  padding: #{$global-spacing-big * 2} $global-spacing-small 0 $global-spacing-small;
+  @include pane();
+}

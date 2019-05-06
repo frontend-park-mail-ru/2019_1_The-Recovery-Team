@@ -2,12 +2,10 @@ const extractParameter = (
   templateChunk: string,
   pathChunk: string
 ): boolean | [string, string] => {
-  if (
-    templateChunk.length >= 3 &&
-    templateChunk[0] === '{' &&
-    templateChunk[templateChunk.length - 1] === '}'
-  ) {
-    return [templateChunk.substr(1, templateChunk.length - 2), pathChunk];
+  const coincidence = templateChunk.match(/{\w+}/);
+
+  if (coincidence) {
+    return [coincidence[0].substr(1, templateChunk.length - 2), pathChunk];
   }
   return pathChunk === templateChunk;
 };
@@ -15,7 +13,7 @@ const extractParameter = (
 export const match = (
   template: string,
   path: string,
-  exact: boolean = false,
+  exact: boolean = false
 ): null | { [key: string]: string } => {
   const routeChunks = template.split('/');
   const pathChunks = path.split('/');

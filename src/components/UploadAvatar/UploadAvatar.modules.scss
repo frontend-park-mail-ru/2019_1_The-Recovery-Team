@@ -1,0 +1,38 @@
+@import '../../styles/mixins';
+@import '../../styles/constants';
+
+.upload-avatar {
+
+  &__preview-container {
+    margin: 0 auto $global-spacing-medium;
+  }
+
+  &__preview-reset {
+    &:after {
+      background-image: url('img/cancel.svg');
+    }
+  }
+
+  &__preview {
+    display: block;
+    object-fit: cover;
+    background-color: $global-color-borders;
+
+    @include square(100%, 50%)
+  }
+
+  &__label {
+    cursor: pointer;
+
+    @include text-medium() {
+      @include hover {
+        color: lighten($global-color-blue, 10%);
+      }
+    };
+  }
+
+  &__input {
+    position: absolute;
+    @include square(1px);
+  }
+}

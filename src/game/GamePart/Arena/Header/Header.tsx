@@ -1,9 +1,9 @@
-import LabelAuthUser from 'components/LabelAuthUser';
 import gameStore from 'game/store';
 import { gameStoreActions } from 'game/store/actions';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import PlayerLabel from './PlayerLabel';
 import Timer from './Timer';
 
 const styles = require('./Header.modules.scss');
@@ -13,6 +13,8 @@ const cn = classNames(styles);
 // @ts-ignore
 @connectToCheburstore
 export default class Header extends React.Component {
+  containerRef: HTMLElement | null = null;
+
   state = {
     me: null,
     opponent: null,
@@ -20,6 +22,11 @@ export default class Header extends React.Component {
 
   componentDidMount() {
     this.updatePlayers();
+    this.updateWidth();
+  }
+
+  componentDidUpdate() {
+    this.updateWidth();
   }
 
   @onCheburevent(gameStore, gameStoreActions.SET_OPPONENT)
@@ -39,25 +46,26 @@ export default class Header extends React.Component {
     });
   }
 
+  updateWidth = () => {
+    const { width } = this.props;
+    if (this.containerRef && width) {
+      this.containerRef.style.width = `${width}px`;
+    }
+  };
+
   render() {
-    const { mode } = this.props;
+    const { mode, onOpenInfo } = this.props;
     const { me = null, opponent = null } = this.state;
 
     return (
-      <div className={cn('header')}>
-        {me && (
-          <LabelAuthUser
-            className={cn('header__me')}
-            user={me}
-            reverse={true}
-          />
-        )}
-        <div className={cn('header__timer')}>
-          <Timer mode={mode} />
+      <div className={cn('header')} ref={r => (this.containerRef = r)}>
+        <div className={cn('header__me')}>
+          <PlayerLabel user={me} />
         </div>
-        {opponent && (
-          <LabelAuthUser className={cn('header__opponent')} user={opponent} />
-        )}
+        <div className={cn('header__timer')}>
+          <Timer mode={mode} onOpenInfo={onOpenInfo} />
+        </div>
+        <PlayerLabel user={opponent} isEnemy={true} />
       </div>
     );
   }

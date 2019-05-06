@@ -1,0 +1,7 @@
+@import 'styles/constants';
+
+.edit-avatar-form {
+  &__input {
+    margin-bottom: $global-spacing-big;
+  }
+}

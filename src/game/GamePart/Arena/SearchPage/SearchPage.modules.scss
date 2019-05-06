@@ -1,0 +1,21 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+.search-page {
+  background-color: $global-color-game-primary-light;
+  text-align: center;
+  padding-top: 100px;
+  z-index: 1;
+
+  @include absoluteCenter();
+  @include square(100%);
+
+  &__title {
+    font-size: 160px;
+    color: $global-color-primary-light;
+  }
+
+  &__icon {
+    margin-top: 100px;
+  }
+}

@@ -4,8 +4,6 @@
   @include gameLayer(2);
 
   &__player {
-    @include square(50px);
-
     position: absolute;
     transform: translate(-50%, -50%);
     transition: top 50ms linear, left 50ms linear;
@@ -14,6 +12,11 @@
 
     background: no-repeat center;
     background-size: contain;
+
+    @include square(50px);
+    :global(.isMobile) & {
+      @include square(20px);
+    }
 
     &_me {
       &-1 {

@@ -1,0 +1,31 @@
+  @import 'styles/constants';
+
+.chat {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 280px;
+  box-shadow: 0px 0px 50px -10px #BDBDBD;
+  z-index: 9999;
+
+  &__header {
+    width: 100%;
+    padding: 18px;
+    background-color: $global-color-primary-dark;
+    color: #ffffff;
+    text-align: center;
+    font-size: $global-font-size-m;
+    cursor: pointer;
+  }
+
+  &__content {
+    width: 100%;
+    height: 0px;
+    overflow: hidden;
+    background: #ffffff;
+
+    &_open {
+      height: 400px;
+    }
+  }
+}

@@ -1,0 +1,93 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+$local-counter-size: 40px;
+$local-counter-size-small: 20px;
+$local-resource-size: 86px;
+$local-resource-size-small: 43px;
+
+.items-container {
+  position: absolute;
+  right: 30px;
+  transform: translateY(-50%);
+  top: 60%;
+}
+
+.resource {
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include square($local-resource-size);
+  :global(.isMobile) & {
+    @include square($local-resource-size-small);
+  }
+
+  &_disabled {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+    opacity: 0.5;
+  }
+
+  &__counter {
+    background-color: $global-color-blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+
+    @include text-medium(#ffffff);
+    @include square($local-counter-size, 50%);
+    :global(.isMobile) & {
+      @include square($local-counter-size-small);
+    }
+  }
+
+  &__container-icon {
+    background-color: $global-color-sad;
+    border: 3px $global-color-blue solid;
+    background-size: contain;
+    position: relative;
+
+    @include square(100%, 50%);
+    @include animate(background-color);
+    @include hover {
+      background-color: lighten($global-color-sad, 10%);
+    }
+
+    &:after {
+      content: '';
+      z-index: 1;
+
+      @include square(80%);
+      @include absoluteCenter;
+    }
+
+    &_SAND {
+      &:after {
+        background: url("img/Sand.svg") no-repeat center;
+        background-size: 100% 100%;
+      }
+    }
+
+    &_BOMB {
+      &:after {
+        background: url("img/Bomb.svg") no-repeat center;
+        background-size: 100% 100%;
+      }
+    }
+
+    &_LIFEBUOY {
+      &:after {
+        background: url("img/Lifebuoy.svg") no-repeat center;
+        background-size: 100% 100%;
+      }
+    }
+  }
+}

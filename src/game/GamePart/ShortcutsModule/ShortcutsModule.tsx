@@ -13,14 +13,22 @@ export default class ShortcutsModule extends React.Component {
         { obj: 'S', title: 'песок' },
         { obj: 'Пробел', title: 'круг' },
       ],
-      controls: [{type: 'top'}, {type: 'left'}, {type: 'bottom'}, {type: 'right'}],
+      controls: [
+        { type: 'top' },
+        { type: 'left' },
+        { type: 'bottom' },
+        { type: 'right' },
+      ],
     },
   };
 
   render() {
     const { shortcuts } = this.state;
+    const { className = '' } = this.props;
+    const shortcutsClasses = `${className} ${cn('shortcuts')}`;
+
     return (
-      <div className={cn('shortcuts')}>
+      <div className={shortcutsClasses}>
         <div className={cn('shortcuts__column')}>
           {shortcuts.literal.map(shortcut => (
             <div className={cn('shortcuts__container-shortcut')}>
@@ -36,7 +44,11 @@ export default class ShortcutsModule extends React.Component {
             <div className={cn('shortcuts__container-line')}>
               {shortcuts.controls.map(shortcut =>
                 shortcut.type !== 'top' ? (
-                    <div className={cn(`shortcuts__container-${shortcut.type}-arrow`)} />
+                  <div
+                    className={cn(
+                      `shortcuts__container-${shortcut.type}-arrow`
+                    )}
+                  />
                 ) : null
               )}
               <div className={cn('shorcuts__bottom-control-container')} />

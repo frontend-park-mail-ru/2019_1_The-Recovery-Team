@@ -1,0 +1,36 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+.member {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+
+  &__avatar {
+    @include square(124px);
+    display: inline-block;
+  }
+
+  &__info {
+    padding-top: 20px;
+  }
+
+  &__name {
+    display: inline-block;
+    margin-bottom: $global-spacing-small;
+    padding: 5px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+
+    @include text-medium();
+    @include animate(color, border);
+    @include hover {
+      border-bottom: 2px solid $global-color-blue;
+    }
+  }
+
+  &__description {
+    display: block;
+    @include text-medium($global-color-borders);
+  }
+}

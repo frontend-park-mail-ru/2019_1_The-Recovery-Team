@@ -1,0 +1,30 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+.about-page {
+  padding: #{$global-spacing-big * 2} $global-spacing-small;
+
+  &__members {
+    width: 900px;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+    @include pane();
+    padding: #{$global-spacing-big * 2} $global-spacing-small 0 $global-spacing-small;
+  }
+
+  &__member-container {
+    width: 25%;
+    margin-bottom: #{$global-spacing-big * 2};
+    min-width: 160px;
+
+    @include media('<=tablet') {
+      width: 50%;
+    }
+
+    @include media('<=phone') {
+      width: 100%;
+    }
+  }
+}

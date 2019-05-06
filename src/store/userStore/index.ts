@@ -217,5 +217,6 @@ class UserStore extends Cheburstore<ProfileState> {
 
 export * from './types';
 export * from './actions';
+export * from './normalizeResponse';
 
 export default new UserStore();

@@ -17,15 +17,15 @@
     padding: 0;
 
     &_sand {
-      background-image: url('./img/sand.svg');
+      @include svgBackground('./img/sand.svg', 105%);
     }
 
     &_water {
-      background-image: url('./img/water.svg');
+      @include svgBackground('./img/water.svg', 105%);
     }
 
     &_swamp {
-      background-image: url('./img/swamp.svg');
+      @include svgBackground('./img/swamp.svg', 105%);
     }
   }
 }

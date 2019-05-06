@@ -1,26 +1,30 @@
 @import 'styles/mixins';
 
 .header {
-  height: 140px;
+  margin: $global-spacing-big auto 0;
   width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 2;
+
+  min-width: 400px;
+
+  :global(.isMobile) & {
+    margin: $global-spacing-small auto 0;
+  }
 
   &__timer {
-    width: 100%;
-    @include absoluteCenter;
+    flex-grow: 1;
+    margin: 0 5px;
   }
 
   &__me {
-    position: absolute;
-    transform: translateY(-50%);
-    left: 0;
-    top: 50%;
+    flex-shrink: 0;
   }
 
   &__opponent {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+    flex-shrink: 0;
   }
 }
