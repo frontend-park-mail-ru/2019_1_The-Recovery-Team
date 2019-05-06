@@ -71,6 +71,10 @@
     height: 85px;
 
     @include svgBackground('./img/shortCuts.svg', 100%);
+
+    :global(.isMobile) & {
+      display: none;
+    }
   }
 
   :global(.isMobile) & {
@@ -102,10 +106,6 @@
       margin-right: 24px;
 
       @include square(150px);
-    }
-
-    &__shortcuts {
-      display: none;
     }
   }
 }
