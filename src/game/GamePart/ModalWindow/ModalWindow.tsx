@@ -2,77 +2,95 @@ import PlayButtonNew, {
   playButtonTypes,
 } from 'components/buttons/PlayButtonNew';
 import { routeCreators } from 'config/routes';
+import { GameModes } from 'game/config';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import { gamePageTypes } from '../gamePageTypes';
-// import ShortcutsModule from '../ShortcutsModule/ShortcutsModule';
-const styles = require('./ModalWindow.scss');
+const styles = require('./ModalWindow.modules.scss');
 
 const cn = classNames(styles);
 
 export default class ModalWindow extends React.Component {
-  render() {
-    const { mode, type = null, onClose, onGiveUp } = this.props;
-    const hasTrophy = type === gamePageTypes.WIN || type === gamePageTypes.LOSE;
-    let pageTitle;
-    let playButtons = [];
-
+  getTitle(): string {
+    const { type, mode } = this.props;
     switch (type) {
-      case gamePageTypes.INFO: {
-        pageTitle = 'Информация';
-        playButtons = [
-          {
-            type: playButtonTypes.RESTART,
-            to: routeCreators.TO_GAME_PART(mode),
-          },
-          {
-            type: playButtonTypes.PLAY,
-            onClick: onClose,
-          },
-          {
-            type: playButtonTypes.FINISH,
-            onClick: onGiveUp,
-          },
-        ];
-        break;
-      }
-      case gamePageTypes.WIN:
-      case gamePageTypes.LOSE: {
-        pageTitle = type === gamePageTypes.WIN ? 'Победа' : 'Поражение';
-        playButtons = [
-          {
-            type: playButtonTypes.RESTART,
-            to: routeCreators.TO_GAME_PART(mode),
-            onClick: null,
-          },
-          {
-            type: playButtonTypes.PROFILE,
-            to: routeCreators.TO_PROFILE(),
-            onClick: null,
-          },
-          {
-            type: playButtonTypes.HOME,
-            to: routeCreators.TO_START(),
-            onClick: null,
-          },
-        ];
-        break;
-      }
+      case gamePageTypes.INFO:
+        return 'Информация';
+      case gamePageTypes.LOSE:
+        return mode === GameModes.SINGLEPLAYER ? 'Игра окончена' : 'Поражение';
       case gamePageTypes.SEARCH:
-        pageTitle = 'Поиск игрока...';
+        return 'Поиск игрока';
+      case gamePageTypes.WIN:
+        return mode === GameModes.SINGLEPLAYER ? 'Игра окончена' : 'Победа!';
     }
+    return '';
+  }
+
+  getButtons(): Array<{
+    type: playButtonTypes;
+    onClick?: () => void;
+    to?: string;
+  }> {
+    const { type = null, onClose, onGiveUp, onReload, mode } = this.props;
+
+    const reloadButton = {
+      type: playButtonTypes.RESTART,
+      onClick: onReload,
+    };
+    const continueButton = {
+      type: playButtonTypes.PLAY,
+      onClick: onClose,
+    };
+    const finishButton = {
+      type: playButtonTypes.FINISH,
+      onClick: onGiveUp,
+    };
+
+    if (type === gamePageTypes.INFO) {
+      return mode === GameModes.SINGLEPLAYER
+        ? [reloadButton, continueButton, finishButton]
+        : [continueButton, finishButton];
+    }
+
+    const profileButton = {
+      type: playButtonTypes.PROFILE,
+      to: routeCreators.TO_PROFILE(),
+    };
+    const homeButton = {
+      type: playButtonTypes.HOME,
+      to: routeCreators.TO_START(),
+    };
+
+    if (type === gamePageTypes.SEARCH) {
+      return [profileButton, homeButton];
+    }
+
+    return [reloadButton, profileButton, homeButton];
+  }
+
+  render() {
+    const { type = null } = this.props;
+    const hasTrophy = type === gamePageTypes.WIN || type === gamePageTypes.LOSE;
+    const title = this.getTitle();
+    const buttons = [...this.getButtons()];
+    console.log(buttons);
 
     return (
       <div className={cn('modal-window', type && 'modal-window_open')}>
-        <div className={cn('modal-window__title', !hasTrophy && 'modal-window__title_mb')}>{pageTitle}</div>
-        {hasTrophy ? <div className={cn('modal-window__trophy')} /> : null}
+        <div
+          className={cn(
+            'modal-window__title',
+            !hasTrophy && 'modal-window__title_mb'
+          )}
+        >
+          {title}
+        </div>
+        {hasTrophy && <div className={cn('modal-window__trophy')} />}
         <div className={cn('modal-window__game-buttons-container')}>
-          {playButtons.map(({ type, to, onClick }) => (
+          {buttons.map(params => (
             <PlayButtonNew
               className={cn('modal-window__game-button-container')}
-              type={type}
-              to={to}
-              onClick={onClick}
+              {...params}
             />
           ))}
         </div>

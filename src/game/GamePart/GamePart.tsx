@@ -1,16 +1,14 @@
-import gameStore, {actionGameInit, actionGameStop} from 'game/store';
+import gameStore, { actionGameInit, actionGameStop } from 'game/store';
 import { gameStoreActions } from 'game/store/actions';
 import * as React from 'libs/Cheburact/index';
-import {
-  cheburhandler,
-  connectToCheburstore,
-  onCheburevent,
-} from 'libs/Cheburstore';
+import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import { getIsMobile } from 'utils/checkIsMobile';
+import { GameModes } from '../config';
 import Arena from './Arena';
 import { gamePageTypes } from './gamePageTypes';
 import ModalWindow from './ModalWindow';
+import userStore from 'store/userStore';
 
 const styles = require('./GamePart.modules.scss');
 
@@ -29,7 +27,6 @@ export default class GamePart extends React.Component {
   async componentDidMount() {
     await this.updateContentBounds().requestFullScreen();
     window.addEventListener('resize', this.updateContentBounds);
-    this.onCloseModal();
   }
 
   requestFullScreen = async (): Promise<GamePart> => {
@@ -103,7 +100,13 @@ export default class GamePart extends React.Component {
     const {
       routerParams: { gameMode },
     } = this.props;
-    gameStore.emit(actionGameInit(gameMode));
+    gameStore.emit(
+      actionGameInit({
+        isOnline: gameMode === GameModes.MULTIPLAYER,
+        mode: gameMode,
+        me: userStore.select().user,
+      })
+    );
     this.setState({
       modalWindowType: null,
     });

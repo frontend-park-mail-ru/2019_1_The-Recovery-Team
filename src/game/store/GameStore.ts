@@ -11,11 +11,13 @@ import {
   actionGameStopResult,
   actionInitPlayerReady,
   actionSetGameOver,
-  actionSetOpponent, actionSetOpponentSearch,
+  actionSetOpponent,
+  actionSetOpponentSearch,
   actionSetState,
   actionSetStateUpdated,
   GameInitPL,
-  gameStoreActions, InitItemUsePL,
+  gameStoreActions,
+  InitItemUsePL,
   InitPlayerMovePL,
   InitPlayerReadyPL,
 } from './actions';
@@ -160,6 +162,7 @@ export default class GameStore extends Cheburstore<GameStoreState> {
       case gameTransportActions.SET_STATE_DIFF:
         window.requestAnimationFrame(() => this.emit(actionSetStateUpdated()));
         return;
+      case gameTransportActions.SET_DISCONNECTED:
       case gameTransportActions.SET_GAME_OVER:
         this.handleGameOver();
         return;
