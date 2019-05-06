@@ -53,9 +53,7 @@ class IndicatorsLayer extends React.Component {
   };
 
   updateIndicatorLine = (item: null | GameModels.ActiveItem) => {
-    console.log('update start: ', item);
     if (item === null) {
-      console.log('update nothing: ', item);
       if (this.state.curActiveItemId) {
         this.setState({
           curActiveItemId: null,
@@ -74,7 +72,6 @@ class IndicatorsLayer extends React.Component {
 
     const durationRatio = item.duration / ITEM_MAX_DURATION;
 
-    console.log('update: ', this.indicatorLineRef);
     this.indicatorLineRef.className = cn(
       'indicators-layer__line-content',
       durationRatio >= 0.66 && 'indicators-layer__line-content_full',
@@ -91,8 +88,6 @@ class IndicatorsLayer extends React.Component {
   };
 
   render() {
-    const { curActiveItemId } = this.state;
-    console.log('update: curActiveItemId', curActiveItemId);
     return (
       <div className={cn('indicators-layer')}>
         <div className={cn('indicators-layer__line')}>
