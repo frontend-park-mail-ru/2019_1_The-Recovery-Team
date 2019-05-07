@@ -21,6 +21,7 @@ import {
   InitPlayerMovePL,
   InitPlayerReadyPL,
 } from './actions';
+import gameStore from './index';
 import stateReducer from './stateReducer';
 
 interface GameStoreState {
@@ -42,7 +43,13 @@ export default class GameStore extends Cheburstore<GameStoreState> {
   }
 
   handleGameOver() {
-    this.emit(actionSetGameOver());
+    const myId = gameStore.selectMyId();
+    const { loseRound = null } = gameStore.select().state.players[myId] || {};
+    this.emit(
+      actionSetGameOver({
+        loseRound,
+      })
+    );
   }
 
   @cheburhandler(gameStoreActions.INIT)

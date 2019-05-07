@@ -73,14 +73,13 @@ export default class ModalWindow extends React.Component {
     const hasTrophy = type === gamePageTypes.WIN || type === gamePageTypes.LOSE;
     const title = this.getTitle();
     const buttons = [...this.getButtons()];
-    console.log(buttons);
 
     return (
       <div className={cn('modal-window', type && 'modal-window_open')}>
         <div
           className={cn(
             'modal-window__title',
-            !hasTrophy && 'modal-window__title_mb'
+            !hasTrophy && 'modal-window__title_no-trophy'
           )}
         >
           {title}

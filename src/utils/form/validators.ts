@@ -21,13 +21,13 @@ export const touchField: InputValidator = (input, nextValue = null) => ({
 });
 
 export const recoverField: InputValidator = (input, nextValue = null) => {
-  const tmpPlaceholder = input.isError ? input.placeholder : input.label;
+  const currentPlaceholder = input.isError ? input.placeholder : input.label;
 
   return {
     ...input,
+    currentPlaceholder,
     isError: false,
     value: nextValue === null ? input.value : nextValue,
-    currentPlaceholder: tmpPlaceholder,
   };
 };
 
@@ -93,7 +93,7 @@ export const setInputError = (
 const MIN_PASSWORD_LENGTH = 4;
 const MAX_PASSWORD_LENGTH = 32;
 
-export const validatePasswordLength  = (input: InputConfig): InputConfig => {
+export const validatePasswordLength = (input: InputConfig): InputConfig => {
   if (input.value.length < MIN_PASSWORD_LENGTH) {
     return {
       ...input,

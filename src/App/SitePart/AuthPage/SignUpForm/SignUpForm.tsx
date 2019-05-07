@@ -80,11 +80,13 @@ export default class SignUpForm extends React.Component {
 
   validateRequiredSecondStage = () => {
     const newNickname = validateRequired(this.state.nickname);
-    this.setState({
+    const newState = {
       nickname: newNickname,
-    });
+    };
 
-    return newNickname.isError;
+    this.setState(newState);
+
+    return newState;
   };
 
   toSecondStage = () => {
@@ -95,10 +97,10 @@ export default class SignUpForm extends React.Component {
   };
 
   handleSubmit = async () => {
-    const isError = this.validateRequiredSecondStage();
+    const { nickname } = this.validateRequiredSecondStage();
 
-    if (!isError) {
-      const { email, nickname, password, avatar } = this.state;
+    if (!nickname.isError) {
+      const { email, password, avatar } = this.state;
       userStore.emit(
         actionUserSignup({
           avatar,
@@ -119,7 +121,8 @@ export default class SignUpForm extends React.Component {
     if (
       field.value &&
       field.value !== '' &&
-      (field.name === 'email' || field.name === 'nickname')
+      (field.name === this.state.email.name ||
+        field.name === this.state.nickname.name)
     ) {
       const result = await validateAlreadyExists(API.profiles())(field);
       this.setState({
@@ -131,17 +134,16 @@ export default class SignUpForm extends React.Component {
   handleChangeValue = (name: string, value: string) => {
     const nextField = touchField(this.state[name], value);
 
-    this.setState({
-      [name]: nextField,
-    });
-    this.validateAlreadyExists(nextField);
-
-    if (name === 'password') {
-      const newPas = validatePasswordLength(nextField);
+    if (name === this.state.password.name) {
       this.setState({
-        [name]: newPas,
+        [name]: validatePasswordLength(nextField),
+      });
+    } else {
+      this.setState({
+        [name]: nextField,
       });
     }
+    this.validateAlreadyExists(nextField);
   };
 
   handleBlur = (name: string) =>

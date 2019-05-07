@@ -51,7 +51,7 @@ export default class SignInForm extends React.Component {
   };
 
   handleChangeValue = (name: string, value: string) => {
-    if (name === 'email') {
+    if (name === this.state.email.name) {
       this.setState({
         [name]: touchField(this.state[name], value),
         password: recoverField(this.state.password),
@@ -72,18 +72,20 @@ export default class SignInForm extends React.Component {
   validateRequiredAll = () => {
     const newEmail = validateRequired(this.state.email);
     const newPassword = validateRequired(this.state.password);
-    this.setState({
+    const newState = {
       email: newEmail,
       password: newPassword,
-    });
+    };
 
-    return newEmail.isError || newPassword.isError;
+    this.setState(newState);
+
+    return newState;
   };
 
   handleSubmit = () => {
-    const isError = this.validateRequiredAll();
-    const { email, password } = this.state;
-    if (!isError) {
+    const { email, password } = this.validateRequiredAll();
+
+    if (!email.isError && !password.isError) {
       userStore.emit(
         actionUserLogin({
           password: password.value,

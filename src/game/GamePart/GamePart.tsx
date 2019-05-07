@@ -1,14 +1,18 @@
-import gameStore, { actionGameInit, actionGameStop } from 'game/store';
+import gameStore, {
+  actionGameInit,
+  actionGameStop,
+  GameOverPL,
+} from 'game/store';
 import { gameStoreActions } from 'game/store/actions';
 import * as React from 'libs/Cheburact/index';
-import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import userStore from 'store/userStore';
 import { getIsMobile } from 'utils/checkIsMobile';
 import { GameModes } from '../config';
 import Arena from './Arena';
 import { gamePageTypes } from './gamePageTypes';
 import ModalWindow from './ModalWindow';
-import userStore from 'store/userStore';
 
 const styles = require('./GamePart.modules.scss');
 
@@ -65,13 +69,11 @@ export default class GamePart extends React.Component {
   };
 
   @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
-  handleGameOver() {
-    const { id: myId = 0 } = gameStore.select().me || {};
-    const { loseRound: isLose = false } =
-      gameStore.select().state.players[myId] || {};
-
+  handleGameOver(action: Action<GameOverPL>) {
     this.setState({
-      modalWindowType: !!isLose ? gamePageTypes.LOSE : gamePageTypes.WIN,
+      modalWindowType: !!action.payload.loseRound
+        ? gamePageTypes.LOSE
+        : gamePageTypes.WIN,
     });
   }
 
@@ -89,14 +91,14 @@ export default class GamePart extends React.Component {
     });
   }
 
-  onGiveUp = () => {
+  handleGiveUp = () => {
     gameStore.emit(actionGameStop());
     this.setState({
       modalWindowType: gamePageTypes.LOSE,
     });
   };
 
-  onReload = () => {
+  handleReload = () => {
     const {
       routerParams: { gameMode },
     } = this.props;
@@ -112,10 +114,9 @@ export default class GamePart extends React.Component {
     });
   };
 
-  toggleInfoState = () =>
-    this.setState({ modalWindowType: gamePageTypes.INFO });
+  toInfoState = () => this.setState({ modalWindowType: gamePageTypes.INFO });
 
-  onCloseModal = () => {
+  handleCloseModal = () => {
     this.setState({
       modalWindowType: null,
     });
@@ -130,13 +131,13 @@ export default class GamePart extends React.Component {
     return (
       <div className={cn('game-part')} ref={r => (this.root = r)}>
         <div className={cn('game-part__content')} ref={r => (this.content = r)}>
-          <Arena mode={gameMode} onOpenInfo={this.toggleInfoState} />
+          <Arena mode={gameMode} onOpenInfo={this.toInfoState} />
           <ModalWindow
             mode={gameMode}
             type={modalWindowType}
-            onClose={this.onCloseModal}
-            onGiveUp={this.onGiveUp}
-            onReload={this.onReload}
+            onClose={this.handleCloseModal}
+            onGiveUp={this.handleGiveUp}
+            onReload={this.handleReload}
           />
         </div>
       </div>

@@ -34,6 +34,10 @@ export interface ResultPL {
   message?: string;
 }
 
+export interface GameOverPL {
+  loseRound: number | null;
+}
+
 export interface InitPlayerReadyPL {
   playerId: number;
 }
@@ -73,8 +77,8 @@ export const actionInitPlayerReady: ACreator<InitPlayerReadyPL> = payload => ({
   type: gameStoreActions.INIT_PLAYER_READY,
 });
 
-export const actionSetGameOver: ACreatorNull = () => ({
-  payload: null,
+export const actionSetGameOver: ACreator<GameOverPL> = payload => ({
+  payload,
   type: gameStoreActions.SET_GAME_OVER,
 });
 

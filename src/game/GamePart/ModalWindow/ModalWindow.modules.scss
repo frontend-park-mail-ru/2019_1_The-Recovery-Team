@@ -39,8 +39,18 @@
 
     @include text-header();
 
-    &_mb {
+    &_no-trophy {
       margin-bottom: 132px;
+    }
+
+    :global(.isMobile) & {
+      &__title {
+        margin-bottom: 10px;
+
+        &_no-trophy {
+          margin-bottom: 60px;
+        }
+      }
     }
   }
 
@@ -50,11 +60,21 @@
 
     @include square(112px);
     @include svgBackground('./img/trophy.svg', 100%);
+
+    :global(.isMobile) & {
+      margin-bottom: 10px;
+
+      @include square(80px);
+    }
   }
 
   &__game-buttons-container {
     display: inline-flex;
     margin-bottom: 40px;
+
+    :global(.isMobile) & {
+      margin-bottom: 10px;
+    }
   }
 
   &__game-button-container {
@@ -62,6 +82,10 @@
 
     &:last-child {
       margin-right: 0;
+    }
+
+    :global(.isMobile) & {
+      @include square(100px);
     }
   }
 
@@ -77,35 +101,15 @@
     }
   }
 
-  :global(.isMobile) & {
-    &__game-buttons-container {
-      margin-bottom: 10px;
-    }
-
-    &__game-button-container {
-      @include square(100px);
-    }
-
-    &__trophy {
-      margin-bottom: 10px;
-
-      @include square(80px);
-    }
-
-    &__title {
-      margin-bottom: 10px;
-
-      &_mb {
-        margin-bottom: 60px;
-      }
-    }
-  }
-
   @include media("<=tablet") {
     &__game-button-container {
       margin-right: 24px;
 
       @include square(150px);
+    }
+
+    &__shortcuts {
+      display: none;
     }
   }
 }

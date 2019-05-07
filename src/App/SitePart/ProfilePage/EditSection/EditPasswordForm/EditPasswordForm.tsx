@@ -80,20 +80,18 @@ export default class EditPasswordForm extends React.Component {
   };
 
   validateRequiredAll = () => {
-    const newOldPasswrod = validateRequired(this.state.oldPassword);
+    const newOldPassword = validateRequired(this.state.oldPassword);
     const newNewPassword = validateRequired(this.state.newPassword);
     const newRepeatNewPassword = validateRequired(this.state.repeatNewPassword);
-    this.setState({
-      oldPassword: newOldPasswrod,
+    const newState = {
+      oldPassword: newOldPassword,
       newPassword: newNewPassword,
       repeatNewPassword: newRepeatNewPassword,
-    });
+    };
 
-    return (
-      newOldPasswrod.isError ||
-      newNewPassword.isError ||
-      newRepeatNewPassword.isError
-    );
+    this.setState(newState);
+
+    return newState;
   };
 
   handleBlur = (name: string) =>
@@ -102,10 +100,17 @@ export default class EditPasswordForm extends React.Component {
     });
 
   updatePassword = () => {
-    const isError = this.validateRequiredAll();
+    const {
+      oldPassword,
+      newPassword,
+      repeatNewPassword,
+    } = this.validateRequiredAll();
 
-    if (!isError) {
-      const { oldPassword, newPassword } = this.state;
+    if (
+      !oldPassword.isError &&
+      !newPassword.isError &&
+      !repeatNewPassword.isError
+    ) {
       userStore.emit(
         actionUserEditPassword({
           password: newPassword.value,

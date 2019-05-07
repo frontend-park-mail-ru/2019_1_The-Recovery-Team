@@ -59,7 +59,8 @@ export default class EditSection extends React.Component {
       field.value &&
       field.value !== '' &&
       field.value !== user[field.name] &&
-      (field.name === 'email' || field.name === 'nickname')
+      (field.name === this.state.email.name ||
+        field.name === this.state.nickname.name)
     ) {
       const result = await validateAlreadyExists(API.profiles())(field);
       this.setState({
@@ -94,8 +95,6 @@ export default class EditSection extends React.Component {
 
   toggleEditPasswordModal = () =>
     this.setState({ isShownModalPassword: !this.state.isShownModalPassword });
-  // toggleEditAvatarModal = () =>
-  //   this.setState({ isShownModalAvatar: !this.state.isShownModalAvatar });
 
   updateUser = async () => {
     const { email, nickname } = this.state;
