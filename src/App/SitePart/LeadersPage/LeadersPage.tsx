@@ -95,13 +95,15 @@ export default class LeadersPage extends React.Component {
               )
           )}
           {hasMore && (
-            <SimpleButton
-              className={cn('leaders-page__load-button')}
-              onClick={this.handleLoadNextPage}
-              air={true}
-            >
-              Загрузить ещё
-            </SimpleButton>
+            <div>
+              <SimpleButton
+                className={cn('leaders-page__load-button')}
+                onClick={this.handleLoadNextPage}
+                air={true}
+              >
+                Загрузить ещё
+              </SimpleButton>
+            </div>
           )}
         </div>
       </MainBlock>
