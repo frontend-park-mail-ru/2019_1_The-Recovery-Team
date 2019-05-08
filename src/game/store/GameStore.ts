@@ -12,13 +12,16 @@ import {
   actionInitPlayerReady,
   actionSetGameOver,
   actionSetOpponent,
+  actionSetOpponentSearch,
   actionSetState,
   actionSetStateUpdated,
   GameInitPL,
-  gameStoreActions, InitItemUsePL,
+  gameStoreActions,
+  InitItemUsePL,
   InitPlayerMovePL,
   InitPlayerReadyPL,
 } from './actions';
+import gameStore from './index';
 import stateReducer from './stateReducer';
 
 interface GameStoreState {
@@ -40,7 +43,13 @@ export default class GameStore extends Cheburstore<GameStoreState> {
   }
 
   handleGameOver() {
-    this.emit(actionSetGameOver());
+    const myId = gameStore.selectMyId();
+    const { loseRound = null } = gameStore.select().state.players[myId] || {};
+    this.emit(
+      actionSetGameOver({
+        loseRound,
+      })
+    );
   }
 
   @cheburhandler(gameStoreActions.INIT)
@@ -160,12 +169,16 @@ export default class GameStore extends Cheburstore<GameStoreState> {
       case gameTransportActions.SET_STATE_DIFF:
         window.requestAnimationFrame(() => this.emit(actionSetStateUpdated()));
         return;
+      case gameTransportActions.SET_DISCONNECTED:
       case gameTransportActions.SET_GAME_OVER:
         this.handleGameOver();
         return;
       case gameStoreActions.SET_OPPONENT:
         this.store.opponent = action.payload;
         this.emit(actionSetOpponent());
+        return;
+      case gameStoreActions.SET_OPPONENT_SEARCH:
+        this.emit(actionSetOpponentSearch());
         return;
     }
   };

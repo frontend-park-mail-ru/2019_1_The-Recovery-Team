@@ -18,6 +18,7 @@ export enum gameStoreActions {
   SET_STATE_UPDATED = 'SET_STATE_UPDATED',
 
   SET_OPPONENT = 'SET_OPPONENT',
+  SET_OPPONENT_SEARCH = 'SET_OPPONENT_SEARCH',
 
   SET_GAME_OVER = 'SET_GAME_OVER',
 }
@@ -31,6 +32,10 @@ export interface GameInitPL {
 export interface ResultPL {
   success: boolean;
   message?: string;
+}
+
+export interface GameOverPL {
+  loseRound: number | null;
 }
 
 export interface InitPlayerReadyPL {
@@ -72,8 +77,8 @@ export const actionInitPlayerReady: ACreator<InitPlayerReadyPL> = payload => ({
   type: gameStoreActions.INIT_PLAYER_READY,
 });
 
-export const actionSetGameOver: ACreatorNull = () => ({
-  payload: null,
+export const actionSetGameOver: ACreator<GameOverPL> = payload => ({
+  payload,
   type: gameStoreActions.SET_GAME_OVER,
 });
 
@@ -95,6 +100,11 @@ export const actionSetStateUpdated: ACreatorNull = () => ({
 export const actionSetOpponent: ACreatorNull = () => ({
   payload: null,
   type: gameStoreActions.SET_OPPONENT,
+});
+
+export const actionSetOpponentSearch: ACreatorNull = () => ({
+  payload: null,
+  type: gameStoreActions.SET_OPPONENT_SEARCH,
 });
 
 export const actionGameInitItemUse: ACreator<InitItemUsePL> = payload => ({

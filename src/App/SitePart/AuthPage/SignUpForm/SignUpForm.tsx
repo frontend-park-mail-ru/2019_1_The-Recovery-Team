@@ -15,6 +15,7 @@ import { InputConfig } from 'utils/form/types';
 import {
   touchField,
   validateAlreadyExists,
+  validatePasswordLength,
   validateRequired,
 } from 'utils/form/validators';
 import ContinueWithVK from '../ContinueWithVK';
@@ -30,9 +31,6 @@ interface State {
   nickname: InputConfig;
   avatar: ImageData | null;
 }
-
-const MIN_PASSWORD_LENGTH = 4;
-const MAX_PASSWORD_LENGTH = 32;
 
 // @ts-ignore
 @connectToCheburstore
@@ -69,23 +67,49 @@ export default class SignUpForm extends React.Component {
     avatar: null,
   };
 
-  toSecondStage = () =>
-    !this.nextDisabled && this.setState({ firstSage: false });
+  validateRequiredFirstStage = () => {
+    const newEmail = validateRequired(this.state.email);
+    const newPassword = validateRequired(this.state.password);
+    this.setState({
+      email: newEmail,
+      password: newPassword,
+    });
+
+    return newEmail.isError || newPassword.isError;
+  };
+
+  validateRequiredSecondStage = () => {
+    const newNickname = validateRequired(this.state.nickname);
+    const newState = {
+      nickname: newNickname,
+    };
+
+    this.setState(newState);
+
+    return newState;
+  };
+
+  toSecondStage = () => {
+    const isError = this.validateRequiredFirstStage();
+    if (!isError) {
+      this.setState({ firstSage: false });
+    }
+  };
 
   handleSubmit = async () => {
-    const { email, nickname, password, avatar } = this.state;
-    if (!nickname.value || nickname.value.length === 0) {
-      return;
-    }
+    const { nickname } = this.validateRequiredSecondStage();
 
-    userStore.emit(
-      actionUserSignup({
-        avatar,
-        email: email.value,
-        nickname: nickname.value,
-        password: password.value,
-      })
-    );
+    if (!nickname.isError) {
+      const { email, password, avatar } = this.state;
+      userStore.emit(
+        actionUserSignup({
+          avatar,
+          email: email.value,
+          nickname: nickname.value,
+          password: password.value,
+        })
+      );
+    }
   };
 
   @onCheburevent(userStore, userActions.SIGNUP_ERROR)
@@ -97,7 +121,8 @@ export default class SignUpForm extends React.Component {
     if (
       field.value &&
       field.value !== '' &&
-      (field.name === 'email' || field.name === 'nickname')
+      (field.name === this.state.email.name ||
+        field.name === this.state.nickname.name)
     ) {
       const result = await validateAlreadyExists(API.profiles())(field);
       this.setState({
@@ -106,47 +131,18 @@ export default class SignUpForm extends React.Component {
     }
   }, 500);
 
-  validatePassword = (field: InputConfig) => {
-    if (field.value && field.value !== '') {
-      if (field.value.length < MIN_PASSWORD_LENGTH) {
-        this.setState({
-          password: {
-            ...field,
-            currentPlaceholder: 'Слишком короткий пароль',
-            isError: true,
-          },
-        });
-      } else if (field.value.length > MAX_PASSWORD_LENGTH) {
-        this.setState({
-          password: {
-            ...field,
-            currentPlaceholder: 'Слишком длинный пароль',
-            isError: true,
-          },
-        });
-      } else {
-        this.setState({
-          password: {
-            ...field,
-            currentPlaceholder: 'Пароль',
-            isError: false,
-          },
-        });
-      }
-    }
-  };
-
   handleChangeValue = (name: string, value: string) => {
     const nextField = touchField(this.state[name], value);
 
-    this.setState({
-      [name]: nextField,
-    });
-
-    if (name === 'password') {
-      this.validatePassword(nextField);
+    if (name === this.state.password.name) {
+      this.setState({
+        [name]: validatePasswordLength(nextField),
+      });
+    } else {
+      this.setState({
+        [name]: nextField,
+      });
     }
-
     this.validateAlreadyExists(nextField);
   };
 
@@ -157,21 +153,8 @@ export default class SignUpForm extends React.Component {
 
   handleSelectPhoto = avatar => this.setState({ avatar });
 
-  get nextDisabled() {
-    const { email, password } = this.state;
-
-    return (
-      email.isError ||
-      password.isError ||
-      email.value.length === 0 ||
-      password.value.length === 0
-    );
-  }
-
   render() {
     const { email, password, nickname, firstSage, avatar } = this.state;
-
-    const readyDisabled = nickname.isError || nickname.value.length === 0;
 
     return firstSage ? (
       <div className={cn('sign-up-form')}>
@@ -182,9 +165,7 @@ export default class SignUpForm extends React.Component {
           inputs={[email, password]}
           key="stage1"
         />
-        <SimpleButton onClick={this.toSecondStage} disabled={this.nextDisabled}>
-          Продолжить
-        </SimpleButton>
+        <SimpleButton onClick={this.toSecondStage}>Продолжить</SimpleButton>
         <ContinueWithVK />
       </div>
     ) : (
@@ -202,9 +183,7 @@ export default class SignUpForm extends React.Component {
           key="stage2"
         />
         <div>
-          <SimpleButton disabled={readyDisabled} onClick={this.handleSubmit}>
-            Сохранить
-          </SimpleButton>
+          <SimpleButton onClick={this.handleSubmit}>Сохранить</SimpleButton>
         </div>
       </div>
     );

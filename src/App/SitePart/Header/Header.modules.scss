@@ -12,6 +12,10 @@ $padding-m: 8px;
   flex-grow: 0;
   flex-shrink: 0;
 
+  :global(.isMobile) & {
+    height: 70px;
+  }
+
   &__content {
     margin: 0 auto;
     padding: 0 20px;

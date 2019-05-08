@@ -10,6 +10,7 @@ import userStore, {
 } from 'store/userStore';
 import { InputConfig } from 'utils/form/types';
 import {
+  recoverField,
   setInputError,
   touchField,
   validateRequired,
@@ -49,23 +50,50 @@ export default class SignInForm extends React.Component {
     },
   };
 
-  handleChangeValue = (name: string, value: string) =>
-    this.setState({
-      [name]: touchField(this.state[name], value),
-    });
+  handleChangeValue = (name: string, value: string) => {
+    if (name === this.state.email.name) {
+      this.setState({
+        [name]: touchField(this.state[name], value),
+        password: recoverField(this.state.password),
+      });
+    } else {
+      this.setState({
+        [name]: touchField(this.state[name], value),
+        email: recoverField(this.state.email),
+      });
+    }
+  };
 
   handleBlur = (name: string) =>
     this.setState({
       [name]: validateRequired(this.state[name]),
     });
 
-  handleSubmit = () =>
-    userStore.emit(
-      actionUserLogin({
-        password: this.state.password.value,
-        email: this.state.email.value,
-      })
-    );
+  validateRequiredAll = () => {
+    const newEmail = validateRequired(this.state.email);
+    const newPassword = validateRequired(this.state.password);
+    const newState = {
+      email: newEmail,
+      password: newPassword,
+    };
+
+    this.setState(newState);
+
+    return newState;
+  };
+
+  handleSubmit = () => {
+    const { email, password } = this.validateRequiredAll();
+
+    if (!email.isError && !password.isError) {
+      userStore.emit(
+        actionUserLogin({
+          password: password.value,
+          email: email.value,
+        })
+      );
+    }
+  };
 
   @onCheburevent(userStore, userActions.LOGIN_ERROR)
   handleLoginError(action: Action<UserErrorPL>) {
@@ -78,12 +106,6 @@ export default class SignInForm extends React.Component {
   render() {
     const { email, password } = this.state;
 
-    const nextDisabled =
-      email.isError ||
-      password.isError ||
-      email.value.length === 0 ||
-      password.value.length === 0;
-
     return (
       <div className={cn('sign-in-form')}>
         <Form
@@ -92,9 +114,7 @@ export default class SignInForm extends React.Component {
           onBlur={this.handleBlur}
           inputs={[email, password]}
         />
-        <SimpleButton disabled={nextDisabled} onClick={this.handleSubmit}>
-          Продолжить
-        </SimpleButton>
+        <SimpleButton onClick={this.handleSubmit}>Продолжить</SimpleButton>
         <ContinueWithVK />
       </div>
     );

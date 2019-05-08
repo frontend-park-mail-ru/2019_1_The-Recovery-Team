@@ -56,12 +56,16 @@ export default class GameOfflineTransport implements ITransport {
       action.payload
     );
 
-    this.sender(
-      JSON.stringify({
-        type: action.type,
-        payload: JSON.stringify(action.payload),
-      })
-    );
+    try {
+      this.sender(
+        JSON.stringify({
+          type: action.type,
+          payload: JSON.stringify(action.payload),
+        })
+      );
+    } catch (e) {
+      console.log('can not send to offline transport');
+    }
   }
 
   private receive: ReceiverCallback = (type: string, payload: string) => {

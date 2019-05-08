@@ -35,6 +35,10 @@
 
   &_play {
     @include playButtonBase(#629A36, #0D6721, './img/play.svg');
+
+    &:after {
+      left: 55%;
+    }
   }
 
   &_restart {
@@ -43,6 +47,14 @@
 
   &_finish {
     @include playButtonBase(#3BCBD1, #2062DE, './img/finish.svg');
+  }
+
+  &_profile {
+    @include playButtonBase(#629A36, #0D6721, './img/profile.svg');
+  }
+
+  &_home {
+    @include playButtonBase(#3BCBD1, #2062DE, './img/home.svg');
   }
 
   &_multi {

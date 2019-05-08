@@ -54,7 +54,11 @@ class IndicatorsLayer extends React.Component {
 
   updateIndicatorLine = (item: null | GameModels.ActiveItem) => {
     if (item === null) {
-      this.indicatorLineRef = null;
+      if (this.state.curActiveItemId) {
+        this.setState({
+          curActiveItemId: null,
+        });
+      }
       return;
     }
 
@@ -84,17 +88,14 @@ class IndicatorsLayer extends React.Component {
   };
 
   render() {
-    const { curActiveItemId } = this.state;
     return (
       <div className={cn('indicators-layer')}>
-        {curActiveItemId && (
-          <div className={cn('indicators-layer__line')}>
-            <div
-              ref={this.setLineRef}
-              className={cn('indicators-layer__line-content')}
-            />
-          </div>
-        )}
+        <div className={cn('indicators-layer__line')}>
+          <div
+            ref={this.setLineRef}
+            className={cn('indicators-layer__line-content')}
+          />
+        </div>
       </div>
     );
   }

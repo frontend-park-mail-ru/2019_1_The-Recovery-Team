@@ -4,4 +4,6 @@ export enum playButtonTypes {
   RESTART = 'restart',
   PLAY = 'play',
   FINISH = 'finish',
+  PROFILE = 'profile',
+  HOME = 'home',
 }

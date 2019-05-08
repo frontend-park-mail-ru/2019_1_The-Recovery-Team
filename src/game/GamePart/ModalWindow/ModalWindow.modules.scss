@@ -1,0 +1,115 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+@import 'styles/includeMedia';
+
+.modal-window {
+  z-index: 9999;
+  position: absolute;
+  left: 0;
+  top: -100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+
+  @include square(100%);
+  @include animate(top, opacity);
+
+  &:before {
+    background-color: $global-color-light-sad;
+    opacity: 0.9;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include square(100%);
+  }
+
+  &_open {
+    top: 0;
+    opacity: 1;
+  }
+
+  &__title {
+    text-align: center;
+    z-index: 1;
+    margin-bottom: 20px;
+
+    @include text-header();
+
+    &_no-trophy {
+      margin-bottom: 132px;
+    }
+
+    :global(.isMobile) & {
+      &__title {
+        margin-bottom: 10px;
+
+        &_no-trophy {
+          margin-bottom: 60px;
+        }
+      }
+    }
+  }
+
+  &__trophy {
+    z-index: 1;
+    margin-bottom: 20px;
+
+    @include square(112px);
+    @include svgBackground('./img/trophy.svg', 100%);
+
+    :global(.isMobile) & {
+      margin-bottom: 10px;
+
+      @include square(80px);
+    }
+  }
+
+  &__game-buttons-container {
+    display: inline-flex;
+    margin-bottom: 40px;
+
+    :global(.isMobile) & {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__game-button-container {
+    margin-right: 50px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    :global(.isMobile) & {
+      @include square(100px);
+    }
+  }
+
+  &__shortcuts {
+    z-index: 1;
+    width: 760px;
+    height: 85px;
+
+    @include svgBackground('./img/shortCuts.svg', 100%);
+
+    :global(.isMobile) & {
+      display: none;
+    }
+  }
+
+  @include media("<=tablet") {
+    &__game-button-container {
+      margin-right: 24px;
+
+      @include square(150px);
+    }
+
+    &__shortcuts {
+      display: none;
+    }
+  }
+}

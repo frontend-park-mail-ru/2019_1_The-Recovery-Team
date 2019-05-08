@@ -34,16 +34,14 @@ export default class Arena extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
-    } = this.props;
+    const { mode = GameModes.SINGLEPLAYER } = this.props;
     const { user: me } = userStore.select();
 
     gameStore.emit(
       actionGameInit({
         me,
-        isOnline: !!(gameMode === GameModes.MULTIPLAYER && me),
-        mode: gameMode,
+        isOnline: !!(mode === GameModes.MULTIPLAYER && me),
+        mode,
       })
     );
 

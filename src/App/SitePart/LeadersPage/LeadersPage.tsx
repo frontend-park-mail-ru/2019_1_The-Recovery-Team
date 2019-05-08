@@ -79,8 +79,8 @@ export default class LeadersPage extends React.Component {
 
         <div className={cn('rows-block', 'rows-block', 'leaders-page__users')}>
           {leaders.map(
-            (user, index) =>
-              user.id !== (me || {}).id && (
+            (user: any, index) =>
+              user.id !== (me || { id: null }).id && (
                 <div className={cn('row')}>
                   <div className={cn('row__col', 'row__col_index')}>
                     <span className={cn('circle')}>{`${index + 1}`}</span>
@@ -95,13 +95,15 @@ export default class LeadersPage extends React.Component {
               )
           )}
           {hasMore && (
-            <SimpleButton
-              className={cn('leaders-page__load-button')}
-              onClick={this.handleLoadNextPage}
-              air={true}
-            >
-              Загрузить ещё
-            </SimpleButton>
+            <div>
+              <SimpleButton
+                className={cn('leaders-page__load-button')}
+                onClick={this.handleLoadNextPage}
+                air={true}
+              >
+                Загрузить ещё
+              </SimpleButton>
+            </div>
           )}
         </div>
       </MainBlock>
