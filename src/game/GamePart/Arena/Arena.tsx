@@ -6,8 +6,10 @@ import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 import userStore from 'store/userStore';
+import Controllers from './Controllers';
 import Field from './Field';
 import Header from './Header';
+import Resources from './Resources';
 import SearchPage from './SearchPage';
 
 const styles = require('./Arena.modules.scss');
@@ -21,6 +23,7 @@ export default class Arena extends React.Component {
 
   state = {
     gameStarted: false,
+    fieldWidth: null,
   };
 
   @onCheburevent(gameStore, gameStoreActions.SET_STATE_UPDATED)
@@ -31,16 +34,14 @@ export default class Arena extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
-    } = this.props;
+    const { mode = GameModes.SINGLEPLAYER } = this.props;
     const { user: me } = userStore.select();
 
     gameStore.emit(
       actionGameInit({
         me,
-        isOnline: !!(gameMode === GameModes.MULTIPLAYER && me),
-        mode: gameMode,
+        isOnline: !!(mode === GameModes.MULTIPLAYER && me),
+        mode,
       })
     );
 
@@ -48,17 +49,25 @@ export default class Arena extends React.Component {
     this.controllersManager.connect();
   }
 
+  handleFieldWidthChanged = fieldWidth =>
+    this.setState({
+      fieldWidth,
+    });
+
   render() {
     const {
       routerParams: { gameMode = GameModes.SINGLEPLAYER } = {},
+      onOpenInfo,
     } = this.props;
-    const { gameStarted } = this.state;
+    const { gameStarted, fieldWidth } = this.state;
 
     return (
       <div className={cn('arena')}>
         {!gameStarted && gameMode !== GameModes.SINGLEPLAYER && <SearchPage />}
-        <Header mode={gameMode} />
-        <Field />
+        <Header onOpenInfo={onOpenInfo} mode={gameMode} width={fieldWidth} />
+        <Field onWidthChanged={this.handleFieldWidthChanged} />
+        <Resources />
+        <Controllers manager={this.controllersManager} />
       </div>
     );
   }

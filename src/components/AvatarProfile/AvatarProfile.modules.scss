@@ -1,21 +1,39 @@
-@import '~styles/constants';
+@import 'styles/constants';
 @import 'styles/mixins';
 
 .avatar-profile {
-  border-radius: 50%;
-  box-shadow: 0px 0px 0px 3px #0097a7, 0px 0px 0px 5px #ffffff inset;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-
-  @include square(250px);
+  position: relative;
+  margin: 0 auto;
+  @include square(124px);
+  @include media('<=phone') {
+    @include square(85px);
+  }
 
   &__image {
-    border-radius: 50%;
+    display: block;
     object-fit: cover;
-    object-position: center;
+    background-color: $global-color-borders;
 
-    @include square(100%);
+    @include square(100%, 50%);
+  }
+
+  &__button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    @include square(32px, 50%);
+    @include buttonBase();
+
+    &:after {
+      content: '';
+      position: absolute;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+
+      @include square(50%);
+      @include absoluteCenter();
+    }
   }
 }

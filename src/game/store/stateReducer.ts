@@ -16,7 +16,7 @@ const reducersMap: ReducersMap = {
     normalizeSetState(payload),
 
   [gameTransportActions.SET_STATE_DIFF]: (state, payload) =>
-    applyDiff(state, payload),
+    applyDiff(state, payload || {}),
 };
 
 export default (

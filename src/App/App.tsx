@@ -4,8 +4,10 @@ import * as React from 'libs/Cheburact';
 import { Route } from 'libs/Cheburouter';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
+// import ChatContainer from './ChatContainer';
 import Music from './Music';
 import SitePart from './SitePart';
+
 const styles = require('./App.modules.scss');
 
 // @ts-ignore
@@ -42,6 +44,7 @@ class App extends React.Component {
           user={user}
         />
         <Music />
+        {/*<ChatContainer />*/}
       </div>
     );
   }

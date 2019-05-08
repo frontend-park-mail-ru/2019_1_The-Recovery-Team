@@ -1,53 +1,75 @@
 @import 'styles/constants';
 @import 'styles/mixins';
+@import 'styles/includeMedia';
 
 .timer {
   position: relative;
-  width: 100%;
+  height: $global-input-height;
+  background-color: $global-color-blue;
+  border-radius: $global-border-radius;
+
+  :global(.isMobile) & {
+    height: $global-input-height-small;
+  }
+
+  @include animate(background-color);
+
+  &_time-ok {
+    background-color: $global-color-sad;
+  }
+
+  &_warning {
+    background-color: #BC8134;
+  }
+
+  &_dangerous {
+    background-color: $global-color-dangerous;
+  }
 
   &__pause-container {
     display: block;
     position: absolute;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     top: 50%;
-    right: 31%;
+    right: $global-spacing-medium;
   }
 
   &__pause {
-    @include square(46px);
-    border-radius: 50%;
-    background-color: $global-color-game-secondary-light;
-    border: 4px solid $global-color-primary-light;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    position: relative;
+    @include buttonBase($global-color-sad);
+    @include square(34px, 50%);
+    :global(.isMobile) &  {
+      @include square(20px, 50%);
+    }
 
     &:after {
       content: '';
-      height: 100%;
-      width: 100%;
-      background: url("img/Pause.svg") no-repeat center;
+      background: url("img/pause.svg") no-repeat center;
       z-index: 1;
+      @include square(100%);
       @include absoluteCenter;
     }
   }
+
   &__round {
-    font-size: $global-font-size-l;
-    padding: 7px 20px 15px 22px;
-    text-align: center;
-    color: $global-color-primary-light;
-    background-color:  #FDE679;
-    border-radius: 10px;
-    @include absoluteCenter;
-    left: 36%;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    left: $global-spacing-medium;
+
+    @include text-medium(#ffffff);
+    :global(.isMobile) & {
+      font-size: $global-font-size-small;
+    }
   }
 
   &__time {
-    color: $global-color-primary-light;
-    padding: 10px 10px 20px;
-    font-size: $global-font-size-xl;
+    padding: 0 10px;
+    border-radius: $global-border-radius;
+
     @include absoluteCenter;
+    @include text-medium(#ffffff, 32px);
+    :global(.isMobile) &  {
+      font-size: $global-font-size-medium;
+    }
   }
 }

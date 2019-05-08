@@ -10,16 +10,12 @@ const cn = classNames(styles);
 export default class RulesPage extends React.Component {
   render() {
     return (
-      <MainBlock className={cn('rules-page')}>
-        {rules.map((rule, idx) => {
-          return (
-            <RuleSection
-              rule={rule}
-              reverse={idx % 2 !== 0}
-              className={cn('rules-page__rule-container')}
-            />
-          );
-        })}
+      <MainBlock className={cn('rules-page__container')}>
+        <div className={cn('rules-page')}>
+          {rules.map((rule, idx) => (
+            <RuleSection rule={rule} reverse={idx % 2 !== 0} />
+          ))}
+        </div>
       </MainBlock>
     );
   }

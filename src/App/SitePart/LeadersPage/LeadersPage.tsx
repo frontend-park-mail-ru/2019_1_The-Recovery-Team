@@ -1,9 +1,8 @@
-import SubmitButton, { modes } from 'components/buttons/SubmitButton';
 import MainBlock from 'components/MainBlock';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import RowLeader from './RowLeader';
 const styles = require('./LeadersPage.modules.scss');
+import SimpleButton from 'components/SimpleButton';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import scoreboardStore from 'store/scoreboardStore';
 import {
@@ -12,7 +11,7 @@ import {
   scoreboardActions,
   UpdateLeadersPL,
 } from 'store/scoreboardStore/actions';
-import { columnTypes } from './config';
+import userStore, { userActions } from 'store/userStore';
 
 const cn = classNames(styles);
 
@@ -20,15 +19,6 @@ const cn = classNames(styles);
 @connectToCheburstore
 export default class LeadersPage extends React.Component {
   state = {
-    columns: [
-      { title: '#', type: columnTypes.COLUMN_NUM },
-      { title: 'Игрок', type: columnTypes.COLUMN_NICK },
-      {
-        title: 'Рейтинг',
-        type: columnTypes.COLUMN_RATING,
-        iconClass: 'trophy-icon',
-      },
-    ],
     leaders: [],
     hasMore: true,
   };
@@ -39,6 +29,16 @@ export default class LeadersPage extends React.Component {
 
   handleLoadNextPage = () => scoreboardStore.emit(actionScoreboardLoad());
 
+  @onCheburevent(userStore, userActions.LOGOUT_SUCCESS)
+  handleLogout() {
+    this.setState({});
+  }
+
+  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
+  handleUpdate() {
+    this.setState({});
+  }
+
   @onCheburevent(scoreboardStore, scoreboardActions.LOAD_SUCCESS)
   handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
     this.setState({
@@ -48,49 +48,64 @@ export default class LeadersPage extends React.Component {
   }
 
   render() {
-    const { columns, leaders, hasMore } = this.state;
+    const { leaders, hasMore } = this.state;
+    const { user: me } = userStore.select();
 
     return (
       <MainBlock className={cn('leaders-page')}>
-        <div className={cn('leaders-page__header-table')}>
-          {columns.map(({ title, type, iconClass = false }) => {
-            const columnClasses = cn(
-              'leaders-page__header-column',
-              `leaders-page__header-column_${type}`
-            );
-            const iconComp = iconClass ? (
-              <div className={cn('leaders-page__trophy-icon')} />
-            ) : null;
+        <div className={cn('rows-block', 'rows-block_header', 'row')}>
+          <div className={cn('row__col', 'row__col_index')}>
+            <span className={cn('circle', 'circle_header')}>№</span>
+          </div>
+          <div className={cn('row__col', 'row__col_user')}>Игрок</div>
+          <div className={cn('row__col', 'row__col_rating')}>Рейтинг</div>
+        </div>
 
-            if (type === columnTypes.COLUMN_RATING) {
-              return (
-                <div key={title} className={columnClasses}>
-                  {iconComp}
-                  {title}
-                </div>
-              );
-            }
-            return (
-              <div key={title} className={columnClasses}>
-                {title}
+        {me && (
+          <div className={cn('rows-block', 'rows-block_me')}>
+            <div className={cn('row')}>
+              <div className={cn('row__col', 'row__col_index')}>
+                <span className={cn('circle', 'circle_me')}>{`${me.id}`}</span>
               </div>
-            );
-          })}
-        </div>
-        <div className={cn('leaders-page__content-table')}>
-          {leaders.map((leader, index) => (
-            <RowLeader leader={leader} index={index + 1} />
-          ))}
-        </div>
-        {hasMore && (
-          <SubmitButton
-            className={cn('leaders-page__load-button')}
-            mode={modes.NEXT}
-            onClick={this.handleLoadNextPage}
-          >
-            Загрузить ещё
-          </SubmitButton>
+              <div className={cn('row__col', 'row__col_user')}>
+                {me.nickname}
+              </div>
+              <div className={cn('row__col', 'row__col_rating')}>
+                {`${me.record}`}
+              </div>
+            </div>
+          </div>
         )}
+
+        <div className={cn('rows-block', 'rows-block', 'leaders-page__users')}>
+          {leaders.map(
+            (user: any, index) =>
+              user.id !== (me || { id: null }).id && (
+                <div className={cn('row')}>
+                  <div className={cn('row__col', 'row__col_index')}>
+                    <span className={cn('circle')}>{`${index + 1}`}</span>
+                  </div>
+                  <div className={cn('row__col', 'row__col_user')}>
+                    {user.nickname}
+                  </div>
+                  <div className={cn('row__col', 'row__col_rating')}>
+                    {`${user.record}`}
+                  </div>
+                </div>
+              )
+          )}
+          {hasMore && (
+            <div>
+              <SimpleButton
+                className={cn('leaders-page__load-button')}
+                onClick={this.handleLoadNextPage}
+                air={true}
+              >
+                Загрузить ещё
+              </SimpleButton>
+            </div>
+          )}
+        </div>
       </MainBlock>
     );
   }

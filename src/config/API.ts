@@ -1,8 +1,6 @@
+import isProd from 'config/isProd';
+
 export const BASE_URL = '';
-// window.location.hostname === '127.0.0.1' ||
-// window.location.hostname === 'localhost'
-//   ? 'http://127.0.0.1:8080'
-//   : '';
 
 const prefixAPI = url => `${BASE_URL}/api/v1${url}`;
 
@@ -12,9 +10,7 @@ export const HTTP_STATUS = {
   notFound: 404,
 };
 
-const isSecure = window.location.host === 'sadislands.ru';
-
-export const WS_URL: string = `${isSecure ? 'wss' : 'ws'}://${
+export const WS_URL: string = `${isProd ? 'wss' : 'ws'}://${
   window.location.host
 }/api/v1/game.ws`;
 

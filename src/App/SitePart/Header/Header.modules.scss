@@ -1,54 +1,195 @@
-@import '~styles/constants';
+@import 'styles/constants';
+@import 'styles/mixins';
+@import 'styles/includeMedia.scss';
+
+$margin-l: 52px;
+$margin-m: 16px;
+$padding-m: 8px;
 
 .header {
+  height: 90px;
+  background-color: $global-color-blue;
   flex-grow: 0;
   flex-shrink: 0;
-  display: flex;
-  height: 200px;
-  align-items: center;
-  justify-content: center;
-  background: $global-color-primary-light;
-  position: relative;
 
-  &_main {
-    flex-direction: column;
+  :global(.isMobile) & {
+    height: 70px;
+  }
+
+  &__content {
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+
+  &__nav-bar {
+    display: none;
+    width: 28px;
+    height: 18px;
+    background: url("./img/navBarIcon.svg") no-repeat center;
+    cursor: pointer;
   }
 
   &__tabbar {
-    position: relative;
-    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  &__container {
-    &-logotype {
-      margin-bottom: 30px;
+  &__left-part {
+  }
+
+  &__right-part {
+  }
+
+  &__tab {
+    &_left {
     }
 
-    &-buttons {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      position: absolute;
-      z-index: 0;
-      padding: 0 56px;
-      transform: translateY(-100%);
-      top: 40%;
+    &_right {
+    }
+  }
 
-      &_auth-page {
-        justify-content: flex-start;
-      }
+  &__logotype {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 80%;
+  }
 
-      &_start-page {
-        top:60%;
-      }
+  &__volume {}
 
-      &_auth {
-        padding-right: 0;
-      }
+  &__entry {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+  }
+
+  &__entry-text {
+    letter-spacing: 0.02rem;
+    color: #FFFFFF;
+    font-size: $global-font-size-medium;
+    margin-right: 12px;
+
+    &_active {
+      color: $global-color-sad;
+    }
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+  }
+
+  &__nickname {
+    display: none;
+    letter-spacing: 0.02rem;
+    color: #FFFFFF;
+    font-size: $global-font-size-medium;
+    margin-right: 12px;
+
+    &_active {
+      color: $global-color-sad;
+    }
+  }
+
+  @include media("<tablet") {
+    &__tabbar {
+      display: none;
     }
 
-    &-user-wrapper {
-      margin-right: -56px;
+    &__volume {
+      display: none;
+    }
+
+    &__entry {
+      display: none;
+    }
+
+    &__profile {
+      display: none;
+    }
+
+    &__nav-bar {
+      display: block;
+    }
+
+    &__logotype {
+      width: 222px;
+      height: 67px;
+    }
+  }
+
+  @include media(">=tablet") {
+    &__content {
+      width: 760px;
+    }
+
+    &__tabbar {
+      width: 540px;
+      left: 48%;
+    }
+
+    &__tab {
+      &_left {
+        margin-right: $margin-m;
+      }
+
+      &_right {
+        margin-left: $margin-m;
+      }
+    }
+  }
+
+  @include media(">=tablet", "<desktop") {
+    &__logotype {
+      width: 280px;
+      height: 86px;
+    }
+  }
+
+  @include media(">=desktop") {
+    &__content {
+      width: 1000px;
+    }
+
+    &__tabbar {
+      @include absoluteCenter;
+      width: 708px;
+    }
+
+    &__logotype {
+      width: 331px;
+      height: 102px;
+    }
+
+    &__tab {
+      &_left {
+        margin-right: $margin-l;
+      }
+
+      &_right {
+        margin-left: $margin-l;
+      }
+    }
+  }
+
+  @include media(">=1300px") {
+    &__content {
+      width: 1260px;
+    }
+
+    &__nickname {
+      display: block;
     }
   }
 }

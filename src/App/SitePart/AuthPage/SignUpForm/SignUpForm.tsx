@@ -1,6 +1,6 @@
-import SubmitButton, { modes } from 'components/buttons/SubmitButton';
-import VkButton from 'components/buttons/VkButton';
 import Form from 'components/Form';
+import SimpleButton from 'components/SimpleButton';
+import UploadAvatar from 'components/UploadAvatar';
 import API from 'config/API';
 import * as React from 'libs/Cheburact';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
@@ -15,16 +15,17 @@ import { InputConfig } from 'utils/form/types';
 import {
   touchField,
   validateAlreadyExists,
+  validatePasswordLength,
   validateRequired,
 } from 'utils/form/validators';
-import { SignUpStage } from './config/stages';
+import ContinueWithVK from '../ContinueWithVK';
 
 const styles = require('./SignUpForm.modules.scss');
 
 const cn = classNames(styles);
 
 interface State {
-  stage: SignUpStage;
+  firstSage: boolean;
   email: InputConfig;
   password: InputConfig;
   nickname: InputConfig;
@@ -35,7 +36,7 @@ interface State {
 @connectToCheburstore
 export default class SignUpForm extends React.Component {
   state: State = {
-    stage: SignUpStage.FIRST,
+    firstSage: true,
     email: {
       placeholder: 'Email',
       isError: false,
@@ -66,23 +67,49 @@ export default class SignUpForm extends React.Component {
     avatar: null,
   };
 
-  toSecondStage = () =>
-    !this.nextDisabled ? this.setState({ stage: SignUpStage.SECOND }) : null;
+  validateRequiredFirstStage = () => {
+    const newEmail = validateRequired(this.state.email);
+    const newPassword = validateRequired(this.state.password);
+    this.setState({
+      email: newEmail,
+      password: newPassword,
+    });
+
+    return newEmail.isError || newPassword.isError;
+  };
+
+  validateRequiredSecondStage = () => {
+    const newNickname = validateRequired(this.state.nickname);
+    const newState = {
+      nickname: newNickname,
+    };
+
+    this.setState(newState);
+
+    return newState;
+  };
+
+  toSecondStage = () => {
+    const isError = this.validateRequiredFirstStage();
+    if (!isError) {
+      this.setState({ firstSage: false });
+    }
+  };
 
   handleSubmit = async () => {
-    const { email, nickname, password, avatar } = this.state;
-    if (!nickname.value || nickname.value.length === 0) {
-      return;
-    }
+    const { nickname } = this.validateRequiredSecondStage();
 
-    userStore.emit(
-      actionUserSignup({
-        avatar,
-        email: email.value,
-        nickname: nickname.value,
-        password: password.value,
-      })
-    );
+    if (!nickname.isError) {
+      const { email, password, avatar } = this.state;
+      userStore.emit(
+        actionUserSignup({
+          avatar,
+          email: email.value,
+          nickname: nickname.value,
+          password: password.value,
+        })
+      );
+    }
   };
 
   @onCheburevent(userStore, userActions.SIGNUP_ERROR)
@@ -94,7 +121,8 @@ export default class SignUpForm extends React.Component {
     if (
       field.value &&
       field.value !== '' &&
-      (field.name === 'email' || field.name === 'nickname')
+      (field.name === this.state.email.name ||
+        field.name === this.state.nickname.name)
     ) {
       const result = await validateAlreadyExists(API.profiles())(field);
       this.setState({
@@ -106,10 +134,15 @@ export default class SignUpForm extends React.Component {
   handleChangeValue = (name: string, value: string) => {
     const nextField = touchField(this.state[name], value);
 
-    this.setState({
-      [name]: nextField,
-    });
-
+    if (name === this.state.password.name) {
+      this.setState({
+        [name]: validatePasswordLength(nextField),
+      });
+    } else {
+      this.setState({
+        [name]: nextField,
+      });
+    }
     this.validateAlreadyExists(nextField);
   };
 
@@ -118,69 +151,40 @@ export default class SignUpForm extends React.Component {
       [name]: validateRequired(this.state[name]),
     });
 
-  handleSelectPhoto = e =>
-    this.setState({
-      avatar: e.target.files[0] || null,
-    });
-
-  get nextDisabled() {
-    const { email, password } = this.state;
-
-    return (
-      email.isError ||
-      password.isError ||
-      email.value.length === 0 ||
-      password.value.length === 0
-    );
-  }
+  handleSelectPhoto = avatar => this.setState({ avatar });
 
   render() {
-    const { stage, email, password, nickname } = this.state;
+    const { email, password, nickname, firstSage, avatar } = this.state;
 
-    const readyDisabled = nickname.isError || nickname.value.length === 0;
-
-    return (
-      <div className={'sign-up-form'}>
-        {/* TODO: Див убрать, когда Чебурякт доделОем */}
+    return firstSage ? (
+      <div className={cn('sign-up-form')}>
+        <Form
+          className={cn('sign-up-form__form')}
+          onChangeValue={this.handleChangeValue}
+          onBlur={this.handleBlur}
+          inputs={[email, password]}
+          key="stage1"
+        />
+        <SimpleButton onClick={this.toSecondStage}>Продолжить</SimpleButton>
+        <ContinueWithVK />
+      </div>
+    ) : (
+      <div className={cn('sign-up-form')}>
+        <UploadAvatar
+          className={cn('sign-up-form__upload')}
+          onChange={this.handleSelectPhoto}
+          avatar={avatar}
+        />
+        <Form
+          className={cn('sign-up-form__form')}
+          onChangeValue={this.handleChangeValue}
+          onBlur={this.handleBlur}
+          inputs={[nickname]}
+          key="stage2"
+        />
         <div>
-          <Form
-            onChangeValue={this.handleChangeValue}
-            onBlur={this.handleBlur}
-            inputs={
-              stage === SignUpStage.FIRST ? [email, password] : [nickname]
-            }
-            key={stage === SignUpStage.FIRST ? 'form1' : 'form2'}
-          />
+          <SimpleButton onClick={this.handleSubmit}>Сохранить</SimpleButton>
         </div>
-        {stage === SignUpStage.FIRST ? (
-          <div className={cn('sign-up-form__up1-container-submits')}>
-            <VkButton />
-            <SubmitButton
-              mode={modes.NEXT}
-              onClick={this.toSecondStage}
-              disabled={this.nextDisabled}
-            >
-              Продолжить регистрацию
-            </SubmitButton>
-          </div>
-        ) : (
-          <div className={cn('sign-up-form__up2-container-submits')}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={this.handleSelectPhoto}
-            />
-            <div className={cn('sign-up-form__container-ready-button')}>
-              <SubmitButton
-                mode={modes.NEXT}
-                disabled={readyDisabled}
-                onClick={this.handleSubmit}
-              >
-                Зарегистрироваться
-              </SubmitButton>
-            </div>
-          </div>
-        )}
       </div>
     );
   }

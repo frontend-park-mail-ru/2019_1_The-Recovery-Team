@@ -1,60 +1,96 @@
 @import 'styles/constants';
+@import 'styles/mixins';
+@import 'styles/includeMedia';
 
 .leaders-page {
-  padding-bottom: 20px;
+  padding: #{$global-spacing-big * 2} $global-spacing-small;
+  width: calc(620px + #{$global-spacing-small});
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
 
-  &__load-button {
-    margin: 0 auto;
+.rows-block {
+  width: 100%;
+  background: #ffffff;
+  margin-bottom: $global-spacing-small;
+  border-radius: $global-border-radius;
+
+  @include text-medium();
+
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  &__header-table {
-    width: 100%;
-    height: 100px;
-    background-color: $global-color-primary-light;
-    display: flex;
-    flex-direction: row;
-    color: #FFFFFF;
+  &_header {
+    background: $global-color-blue;
+    color: #ffffff;
   }
 
-  &__header-column {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &_me {
+    background: #ffffff;
+    color: $global-color-sad;
+  }
+}
 
-    &_num {
-      width: 120px;
-      flex-grow: 0;
+.row {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 $global-spacing-medium-big $global-spacing-small $global-spacing-medium-big;
+  align-items: center;
+  &:first-child {
+    padding-top: $global-spacing-small;
+  }
+
+  &__col {
+    text-align: left;
+
+    &_index {
+      width: 100px;
       flex-shrink: 0;
+
+      @include media('<=phone') {
+        width: 60px;
+      }
     }
 
-    &_nick {
+    &_user {
       flex-grow: 1;
+      box-sizing: border-box;
+      padding-right: $global-spacing-small;
+      overflow: hidden;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     &_rating {
-      width: 300px;
-      flex-grow: 0;
+      width: 120px;
       flex-shrink: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+
+      @include media('<=phone') {
+        width: 80px;
+      }
     }
   }
+}
 
-  &__container-trophy-icon {
-    margin-right: 12px;
-  }
-  &__trophy-icon {
-    width: 40px;
-    height: 40px;
-    background: url("img/Trophy.svg") no-repeat center;
-    margin-right: 10px;
+.circle {
+  background-color: $global-color-blue;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include square(36px, 50%);
+
+  &_me {
+    background-color: $global-color-sad;
   }
 
-  &__content-table {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  &_header {
+    background-color: #ffffff;
+    color: $global-color-blue;
   }
 }

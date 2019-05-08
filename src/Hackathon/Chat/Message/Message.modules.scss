@@ -1,0 +1,54 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+.message {
+  max-width: 80%;
+  margin-bottom: 20px;
+
+  &_mine {
+    align-self: flex-end;
+    width: 100%;
+  }
+
+  &__avatar {
+    display: inline-block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    @include square(40px);
+    margin: 4px 8px 0 0;
+    vertical-align: top;
+
+    &_container {
+      display: inline-block;
+      vertical-align: top;
+    }
+  }
+
+  &__text {
+    display: inline-block;
+    width: calc(100% - 48px);
+    padding: 8px;
+    background: $global-color-primary-dark;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: $global-font-size-s;
+    word-break: break-all;
+    letter-spacing: 0.02em;
+
+    &_mine {
+      background-color: $global-color-primary-light;
+      width: 100%;
+    }
+  }
+
+  &__nickname {
+    font-size: $global-font-size-s;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+  }
+
+  &__created {
+    text-align: right;
+    font-size: $global-font-size-xs;
+  }
+}

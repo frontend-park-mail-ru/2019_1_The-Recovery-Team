@@ -1,0 +1,12 @@
+@import 'styles/mixins';
+
+.avatar {
+  @include square(40px, 50%);
+
+  &__img {
+    object-fit: cover;
+    object-position: center;
+
+    @include square(100%, 50%);
+  }
+}

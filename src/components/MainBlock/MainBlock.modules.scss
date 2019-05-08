@@ -1,15 +1,12 @@
-@import '~styles/constants';
+@import 'styles/mixins';
 
 .main-block {
-  background: $global-color-secondary-dark;
-  padding: 60px 0;
-  position: relative;
   flex-grow: 1;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
 
-  &__content {
-    width: 900px;
-    background: #FFFFFF;
-    margin: 0 auto;
-    position: relative;
+  &__children {
+   flex-grow: 1;
   }
 }

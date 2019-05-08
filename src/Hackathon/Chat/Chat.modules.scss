@@ -1,0 +1,73 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+textarea {
+  outline: none;
+  resize: none;
+}
+
+.chat {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__messages {
+    flex-grow: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  &__footer {
+    width: 100%;
+    height: 56px;
+    padding: 12px 8px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__button-container {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+
+  &__textarea {
+    font-family: 'Exo 2', serif;
+    width: calc(100% - 28px);
+    overflow: hidden;
+    color: $global-color-primary-dark;
+    border-bottom: 1px solid $global-color-primary-dark;
+  }
+
+  &__scroll {
+    position: absolute;
+    right: 10%;
+    bottom: 64px;
+    background-size: contain;
+    @include square(36px);
+    background: url("./img/Arrow.svg") no-repeat center;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  &__old-message {
+    font-size: 12px;
+    width: 80%;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    background-color: $global-color-secondary-dark;
+    color: $global-color-primary-dark;
+    letter-spacing: 0.02em;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    margin: 20px auto;
+    cursor: pointer;
+  }
+}

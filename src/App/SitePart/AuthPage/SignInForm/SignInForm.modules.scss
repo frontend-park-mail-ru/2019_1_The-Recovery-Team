@@ -1,6 +1,12 @@
+@import 'styles/mixins';
+
 .sign-in-form {
   width: 100%;
   height: 100%;
+
+  &__form {
+    margin-bottom: $global-spacing-medium;
+  }
 
   &__container-submits {
     margin-top: 90px;

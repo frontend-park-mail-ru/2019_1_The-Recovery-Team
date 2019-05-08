@@ -1,19 +1,42 @@
-@import "~styles/constants";
+@import 'styles/constants';
+@import 'styles/mixins';
+@import 'styles/includeMedia.scss';
 
 .start-page {
-  flex-grow: 1;
-  background-color: $global-color-primary-light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &__play-buttons {
     text-align: center;
-    margin-top: 40px;
   }
 
   &__play-button {
-    margin-right: 120px;
+    display: inline-block;
+    margin-right: 50px;
 
     &:last-child {
-      margin-right: 0;
+      margin: 0;
     }
+
+    @include square(200px);
+  }
+
+  :global(.isMobile) &__play-button {
+    display: block;
+    margin: 0 0 20px 0;
+
+    @include square(150px);
+  }
+
+  :global(.isHorizontalMobile) &__play-button {
+    display: inline-block;
+    margin: 0 50px 0 0;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    @include square(150px);
   }
 }

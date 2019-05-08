@@ -52,10 +52,10 @@ export interface Player {
 export interface GameState {
   field: Field;
   players: {
-    [id: string]: Player;
+    [id: number]: Player;
   };
   activeItems: {
-    [id: string]: ActiveItem;
+    [id: number]: ActiveItem;
   };
   roundNumber: number;
   roundTimer: number;
