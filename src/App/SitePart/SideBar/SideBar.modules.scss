@@ -10,14 +10,13 @@ $local-height: 90px;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.1);
-    z-index: 9999;
+    z-index: $global-z-index-max;
 
     &_open {
       width: 100%
     }
   }
 
-  z-index: 1000;
   position: fixed;
   left: 250px;
   height: 100%;
