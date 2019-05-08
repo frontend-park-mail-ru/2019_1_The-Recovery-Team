@@ -3,7 +3,7 @@
 @import 'styles/includeMedia';
 
 .modal-window {
-  z-index: $global-z-index-max;
+  z-index: $global-z-index-modal-window;
   position: absolute;
   left: 0;
   top: -100%;
