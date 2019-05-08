@@ -3,7 +3,7 @@
 
 .modal-window {
   position: fixed;
-  z-index: 9999;
+  z-index: $global-z-index-modal-window;
   top: 0;
   left: 0;
   max-width: 100%;

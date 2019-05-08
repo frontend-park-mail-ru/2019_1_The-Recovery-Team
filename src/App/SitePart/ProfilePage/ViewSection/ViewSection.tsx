@@ -35,7 +35,7 @@ export default class ViewSection extends React.Component {
           Редактировать
         </SimpleButton>
         <SimpleButton onClick={this.handleLogout} air={true}>
-          Выйти
+          Выйти из аккаунта
         </SimpleButton>
       </div>
     );

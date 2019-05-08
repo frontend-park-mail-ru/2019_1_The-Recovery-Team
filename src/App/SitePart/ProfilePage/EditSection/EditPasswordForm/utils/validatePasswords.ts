@@ -1,4 +1,5 @@
 import { InputConfig } from 'utils/form/types';
+import { validatePasswordLength } from 'utils/form/validators';
 
 export default (
   newP: InputConfig,
@@ -25,12 +26,7 @@ export default (
     ];
   }
 
-  return [
-    newP,
-    {
-      ...newRepeatP,
-      isError: false,
-      currentPlaceholder: newRepeatP.placeholder,
-    },
-  ];
+  const newRepeatedPas = validatePasswordLength(newRepeatP);
+
+  return [newP, newRepeatedPas];
 };
