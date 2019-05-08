@@ -1,6 +1,7 @@
 import CircleButton from 'components/buttons/CircleButton';
 import { circleButtonTypes } from 'components/buttons/CircleButton/modes';
 import Logotype from 'components/LogotypeNew';
+import SimpleButton from 'components/SimpleButton/SimpleButton';
 import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import routerStore, {
@@ -120,7 +121,7 @@ export default class Header extends React.Component {
   render() {
     const { user }: { user: Profile } = this.state as any;
     const { path, isMusicOn } = this.state;
-    const { onOpenSideBar } = this.props;
+    const { onOpenSideBar, onLogout } = this.props;
     const isRulesActive = match(routeCreators.TO_RULES(), path, false);
     const isLeadersActive = match(routeCreators.TO_LEADER_BOARD(), path, false);
     const isAboutActive = match(routeCreators.TO_ABOUT(), path, false);
@@ -177,7 +178,45 @@ export default class Header extends React.Component {
               >
                 {user.nickname}
               </div>
-              <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+              <div className={cn('header__avatar')}>
+                <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+                <div className={cn('header__popup')}>
+                  <div className={cn('header__popup-content')}>
+                    <div className={cn('header__popup-lead-pos')}>
+                      <div className={cn('header__popup-item-title')}>
+                        Место
+                      </div>
+                      <div className={cn('header__popup-item')}>
+                        {`${user.record || 0}`}
+                      </div>
+                    </div>
+                    <div className={cn('header__popup-rating')}>
+                      <div
+                        className={cn(
+                          'header__popup-item-title',
+                          'header__popup-item_right'
+                        )}
+                      >
+                        Рейтинг
+                      </div>
+                      <div
+                        className={cn(
+                          'header__popup-item',
+                          'header__popup-item_right'
+                        )}
+                      >
+                        {`${user.record || 0}`}
+                      </div>
+                    </div>
+                    <SimpleButton
+                      className={cn('header__popup-button')}
+                      onClick={onLogout}
+                    >
+                      Выйти
+                    </SimpleButton>
+                  </div>
+                </div>
+              </div>
             </button>
           ) : (
             <div className={cn('header__entry')}>

@@ -27,7 +27,6 @@ $padding-m: 8px;
     position: relative;
   }
 
-
   &__nav-bar {
     display: none;
     width: 28px;
@@ -99,6 +98,82 @@ $padding-m: 8px;
 
     &_active {
       color: $global-color-sad;
+    }
+  }
+
+  &__avatar {
+    position: relative;
+  }
+
+  &__avatar:hover &__popup {
+    opacity: 1;
+    transition-duration: 0.5s;
+
+    @include media('<=tablet') {
+      opacity: 0;
+    }
+
+    :global(.isMobile) & {
+      opacity: 0;
+    }
+  }
+
+  &__popup {
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    transform: translate(8%, 10%);
+    width: 250px;
+    padding: $global-spacing-medium-big;
+    border-radius: $global-border-radius-big;
+    background-color: #FFFFFF;
+    z-index: 1;
+
+    &-content {
+      @include square(100%);
+      position: relative;
+
+      &:after {
+        content: '';
+        width: 34px;
+        height: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(4px, -40px);
+        background: url("./img/triangle.svg") no-repeat center;
+      }
+    }
+
+    &-lead-pos {
+      display: inline-block;
+      width: 50%;
+    }
+    &-rating {
+      display: inline-block;
+      width: 50%;
+    }
+
+    &-item-title {
+      font-size: $global-font-size-medium;
+      color: $global-color-borders;
+      text-align: left;
+      margin-bottom: $global-spacing-small;
+    }
+
+    &-item {
+      font-size: $global-font-size-medium;
+      color: $global-color-blue;
+      text-align: left;
+
+      &_right {
+        text-align: right;
+      }
+    }
+
+    &-button {
+      margin-top: $global-spacing-medium;
     }
   }
 
