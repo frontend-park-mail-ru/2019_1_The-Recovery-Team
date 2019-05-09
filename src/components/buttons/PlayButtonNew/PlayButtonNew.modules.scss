@@ -15,6 +15,9 @@
   }
 }
 
+$local-light-gray-color: #E7E7E7;
+$local-dark-gray-color: #CACACA;
+
 .play-button {
   background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
   position: relative;
@@ -63,5 +66,13 @@
 
   &_single {
     @include playButtonBase($global-color-sad, $global-color-blue, './img/single.svg');
+  }
+
+  &_blur {
+    background: linear-gradient(180deg, darken($local-light-gray-color, 10%) 0%, darken($local-dark-gray-color, 10%) 100%);
+
+    @include hover {
+      background: linear-gradient(180deg, $local-light-gray-color 0%, $local-dark-gray-color 100%);
+    }
   }
 }
