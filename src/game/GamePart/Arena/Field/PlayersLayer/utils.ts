@@ -34,6 +34,7 @@ export const setPlayerClasses = (
 
   playerRef.className = cn(
     'layer__player',
+    `layer__player_${isMe ? 'me' : 'opponent'}`,
     iconClassName,
     dead && 'layer__player_dead'
   );

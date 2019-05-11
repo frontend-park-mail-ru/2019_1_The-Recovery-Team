@@ -1,5 +1,5 @@
 import { GameModels, GameModes } from 'game/config';
-import { anonymousUser } from 'game/config/models';
+import { ActiveItem, anonymousUser } from 'game/config/models';
 import getTransport, { gameTransportActions } from 'game/transport';
 import { actionGameOfflineInitPlayers } from 'game/transport/GameOfflineTransport';
 import { ITransport } from 'game/types';
@@ -185,5 +185,26 @@ export default class GameStore extends Cheburstore<GameStoreState> {
 
   public selectMyId(): number {
     return this.store.me ? this.store.me.id : anonymousUser.id;
+  }
+
+  public selectMyActiveItem(): { id: number | null; item: ActiveItem | null } {
+    const myId = this.selectMyId();
+    let curItemId: null | number = null;
+    let curItem: null | GameModels.ActiveItem = null;
+
+    const { activeItems } = this.store.state;
+
+    for (const [id, item] of Object.entries(activeItems)) {
+      if (item && item.playerId === myId) {
+        curItemId = id as any;
+        curItem = item;
+        break;
+      }
+    }
+
+    return {
+      id: curItemId,
+      item: curItem,
+    };
   }
 }

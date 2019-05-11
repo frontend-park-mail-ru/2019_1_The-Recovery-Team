@@ -32,6 +32,32 @@ $local-resource-size-small: 43px;
     opacity: 0.5;
   }
 
+  &:after {
+    content: '';
+    z-index: 0;
+
+    @include square(80%);
+    @include absoluteCenter;
+  }
+
+  &_SAND {
+    &:after {
+      @include svgBackground('img/Sand.svg', 80%);
+    }
+  }
+
+  &_BOMB {
+    &:after {
+      @include svgBackground('img/Bomb.svg', 80%);
+    }
+  }
+
+  &_LIFEBUOY {
+    &:after {
+      @include svgBackground('img/Lifebuoy.svg', 80%);
+    }
+  }
+
   &__counter {
     background-color: $global-color-blue;
     display: flex;
@@ -53,41 +79,28 @@ $local-resource-size-small: 43px;
     background-color: $global-color-sad;
     border: 3px $global-color-blue solid;
     background-size: contain;
-    position: relative;
 
     @include square(100%, 50%);
+    @include absoluteCenter();
     @include animate(background-color);
     @include hover {
       background-color: lighten($global-color-sad, 10%);
     }
 
-    &:after {
-      content: '';
-      z-index: 1;
+    &_active {
+      @keyframes vibrate {
+        from {
+          background-color: $global-color-sad;
+          @include square(100%, 50%);
+        }
 
-      @include square(80%);
-      @include absoluteCenter;
-    }
-
-    &_SAND {
-      &:after {
-        background: url("img/Sand.svg") no-repeat center;
-        background-size: 100% 100%;
+        to {
+          background-color: $global-color-dangerous;
+          @include square(130%, 50%);
+        }
       }
-    }
 
-    &_BOMB {
-      &:after {
-        background: url("img/Bomb.svg") no-repeat center;
-        background-size: 100% 100%;
-      }
-    }
-
-    &_LIFEBUOY {
-      &:after {
-        background: url("img/Lifebuoy.svg") no-repeat center;
-        background-size: 100% 100%;
-      }
+      animation: vibrate 0.5s infinite ease-in-out alternate;
     }
   }
 }

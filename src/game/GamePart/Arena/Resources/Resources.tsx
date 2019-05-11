@@ -12,6 +12,7 @@ const cn = classNames(styles);
 @connectToCheburstore
 class Resources extends React.Component {
   state = {
+    activeItemType: null,
     items: {
       [GameModels.ItemType.BOMB]: 0,
       [GameModels.ItemType.SAND]: 0,
@@ -19,8 +20,11 @@ class Resources extends React.Component {
     },
   };
 
-  shouldUpdate = newItems => {
-    const { items } = this.state;
+  shouldUpdate = (newItems, activeItemType: GameModels.ItemType | null) => {
+    const { items, activeItemType: prevActiveItemType } = this.state;
+    if (activeItemType !== prevActiveItemType) {
+      return true;
+    }
     for (const type of Object.values(GameModels.ItemType)) {
       if (items[type] !== newItems[type]) {
         return true;
@@ -38,10 +42,14 @@ class Resources extends React.Component {
       return;
     }
 
-    const me = players[myId];
-    if (me && this.shouldUpdate(me.items)) {
+    const { items = null } = players[myId] || {};
+    const { item } = gameStore.selectMyActiveItem();
+    const activeItemType = !item ? null : item.type;
+
+    if (items && this.shouldUpdate(items, activeItemType)) {
       this.setState({
-        items: me.items,
+        activeItemType,
+        items,
       });
     }
   }
@@ -60,32 +68,17 @@ class Resources extends React.Component {
     this.updateItems();
   }
 
-  emitUseLifebuoy = () => {
+  emitUseItem = (itemType: GameModels.ItemType) =>
     gameStore.emit(
       actionGameInitItemUse({
+        itemType,
         playerId: gameStore.selectMyId(),
-        itemType: GameModels.ItemType.LIFEBUOY,
       })
     );
-  };
 
-  emitUseBomb = () => {
-    gameStore.emit(
-      actionGameInitItemUse({
-        playerId: gameStore.selectMyId(),
-        itemType: GameModels.ItemType.BOMB,
-      })
-    );
-  };
-
-  emitUseSand = () => {
-    gameStore.emit(
-      actionGameInitItemUse({
-        playerId: gameStore.selectMyId(),
-        itemType: GameModels.ItemType.SAND,
-      })
-    );
-  };
+  emitUseLifebuoy = () => this.emitUseItem(GameModels.ItemType.LIFEBUOY);
+  emitUseBomb = () => this.emitUseItem(GameModels.ItemType.BOMB);
+  emitUseSand = () => this.emitUseItem(GameModels.ItemType.SAND);
 
   handleSelectItem = (item: GameModels.ItemType) => {
     switch (item) {
@@ -97,8 +90,9 @@ class Resources extends React.Component {
         return this.emitUseSand;
     }
   };
+
   render() {
-    const { items } = this.state;
+    const { items, activeItemType } = this.state;
 
     return (
       <div class={cn('items-container')}>
@@ -106,12 +100,16 @@ class Resources extends React.Component {
           <div
             key={type}
             onClick={this.handleSelectItem(type)}
-            className={cn('resource', !items[type] && 'resource_disabled')}
+            className={cn(
+              'resource',
+              `resource_${type}`,
+              !items[type] && 'resource_disabled'
+            )}
           >
             <div
               className={cn(
                 'resource__container-icon',
-                `resource__container-icon_${type}`
+                activeItemType === type && 'resource__container-icon_active'
               )}
             />
             <div className={cn('resource__counter')}>{`${items[type] ||

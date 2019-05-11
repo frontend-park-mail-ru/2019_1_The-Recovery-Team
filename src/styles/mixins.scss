@@ -46,6 +46,34 @@ $transition-normal: .2s ease-out;
   transition: $animatedProperty nth($property, length($property)) $transition-normal;
 }
 
+@mixin animateBackgrounds($step-size, $duration, $background-image...) {
+  @for $frame from 1 through length($background-image) {
+
+    &-#{$frame} {
+      background-image: url('#{nth($background-image, $frame)}');
+
+      @keyframes backgrounds {
+        $breakpoint: 0%;
+
+        @for $i from 1 through length($background-image) {
+          @if $frame == $i {
+            opacity: 1;
+          } @else {
+            opacity: 0;
+          }
+          //#{$breakpoint} {
+          //  background-image: nth($background-image, $i);
+          //}
+          //$breakpoint: $breakpoint + $step-size;
+        }
+      }
+
+      animation: backgrounds $duration steps(length($background-image), start) infinite alternate;
+
+    }
+  }
+}
+
 @mixin hover {
   :not(:global(.isMobile)) & {
     &:hover {
