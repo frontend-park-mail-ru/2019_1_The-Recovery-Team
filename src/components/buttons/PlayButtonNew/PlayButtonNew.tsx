@@ -1,4 +1,3 @@
-import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import { Link } from 'libs/Cheburouter';
 import classNames from 'libs/classNames';
@@ -8,9 +7,14 @@ const cn = classNames(styles);
 
 export default class PlayButtonNew extends React.Component {
   render() {
-    const { className = '', type, blur = false, blurText = '' } = this.props;
-    const onClick = !blur ? this.props.onClick : () => null;
-    const to = !blur ? this.props.to : routeCreators.TO_SIGN_IN();
+    const {
+      className = '',
+      type,
+      blur = false,
+      blurText = '',
+      onClick = () => null,
+      to,
+    } = this.props;
     const classes = `${className} ${cn(
       'play-button',
       `play-button_${type}`,

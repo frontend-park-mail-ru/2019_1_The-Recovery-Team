@@ -1,3 +1,4 @@
+import Avatar from 'components/Avatar';
 import CircleButton from 'components/buttons/CircleButton';
 import { circleButtonTypes } from 'components/buttons/CircleButton/modes';
 import Logotype from 'components/LogotypeNew';
@@ -21,7 +22,6 @@ import userStore, {
   userActions,
   UserUpdateSuccessPL,
 } from 'store/userStore';
-import Avatar from '../../../components/Avatar';
 import Popup from './Popup';
 import Tab from './Tab';
 
