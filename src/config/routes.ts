@@ -11,9 +11,6 @@ export const routeNames = {
   PROFILE_EDIT: 'PROFILE_EDIT',
   LEADER_BOARD: 'LEADER_BOARD',
   GAME_PART: 'GAME_PART',
-  PAUSE_PAGE: 'PAUSE_PAGE',
-  FINISH_PAGE: 'FINISH_PAGE',
-  SEARCH_PAGE: 'SEARCH_PAGE',
 };
 
 export const routesMap = {
@@ -72,21 +69,6 @@ export const routesMap = {
     template: '/game/{gameMode}',
     title: 'Игра',
   },
-  PAUSE_PAGE: {
-    name: routeNames.PAUSE_PAGE,
-    template: '/game/{gameMode}/pause',
-    title: 'Пауза',
-  },
-  FINISH_PAGE: {
-    name: routeNames.FINISH_PAGE,
-    template: '/game/{gameMode}/finish',
-    title: 'Конец',
-  },
-  SEARCH_PAGE: {
-    name: routeNames.SEARCH_PAGE,
-    template: '/game/multiplayer/search',
-    title: 'Поиск',
-  },
 };
 
 export const routeCreators = {
@@ -99,9 +81,4 @@ export const routeCreators = {
   TO_PROFILE_EDIT: () => `/profile/edit`,
   TO_LEADER_BOARD: () => `/leaderboard`,
   TO_GAME_PART: (mode: GameModes = GameModes.SINGLEPLAYER) => `/game/${mode}`,
-  TO_PAUSE_PAGE: (mode: GameModes = GameModes.SINGLEPLAYER) =>
-    `/game/${mode}/pause`,
-  TO_FINISH_PAGE: (mode: GameModes = GameModes.SINGLEPLAYER) =>
-    `/game/${mode}/finish`,
-  TO_SEARCH_PAGE: () => '/game/multiplayer/search',
 };

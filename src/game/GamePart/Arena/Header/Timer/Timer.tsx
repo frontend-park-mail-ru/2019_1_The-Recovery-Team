@@ -1,7 +1,5 @@
-import { routeCreators } from 'config/routes';
 import gameStore, { gameStoreActions } from 'game/store';
 import * as React from 'libs/Cheburact/index';
-import { Link } from 'libs/Cheburouter';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 
@@ -32,12 +30,7 @@ export default class Timer extends React.Component {
 
   render() {
     const { roundNumber, roundTimer } = this.state;
-    const {
-      withPauseButton = true,
-      mode,
-      onOpenInfo,
-      className = '',
-    } = this.props;
+    const { withPauseButton = true, onOpenInfo, className = '' } = this.props;
 
     const time = Number(roundTimer);
     const timeOk = time === 3;
@@ -57,11 +50,7 @@ export default class Timer extends React.Component {
         <div className={cn('timer__time')}>{`0${roundTimer}`}</div>
         <div className={cn('timer__pause-container')}>
           {withPauseButton && (
-            <div
-              onClick={onOpenInfo}
-              to={routeCreators.TO_PAUSE_PAGE(mode)}
-              className={cn('timer__pause')}
-            />
+            <div onClick={onOpenInfo} className={cn('timer__pause')} />
           )}
         </div>
       </div>

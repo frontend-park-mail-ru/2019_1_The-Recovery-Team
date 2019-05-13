@@ -6,6 +6,10 @@ $margin-l: 52px;
 $margin-m: 16px;
 $padding-m: 8px;
 
+$top-popup-indent: 60px;
+$right-popup-indent: -20px;
+
+
 .header {
   height: 90px;
   background-color: $global-color-blue;
@@ -26,7 +30,6 @@ $padding-m: 8px;
     justify-content: space-between;
     position: relative;
   }
-
 
   &__nav-bar {
     display: none;
@@ -88,6 +91,7 @@ $padding-m: 8px;
     align-items: center;
     justify-content: flex-end;
     cursor: pointer;
+    position: relative;
   }
 
   &__nickname {
@@ -100,6 +104,25 @@ $padding-m: 8px;
     &_active {
       color: $global-color-sad;
     }
+  }
+
+  &__avatar {
+  }
+
+  &__profile:hover &__popup {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__popup {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: $top-popup-indent;
+    right: $right-popup-indent;
+    z-index: 1;
+
+    @include animate(visibility, opacity);
   }
 
   @include media("<tablet") {

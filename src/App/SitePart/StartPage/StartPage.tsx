@@ -14,6 +14,9 @@ const cn = classNames(styles);
 export default class StartPage extends React.Component {
   render() {
     const { authorized = false } = this.props;
+    const multiTo = authorized
+      ? routeCreators.TO_GAME_PART(GameModes.MULTIPLAYER)
+      : routeCreators.TO_SIGN_IN();
 
     return (
       <MainBlock className={cn('start-page')}>
@@ -25,9 +28,11 @@ export default class StartPage extends React.Component {
               to={routeCreators.TO_GAME_PART(GameModes.SINGLEPLAYER)}
             />
             <PlayButtonNew
+              blur={!authorized}
+              blurText={!authorized && 'Войти'}
               className={cn('start-page__play-button')}
               type={playButtonTypes.MULTIPLAYER}
-              to={routeCreators.TO_GAME_PART(GameModes.MULTIPLAYER)}
+              to={multiTo}
             />
           </div>
         </div>

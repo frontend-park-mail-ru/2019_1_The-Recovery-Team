@@ -1,3 +1,4 @@
+import Avatar from 'components/Avatar';
 import CircleButton from 'components/buttons/CircleButton';
 import { circleButtonTypes } from 'components/buttons/CircleButton/modes';
 import Logotype from 'components/LogotypeNew';
@@ -21,7 +22,7 @@ import userStore, {
   userActions,
   UserUpdateSuccessPL,
 } from 'store/userStore';
-import Avatar from '../../../components/Avatar';
+import Popup from './Popup';
 import Tab from './Tab';
 
 const styles = require('./Header.modules.scss');
@@ -120,7 +121,7 @@ export default class Header extends React.Component {
   render() {
     const { user }: { user: Profile } = this.state as any;
     const { path, isMusicOn } = this.state;
-    const { onOpenSideBar } = this.props;
+    const { onOpenSideBar, onLogout } = this.props;
     const isRulesActive = match(routeCreators.TO_RULES(), path, false);
     const isLeadersActive = match(routeCreators.TO_LEADER_BOARD(), path, false);
     const isAboutActive = match(routeCreators.TO_ABOUT(), path, false);
@@ -177,7 +178,12 @@ export default class Header extends React.Component {
               >
                 {user.nickname}
               </div>
-              <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+              <div className={cn('header__avatar')}>
+                <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+                <div className={cn('header__popup')}>
+                  <Popup user={user} onLogout={onLogout} />
+                </div>
+              </div>
             </button>
           ) : (
             <div className={cn('header__entry')}>
