@@ -36,6 +36,15 @@ $local-dark-gray-color: #CACACA;
     @include absoluteCenter;
   }
 
+  &__blur-text {
+    z-index: 2;
+    opacity: 1;
+
+    @include text-medium($global-color-blue, $global-font-size-header);
+    @include absoluteCenter;
+  }
+
+
   &_play {
     @include playButtonBase(#629A36, #0D6721, './img/play.svg');
 
@@ -69,10 +78,6 @@ $local-dark-gray-color: #CACACA;
   }
 
   &_blur {
-    background: linear-gradient(180deg, darken($local-light-gray-color, 10%) 0%, darken($local-dark-gray-color, 10%) 100%);
-
-    @include hover {
-      background: linear-gradient(180deg, $local-light-gray-color 0%, $local-dark-gray-color 100%);
-    }
+    opacity: 0.7;
   }
 }

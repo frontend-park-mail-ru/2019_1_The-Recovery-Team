@@ -8,7 +8,7 @@ const cn = classNames(styles);
 
 export default class PlayButtonNew extends React.Component {
   render() {
-    const { className = '', type, blur = false } = this.props;
+    const { className = '', type, blur = false, blurText = '' } = this.props;
     const onClick = !blur ? this.props.onClick : () => null;
     const to = !blur ? this.props.to : routeCreators.TO_SIGN_IN();
     const classes = `${className} ${cn(
@@ -21,6 +21,12 @@ export default class PlayButtonNew extends React.Component {
     const Component = to ? Link : 'div';
     const params = to ? { to } : { onClick };
 
-    return <Component {...params} className={classes} />;
+    return (
+      <Component {...params} className={classes}>
+        {!!blurText && (
+          <div className={cn('play-button__blur-text')}>{blurText}</div>
+        )}
+      </Component>
+    );
   }
 }

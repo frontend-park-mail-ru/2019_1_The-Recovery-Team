@@ -1,7 +1,6 @@
 import CircleButton from 'components/buttons/CircleButton';
 import { circleButtonTypes } from 'components/buttons/CircleButton/modes';
 import Logotype from 'components/LogotypeNew';
-import SimpleButton from 'components/SimpleButton/SimpleButton';
 import { routeCreators, routesMap } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import routerStore, {
@@ -24,6 +23,7 @@ import userStore, {
 } from 'store/userStore';
 import Avatar from '../../../components/Avatar';
 import Tab from './Tab';
+import Popup from './Popup/Popup';
 
 const styles = require('./Header.modules.scss');
 
@@ -181,40 +181,7 @@ export default class Header extends React.Component {
               <div className={cn('header__avatar')}>
                 <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
                 <div className={cn('header__popup')}>
-                  <div className={cn('header__popup-content')}>
-                    <div className={cn('header__popup-lead-pos')}>
-                      <div className={cn('header__popup-item-title')}>
-                        Место
-                      </div>
-                      <div className={cn('header__popup-item')}>
-                        {`${user.record || 0}`}
-                      </div>
-                    </div>
-                    <div className={cn('header__popup-rating')}>
-                      <div
-                        className={cn(
-                          'header__popup-item-title',
-                          'header__popup-item_right'
-                        )}
-                      >
-                        Рейтинг
-                      </div>
-                      <div
-                        className={cn(
-                          'header__popup-item',
-                          'header__popup-item_right'
-                        )}
-                      >
-                        {`${user.record || 0}`}
-                      </div>
-                    </div>
-                    <SimpleButton
-                      className={cn('header__popup-button')}
-                      onClick={onLogout}
-                    >
-                      Выйти
-                    </SimpleButton>
-                  </div>
+                  <Popup user={user} onLogout={onLogout} />
                 </div>
               </div>
             </button>

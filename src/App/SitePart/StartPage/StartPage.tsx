@@ -26,6 +26,7 @@ export default class StartPage extends React.Component {
             />
             <PlayButtonNew
               blur={!authorized}
+              blurText={!authorized && 'Войти'}
               className={cn('start-page__play-button')}
               type={playButtonTypes.MULTIPLAYER}
               to={routeCreators.TO_GAME_PART(GameModes.MULTIPLAYER)}
