@@ -22,8 +22,8 @@ import userStore, {
   UserUpdateSuccessPL,
 } from 'store/userStore';
 import Avatar from '../../../components/Avatar';
+import Popup from './Popup';
 import Tab from './Tab';
-import Popup from './Popup/Popup';
 
 const styles = require('./Header.modules.scss');
 

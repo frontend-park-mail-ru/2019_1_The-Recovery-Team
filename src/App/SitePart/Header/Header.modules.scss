@@ -117,12 +117,12 @@ $right-popup-indent: -20px;
   &__popup {
     visibility: hidden;
     opacity: 0;
-    @include animate(visibility, opacity);
-
     position: absolute;
     top: $top-popup-indent;
     right: $right-popup-indent;
     z-index: 1;
+
+    @include animate(visibility, opacity);
   }
 
   @include media("<tablet") {

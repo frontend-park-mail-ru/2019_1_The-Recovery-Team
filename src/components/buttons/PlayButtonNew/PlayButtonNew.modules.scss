@@ -36,11 +36,17 @@ $local-dark-gray-color: #CACACA;
     @include absoluteCenter;
   }
 
+  &_blur {
+    &:after {
+      background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
+      opacity: 0.2;
+    }
+  }
+
   &__blur-text {
     z-index: 2;
-    opacity: 1;
 
-    @include text-medium($global-color-blue, $global-font-size-header);
+    @include text-medium(#FFFFFF, $global-font-size-header);
     @include absoluteCenter;
   }
 
@@ -75,9 +81,5 @@ $local-dark-gray-color: #CACACA;
 
   &_single {
     @include playButtonBase($global-color-sad, $global-color-blue, './img/single.svg');
-  }
-
-  &_blur {
-    opacity: 0.7;
   }
 }
