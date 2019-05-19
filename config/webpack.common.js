@@ -18,7 +18,7 @@ module.exports = {
         chunkFilename: 'static/js/[id].[hash].chunk.js'
     },
     resolve: {
-        extensions:  ['.ts', '.tsx', '.js', '.jsx', '.scss', '.css', '.html'],
+        extensions:  ['.ts', '.tsx', '.js', '.jsx', '.scss', '.css', '.html', '.json'],
         alias: {
             libs: srcPath('libs'),
             config: srcPath('config'),

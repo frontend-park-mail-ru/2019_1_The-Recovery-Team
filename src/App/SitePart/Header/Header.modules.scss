@@ -2,10 +2,6 @@
 @import 'styles/mixins';
 @import 'styles/includeMedia.scss';
 
-$margin-l: 52px;
-$margin-m: 16px;
-$padding-m: 8px;
-
 $top-popup-indent: 60px;
 $right-popup-indent: -20px;
 
@@ -43,20 +39,7 @@ $right-popup-indent: -20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-  }
-
-  &__left-part {
-  }
-
-  &__right-part {
-  }
-
-  &__tab {
-    &_left {
-    }
-
-    &_right {
-    }
+    z-index: 1;
   }
 
   &__logotype {
@@ -65,8 +48,6 @@ $right-popup-indent: -20px;
     left: 50%;
     top: 80%;
   }
-
-  &__volume {}
 
   &__entry {
     display: flex;
@@ -104,9 +85,6 @@ $right-popup-indent: -20px;
     &_active {
       color: $global-color-sad;
     }
-  }
-
-  &__avatar {
   }
 
   &__profile:hover &__popup {
@@ -164,11 +142,11 @@ $right-popup-indent: -20px;
 
     &__tab {
       &_left {
-        margin-right: $margin-m;
+        margin-right: $global-spacing-tiny;
       }
 
       &_right {
-        margin-left: $margin-m;
+        margin-left: $global-spacing-tiny;
       }
     }
   }
@@ -197,11 +175,11 @@ $right-popup-indent: -20px;
 
     &__tab {
       &_left {
-        margin-right: $margin-l;
+        margin-right: $global-spacing-big;
       }
 
       &_right {
-        margin-left: $margin-l;
+        margin-left: $global-spacing-big;
       }
     }
   }
