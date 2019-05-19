@@ -43,6 +43,7 @@
 
 .heading-item {
   margin-bottom: $global-spacing-medium;
+  position: relative;
 
   &:last-child {
     margin-bottom: 0;
@@ -60,6 +61,18 @@
     text-align: right;
   }
 
+  &__icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: $global-spacing-medium;
+
+    @include square(20px);
+
+    &_vk {
+      @include svgBackground('./img/vk.svg', 100%);
+    }
+  }
+
   &__title {
     @include text-medium($global-color-borders) {
       font-weight: 400;
@@ -70,5 +83,10 @@
 
   &__text {
     @include text-medium();
+
+    &-content {
+      display: inline-block;
+      vertical-align: middle;
+    }
   }
 }

@@ -46,7 +46,6 @@ export default class EditSection extends React.Component {
       type: 'text',
     },
     isShownModalPassword: false,
-    // isShownModalAvatar: false,
   };
 
   validateAlreadyExists = debounce(async (field: InputConfig) => {
@@ -113,6 +112,7 @@ export default class EditSection extends React.Component {
 
     const { user, outerStyles } = this.props;
     const outerCN = classNames(outerStyles);
+    const inputs = user.oauth ? [nickname] : [email, nickname];
 
     return (
       <div key="edit-mode">
@@ -125,15 +125,17 @@ export default class EditSection extends React.Component {
           className={outerCN('profile-page__item')}
           onChangeValue={this.handleChangeValue}
           onBlur={this.handleBlur}
-          inputs={[email, nickname]}
+          inputs={inputs}
         />
-        <SimpleButton
-          onClick={this.toggleEditPasswordModal}
-          air={true}
-          className={outerCN('profile-page__item')}
-        >
-          Изменить пароль
-        </SimpleButton>
+        {!user.oauth && (
+          <SimpleButton
+            onClick={this.toggleEditPasswordModal}
+            air={true}
+            className={outerCN('profile-page__item')}
+          >
+            Изменить пароль
+          </SimpleButton>
+        )}
         <SimpleButton
           onClick={this.updateUser}
           className={outerCN('profile-page__item')}
