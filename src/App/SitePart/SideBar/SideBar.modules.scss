@@ -61,6 +61,11 @@ $local-height: 90px;
     &:last-child {
       border-bottom: 0;
     }
+
+    &_active {
+      background-color: $global-color-grey;
+    }
+
   }
 
   &__entry-text {
