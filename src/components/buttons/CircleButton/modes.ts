@@ -4,3 +4,7 @@ export const circleButtonTypes = {
   PROFILE: 'profile',
   CHAT: 'chat',
 };
+
+export const circleButtonStyles = {
+  BLUE: 'blue',
+};

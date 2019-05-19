@@ -1,5 +1,5 @@
 import CircleButton from 'components/buttons/CircleButton/CircleButton';
-import { circleButtonTypes } from 'components/buttons/CircleButton/modes';
+import {circleButtonStyles, circleButtonTypes} from 'components/buttons/CircleButton/modes';
 import isProd from 'config/isProd';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
@@ -26,7 +26,7 @@ export default class ChatContainer extends React.Component {
     const { isOpen } = this.state;
 
     return (
-      <div className={cn('chat')}>
+      <div className={cn('chat', isOpen && 'chat_open')}>
         <div
           className={cn('chat__header', isOpen && 'chat__header_open')}
           onClick={this.toggle}
@@ -37,12 +37,13 @@ export default class ChatContainer extends React.Component {
           className={cn('chat__icon', isOpen && 'chat__icon_open')}
           type={circleButtonTypes.CHAT}
           onClick={this.toggle}
+          style={circleButtonStyles.BLUE}
         />
         <div className={cn('chat__content', isOpen && 'chat__content_open')}>
           <iframe
             className={cn('chat__iframe')}
             width="100%"
-            height="400px"
+            height="100%"
             src={hackathonUrl}
           />
         </div>

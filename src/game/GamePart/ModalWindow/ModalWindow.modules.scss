@@ -54,6 +54,12 @@
     }
   }
 
+  &__volume-button {
+    position: absolute;
+    top: $global-spacing-medium-big;
+    left: $global-spacing-medium-big;
+  }
+
   &__trophy {
     z-index: 1;
     margin-bottom: 20px;

@@ -6,6 +6,7 @@
   border: 1px solid #FFFFFF;
   position: relative;
   cursor: pointer;
+  @include animate(background);
 
   @include square(40px, 50%);
 
@@ -53,5 +54,13 @@
     &:after {
       background-color: $global-color-sad;
     }
+  }
+
+  &_blue {
+    background-color: $global-color-blue;
+  }
+
+  @include hover {
+    background: lighten($global-color-blue, 10%);
   }
 }

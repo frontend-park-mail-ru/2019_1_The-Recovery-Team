@@ -44,7 +44,11 @@ class App extends React.Component {
           user={user}
         />
         <Music />
-        <ChatContainer />
+        <Route
+          component={ChatContainer}
+          negative={true}
+          template={routesMap.GAME_PART.template}
+        />
       </div>
     );
   }

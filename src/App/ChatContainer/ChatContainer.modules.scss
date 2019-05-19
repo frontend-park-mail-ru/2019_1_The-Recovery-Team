@@ -10,6 +10,12 @@
   z-index: $global-z-index-chat;
   border-radius: $global-border-radius-big;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &_open {
+    height: 440px;
+  }
 
   :global(.isMobile) & {
     &__header {
@@ -30,6 +36,8 @@
   }
 
   &__header {
+    flex-grow: 0;
+    flex-shrink: 0;
     width: 100%;
     padding: $global-spacing-small-medium;
     background-color: $global-color-darker-blue;
@@ -37,20 +45,20 @@
     text-align: center;
     font-size: $global-font-size-medium;
     cursor: pointer;
+    @include animate(background);
+
+    @include hover {
+      background: lighten($global-color-darker-blue, 10%);
+    }
 
     &_open {
       display: block!important;
     }
   }
 
-  &__iframe {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
-
   &__content {
     width: 100%;
+    flex-grow: 0;
     height: 0;
     overflow: hidden;
     background: #FFFFFF;
@@ -59,7 +67,7 @@
     @include animate(height);
 
     &_open {
-      height: 400px;
+      flex-grow: 1;
     }
   }
 }
