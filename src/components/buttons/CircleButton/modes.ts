@@ -6,5 +6,6 @@ export const circleButtonTypes = {
 };
 
 export const circleButtonStyles = {
+  BLUE_FILL: 'blue-fill',
   BLUE: 'blue',
 };

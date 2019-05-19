@@ -115,7 +115,7 @@ export default class ModalWindow extends React.Component {
         <CircleButton
           className={cn('modal-window__volume-button')}
           type={volumeButtonType}
-          style={circleButtonStyles.BLUE}
+          style={circleButtonStyles.BLUE_FILL}
           onClick={this.toggleMusic}
         />
         <div

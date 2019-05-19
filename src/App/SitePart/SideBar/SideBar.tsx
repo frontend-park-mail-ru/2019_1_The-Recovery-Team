@@ -1,18 +1,53 @@
 import Avatar from 'components/Avatar/Avatar';
 import CircleButton from 'components/buttons/CircleButton';
-import { circleButtonTypes } from 'components/buttons/CircleButton/modes';
+import {
+  circleButtonStyles,
+  circleButtonTypes,
+} from 'components/buttons/CircleButton/modes';
 import { routeCreators } from 'config/routes';
 import * as React from 'libs/Cheburact';
 import { Link } from 'libs/Cheburouter';
+import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
+import musicStore, {
+  actionMusicOff,
+  actionMusicOn,
+  musicActions,
+  MusicChangedPL,
+} from '../../../store/musicStore';
 
 const styles = require('./SideBar.modules.scss');
 
 const cn = classNames(styles);
 
+// @ts-ignore
+@connectToCheburstore
 export default class SideBar extends React.Component {
+  state = {
+    isMusicOn: musicStore.select().isOn,
+  };
+
+  @onCheburevent(musicStore, musicActions.CHANGED)
+  handleChangeSound({ payload }: Action<MusicChangedPL>) {
+    this.setState({
+      isMusicOn: payload.isOn,
+    });
+  }
+
+  toggleMusic = e => {
+    e.stopPropagation();
+    if (this.state.isMusicOn) {
+      musicStore.emit(actionMusicOff());
+    } else {
+      musicStore.emit(actionMusicOn());
+    }
+  };
+
   render() {
     const { isOpen, onClose = () => null, user } = this.props;
+    const volumeButtonType = this.state.isMusicOn
+      ? circleButtonTypes.VOLUME_ON
+      : circleButtonTypes.VOLUME_OFF;
 
     return (
       <div
@@ -44,7 +79,7 @@ export default class SideBar extends React.Component {
                 <div>
                   <CircleButton
                     type={circleButtonTypes.PROFILE}
-                    className={cn('side-bar__entry-icon')}
+                    style={circleButtonStyles.BLUE}
                   />
                 </div>
                 <div className={cn('side-bar__entry-text')}>Вход</div>
@@ -66,6 +101,13 @@ export default class SideBar extends React.Component {
           <Link to={routeCreators.TO_ABOUT()} className={cn('side-bar__el')}>
             О нас
           </Link>
+          <div className={cn('side-bar__el')}>
+            <CircleButton
+              type={volumeButtonType}
+              style={circleButtonStyles.BLUE}
+              onClick={this.toggleMusic}
+            />
+          </div>
         </div>
       </div>
     );

@@ -56,11 +56,19 @@
     }
   }
 
-  &_blue {
+  &_blue-fill {
     background-color: $global-color-blue;
+
+    @include hover {
+      background: lighten($global-color-blue, 10%);
+    }
   }
 
-  @include hover {
-    background: lighten($global-color-blue, 10%);
+  &_blue {
+    border-color: $global-color-blue;
+
+    &:after {
+      background-color: $global-color-blue;
+    }
   }
 }
