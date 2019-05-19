@@ -7,14 +7,14 @@ import { GameModels } from '../config';
 import { keyCodeToDir, keyCodeToItem } from './utils';
 
 const LOOP_DURATION = 16;
+const FRAME_COUNT = 5;
 
 export default class ControllersManager implements IControllersManager {
   pressedKeys: Set<string> = new Set<string>();
   loopInterval: any = null;
-  frameIndex: number = 0;
 
   moveRequest: GameModels.Direction | null = null;
-  lastMoveIndex: number = 0;
+  lastMoveIndex = 0;
 
   connect() {
     if (this.loopInterval) {
@@ -38,17 +38,18 @@ export default class ControllersManager implements IControllersManager {
   addKey = (e: KeyboardEvent) => this.pressedKeys.add(e.code);
   removeKey = (e: KeyboardEvent) => this.pressedKeys.delete(e.code);
 
-  // updateFrame = () => {
-  //   this.frameIndex = (this.frameIndex + 1) % FRAME_COUNT;
-  //   this.lastMoveIndex = Math.max(0, this.lastMoveIndex - 1);
-  // };
-
   emitAll = () => {
-    // this.updateFrame();
+    let curMoveRequest: GameModels.Direction | null = null;
+    this.pressedKeys.forEach(keyCode => {
+      const dir = keyCodeToDir(keyCode);
+      if (dir) {
+        curMoveRequest = dir;
+      }
+    });
+    this.handleMovePlayer(curMoveRequest);
 
     this.pressedKeys.forEach(keyCode => {
       this.handleUseItem(keyCode);
-      this.handleMovePlayer(keyCode);
     });
   };
 
@@ -81,21 +82,23 @@ export default class ControllersManager implements IControllersManager {
 
   emitRight = () => this.emitMoveTo(GameModels.Direction.RIGHT);
 
-  handleMovePlayer = keyCode => {
-    const move = keyCodeToDir(keyCode);
-    if (!move) {
-      return;
+  handleMovePlayer = (curMoveRequest: GameModels.Direction | null) => {
+    // Обновляем последнее нажатие
+    if (this.moveRequest) {
     }
-    // this.moveRequest = move || this.moveRequest;
-    // if (!this.moveRequest) {
-    //   this.lastMoveIndex = FRAME_COUNT;
-    //   return;
-    // }
 
-    // if (this.lastMoveIndex === 0) {
-    this.emitMoveTo(move);
-    // this.lastMoveIndex = FRAME_COUNT;
-    // this.moveRequest = null;
-    // }
+    if (this.lastMoveIndex === 0) {
+      this.moveRequest = curMoveRequest || this.moveRequest;
+      if (!this.moveRequest) {
+        return;
+      }
+
+      const moveTo = this.moveRequest;
+      this.moveRequest = null;
+      this.emitMoveTo(moveTo);
+      this.lastMoveIndex = FRAME_COUNT;
+    } else {
+      this.lastMoveIndex = Math.max(0, this.lastMoveIndex - 1);
+    }
   };
 }
