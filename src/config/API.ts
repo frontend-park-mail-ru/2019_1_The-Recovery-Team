@@ -14,6 +14,10 @@ export const WS_URL: string = `${isProd ? 'wss' : 'ws'}://${
   window.location.host
 }/api/v1/game.ws`;
 
+export const VK_OAUTH_REDIRECT = `${window.location.origin}${prefixAPI(
+  '/oauth/redirect'
+)}`;
+
 export default {
   avatars: () => prefixAPI('/avatars'),
   profiles: () => prefixAPI('/profiles'),
