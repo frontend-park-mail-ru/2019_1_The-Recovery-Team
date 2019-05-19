@@ -43,7 +43,7 @@ export default class SideBar extends React.Component {
               <div className={cn('side-bar__entry')}>
                 <div>
                   <CircleButton
-                    type={circleButtonTypes.profile}
+                    type={circleButtonTypes.PROFILE}
                     className={cn('side-bar__entry-icon')}
                   />
                 </div>

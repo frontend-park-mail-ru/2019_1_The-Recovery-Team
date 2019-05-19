@@ -1,5 +1,6 @@
 export const circleButtonTypes = {
-  volumeOn: 'volume-on',
-  volumeOff: 'volume-off',
-  profile: 'profile',
+  VOLUME_ON: 'volume-on',
+  VOLUME_OFF: 'volume-off',
+  PROFILE: 'profile',
+  CHAT: 'chat',
 };

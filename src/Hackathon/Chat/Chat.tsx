@@ -15,6 +15,7 @@ import classNames from 'libs/classNames';
 import userStore, { userActions } from 'store/userStore';
 import Button from './Button';
 import Message from './Message/Message';
+import SimpleButton from 'components/SimpleButton/SimpleButton';
 
 const styles = require('./Chat.modules.scss');
 
@@ -158,11 +159,20 @@ export default class Chat extends React.Component {
     return (
       <div className={cn('chat')}>
         <div className={cn('chat__messages')} ref={r => (this.messagesRef = r)}>
-          <div
-            className={cn('chat__new-message', 'chat__old-message')}
-            onClick={this.handleLoadOld}
-          >
-            Загрузить старые сообщения
+          {/*<div*/}
+            {/*className={cn('chat__new-message', 'chat__old-message')}*/}
+            {/*onClick={this.handleLoadOld}*/}
+          {/*>*/}
+            {/*Загрузить старые сообщения*/}
+          {/*</div>*/}
+          <div>
+            <SimpleButton
+                className={cn('leaders-page__load-button')}
+                onClick={this.handleLoadOld}
+                air={true}
+            >
+              Загрузить ещё
+            </SimpleButton>
           </div>
           {messages.map((msg: ChatMessage) => (
             <Message

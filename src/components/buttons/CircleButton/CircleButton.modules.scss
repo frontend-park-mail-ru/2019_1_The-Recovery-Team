@@ -40,6 +40,13 @@
     }
   }
 
+  &_chat {
+    &:after {
+      mask: url("./img/chat.svg") no-repeat center;
+      background-color: #FFFFFF;
+    }
+  }
+
   &_active {
     border-color: $global-color-sad;
 

@@ -28,7 +28,7 @@
     display: inline-block;
     width: calc(100% - 48px);
     padding: 8px;
-    background: $global-color-primary-dark;
+    background-color: $global-color-top-linear;
     border-radius: 12px;
     color: #FFFFFF;
     font-size: $global-font-size-s;
@@ -36,8 +36,8 @@
     letter-spacing: 0.02em;
 
     &_mine {
-      background-color: $global-color-primary-light;
       width: 100%;
+      background: $global-color-sad;
     }
   }
 

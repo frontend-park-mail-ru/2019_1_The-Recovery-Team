@@ -127,8 +127,8 @@ export default class Header extends React.Component {
     const isAboutActive = match(routeCreators.TO_ABOUT(), path, false);
     const isStartActive = match(routeCreators.TO_START(), path, false);
     const volumeButtonType = isMusicOn
-      ? circleButtonTypes.volumeOn
-      : circleButtonTypes.volumeOff;
+      ? circleButtonTypes.VOLUME_ON
+      : circleButtonTypes.VOLUME_OFF;
 
     return (
       <div className={cn('header')}>
@@ -198,7 +198,7 @@ export default class Header extends React.Component {
               </a>
               <CircleButton
                 onClick={this.handleEntrance}
-                type={circleButtonTypes.profile}
+                type={circleButtonTypes.PROFILE}
                 isActive={this.isEntryActive}
               />
             </div>
