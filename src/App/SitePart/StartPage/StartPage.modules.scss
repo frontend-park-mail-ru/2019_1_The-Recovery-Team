@@ -9,6 +9,7 @@
 
   &__play-buttons {
     text-align: center;
+    position: relative;
   }
 
   &__play-button {
@@ -38,5 +39,11 @@
     }
 
     @include square(150px);
+  }
+
+  &__sharing-button {
+    position: absolute;
+    top: 105%;
+    left: 105%;
   }
 }

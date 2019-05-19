@@ -1,0 +1,7 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+.sharing-button {
+  @include buttonBase();
+  @include square(50px, 50%);
+}

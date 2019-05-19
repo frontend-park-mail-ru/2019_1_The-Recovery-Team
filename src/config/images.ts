@@ -4,5 +4,7 @@ export const giveUpImg = require('./img/GiveUp.svg');
 export const profileImg = require('./img/Profile.svg');
 export const homeImg = require('./img/Home.svg');
 
+export const defaultSharingImage = require('./img/sharing.png');
+
 export const anonymousAvatar = require('./img/anonymousAvatar.jpg');
 export const defaultAvatar = require('./img/nouser.png');
