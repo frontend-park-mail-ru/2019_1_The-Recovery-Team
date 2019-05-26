@@ -17,7 +17,10 @@ export const normalizeProfileGet = (response): Profile | null => {
   const {
     id = null,
     email = null,
-    nickname = null,
+    nickname = '',
+    oauth = null,
+    oauthId = null,
+    position = 0,
     loss = 0,
     record = 0,
     win = 0,
@@ -25,7 +28,7 @@ export const normalizeProfileGet = (response): Profile | null => {
 
   let { avatar = null } = response.response;
 
-  if (avatar === null || avatar.length === '') {
+  if (!avatar || avatar!.length === '') {
     avatar = defaultAvatar;
   }
 
@@ -33,6 +36,9 @@ export const normalizeProfileGet = (response): Profile | null => {
     id,
     email,
     nickname,
+    oauth,
+    oauthId,
+    position,
     loss,
     record,
     win,

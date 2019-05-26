@@ -67,14 +67,15 @@ module.exports = {
             skipWaiting: true,
             importsDirectory: `${publicDir}/static/js`,
             navigateFallback: '/index.html',
+            navigateFallbackBlacklist: [/^\/api/],
             runtimeCaching: [
                 {
                     urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
-                    handler: 'CacheFirst'
+                    handler: 'CacheFirst',
                 },
                 {
                     urlPattern: /.*/,
-                    handler: 'NetworkFirst'
+                    handler: 'NetworkFirst',
                 }
             ]
         }),

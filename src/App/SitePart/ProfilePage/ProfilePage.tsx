@@ -23,6 +23,7 @@ const cn = classNames(styles);
 interface State {
   isEditMode: boolean;
   isShownModalAvatar: boolean;
+  isNewUser: boolean;
 }
 
 // @ts-ignore
@@ -31,6 +32,7 @@ export default class ProfilePage extends React.Component {
   state: State = {
     isEditMode: false,
     isShownModalAvatar: false,
+    isNewUser: false,
   };
 
   @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
@@ -52,9 +54,35 @@ export default class ProfilePage extends React.Component {
   toggleEditAvatarModal = () =>
     this.setState({ isShownModalAvatar: !this.state.isShownModalAvatar });
 
+  componentDidMount() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const mode = params.get('mode');
+      if (mode === 'new') {
+        this.setState({
+          isNewUser: true,
+        });
+      }
+    } catch (e) {
+      console.log('can not read query');
+    }
+  }
+
   render() {
     const { isEditMode, isShownModalAvatar } = this.state;
     const { user } = userStore.select();
+    // const { user: u } = userStore.select();
+    // let user: any = null;
+    // if (u) {
+    //   user = {
+    //     nickname: u.nickname,
+    //     avatar: u.avatar,
+    //     oauth: 'vk',
+    //     oauthId: '1111111111',
+    //     rating: u.record,
+    //     position: u.position,
+    //   };
+    // }
 
     return user ? (
       <MainBlock className={cn('profile-page')}>
