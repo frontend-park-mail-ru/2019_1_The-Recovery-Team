@@ -67,7 +67,6 @@ export default class AuthPage extends React.Component {
             <SimpleButton
               className={cn('sign-auth-page__link')}
               key="to-sign-in"
-              air={true}
               to={routeCreators.TO_SIGN_IN()}
             >
               Уже есть аккаунт? Войти

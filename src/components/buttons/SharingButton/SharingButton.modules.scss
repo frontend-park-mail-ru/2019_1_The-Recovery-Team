@@ -1,0 +1,22 @@
+@import 'styles/constants';
+@import 'styles/mixins';
+
+.sharing-button {
+  @include buttonBase();
+  @include square(70px, 50%);
+
+  &:after {
+    content: '';
+    @include square(100%);
+    @include absoluteCenter();
+    @include svgBackground('./img/share.svg', 50%);
+  }
+
+  &__text {
+    display: block;
+    position: absolute;
+    bottom: 8px;
+    right: 25px;
+    @include text-medium(#ffffff);
+  }
+}

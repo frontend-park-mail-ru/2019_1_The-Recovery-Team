@@ -4,7 +4,7 @@ import * as React from 'libs/Cheburact';
 import { Route } from 'libs/Cheburouter';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import userStore, { userActions, UserUpdateSuccessPL } from 'store/userStore';
-// import ChatContainer from './ChatContainer';
+import ChatContainer from './ChatContainer';
 import Music from './Music';
 import SitePart from './SitePart';
 
@@ -44,7 +44,11 @@ class App extends React.Component {
           user={user}
         />
         <Music />
-        {/*<ChatContainer />*/}
+        <Route
+          component={ChatContainer}
+          negative={true}
+          template={routesMap.GAME_PART.template}
+        />
       </div>
     );
   }

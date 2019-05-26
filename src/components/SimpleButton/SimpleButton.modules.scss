@@ -15,6 +15,7 @@
   box-sizing: border-box;
   position: relative;
   border-radius: $global-border-radius;
+  display: block;
 
   @include buttonBase();
 
