@@ -10,10 +10,11 @@ textarea {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: #FFFFFF;
 
   &__messages {
     flex-grow: 1;
-    padding: 8px;
+    padding: $global-spacing-small;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -23,7 +24,7 @@ textarea {
   &__footer {
     width: 100%;
     height: 56px;
-    padding: 12px 8px;
+    padding: $global-spacing-small-medium $global-spacing-small;
     flex-grow: 0;
     flex-shrink: 0;
     display: flex;
@@ -33,15 +34,15 @@ textarea {
   &__button-container {
     flex-grow: 0;
     flex-shrink: 0;
-    margin-left: 8px;
+    margin-left: $global-spacing-small;
   }
 
   &__textarea {
     font-family: 'Exo 2', serif;
     width: calc(100% - 28px);
     overflow: hidden;
-    color: $global-color-primary-dark;
-    border-bottom: 1px solid $global-color-primary-dark;
+    color: $global-color-sad;
+    border-bottom: 1px solid $global-color-sad;
   }
 
   &__scroll {
@@ -49,20 +50,21 @@ textarea {
     right: 10%;
     bottom: 64px;
     background-size: contain;
-    @include square(36px);
     background: url("./img/Arrow.svg") no-repeat center;
     z-index: 1;
     cursor: pointer;
+
+    @include square(36px);
   }
 
   &__old-message {
     font-size: 12px;
     width: 80%;
-    height: 40px;
+    padding: $global-spacing-tiny;
     line-height: 40px;
-    border-radius: 20px;
-    background-color: $global-color-secondary-dark;
-    color: $global-color-primary-dark;
+    border-radius: $global-border-radius-giant;
+    background-color: $global-color-borders;
+    color: #FFFFFF;
     letter-spacing: 0.02em;
     text-align: center;
     position: relative;

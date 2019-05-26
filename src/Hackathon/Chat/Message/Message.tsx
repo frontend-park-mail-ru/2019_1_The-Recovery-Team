@@ -28,7 +28,7 @@ export default class Message extends React.Component {
           {!isMine && (
             <div className={cn('message__nickname')}>{user.nickname}</div>
           )}
-          {text}
+          <div>{text}</div>
           <div className={cn('message__created')}>{reformatDate(created)}</div>
         </div>
       </div>

@@ -49,6 +49,17 @@ $right-popup-indent: -20px;
     top: 80%;
   }
 
+  &__button {
+    border-radius: 50%;
+
+    @include square(40px);
+    @include hover {
+      background: lighten($global-color-blue, 10%);
+    }
+  }
+
+  &__volume {}
+
   &__entry {
     display: flex;
     align-items: center;

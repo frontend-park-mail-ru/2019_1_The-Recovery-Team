@@ -57,19 +57,20 @@ $local-height: 90px;
     cursor: pointer;
     color: $global-color-blue;
     font-size: $global-font-size-medium;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &_active {
+      background-color: $global-color-grey;
+    }
+
   }
 
   &__entry-text {
     font-size: $global-font-size-medium;
     color: $global-color-blue;
     margin-left: 10px;
-  }
-
-  &__entry-icon {
-    border-color: $global-color-blue;
-
-    &:after {
-      background-color: $global-color-blue;
-    }
   }
 }
