@@ -11,7 +11,6 @@
   box-sizing: border-box;
   border-radius: $global-border-radius;
 
-
   @include animate(background-color);
   $local-color-active: #15283C;
 
