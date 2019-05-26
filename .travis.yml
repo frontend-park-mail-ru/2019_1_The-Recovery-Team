@@ -2,13 +2,9 @@ language: node_js
 node_js:
 - 10
 
-script:
-- chmod 600 ./deploy_id_rsa.pem
-- ssh-keyscan -H 89.208.199.114 >> ~/.ssh/known_hosts
-- scp -i ./deploy_id_rsa.pem ./index.html ubuntu@89.208.199.114:/home/ubuntu/www
 branches:
   only:
-  - master
+  - travis
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_32509143ff02_key -iv $encrypted_32509143ff02_iv
@@ -23,4 +19,4 @@ before_script:
 
 script:
 - npm run build
-- scp -i ./travis_id_rsa -r ./docker-compose.yml ./public sadislands@$DEPLOYMENT_IP_ADDRESS:/home/sadislands/f/2019_1_The-Recovery-Team
+- scp -i ./travis_id_rsa -r ./public/ sadislands@$DEPLOYMENT_IP_ADDRESS:/home/sadislands/f/2019_1_The-Recovery-Team/tmp/
