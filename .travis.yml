@@ -19,8 +19,9 @@ before_script:
 
 script:
 - npm run build
-- scp -i ./travis_id_rsa -r ./public ./favicon.ico ./icon.png sadislands@$DEPLOYMENT_IP_ADDRESS:/home/sadislands/f/tmp/
+- scp -i ./travis_id_rsa -r ./public ./favicon.ico ./icon.png sadislands@$DEPLOYMENT_IP_ADDRESS:/home/sadislands/f/tmp
 - ssh -i ./travis_id_rsa sadislands@$DEPLOYMENT_IP_ADDRESS '
     cd /home/sadislands/f;
     rm -r 2019_1_The-Recovery-Team;
-    mv tmp 2019_1_The-Recovery-Team'
+    mv tmp 2019_1_The-Recovery-Team;
+    mkdir tmp'
