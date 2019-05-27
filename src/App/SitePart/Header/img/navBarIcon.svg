@@ -1,5 +1,1 @@
-<svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="28" height="4" fill="white"/>
-<rect y="7" width="28" height="4" fill="white"/>
-<rect y="14" width="28" height="4" fill="white"/>
-</svg>
+<svg width="28" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M0 0h28v4H0zM0 7h28v4H0zM0 14h28v4H0z"/></svg>

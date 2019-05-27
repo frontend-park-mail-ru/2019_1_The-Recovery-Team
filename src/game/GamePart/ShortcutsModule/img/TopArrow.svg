@@ -1,6 +1,1 @@
-<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="1.5" y="1.5" width="37" height="37" rx="8.5" fill="#EBFFFC" stroke="#1DA1AF" stroke-width="3"/>
-<line x1="20" y1="13" x2="20" y2="30" stroke="#0097A7" stroke-width="4"/>
-<line x1="21.4147" y1="11.3432" x2="14.3436" y2="18.4142" stroke="#0097A7" stroke-width="4"/>
-<line x1="25.5858" y1="18.4142" x2="18.5147" y2="11.3431" stroke="#0097A7" stroke-width="4"/>
-</svg>
+<svg width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="1.5" width="37" height="37" rx="8.5" fill="#EBFFFC" stroke="#1DA1AF" stroke-width="3"/><path stroke="#0097A7" stroke-width="4" d="M20 13v17M21.415 11.343l-7.071 7.071M25.586 18.414l-7.071-7.071"/></svg>
