@@ -4,7 +4,7 @@ node_js:
 
 branches:
   only:
-  - travis
+  - dev
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_32509143ff02_key -iv $encrypted_32509143ff02_iv
