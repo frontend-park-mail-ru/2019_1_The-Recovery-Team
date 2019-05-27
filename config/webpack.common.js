@@ -50,7 +50,7 @@ module.exports = {
                             modules: true,
                             importLoaders: 1,
                             sourceMap: false,
-                            localIdentName: isProd ? '[hash:base64:10]' : '[local][hash:base64:10]',
+                            localIdentName: '[local][hash:base64:10]',
                         }
                     },
                     {
