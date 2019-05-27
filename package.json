@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "main": "ENTRY=main webpack-dev-server --inline --config config/webpack.dev.js --progress",
-    "hackathon": "ENTRY=hackathon webpack-dev-server --inline --config config/webpack.dev.js --progress",
+    "main": "DEV=true ENTRY=main webpack-dev-server --inline --config config/webpack.dev.js --progress",
+    "hackathon": "DEV=true ENTRY=hackathon webpack-dev-server --inline --config config/webpack.dev.js --progress",
     "start": "npm run main && npm run hackathon",
     "build": "webpack --config config/webpack.prod.js --colors --progress --bail",
     "now-build": "npm run build"

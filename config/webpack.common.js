@@ -2,11 +2,15 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
+const isProd = !process.env.DEV;
 const srcPath = subPath => path.join(__dirname, '../src', subPath);
 const publicDir = path.join(__dirname, '..', '/public');
 
+console.log('MODE: ', isProd ? 'prod' : 'dev');
+
 module.exports = {
     context: path.resolve('./src'),
+    devtool: isProd ? 'cheap-source-map' : 'source-map',
     entry: {
         main: './index.tsx',
         hackathon: './Hackathon/index.tsx',
@@ -39,16 +43,14 @@ module.exports = {
             {
                 test: /\.s?css$/,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader
-                    },
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
                             modules: true,
                             importLoaders: 1,
                             sourceMap: false,
-                            localIdentName: '[local][hash:base64:10]',
+                            localIdentName: isProd ? '[hash:base64:10]' : '[local][hash:base64:10]',
                         }
                     },
                     {
