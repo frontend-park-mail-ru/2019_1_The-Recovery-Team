@@ -1,3 +1,4 @@
+import Avatar from 'components/Avatar';
 import CircleButton from 'components/buttons/CircleButton';
 import { circleButtonTypes } from 'components/buttons/CircleButton/modes';
 import Logotype from 'components/LogotypeNew';
@@ -21,7 +22,7 @@ import userStore, {
   userActions,
   UserUpdateSuccessPL,
 } from 'store/userStore';
-import Avatar from '../../../components/Avatar';
+import Popup from './Popup';
 import Tab from './Tab';
 
 const styles = require('./Header.modules.scss');
@@ -120,20 +121,20 @@ export default class Header extends React.Component {
   render() {
     const { user }: { user: Profile } = this.state as any;
     const { path, isMusicOn } = this.state;
-    const { onOpenSideBar } = this.props;
+    const { onOpenSideBar, onLogout } = this.props;
     const isRulesActive = match(routeCreators.TO_RULES(), path, false);
     const isLeadersActive = match(routeCreators.TO_LEADER_BOARD(), path, false);
     const isAboutActive = match(routeCreators.TO_ABOUT(), path, false);
     const isStartActive = match(routeCreators.TO_START(), path, false);
     const volumeButtonType = isMusicOn
-      ? circleButtonTypes.volumeOn
-      : circleButtonTypes.volumeOff;
+      ? circleButtonTypes.VOLUME_ON
+      : circleButtonTypes.VOLUME_OFF;
 
     return (
       <div className={cn('header')}>
         <div className={cn('header__content')}>
           <button className={cn('header__nav-bar')} onClick={onOpenSideBar} />
-          <div className={cn('header__volume')}>
+          <div className={cn('header__volume', 'header__button')}>
             <CircleButton type={volumeButtonType} onClick={this.toggleMusic} />
           </div>
           <div className={cn('header__tabbar')}>
@@ -177,7 +178,12 @@ export default class Header extends React.Component {
               >
                 {user.nickname}
               </div>
-              <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+              <div className={cn('header__avatar')}>
+                <Avatar to={routeCreators.TO_PROFILE()} avatar={user.avatar} />
+                <div className={cn('header__popup')}>
+                  <Popup user={user} onLogout={onLogout} />
+                </div>
+              </div>
             </button>
           ) : (
             <div className={cn('header__entry')}>
@@ -191,8 +197,9 @@ export default class Header extends React.Component {
                 Вход
               </a>
               <CircleButton
+                className={cn('header__button')}
                 onClick={this.handleEntrance}
-                type={circleButtonTypes.profile}
+                type={circleButtonTypes.PROFILE}
                 isActive={this.isEntryActive}
               />
             </div>

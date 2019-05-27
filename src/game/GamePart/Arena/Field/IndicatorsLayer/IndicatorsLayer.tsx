@@ -10,10 +10,11 @@ const cn = classNames(styles);
 // @ts-ignore
 @connectToCheburstore
 class IndicatorsLayer extends React.Component {
-  indicatorLineRef: HTMLElement | null;
+  indicatorLineRef: HTMLElement | null = null;
 
   state = {
     curActiveItemId: null,
+    curActiveItemType: null,
   };
 
   componentDidMount() {
@@ -31,55 +32,53 @@ class IndicatorsLayer extends React.Component {
   }
 
   updateItemIndicator = () => {
-    const { activeItems } = gameStore.select().state;
-    const myId = gameStore.selectMyId();
+    const { id, item } = gameStore.selectMyActiveItem();
 
-    let curItemId: null | number = null;
-    let curItem: null | GameModels.ActiveItem = null;
-    for (const [id, item] of Object.entries(activeItems)) {
-      if (item && item.playerId === myId) {
-        curItemId = id as any;
-        curItem = item;
-        break;
-      }
-    }
-
-    this.updateIndicatorLine(curItem);
-    if (curItemId !== this.state.curActiveItemId) {
+    this.updateIndicatorLine(item);
+    if (id !== this.state.curActiveItemId) {
       this.setState({
-        curActiveItemId: curItemId,
+        curActiveItemId: id,
+        curActiveItemType: item ? item.type : null,
       });
     }
   };
 
-  updateIndicatorLine = (item: null | GameModels.ActiveItem) => {
-    if (item === null) {
-      if (this.state.curActiveItemId) {
-        this.setState({
-          curActiveItemId: null,
-        });
-      }
-      return;
-    }
-
+  setIndicatorLineClassNames = (duration: number = ITEM_MAX_DURATION + 1) => {
     if (!this.indicatorLineRef) {
       return;
     }
 
+    if (duration <= ITEM_MAX_DURATION) {
+      this.indicatorLineRef.style.transition =
+        'background-color 1s linear, width 1s linear';
+    } else {
+      this.indicatorLineRef.style.removeProperty('transition');
+    }
+
     this.indicatorLineRef.style.width = `${Math.floor(
-      (Math.max(item.duration - 1, 0) / ITEM_MAX_DURATION) * 1000
+      (Math.max(duration - 1, 0) / ITEM_MAX_DURATION) * 1000
     ) / 10}%`;
 
-    const durationRatio = item.duration / ITEM_MAX_DURATION;
+    const durationRatio = duration / ITEM_MAX_DURATION;
 
     this.indicatorLineRef.className = cn(
       'indicators-layer__line-content',
-      durationRatio >= 0.66 && 'indicators-layer__line-content_full',
-      durationRatio < 0.66 &&
-        durationRatio >= 0.4 &&
+      durationRatio >= 0.7 && 'indicators-layer__line-content_full',
+      durationRatio < 0.7 &&
+        durationRatio >= 0.5 &&
         'indicators-layer__line-content_medium',
-      durationRatio < 0.4 && 'indicators-layer__line-content_empty'
+      durationRatio < 0.5 && 'indicators-layer__line-content_empty'
     );
+  };
+
+  updateIndicatorLine = (item: null | GameModels.ActiveItem) => {
+    if (item === null) {
+      // Восстанавливаем полную ширину;
+      this.setIndicatorLineClassNames();
+      return;
+    }
+
+    this.setIndicatorLineClassNames(item.duration);
   };
 
   setLineRef = r => {
@@ -88,13 +87,16 @@ class IndicatorsLayer extends React.Component {
   };
 
   render() {
+    const { curActiveItemId } = this.state;
     return (
       <div className={cn('indicators-layer')}>
-        <div className={cn('indicators-layer__line')}>
-          <div
-            ref={this.setLineRef}
-            className={cn('indicators-layer__line-content')}
-          />
+        <div
+          className={cn(
+            'indicators-layer__line',
+            !curActiveItemId && 'indicators-layer__line_hidden'
+          )}
+        >
+          <div ref={this.setLineRef} />
         </div>
       </div>
     );

@@ -10,15 +10,27 @@ export default class PlayButtonNew extends React.Component {
     const {
       className = '',
       type,
-      to = null,
+      blur = false,
+      blurText = '',
       onClick = () => null,
+      to,
     } = this.props;
-    const classes = `${className} ${cn('play-button', `play-button_${type}`)}`;
+    const classes = `${className} ${cn(
+      'play-button',
+      `play-button_${type}`,
+      blur && 'play-button_blur'
+    )}`;
 
     // tslint:disable-next-line:variable-name
     const Component = to ? Link : 'div';
     const params = to ? { to } : { onClick };
 
-    return <Component {...params} className={classes} />;
+    return (
+      <Component {...params} className={classes}>
+        {!!blurText && (
+          <div className={cn('play-button__blur-text')}>{blurText}</div>
+        )}
+      </Component>
+    );
   }
 }

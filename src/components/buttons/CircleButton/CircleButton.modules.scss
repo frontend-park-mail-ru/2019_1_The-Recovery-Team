@@ -6,6 +6,7 @@
   border: 1px solid #FFFFFF;
   position: relative;
   cursor: pointer;
+  @include animate(background);
 
   @include square(40px, 50%);
 
@@ -40,11 +41,34 @@
     }
   }
 
+  &_chat {
+    &:after {
+      mask: url("./img/chat.svg") no-repeat center;
+      background-color: #FFFFFF;
+    }
+  }
+
   &_active {
     border-color: $global-color-sad;
 
     &:after {
       background-color: $global-color-sad;
+    }
+  }
+
+  &_blue-fill {
+    background-color: $global-color-blue;
+
+    @include hover {
+      background: lighten($global-color-blue, 10%);
+    }
+  }
+
+  &_blue {
+    border-color: $global-color-blue;
+
+    &:after {
+      background-color: $global-color-blue;
     }
   }
 }

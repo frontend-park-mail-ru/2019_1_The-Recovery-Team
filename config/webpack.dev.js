@@ -20,7 +20,7 @@ module.exports = webpackMerge(commonConfig, {
     devServer: {
         publicPath: '/',
         host: '0.0.0.0',
-        port: isMain ? 5000 : 9000,
+        port: isMain ? 8000 : 9000,
         historyApiFallback: isMain ? true : {
             rewrites: [
                 { from: /^\/$/, to: '/hackathon/index.html' },

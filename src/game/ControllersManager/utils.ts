@@ -13,6 +13,7 @@ const itemsMap = {
   Space: GameModels.ItemType.LIFEBUOY,
 };
 
-export const keyCodeToDir = e => keysMap[e.code] || null;
+export const keyCodeToDir = (code): GameModels.Direction | null =>
+  keysMap[code] || null;
 
-export const keyCodeToItem = e => itemsMap[e.code] || null;
+export const keyCodeToItem = code => itemsMap[code] || null;

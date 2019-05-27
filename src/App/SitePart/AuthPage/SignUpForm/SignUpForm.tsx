@@ -96,6 +96,10 @@ export default class SignUpForm extends React.Component {
     }
   };
 
+  toFirstStage = () => {
+    this.setState({ firstSage: true });
+  };
+
   handleSubmit = async () => {
     const { nickname } = this.validateRequiredSecondStage();
 
@@ -184,6 +188,15 @@ export default class SignUpForm extends React.Component {
         />
         <div>
           <SimpleButton onClick={this.handleSubmit}>Сохранить</SimpleButton>
+        </div>
+        <div>
+          <SimpleButton
+            className={cn('sign-up-form__back-button')}
+            onClick={this.toFirstStage}
+            air={true}
+          >
+            Назад
+          </SimpleButton>
         </div>
       </div>
     );

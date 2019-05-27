@@ -15,6 +15,9 @@
   }
 }
 
+$local-light-gray-color: #E7E7E7;
+$local-dark-gray-color: #CACACA;
+
 .play-button {
   background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
   position: relative;
@@ -32,6 +35,21 @@
     @include square(100%);
     @include absoluteCenter;
   }
+
+  &_blur {
+    &:after {
+      background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
+      opacity: 0.2;
+    }
+  }
+
+  &__blur-text {
+    z-index: 2;
+
+    @include text-medium(#FFFFFF, $global-font-size-header);
+    @include absoluteCenter;
+  }
+
 
   &_play {
     @include playButtonBase(#629A36, #0D6721, './img/play.svg');

@@ -21,15 +21,25 @@ export default class SimpleButton extends React.Component {
       className = '',
       disabled = false,
       to = null,
+      href = null,
     } = this.props;
 
-    // noinspection TsLint
-    const Component = to ? Link : 'div';
-    const props = to ? { to } : { onClick: this.handleClick };
+    // tslint:disable-next-line:variable-name
+    let Component: any = 'div';
+    const params: any = {};
+    if (to) {
+      Component = Link;
+      params.to = to;
+    } else if (href) {
+      Component = 'a';
+      params.href = href;
+    } else {
+      params.onClick = this.handleClick;
+    }
 
     return (
       <Component
-        {...props}
+        {...params}
         className={`${className} ${cn(
           'simple-button',
           air && 'simple-button_air',

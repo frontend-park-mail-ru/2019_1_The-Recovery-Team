@@ -82,20 +82,31 @@ export default class Requester {
     );
   }
 
-  static get(url: string, data: Object = {}) {
-    let query = Object.entries(data)
+  static createQuery(data: Object = {}) {
+    return Object.entries(data)
       .filter(([key, value]) => !!value || value === 0)
       .map(
         ([key, value]) =>
           `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
       )
       .join('&');
+  }
+
+  static createHref(url: string, data: Object = {}) {
+    let query = Requester.createQuery(data);
 
     if (query.length) {
       query = `?${query}`;
     }
 
-    return Requester.doRequest(`${url}${query}`, HTTPMethods.GET);
+    return `${url}${query}`;
+  }
+
+  static get(url: string, data: Object = {}) {
+    return Requester.doRequest(
+      Requester.createHref(url, data),
+      HTTPMethods.GET
+    );
   }
 
   static put(url: string, data: Object = {}, multipart: boolean = false) {

@@ -2,9 +2,9 @@
 @import 'styles/mixins';
 @import 'styles/includeMedia.scss';
 
-$margin-l: 52px;
-$margin-m: 16px;
-$padding-m: 8px;
+$top-popup-indent: 60px;
+$right-popup-indent: -20px;
+
 
 .header {
   height: 90px;
@@ -27,7 +27,6 @@ $padding-m: 8px;
     position: relative;
   }
 
-
   &__nav-bar {
     display: none;
     width: 28px;
@@ -40,20 +39,7 @@ $padding-m: 8px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-  }
-
-  &__left-part {
-  }
-
-  &__right-part {
-  }
-
-  &__tab {
-    &_left {
-    }
-
-    &_right {
-    }
+    z-index: 1;
   }
 
   &__logotype {
@@ -61,6 +47,15 @@ $padding-m: 8px;
     transform: translate(-50%, -50%);
     left: 50%;
     top: 80%;
+  }
+
+  &__button {
+    border-radius: 50%;
+
+    @include square(40px);
+    @include hover {
+      background: lighten($global-color-blue, 10%);
+    }
   }
 
   &__volume {}
@@ -88,6 +83,7 @@ $padding-m: 8px;
     align-items: center;
     justify-content: flex-end;
     cursor: pointer;
+    position: relative;
   }
 
   &__nickname {
@@ -100,6 +96,22 @@ $padding-m: 8px;
     &_active {
       color: $global-color-sad;
     }
+  }
+
+  &__profile:hover &__popup {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__popup {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: $top-popup-indent;
+    right: $right-popup-indent;
+    z-index: 1;
+
+    @include animate(visibility, opacity);
   }
 
   @include media("<tablet") {
@@ -141,11 +153,11 @@ $padding-m: 8px;
 
     &__tab {
       &_left {
-        margin-right: $margin-m;
+        margin-right: $global-spacing-tiny;
       }
 
       &_right {
-        margin-left: $margin-m;
+        margin-left: $global-spacing-tiny;
       }
     }
   }
@@ -174,11 +186,11 @@ $padding-m: 8px;
 
     &__tab {
       &_left {
-        margin-right: $margin-l;
+        margin-right: $global-spacing-big;
       }
 
       &_right {
-        margin-left: $margin-l;
+        margin-left: $global-spacing-big;
       }
     }
   }

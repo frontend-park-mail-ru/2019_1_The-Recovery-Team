@@ -6,30 +6,65 @@ import { IControllersManager } from 'game/types';
 import { GameModels } from '../config';
 import { keyCodeToDir, keyCodeToItem } from './utils';
 
+const LOOP_DURATION = 16;
+const FRAME_COUNT = 5;
+
 export default class ControllersManager implements IControllersManager {
+  pressedKeys: Set<string> = new Set<string>();
+  loopInterval: any = null;
+
+  moveRequest: GameModels.Direction | null = null;
+  lastMoveIndex = 0;
+
   connect() {
-    window.addEventListener('keydown', this.handleUseItem);
-    window.addEventListener('keydown', this.handleMovePlayer);
+    if (this.loopInterval) {
+      clearInterval(this.loopInterval);
+      this.loopInterval = null;
+    }
+
+    this.loopInterval = setInterval(this.emitAll, LOOP_DURATION);
+
+    window.addEventListener('keydown', this.addKey);
+    window.addEventListener('keyup', this.removeKey);
   }
 
   disconnect() {
-    window.removeEventListener('keydown', this.handleUseItem);
-    window.removeEventListener('keydown', this.handleMovePlayer);
+    clearInterval(this.loopInterval);
+
+    window.removeEventListener('keydown', this.addKey);
+    window.removeEventListener('keyup', this.removeKey);
   }
 
-  handleUseItem = e =>
-    requestAnimationFrame(() => {
-      const itemType = keyCodeToItem(e);
-      if (!itemType) {
-        return;
+  addKey = (e: KeyboardEvent) => this.pressedKeys.add(e.code);
+  removeKey = (e: KeyboardEvent) => this.pressedKeys.delete(e.code);
+
+  emitAll = () => {
+    let curMoveRequest: GameModels.Direction | null = null;
+    this.pressedKeys.forEach(keyCode => {
+      const dir = keyCodeToDir(keyCode);
+      if (dir) {
+        curMoveRequest = dir;
       }
-      gameStore.emit(
-        actionGameInitItemUse({
-          itemType,
-          playerId: gameStore.selectMyId(),
-        })
-      );
     });
+    this.handleMovePlayer(curMoveRequest);
+
+    this.pressedKeys.forEach(keyCode => {
+      this.handleUseItem(keyCode);
+    });
+  };
+
+  handleUseItem = keyCode => {
+    const itemType = keyCodeToItem(keyCode);
+    if (!itemType) {
+      return;
+    }
+    gameStore.emit(
+      actionGameInitItemUse({
+        itemType,
+        playerId: gameStore.selectMyId(),
+      })
+    );
+  };
 
   emitMoveTo = (dir: GameModels.Direction) =>
     gameStore.emit(
@@ -47,13 +82,23 @@ export default class ControllersManager implements IControllersManager {
 
   emitRight = () => this.emitMoveTo(GameModels.Direction.RIGHT);
 
-  handleMovePlayer = e =>
-    requestAnimationFrame(() => {
-      const move = keyCodeToDir(e);
-      if (!move) {
+  handleMovePlayer = (curMoveRequest: GameModels.Direction | null) => {
+    // Обновляем последнее нажатие
+    if (this.moveRequest) {
+    }
+
+    if (this.lastMoveIndex === 0) {
+      this.moveRequest = curMoveRequest || this.moveRequest;
+      if (!this.moveRequest) {
         return;
       }
 
-      this.emitMoveTo(move);
-    });
+      const moveTo = this.moveRequest;
+      this.moveRequest = null;
+      this.emitMoveTo(moveTo);
+      this.lastMoveIndex = FRAME_COUNT;
+    } else {
+      this.lastMoveIndex = Math.max(0, this.lastMoveIndex - 1);
+    }
+  };
 }

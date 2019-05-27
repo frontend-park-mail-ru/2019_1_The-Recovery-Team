@@ -9,11 +9,13 @@
 
   &__play-buttons {
     text-align: center;
+    position: relative;
   }
 
   &__play-button {
     display: inline-block;
     margin-right: 50px;
+    z-index: 0;
 
     &:last-child {
       margin: 0;
@@ -38,5 +40,12 @@
     }
 
     @include square(150px);
+  }
+
+  &__sharing-button {
+    z-index: 1;
+    position: absolute;
+    bottom: -10px;
+    right: 0;
   }
 }

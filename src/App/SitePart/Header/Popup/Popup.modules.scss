@@ -1,0 +1,51 @@
+@import 'styles/mixins';
+@import 'styles/constants';
+
+$top-triangle-indent: 8px;
+$right-triangle-indent: 28px;
+
+.popup {
+  width: 250px;
+  padding: $global-spacing-medium-big;
+  border-radius: $global-border-radius-big;
+  background-color: #FFFFFF;
+  position: relative;
+
+  &:after {
+    content: '';
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    position: absolute;
+    transform: rotate(45deg) translate(-50%, -50%);
+    top: $top-triangle-indent;
+    right: $right-triangle-indent;
+
+    @include square(20px);
+  }
+
+  &__section {
+    display: inline-block;
+    width: 50%;
+  }
+
+  &__item-title {
+    text-align: left;
+    margin-bottom: $global-spacing-small;
+
+    @include text-medium($global-color-borders);
+  }
+
+  &__item {
+    text-align: left;
+
+    @include text-medium($global-color-blue);
+
+    &_right {
+      text-align: right;
+    }
+  }
+
+  &__button {
+    margin-top: $global-spacing-medium;
+  }
+}

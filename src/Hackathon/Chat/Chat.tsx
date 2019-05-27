@@ -1,3 +1,4 @@
+import SimpleButton from 'components/SimpleButton/SimpleButton';
 import chatStore, {
   actionChatInitGlobalMessages,
   ChatMessage,
@@ -158,11 +159,14 @@ export default class Chat extends React.Component {
     return (
       <div className={cn('chat')}>
         <div className={cn('chat__messages')} ref={r => (this.messagesRef = r)}>
-          <div
-            className={cn('chat__new-message', 'chat__old-message')}
-            onClick={this.handleLoadOld}
-          >
-            Загрузить старые сообщения
+          <div>
+            <SimpleButton
+              className={cn('leaders-page__load-button')}
+              onClick={this.handleLoadOld}
+              air={true}
+            >
+              Загрузить ещё
+            </SimpleButton>
           </div>
           {messages.map((msg: ChatMessage) => (
             <Message

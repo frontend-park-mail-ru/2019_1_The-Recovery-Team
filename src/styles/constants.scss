@@ -21,6 +21,7 @@ $global-font-size-xxl: 80px;
 $global-color-top-linear: #006064;
 $global-color-bottom-linear: #243555;
 $global-color-blue: #243555;
+$global-color-darker-blue: #15283a;
 $global-color-sad: #008287;
 $global-color-light-sad: #DAF2E8;
 $global-color-borders: #BDBDBD;
@@ -30,7 +31,9 @@ $global-color-grey: #E0E0E0;
 $global-input-height: 50px;
 $global-input-height-small: 25px;
 
+$global-spacing-tiny: 4px;
 $global-spacing-small: 8px;
+$global-spacing-small-medium: 12px;
 $global-spacing-medium: 16px;
 $global-spacing-medium-big: 24px;
 $global-spacing-big: 32px;
@@ -41,7 +44,8 @@ $global-font-size-header: 24px;
 
 $global-border-radius: 5px;
 $global-border-radius-big: 10px;
+$global-border-radius-giant: 20px;
 
 $global-z-index-modal-window: 9999;
-$global-z-index-chat: 9899;
-$global-z-index-side-bar: 9799;
+$global-z-index-side-bar: 9899;
+$global-z-index-chat: 9799;
