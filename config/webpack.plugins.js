@@ -59,9 +59,6 @@ module.exports = {
 
     prodPlugins: ({ publicDir }) => [
         manifestPlugin,
-        getEntry(mainPluginsConfig),
-        getEntry(hackathonPluginsConfig),
-        CSSPlugin,
         new WorkboxPlugin.GenerateSW({
             importsDirectory: `${publicDir}/static/js`,
             navigateFallback: '/index.html',
@@ -77,6 +74,9 @@ module.exports = {
                 }
             ]
         }),
+        getEntry(mainPluginsConfig),
+        getEntry(hackathonPluginsConfig),
+        CSSPlugin,
     ],
     devPlugins: ({ chunks, filename, title }) => [
         manifestPlugin,
