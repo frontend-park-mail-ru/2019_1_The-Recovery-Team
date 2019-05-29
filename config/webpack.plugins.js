@@ -65,7 +65,7 @@ module.exports = {
         new WorkboxPlugin.GenerateSW({
             importsDirectory: `${publicDir}/static/js`,
             navigateFallback: '/index.html',
-            navigateFallbackBlacklist: [/^\/api/],
+            navigateFallbackBlacklist: [/^\/api/, /^\/service-worker.js/],
             runtimeCaching: [
                 {
                     urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
