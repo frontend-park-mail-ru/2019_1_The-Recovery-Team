@@ -3,8 +3,10 @@ const registerFunc = async () => {
     const registration = await navigator.serviceWorker.register(
       '/service-worker.js'
     );
+    // tslint:disable-next-line:no-console
     console.info('SW registered: ', registration);
   } catch (e) {
+    // tslint:disable-next-line:no-console
     console.info('SW registration failed: ', e);
   }
 };
