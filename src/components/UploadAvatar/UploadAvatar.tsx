@@ -69,6 +69,7 @@ export default class UploadAvatar extends React.Component {
           Загрузить фото
         </label>
         <input
+          autocomplete="off"
           name={inputClass}
           id={inputClass}
           className={inputClass}

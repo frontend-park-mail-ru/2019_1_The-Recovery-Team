@@ -10,6 +10,7 @@ export default class SimpleInput extends React.Component {
   };
 
   handleFocus = () => this.setState({ active: true });
+
   handleBlur = () => {
     this.setState({ active: false });
     this.props.onBlur();
@@ -37,6 +38,7 @@ export default class SimpleInput extends React.Component {
           value={value}
           type={type}
           spellcheck="false"
+          autocomplete="new-password"
         />
         <div
           className={cn(

@@ -63,21 +63,21 @@ module.exports = {
         getEntry(hackathonPluginsConfig),
         CSSPlugin,
         new WorkboxPlugin.GenerateSW({
-            clientsClaim: true,
-            skipWaiting: true,
+            // clientsClaim: true,
+            // skipWaiting: true,
             importsDirectory: `${publicDir}/static/js`,
             navigateFallback: '/index.html',
             navigateFallbackBlacklist: [/^\/api/],
-            runtimeCaching: [
-                {
-                    urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
-                    handler: 'CacheFirst',
-                },
-                {
-                    urlPattern: /.*/,
-                    handler: 'NetworkFirst',
-                }
-            ]
+            // runtimeCaching: [
+            //     {
+            //         urlPattern: new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
+            //         handler: 'CacheFirst',
+            //     },
+            //     {
+            //         urlPattern: /.*/,
+            //         handler: 'NetworkFirst',
+            //     }
+            // ]
         }),
     ],
     devPlugins: ({ chunks, filename, title }) => [
