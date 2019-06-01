@@ -14,6 +14,7 @@ export default class PlayButtonNew extends React.Component {
       blurText = '',
       onClick = () => null,
       to,
+      description = null,
     } = this.props;
     const classes = `${className} ${cn(
       'play-button',
@@ -29,6 +30,16 @@ export default class PlayButtonNew extends React.Component {
       <Component {...params} className={classes}>
         {!!blurText && (
           <div className={cn('play-button__blur-text')}>{blurText}</div>
+        )}
+        {description && (
+          <div
+            className={cn(
+              'play-button__description',
+              `play-button__description_${type}`
+            )}
+          >
+            {description}
+          </div>
         )}
       </Component>
     );

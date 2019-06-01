@@ -43,6 +43,49 @@ $local-dark-gray-color: #CACACA;
     }
   }
 
+  &__description {
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100%;
+    left: 50%;
+    text-align: center;
+    top: 110%;
+    font-size: $global-font-size-large;
+    font-weight: 700;
+
+    :global(.isMobile) & {
+      font-size: $global-font-size-small;
+    }
+
+    &_play {
+      color: #0D6721;
+    }
+
+    &_restart {
+      color: #C8661F;
+    }
+
+    &_finish {
+      color: #2062DE;
+    }
+
+    &_profile {
+      color: #0D6721;
+    }
+
+    &_home {
+      color: #2062DE;
+    }
+
+    &_multi {
+      color: $global-color-blue;
+    }
+
+    &_single {
+      color: $global-color-blue;
+    }
+  }
+
   &__blur-text {
     z-index: 2;
 
