@@ -17,7 +17,7 @@
 
   &__img {
     height: 240px;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     flex-shrink: 0;
     border-radius: $global-border-radius;

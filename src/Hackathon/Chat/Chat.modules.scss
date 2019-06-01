@@ -21,6 +21,10 @@ textarea {
     position: relative;
   }
 
+  &__load-button {
+    margin-bottom: $global-spacing-small;
+  }
+
   &__footer {
     width: 100%;
     height: 56px;
@@ -38,11 +42,11 @@ textarea {
   }
 
   &__textarea {
-    font-family: 'Exo 2', serif;
     width: calc(100% - 28px);
     overflow: hidden;
     color: $global-color-sad;
     border-bottom: 1px solid $global-color-sad;
+    font-family: 'Open Sans', sans-serif;
   }
 
   &__scroll {

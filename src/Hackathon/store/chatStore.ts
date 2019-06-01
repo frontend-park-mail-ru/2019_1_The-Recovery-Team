@@ -42,7 +42,6 @@ class ChatStore extends Cheburstore<ChatState> {
     messages: {},
     users: {},
     mySessionId: null,
-    oldestMsgId: null,
   };
   messagesListRequested: boolean = false;
   connection: CheburSocket | null = null;
@@ -79,7 +78,7 @@ class ChatStore extends Cheburstore<ChatState> {
       return;
     }
 
-    const { oldestMsgId } = this.store;
+    const oldestMsgId = this.store.messageIds[0] || 0;
     const payload = oldestMsgId
       ? {
           start: oldestMsgId,
@@ -166,7 +165,6 @@ class ChatStore extends Cheburstore<ChatState> {
     });
 
     this.store.messageIds = [...ids, ...this.store.messageIds];
-    this.store.oldestMsgId = !ids.length ? null : ids[0];
     this.messagesListRequested = false;
 
     for (const msg of messages) {

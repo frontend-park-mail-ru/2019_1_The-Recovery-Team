@@ -144,12 +144,12 @@ export default class ModalWindow extends React.Component {
         </div>
         <div className={cn('modal-window__shortcuts')}>
           <img
-              src={controllersImg}
-              className={cn('modal-window__controllers-img')}
+            src={controllersImg}
+            className={cn('modal-window__controllers-img')}
           />
           <img
-              src={controllers2Img}
-              className={cn('modal-window__controllers-img')}
+            src={controllers2Img}
+            className={cn('modal-window__controllers-img')}
           />
         </div>
       </div>
