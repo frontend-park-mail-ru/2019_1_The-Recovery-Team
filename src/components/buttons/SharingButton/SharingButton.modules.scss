@@ -18,5 +18,11 @@
     bottom: 8px;
     right: 25px;
     @include text-medium(#ffffff);
+
+    :global(.isMobile) & {
+      @include text-medium(#ffffff, $global-font-size-small);
+      right: 20px;
+      bottom: 6px;
+    }
   }
 }
