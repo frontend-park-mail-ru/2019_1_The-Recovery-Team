@@ -35,13 +35,6 @@ export default class LeadersPage extends React.Component {
     this.setState({});
   }
 
-/*
-  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
-  handleUpdate() {
-    this.setState({});
-  }
-*/
-
   @onCheburevent(scoreboardStore, scoreboardActions.LOAD_SUCCESS)
   handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
     console.log('action', action);

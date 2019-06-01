@@ -31,13 +31,9 @@ export default class ControllersManager implements IControllersManager {
       window.addEventListener('keydown', this.addKey);
       window.addEventListener('keyup', this.removeKey);
     }
-
-    console.log('**** connect controllers', this);
   }
 
   disconnect() {
-    console.log('**** disconnect controllers', this);
-
     clearInterval(this.loopInterval);
     this.loopInterval = null;
     this.lastMoveIndex = 0;

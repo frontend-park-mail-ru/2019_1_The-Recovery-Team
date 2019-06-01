@@ -6,8 +6,6 @@ const isProd = !process.env.DEV;
 const srcPath = subPath => path.join(__dirname, '../src', subPath);
 const publicDir = path.join(__dirname, '..', '/public');
 
-console.log('MODE: ', isProd ? 'prod' : 'dev');
-
 module.exports = {
     context: path.resolve('./src'),
     devtool: isProd ? 'cheap-source-map' : 'source-map',
