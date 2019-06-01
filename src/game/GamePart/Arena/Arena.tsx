@@ -51,19 +51,6 @@ export default class Arena extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const { mode = GameModes.SINGLEPLAYER } = this.props;
-    const { user: me } = userStore.select();
-
-    gameStore.emit(
-      actionGameInit({
-        me,
-        isOnline: !!(mode === GameModes.MULTIPLAYER && me),
-        mode,
-      })
-    );
-  }
-
   handleFieldWidthChanged = fieldWidth =>
     this.setState({
       fieldWidth,
