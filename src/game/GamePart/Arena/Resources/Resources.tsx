@@ -4,6 +4,10 @@ import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
 
+const bombButtonImage = require('./img/bombButton.svg');
+const sandButtonImage = require('./img/sandButton.svg');
+const lifebuoyButtonImage = require('./img/lifebuoyButton.svg');
+
 const styles = require('./Resources.modules.scss');
 
 const cn = classNames(styles);
@@ -17,6 +21,11 @@ class Resources extends React.Component {
       [GameModels.ItemType.BOMB]: 0,
       [GameModels.ItemType.SAND]: 0,
       [GameModels.ItemType.LIFEBUOY]: 0,
+    },
+    shortcuts: {
+      [GameModels.ItemType.BOMB]: bombButtonImage,
+      [GameModels.ItemType.SAND]: sandButtonImage,
+      [GameModels.ItemType.LIFEBUOY]: lifebuoyButtonImage,
     },
   };
 
@@ -92,7 +101,7 @@ class Resources extends React.Component {
   };
 
   render() {
-    const { items, activeItemType } = this.state;
+    const { items, activeItemType, shortcuts } = this.state;
 
     return (
       <div class={cn('items-container')}>
@@ -114,6 +123,7 @@ class Resources extends React.Component {
             />
             <div className={cn('resource__counter')}>{`${items[type] ||
               0}`}</div>
+            <img src={shortcuts[type]} className={cn('resource__shortcut')} />
           </div>
         ))}
       </div>

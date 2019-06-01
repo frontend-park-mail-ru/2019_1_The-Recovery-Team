@@ -1,12 +1,12 @@
 import PlayButtonNew, {
   playButtonTypes,
 } from 'components/buttons/PlayButtonNew';
+import SharingButton from 'components/buttons/SharingButton';
 import MainBlock from 'components/MainBlock/MainBlock';
 import { routeCreators } from 'config/routes';
 import { GameModes } from 'game/config';
 import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
-import SharingButton from 'components/buttons/SharingButton';
 
 const styles = require('./StartPage.modules.scss');
 

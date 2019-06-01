@@ -2,7 +2,7 @@ const fieldImg = require('./img/Field.svg');
 const cellsTypesImg = require('./img/CellTypes.svg');
 const waterBarrierImg = require('./img/WaterBarrier.svg');
 const timerImg = require('./img/Timer.svg');
-const roundImg = require('./img/Round.svg');
+const resourcesImg = require('./img/Resources.svg');
 
 export const rules = [
   {
@@ -29,7 +29,7 @@ export const rules = [
   },
   {
     title: 'Title',
-    description: 'Старайтесь продержаться как можно дольше!',
-    img: roundImg,
+    description: 'Используйте ресурсы, чтобы дольше продержаться на острове!',
+    img: resourcesImg,
   },
 ];

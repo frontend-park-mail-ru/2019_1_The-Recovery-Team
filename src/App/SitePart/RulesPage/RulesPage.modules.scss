@@ -21,7 +21,6 @@
     object-fit: contain;
     object-position: center;
     flex-shrink: 0;
-    border-radius: $global-border-radius;
     width: 50%;
 
     @include media('<=phone') {

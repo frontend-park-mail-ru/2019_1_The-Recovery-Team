@@ -6,9 +6,8 @@
   background: linear-gradient(180deg, $gradientFrom 0%, $gradientTo 100%);
 
   @include animate(background);
-  @include hover {
-    background: linear-gradient(180deg, lighten($gradientFrom, 10%) 0%, lighten($gradientTo, 10%) 100%);
-  }
+  animation-name: gradient-fade;
+  animation-duration: 1.1s;
 
   &:after {
     @include svgBackground($image, 50%);
@@ -39,6 +38,24 @@ $local-dark-gray-color: #CACACA;
   &_blur {
     &:after {
       background: linear-gradient(180deg, $global-color-sad 0%, $global-color-blue 100%);
+      opacity: 0.2;
+    }
+  }
+
+  &:before {
+    content: '';
+    z-index: 2;
+
+    @include square(100%, 50%);
+    @include absoluteCenter;
+
+    background: #FFFFFF;
+    opacity: 0;
+    @include animate(opacity);
+  }
+
+  @include hover {
+    &:before {
       opacity: 0.2;
     }
   }
