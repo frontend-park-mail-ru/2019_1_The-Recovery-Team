@@ -11,6 +11,10 @@
 
   min-width: 400px;
 
+  :not(:global(.isMobile)) & {
+    min-width: 650px;
+  }
+
   :global(.isMobile) & {
     margin: $global-spacing-small auto 0;
   }

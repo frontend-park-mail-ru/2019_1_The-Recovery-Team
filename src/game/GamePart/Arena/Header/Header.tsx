@@ -50,7 +50,13 @@ export default class Header extends React.Component {
     const { width } = this.props;
     if (this.containerRef && width) {
       this.containerRef.style.width = `${width}px`;
+      this.containerRef.style.visibility = 'visible';
     }
+  };
+
+  registerRef = (r: HTMLElement) => {
+    r.style.visibility = 'hidden';
+    this.containerRef = r;
   };
 
   render() {
@@ -58,7 +64,7 @@ export default class Header extends React.Component {
     const { me = null, opponent = null } = this.state;
 
     return (
-      <div className={cn('header')} ref={r => (this.containerRef = r)}>
+      <div className={cn('header')} ref={this.registerRef}>
         <div className={cn('header__me')}>
           <PlayerLabel user={me} />
         </div>

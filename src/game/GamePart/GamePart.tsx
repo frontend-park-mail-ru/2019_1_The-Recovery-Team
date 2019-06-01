@@ -29,7 +29,9 @@ export default class GamePart extends React.Component {
   };
 
   async componentDidMount() {
-    await this.updateContentBounds().requestFullScreen();
+    await this.handleReload()
+      .updateContentBounds()
+      .requestFullScreen();
     window.addEventListener('resize', this.updateContentBounds);
   }
 
@@ -107,6 +109,7 @@ export default class GamePart extends React.Component {
     this.setState({
       modalWindowType: null,
     });
+    return this;
   };
 
   toInfoState = () => this.setState({ modalWindowType: gamePageTypes.INFO });

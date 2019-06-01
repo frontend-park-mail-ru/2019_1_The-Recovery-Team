@@ -1,11 +1,10 @@
 import { GameModes } from 'game/config';
 import ControllersManager from 'game/ControllersManager';
-import gameStore, { actionGameInit, gameStoreActions } from 'game/store';
+import gameStore, { gameStoreActions } from 'game/store';
 import { IControllersManager } from 'game/types';
 import * as React from 'libs/Cheburact';
 import { connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
-import userStore from 'store/userStore';
 import Controllers from './Controllers';
 import Field from './Field';
 import Header from './Header';
@@ -49,19 +48,6 @@ export default class Arena extends React.Component {
     if (this.controllersManager) {
       this.controllersManager.disconnect();
     }
-  }
-
-  componentDidMount() {
-    const { mode = GameModes.SINGLEPLAYER } = this.props;
-    const { user: me } = userStore.select();
-
-    gameStore.emit(
-      actionGameInit({
-        me,
-        isOnline: !!(mode === GameModes.MULTIPLAYER && me),
-        mode,
-      })
-    );
   }
 
   handleFieldWidthChanged = fieldWidth =>
