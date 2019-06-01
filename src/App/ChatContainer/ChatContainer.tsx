@@ -15,6 +15,8 @@ const hackathonUrl = isProd
   : 'http://localhost:9000';
 
 export default class ChatContainer extends React.Component {
+  containerRef: HTMLElement | null = null;
+
   state = {
     isOpen: false,
   };
@@ -23,6 +25,15 @@ export default class ChatContainer extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen,
     });
+  };
+
+  registerContainerRef = r => {
+    this.containerRef = r;
+    const iframe = document.createElement('iframe');
+    r.appendChild(iframe);
+    iframe.src = hackathonUrl;
+    iframe.width = '100%';
+    iframe.height = '100%';
   };
 
   render() {
@@ -42,14 +53,10 @@ export default class ChatContainer extends React.Component {
           onClick={this.toggle}
           style={circleButtonStyles.BLUE_FILL}
         />
-        <div className={cn('chat__content', isOpen && 'chat__content_open')}>
-          <iframe
-            className={cn('chat__iframe')}
-            width="100%"
-            height="100%"
-            src={hackathonUrl}
-          />
-        </div>
+        <div
+          className={cn('chat__content', isOpen && 'chat__content_open')}
+          ref={this.registerContainerRef}
+        />
       </div>
     );
   }
