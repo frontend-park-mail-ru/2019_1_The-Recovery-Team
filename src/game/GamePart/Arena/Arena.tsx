@@ -9,7 +9,6 @@ import Controllers from './Controllers';
 import Field from './Field';
 import Header from './Header';
 import Resources from './Resources';
-import SearchPage from './SearchPage';
 
 const styles = require('./Arena.modules.scss');
 
