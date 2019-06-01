@@ -11,7 +11,7 @@ import {
   scoreboardActions,
   UpdateLeadersPL,
 } from 'store/scoreboardStore/actions';
-import userStore, { userActions } from 'store/userStore';
+import userStore, { actionUserUpdate, userActions } from 'store/userStore';
 
 const cn = classNames(styles);
 
@@ -25,6 +25,7 @@ export default class LeadersPage extends React.Component {
 
   componentDidMount() {
     this.handleLoadNextPage();
+    userStore.emit(actionUserUpdate());
   }
 
   handleLoadNextPage = () => scoreboardStore.emit(actionScoreboardLoad());
@@ -52,7 +53,7 @@ export default class LeadersPage extends React.Component {
     const { user: me } = userStore.select();
     let leadersCounter = 0;
     let lastRating = null;
-    console.log('me',me);
+    console.log('me', me);
 
     return (
       <MainBlock className={cn('leaders-page')}>

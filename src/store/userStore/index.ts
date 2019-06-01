@@ -62,6 +62,27 @@ class UserStore extends Cheburstore<ProfileState> {
     }
   }
 
+  @cheburhandler(userActions.UPDATE)
+  async update() {
+    const { id } = this.select().user || { id: '' };
+    if (id === '') {
+      return;
+    }
+    const profile = await this.getProfile(id);
+
+    this.store.user = profile;
+    return this.emit(
+      actionUserUpdateSuccess({
+        profile,
+      })
+    );
+  }
+
+  async getProfile(id: number | string) {
+    const userResp = await Requester.get(API.profileItem(id || ''));
+    return normalizeProfileGet(userResp);
+  }
+
   @cheburhandler(userActions.CHECK_AUTH)
   async authorize() {
     const sessionResp = await Requester.get(API.sessions());
@@ -71,8 +92,8 @@ class UserStore extends Cheburstore<ProfileState> {
       return;
     }
 
-    const userResp = await Requester.get(API.profileItem(id || ''));
-    const profile = normalizeProfileGet(userResp);
+    const profile = await this.getProfile(id);
+
     if (profile === null) {
       this.finalizeLogout();
       return;
