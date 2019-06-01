@@ -35,13 +35,16 @@ export default class LeadersPage extends React.Component {
     this.setState({});
   }
 
+/*
   @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
   handleUpdate() {
     this.setState({});
   }
+*/
 
   @onCheburevent(scoreboardStore, scoreboardActions.LOAD_SUCCESS)
   handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
+    console.log('action', action);
     this.setState({
       leaders: action.payload.leaders,
       hasMore: action.payload.hasMore,
@@ -54,6 +57,7 @@ export default class LeadersPage extends React.Component {
     let leadersCounter = 0;
     let lastRating = null;
     console.log('me', me);
+    console.log('state', this.state);
 
     return (
       <MainBlock className={cn('leaders-page')}>
