@@ -3,7 +3,6 @@ const cellsTypesImg = require('./img/CellTypes.svg');
 const waterBarrierImg = require('./img/WaterBarrier.svg');
 const timerImg = require('./img/Timer.svg');
 const roundImg = require('./img/Round.svg');
-const controllersImg = require('./img/Controllers.svg');
 
 export const rules = [
   {
@@ -32,10 +31,5 @@ export const rules = [
     title: 'Title',
     description: 'Старайтесь продержаться как можно дольше!',
     img: roundImg,
-  },
-  {
-    title: 'Title',
-    description: 'Управляйте вашим крабом с помощью клавиш.',
-    img: controllersImg,
   },
 ];
