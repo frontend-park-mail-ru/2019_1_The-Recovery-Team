@@ -31,6 +31,7 @@ export default class Chat extends React.Component {
     myId: null,
     mySessionId: null,
     isScrolled: false,
+    hasMore: true,
   };
   textareaRef: HTMLTextAreaElement | null = null;
   messagesRef: HTMLElement | null = null;
@@ -94,9 +95,13 @@ export default class Chat extends React.Component {
   @onCheburevent(chatStore, chatActions.SET_MESSAGE)
   handleMessagesUpdated() {
     const { messageIds, messages, users } = chatStore.select();
-    const messageList = messageIds.map(id => messages[id]);
+    const messageList = messageIds.map(id => {
+      return messages[id];
+    });
+
     this.setState({
       users,
+      hasMore: !messageIds.includes(1),
       messages: messageList,
     });
   }
@@ -128,7 +133,7 @@ export default class Chat extends React.Component {
   componentDidMount() {
     chatStore.emit(actionChatInitialize());
     this.selectMe();
-    this.handleMessagesUpdated();
+    this.handleLoadOld();
 
     if (this.messagesRef) {
       this.messagesRef.addEventListener('scroll', this.handleMessagesScroll);
@@ -144,6 +149,7 @@ export default class Chat extends React.Component {
     this.setState({
       users: chatStore.select().users,
       messages: payload.messages,
+      hasMore: !chatStore.select().messageIds.includes(1),
     });
   }
 
@@ -154,20 +160,23 @@ export default class Chat extends React.Component {
       users,
       mySessionId,
       isScrolled,
+      hasMore,
     } = this.state;
 
     return (
       <div className={cn('chat')}>
         <div className={cn('chat__messages')} ref={r => (this.messagesRef = r)}>
-          <div>
-            <SimpleButton
-              className={cn('leaders-page__load-button')}
-              onClick={this.handleLoadOld}
-              air={true}
-            >
-              Загрузить ещё
-            </SimpleButton>
-          </div>
+          {hasMore && (
+            <div>
+              <SimpleButton
+                className={cn('chat__load-button')}
+                onClick={this.handleLoadOld}
+                air={true}
+              >
+                Загрузить ещё
+              </SimpleButton>
+            </div>
+          )}
           {messages.map((msg: ChatMessage) => (
             <Message
               user={users[msg.authorId as any] || null}

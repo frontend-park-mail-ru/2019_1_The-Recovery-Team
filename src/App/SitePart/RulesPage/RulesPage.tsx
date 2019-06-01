@@ -17,11 +17,11 @@ export default class RulesPage extends React.Component {
         <div className={cn('rules-page')}>
           <div className={cn('rules-page__controllers-container')}>
             <img
-              src={controllersImg}
+              src={controllers2Img}
               className={cn('rules-page__controllers-img')}
             />
             <img
-              src={controllers2Img}
+              src={controllersImg}
               className={cn('rules-page__controllers-img')}
             />
           </div>
