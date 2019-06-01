@@ -3,9 +3,10 @@ import * as React from 'libs/Cheburact';
 import classNames from 'libs/classNames';
 import { rules } from './config';
 import RuleSection from './RuleSection';
+const controllers2Img = require('config/img/controllers2.svg');
+const controllersImg = require('config/img/controllers.svg');
+
 const styles = require('./RulesPage.modules.scss');
-const controllersImg = require('./img/controllers.svg');
-const controllers2Img = require('./img/controllers2.svg');
 
 const cn = classNames(styles);
 

@@ -55,9 +55,8 @@ export default class LeadersPage extends React.Component {
     const { leaders, hasMore } = this.state;
     const { user: me } = userStore.select();
     let leadersCounter = 0;
+    let leadersRealCounter = 0;
     let lastRating = null;
-    console.log('me', me);
-    console.log('state', this.state);
 
     return (
       <MainBlock className={cn('leaders-page')}>
@@ -89,8 +88,9 @@ export default class LeadersPage extends React.Component {
 
         <div className={cn('rows-block', 'rows-block', 'leaders-page__users')}>
           {leaders.map((user: any) => {
+            leadersRealCounter++;
             if (lastRating !== user.record) {
-              leadersCounter++;
+              leadersCounter = leadersRealCounter;
             }
             lastRating = user.record;
             if (user.id !== (me || { id: null }).id) {

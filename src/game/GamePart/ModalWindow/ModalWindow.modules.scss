@@ -84,7 +84,7 @@
 
   &__game-buttons-container {
     display: inline-flex;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 
     :global(.isMobile) & {
       margin-bottom: 10px;
@@ -103,12 +103,20 @@
     }
   }
 
+  &__controllers-img {
+    height: 143px;
+    object-fit: contain;
+    object-position: center;
+    flex-shrink: 0;
+    width: 50%;
+  }
+
   &__shortcuts {
     z-index: 1;
-    width: 760px;
-    height: 85px;
-
-    @include svgBackground('./img/shortCuts.svg', 100%);
+    width: 756px;
+    height: 143px;
+    display: flex;
+    flex-direction: row;
 
     :global(.isMobile) & {
       display: none;

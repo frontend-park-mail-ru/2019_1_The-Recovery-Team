@@ -21,8 +21,11 @@ import musicStore, {
   MusicChangedPL,
 } from 'store/musicStore';
 import userStore, { actionUserUpdate, userActions } from 'store/userStore';
+
 import { gamePageTypes } from '../gamePageTypes';
 
+const controllersImg = require('config/img/controllers.svg');
+const controllers2Img = require('config/img/controllers2.svg');
 const styles = require('./ModalWindow.modules.scss');
 
 const cn = classNames(styles);
@@ -215,7 +218,16 @@ export default class ModalWindow extends React.Component {
             />
           ))}
         </div>
-        <div className={cn('modal-window__shortcuts')} />
+        <div className={cn('modal-window__shortcuts')}>
+          <img
+              src={controllersImg}
+              className={cn('modal-window__controllers-img')}
+          />
+          <img
+              src={controllers2Img}
+              className={cn('modal-window__controllers-img')}
+          />
+        </div>
       </div>
     );
   }
