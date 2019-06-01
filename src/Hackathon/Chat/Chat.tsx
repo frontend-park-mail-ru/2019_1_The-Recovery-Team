@@ -154,6 +154,8 @@ export default class Chat extends React.Component {
   }
 
   render() {
+    console.log('RENDER');
+
     const {
       currentMessage,
       messages,
