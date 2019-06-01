@@ -50,6 +50,8 @@ export default class LeadersPage extends React.Component {
   render() {
     const { leaders, hasMore } = this.state;
     const { user: me } = userStore.select();
+    let leadersCounter = 0;
+    console.log('me',me);
 
     return (
       <MainBlock className={cn('leaders-page')}>
@@ -65,7 +67,9 @@ export default class LeadersPage extends React.Component {
           <div className={cn('rows-block', 'rows-block_me')}>
             <div className={cn('row')}>
               <div className={cn('row__col', 'row__col_index')}>
-                <span className={cn('circle', 'circle_me')}>{`${me.id}`}</span>
+                <span className={cn('circle', 'circle_me')}>{`${
+                  me.position
+                }`}</span>
               </div>
               <div className={cn('row__col', 'row__col_user')}>
                 {me.nickname}
@@ -78,12 +82,13 @@ export default class LeadersPage extends React.Component {
         )}
 
         <div className={cn('rows-block', 'rows-block', 'leaders-page__users')}>
-          {leaders.map(
-            (user: any, index) =>
-              user.id !== (me || { id: null }).id && (
+          {leaders.map((user: any) => {
+            leadersCounter++;
+            if (user.id !== (me || { id: null }).id) {
+              return (
                 <div className={cn('row')}>
                   <div className={cn('row__col', 'row__col_index')}>
-                    <span className={cn('circle')}>{`${index + 1}`}</span>
+                    <span className={cn('circle')}>{`${leadersCounter}`}</span>
                   </div>
                   <div className={cn('row__col', 'row__col_user')}>
                     {user.nickname}
@@ -92,8 +97,9 @@ export default class LeadersPage extends React.Component {
                     {`${user.record}`}
                   </div>
                 </div>
-              )
-          )}
+              );
+            }
+          })}
           {hasMore && (
             <div>
               <SimpleButton

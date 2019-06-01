@@ -71,6 +71,7 @@ export default class Header extends React.Component {
     if (path !== window.location.pathname) {
       this.setState({
         path: window.location.pathname,
+        user: userStore.select().user,
       });
     }
   }
