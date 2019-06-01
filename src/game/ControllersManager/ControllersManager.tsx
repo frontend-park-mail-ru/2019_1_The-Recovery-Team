@@ -10,6 +10,8 @@ const LOOP_DURATION = 16;
 const FRAME_COUNT = 5;
 
 export default class ControllersManager implements IControllersManager {
+  hasListeners: boolean = false;
+
   pressedKeys: Set<string> = new Set<string>();
   loopInterval: any = null;
 
@@ -24,15 +26,27 @@ export default class ControllersManager implements IControllersManager {
 
     this.loopInterval = setInterval(this.emitAll, LOOP_DURATION);
 
-    window.addEventListener('keydown', this.addKey);
-    window.addEventListener('keyup', this.removeKey);
+    if (!this.hasListeners) {
+      this.hasListeners = true;
+      window.addEventListener('keydown', this.addKey);
+      window.addEventListener('keyup', this.removeKey);
+    }
+
+    console.log('**** connect controllers', this);
   }
 
   disconnect() {
+    console.log('**** disconnect controllers', this);
+
     clearInterval(this.loopInterval);
+    this.loopInterval = null;
+    this.lastMoveIndex = 0;
+    this.moveRequest = null;
+    this.pressedKeys = new Set<string>();
 
     window.removeEventListener('keydown', this.addKey);
     window.removeEventListener('keyup', this.removeKey);
+    this.hasListeners = false;
   }
 
   addKey = (e: KeyboardEvent) => this.pressedKeys.add(e.code);

@@ -36,6 +36,7 @@ interface GameStoreState {
 @cheburmodel
 export default class GameStore extends Cheburstore<GameStoreState> {
   transport: ITransport | null = null;
+  gameStarted: boolean = false;
 
   constructor() {
     super();
@@ -43,6 +44,7 @@ export default class GameStore extends Cheburstore<GameStoreState> {
   }
 
   handleGameOver() {
+    this.gameStarted = false;
     const myId = gameStore.selectMyId();
     const { loseRound = null } = gameStore.select().state.players[myId] || {};
     this.emit(
@@ -150,6 +152,7 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     );
 
     if (action.type === gameTransportActions.SET_STATE && this.transport) {
+      this.gameStarted = true;
       await this.transport.send(
         actionInitPlayerReady({
           playerId: (this.store.me as any).id,
@@ -164,10 +167,13 @@ export default class GameStore extends Cheburstore<GameStoreState> {
     this.store.state = stateReducer(this.store.state, action);
     switch (action.type) {
       case gameTransportActions.SET_STATE:
-        window.requestAnimationFrame(() => this.emit(actionSetState()));
+        this.emit(actionSetState());
         return;
       case gameTransportActions.SET_STATE_DIFF:
-        window.requestAnimationFrame(() => this.emit(actionSetStateUpdated()));
+        if (!this.gameStarted) {
+          return;
+        }
+        this.emit(actionSetStateUpdated());
         return;
       case gameTransportActions.SET_DISCONNECTED:
       case gameTransportActions.SET_GAME_OVER:

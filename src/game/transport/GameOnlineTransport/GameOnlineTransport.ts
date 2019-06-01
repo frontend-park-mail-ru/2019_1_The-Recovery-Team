@@ -20,8 +20,8 @@ export default class GameOnlineTransport extends Cheburstore<null>
   receiver: TransportCallback | null = null;
   connection: CheburSocket | null = null;
 
-  async init(receiver: TransportCallback): Promise<ResultPL> {
-    await this.stop();
+  init(receiver: TransportCallback): ResultPL {
+    this.stop();
 
     this.receiver = receiver;
     this.connection = new CheburSocket(WS_URL).setDispatcher(this).connect();
@@ -31,7 +31,7 @@ export default class GameOnlineTransport extends Cheburstore<null>
     };
   }
 
-  async stop(): Promise<ResultPL> {
+  stop(): ResultPL {
     if (!this.isConnected) {
       return { success: false, message: '' };
     }
@@ -41,11 +41,12 @@ export default class GameOnlineTransport extends Cheburstore<null>
       this.connection.disconnect();
       this.connection = null;
     }
+
     this.isConnected = false;
-    return Promise.resolve({
+    return {
       success: true,
       message: 'Successfully disconnected from WS',
-    });
+    };
   }
 
   send(action: Action<any>) {
@@ -68,7 +69,7 @@ export default class GameOnlineTransport extends Cheburstore<null>
   }
 
   @cheburhandler(cheburSocketActions.DISCONNECTED)
-  async handleDisconnected() {
+  handleDisconnected() {
     if (this.receiver) {
       this.receiver({
         type: gameTransportActions.SET_DISCONNECTED,
@@ -76,7 +77,7 @@ export default class GameOnlineTransport extends Cheburstore<null>
       });
     }
 
-    await this.stop();
+    this.stop();
   }
 
   @cheburhandler(cheburSocketActions.CONNECTED)

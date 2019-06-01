@@ -20,29 +20,29 @@ export default class GameOfflineTransport implements ITransport {
     this.mode = mode;
   }
 
-  async init(receiver: TransportCallback): Promise<ResultPL> {
+  init(receiver: TransportCallback): ResultPL {
     if (this.sender) {
-      await this.stop();
+      this.stop();
     }
 
     this.receiver = receiver;
     this.sender = initEngine(this.receive);
 
-    return Promise.resolve({
+    return {
       success: true,
       message: 'Successfully started engine',
-    });
+    };
   }
 
-  async stop(): Promise<ResultPL> {
+  stop(): ResultPL {
     this.send(actionInitGameStop());
 
     this.receiver = null;
     this.sender = null;
-    return Promise.resolve({
+    return {
       success: true,
       message: 'Successfully stopped engine',
-    });
+    };
   }
 
   send(action: Action<any>) {

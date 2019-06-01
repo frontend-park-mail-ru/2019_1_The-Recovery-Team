@@ -30,6 +30,24 @@ export default class Arena extends React.Component {
   handleGameChanged() {
     if (!this.state.gameStarted) {
       this.setState({ gameStarted: true });
+      if (!this.controllersManager) {
+        this.controllersManager = new ControllersManager();
+      }
+      this.controllersManager.connect();
+    }
+  }
+
+  @onCheburevent(gameStore, gameStoreActions.SET_GAME_OVER)
+  handleGameOver() {
+    this.setState({
+      gameStarted: false,
+    });
+    this.disconnectManager();
+  }
+
+  disconnectManager() {
+    if (this.controllersManager) {
+      this.controllersManager.disconnect();
     }
   }
 
@@ -44,9 +62,6 @@ export default class Arena extends React.Component {
         mode,
       })
     );
-
-    this.controllersManager = new ControllersManager();
-    this.controllersManager.connect();
   }
 
   handleFieldWidthChanged = fieldWidth =>
@@ -73,8 +88,6 @@ export default class Arena extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.controllersManager) {
-      this.controllersManager.disconnect();
-    }
+    this.disconnectManager();
   }
 }
