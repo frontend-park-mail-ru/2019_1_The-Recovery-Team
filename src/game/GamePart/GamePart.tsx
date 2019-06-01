@@ -34,17 +34,12 @@ export default class GamePart extends React.Component {
   }
 
   requestFullScreen = async (): Promise<GamePart> => {
-    if (!this.root) {
+    if (!this.root || !getIsMobile()) {
       return this;
     }
     try {
       await this.root.requestFullscreen();
-      // tslint:disable-next-line:no-console
-      console.log('FULLSCREEN');
-    } catch {
-      // tslint:disable-next-line:no-console
-      console.log('CAN NOT OPEN FULLSCREEN');
-    }
+    } catch {}
     return this;
   };
 
@@ -145,6 +140,7 @@ export default class GamePart extends React.Component {
   }
 
   componentWillUnmount() {
+    gameStore.emit(actionGameStop());
     window.removeEventListener('resize', this.updateContentBounds);
   }
 }

@@ -61,14 +61,17 @@ export default class ModalWindow extends React.Component {
     const reloadButton = {
       type: playButtonTypes.RESTART,
       onClick: onReload,
+      key: playButtonTypes.RESTART,
     };
     const continueButton = {
       type: playButtonTypes.PLAY,
       onClick: onClose,
+      key: playButtonTypes.PLAY,
     };
     const finishButton = {
       type: playButtonTypes.FINISH,
       onClick: onGiveUp,
+      key: playButtonTypes.FINISH,
     };
 
     if (type === gamePageTypes.INFO) {
@@ -80,10 +83,12 @@ export default class ModalWindow extends React.Component {
     const profileButton = {
       type: playButtonTypes.PROFILE,
       to: routeCreators.TO_PROFILE(),
+      key: playButtonTypes.PROFILE,
     };
     const homeButton = {
       type: playButtonTypes.HOME,
       to: routeCreators.TO_START(),
+      key: playButtonTypes.HOME,
     };
 
     if (type === gamePageTypes.SEARCH) {
