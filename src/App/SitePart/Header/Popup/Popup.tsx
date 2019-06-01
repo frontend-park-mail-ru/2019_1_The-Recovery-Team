@@ -13,7 +13,7 @@ export default class Popup extends React.Component {
       <div className={cn('popup')}>
         <div className={cn('popup__section')}>
           <div className={cn('popup__item-title')}>Место</div>
-          <div className={cn('popup__item')}>{`${user.record || 0}`}</div>
+          <div className={cn('popup__item')}>{`${user.position}`}</div>
         </div>
         <div className={cn('popup__section')}>
           <div className={cn('popup__item-title', 'popup__item_right')}>

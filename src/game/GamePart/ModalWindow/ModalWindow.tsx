@@ -62,16 +62,19 @@ export default class ModalWindow extends React.Component {
       type: playButtonTypes.RESTART,
       onClick: onReload,
       key: playButtonTypes.RESTART,
+      description: 'Начать заново',
     };
     const continueButton = {
       type: playButtonTypes.PLAY,
       onClick: onClose,
       key: playButtonTypes.PLAY,
+      description: 'Продолжить',
     };
     const finishButton = {
       type: playButtonTypes.FINISH,
       onClick: onGiveUp,
       key: playButtonTypes.FINISH,
+      description: 'Сдаться',
     };
 
     if (type === gamePageTypes.INFO) {
@@ -84,11 +87,13 @@ export default class ModalWindow extends React.Component {
       type: playButtonTypes.PROFILE,
       to: routeCreators.TO_PROFILE(),
       key: playButtonTypes.PROFILE,
+      description: 'Профиль',
     };
     const homeButton = {
       type: playButtonTypes.HOME,
       to: routeCreators.TO_START(),
       key: playButtonTypes.HOME,
+      description: 'Главная страница',
     };
 
     if (type === gamePageTypes.SEARCH) {

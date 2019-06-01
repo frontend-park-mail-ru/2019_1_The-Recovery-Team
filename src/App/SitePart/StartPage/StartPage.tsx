@@ -28,14 +28,16 @@ export default class StartPage extends React.Component {
               type={playButtonTypes.SINGLEPLAYER}
               to={routeCreators.TO_GAME_PART(GameModes.SINGLEPLAYER)}
             />
-            <PlayButtonNew
-              blur={!authorized}
-              blurText={!authorized && 'Войти'}
-              className={cn('start-page__play-button')}
-              type={playButtonTypes.MULTIPLAYER}
-              to={multiTo}
-            />
-            <SharingButton className={cn('start-page__sharing-button')} />
+            <div className={cn('start-page__play-button')}>
+              <PlayButtonNew
+                blur={!authorized}
+                blurText={!authorized && 'Войти'}
+                className={cn('start-page__multi-button')}
+                type={playButtonTypes.MULTIPLAYER}
+                to={multiTo}
+              />
+              <SharingButton className={cn('start-page__sharing-button')} />
+            </div>
           </div>
         </div>
       </MainBlock>

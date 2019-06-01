@@ -11,7 +11,7 @@ import {
   scoreboardActions,
   UpdateLeadersPL,
 } from 'store/scoreboardStore/actions';
-import userStore, { userActions } from 'store/userStore';
+import userStore, { actionUserUpdate, userActions } from 'store/userStore';
 
 const cn = classNames(styles);
 
@@ -25,6 +25,7 @@ export default class LeadersPage extends React.Component {
 
   componentDidMount() {
     this.handleLoadNextPage();
+    userStore.emit(actionUserUpdate());
   }
 
   handleLoadNextPage = () => scoreboardStore.emit(actionScoreboardLoad());
@@ -34,13 +35,16 @@ export default class LeadersPage extends React.Component {
     this.setState({});
   }
 
+/*
   @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
   handleUpdate() {
     this.setState({});
   }
+*/
 
   @onCheburevent(scoreboardStore, scoreboardActions.LOAD_SUCCESS)
   handleUpdateLeaders(action: Action<UpdateLeadersPL>) {
+    console.log('action', action);
     this.setState({
       leaders: action.payload.leaders,
       hasMore: action.payload.hasMore,
@@ -51,7 +55,9 @@ export default class LeadersPage extends React.Component {
     const { leaders, hasMore } = this.state;
     const { user: me } = userStore.select();
     let leadersCounter = 0;
-    console.log('me',me);
+    let lastRating = null;
+    console.log('me', me);
+    console.log('state', this.state);
 
     return (
       <MainBlock className={cn('leaders-page')}>
@@ -83,7 +89,10 @@ export default class LeadersPage extends React.Component {
 
         <div className={cn('rows-block', 'rows-block', 'leaders-page__users')}>
           {leaders.map((user: any) => {
-            leadersCounter++;
+            if (lastRating !== user.record) {
+              leadersCounter++;
+            }
+            lastRating = user.record;
             if (user.id !== (me || { id: null }).id) {
               return (
                 <div className={cn('row')}>

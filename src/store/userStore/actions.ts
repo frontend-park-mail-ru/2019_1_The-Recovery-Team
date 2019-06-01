@@ -5,6 +5,7 @@ export enum userActions {
   CHECK_AUTH = 'USER_CHECK_AUTH',
   CHECK_AUTH_RESULT = 'USER_CHECK_AUTH_RESULT',
 
+  UPDATE = 'USER_UPDATE',
   UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS',
 
   LOGIN = 'USER_LOGIN',
@@ -25,6 +26,10 @@ export enum userActions {
   EDIT_AVATAR = 'USER_EDIT_AVATAR',
   EDIT_AVATAR_ERROR = 'USER_EDIT_AVATAR_ERROR',
   EDIT_AVATAR_SUCCESS = 'USER_EDIT_AVATAR_SUCCESS',
+}
+
+export interface UserUpdatePL {
+  id: number | string;
 }
 
 export interface UserLoginPL {
@@ -65,9 +70,14 @@ export interface UserEditAvatarPL {
   avatar: ImageData;
 }
 
-export const actionUserCheckAuth: ACreatorNull = () => ({
-  type: userActions.CHECK_AUTH,
+export const actionUserUpdate: ACreatorNull = () => ({
   payload: null,
+  type: userActions.UPDATE,
+});
+
+export const actionUserCheckAuth: ACreatorNull = () => ({
+  payload: null,
+  type: userActions.CHECK_AUTH,
 });
 
 export const actionUserLogin: ACreator<UserLoginPL> = payload => ({

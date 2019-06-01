@@ -1,0 +1,6 @@
+2019-05-29T20:30:33.509317861Z Checking connection to host db_chat and port 5432.
+2019-05-29T20:30:33.511406757Z Connection is available after 1 second(s).
+2019-05-31T05:36:45.335153279Z Checking connection to host db_chat and port 5432.
+2019-05-31T05:36:45.350968559Z Retrying(1)
+2019-05-31T05:36:46.338952670Z Retrying(2)
+2019-05-31T05:36:47.341024612Z Connection is available after 3 second(s).

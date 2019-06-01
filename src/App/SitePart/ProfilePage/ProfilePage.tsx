@@ -71,18 +71,6 @@ export default class ProfilePage extends React.Component {
   render() {
     const { isEditMode, isShownModalAvatar } = this.state;
     const { user } = userStore.select();
-    // const { user: u } = userStore.select();
-    // let user: any = null;
-    // if (u) {
-    //   user = {
-    //     nickname: u.nickname,
-    //     avatar: u.avatar,
-    //     oauth: 'vk',
-    //     oauthId: '1111111111',
-    //     rating: u.record,
-    //     position: u.position,
-    //   };
-    // }
 
     return user ? (
       <MainBlock className={cn('profile-page')}>
@@ -97,8 +85,7 @@ export default class ProfilePage extends React.Component {
               )}
             >
               <p className={cn('heading-item__title')}>Место</p>
-              <p className={cn('heading-item__text')}>{`${user.record ||
-                0}`}</p>
+              <p className={cn('heading-item__text')}>{`${user.position}`}</p>
             </div>
             <AvatarProfile
               src={user.avatar}
