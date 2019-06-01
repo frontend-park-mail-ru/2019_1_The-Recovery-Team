@@ -65,7 +65,7 @@ export default class ControllersManager implements IControllersManager {
 
   handleUseItem = keyCode => {
     const activeItem = gameStore.selectMyActiveItem();
-    if (activeItem) {
+    if (activeItem && activeItem.id) {
       return;
     }
 
