@@ -64,7 +64,7 @@
     :global(.isMobile) & {
       margin-bottom: 10px;
 
-      @include square(80px);
+      @include square(60px);
     }
   }
 
@@ -119,6 +119,39 @@
     position: absolute;
     bottom: 0;
     left: 100%;
+  }
+
+  &__stats {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+
+    text-align: center;
+
+    &_right {
+      left: 200%;
+    }
+
+    &_left {
+      right: 150%;
+    }
+  }
+
+  &__rating {
+    @include text-header();
+
+
+    :global(.isMobile) & {
+      font-size: $global-font-size-m;
+    }
+  }
+
+  &__next-record {
+    @include text-medium($global-color-blue, 50px);
+
+    :global(.isMobile) & {
+      font-size: 30px;
+    }
   }
 
   @include media("<=tablet") {

@@ -11,7 +11,7 @@
 
   min-width: 400px;
 
-  :not(:global(.isMobile)) & {
+  &:not(:global(.isMobile)) & {
     min-width: 650px;
   }
 

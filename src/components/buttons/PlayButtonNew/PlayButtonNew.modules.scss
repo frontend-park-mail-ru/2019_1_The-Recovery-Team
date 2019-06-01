@@ -23,7 +23,7 @@ $local-dark-gray-color: #CACACA;
   position: relative;
   cursor: pointer;
 
-  @include square(200px, 50%);
+  @include square(150px, 50%);
   :global(.isMobile) & {
     @include square(100px, 50%);
   }

@@ -1,7 +1,7 @@
 import * as React from 'libs/Cheburact/index';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import musicStore, { musicActions, MusicChangedPL } from 'store/musicStore';
-const music = require('config/music/soundTrack.mp3');
+const music = require('config/music/8bit.mp3');
 
 // @ts-ignore
 @connectToCheburstore

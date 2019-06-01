@@ -10,6 +10,7 @@ import SharingButton from 'components/buttons/SharingButton';
 import { loader } from 'config/images';
 import { routeCreators } from 'config/routes';
 import { GameModes } from 'game/config';
+import gameStore from 'game/store';
 import * as React from 'libs/Cheburact';
 import { Action, connectToCheburstore, onCheburevent } from 'libs/Cheburstore';
 import classNames from 'libs/classNames';
@@ -19,7 +20,9 @@ import musicStore, {
   musicActions,
   MusicChangedPL,
 } from 'store/musicStore';
+import userStore, { actionUserUpdate, userActions } from 'store/userStore';
 import { gamePageTypes } from '../gamePageTypes';
+
 const styles = require('./ModalWindow.modules.scss');
 
 const cn = classNames(styles);
@@ -29,12 +32,31 @@ const cn = classNames(styles);
 export default class ModalWindow extends React.Component {
   state = {
     isMusicOn: musicStore.select().isOn,
+    user: userStore.select().user,
   };
 
   @onCheburevent(musicStore, musicActions.CHANGED)
   handleChangeSound({ payload }: Action<MusicChangedPL>) {
     this.setState({
       isMusicOn: payload.isOn,
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { type = null } = this.props;
+
+    if (
+      type !== prevProps.type &&
+      (type === gamePageTypes.WIN || type === gamePageTypes.LOSE)
+    ) {
+      userStore.emit(actionUserUpdate());
+    }
+  }
+
+  @onCheburevent(userStore, userActions.UPDATE_SUCCESS)
+  handleUpdateUser() {
+    this.setState({
+      user: userStore.select().user,
     });
   }
 
@@ -113,14 +135,32 @@ export default class ModalWindow extends React.Component {
     }
   };
 
+  getStats = () => {
+    const {
+      me,
+      state: { roundNumber } = { roundNumber: 1 },
+    } = gameStore.select();
+
+    const { record: prevRecord } = me || { record: 0 };
+    const { record: nextRecord } = this.state.user || { record: 0 };
+
+    return {
+      prevRecord,
+      nextRecord,
+      roundNumber,
+    };
+  };
+
   render() {
-    const { type = null } = this.props;
+    const { type = null, mode = GameModes.SINGLEPLAYER } = this.props;
     const hasTrophy = type === gamePageTypes.WIN || type === gamePageTypes.LOSE;
     const title = this.getTitle();
     const buttons = [...this.getButtons()];
     const volumeButtonType = this.state.isMusicOn
       ? circleButtonTypes.VOLUME_ON
       : circleButtonTypes.VOLUME_OFF;
+
+    const stats = this.getStats();
 
     return (
       <div className={cn('modal-window', type && 'modal-window_open')}>
@@ -134,6 +174,27 @@ export default class ModalWindow extends React.Component {
         {hasTrophy && (
           <div className={cn('modal-window__trophy')}>
             <SharingButton className={cn('modal-window__sharing-button')} />
+            {mode === GameModes.MULTIPLAYER && (
+              <div
+                className={cn(
+                  'modal-window__stats',
+                  'modal-window__stats_left'
+                )}
+              >
+                <div className={cn('modal-window__rating')}>Рейтинг:</div>
+                <div className={cn('modal-window__next-record')}>
+                  {stats.nextRecord.toString()}
+                </div>
+              </div>
+            )}
+            <div
+              className={cn('modal-window__stats', 'modal-window__stats_right')}
+            >
+              <div className={cn('modal-window__rating')}>Раунд:</div>
+              <div className={cn('modal-window__next-record')}>
+                {stats.roundNumber.toString()}
+              </div>
+            </div>
           </div>
         )}
         <div>
