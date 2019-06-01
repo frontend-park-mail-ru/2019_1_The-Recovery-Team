@@ -62,13 +62,5 @@
     transform: translate(50%, 50%);
     bottom: 16%;
     right: 16%;
-
-    :global(.isMobile) & {
-      @include square(50px);
-
-      &:after {
-        @include svgBackground('./img/share.svg', 50%);
-      }
-    }
   }
 }

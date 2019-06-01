@@ -2,7 +2,7 @@
 @import 'styles/mixins';
 
 .sharing-button {
-  @include buttonBase();
+  @include buttonBase(transparent);
   @include square(70px, 50%);
 
   &:after {
@@ -10,6 +10,33 @@
     @include square(100%);
     @include absoluteCenter();
     @include svgBackground('./img/share.svg', 50%);
+  }
+
+  :global(.isMobile) & {
+    @include square(50px);
+
+    &:after {
+      @include svgBackground('./img/share.svg', 50%);
+    }
+  }
+
+  &__background {
+
+    @include absoluteCenter();
+
+    @keyframes vibrate {
+      from {
+        @include square(100%, 50%);
+        background-color: lighten($global-color-blue, 5%);
+      }
+
+      to {
+        @include square(110%, 50%);
+        background-color: $global-color-blue;
+      }
+    }
+
+    animation: vibrate 0.5s infinite ease-in-out alternate;
   }
 
   &__text {

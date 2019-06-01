@@ -29,6 +29,7 @@ export default class SharingButton extends React.Component {
         target="_blank"
         href={href}
       >
+        <div className={cn('sharing-button__background')}/>
         <span className={cn('sharing-button__text')}>{sharingService}</span>
       </a>
     );

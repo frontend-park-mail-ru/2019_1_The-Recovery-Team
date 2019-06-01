@@ -36,20 +36,13 @@
     text-align: center;
     z-index: 1;
     margin-bottom: 20px;
+    position: relative;
 
     @include text-header();
-
-    &_no-trophy {
-      margin-bottom: 132px;
-    }
 
     :global(.isMobile) & {
       &__title {
         margin-bottom: 10px;
-
-        &_no-trophy {
-          margin-bottom: 60px;
-        }
       }
     }
   }
@@ -63,9 +56,24 @@
   &__trophy {
     z-index: 1;
     margin-bottom: 20px;
+    position: relative;
 
     @include square(112px);
     @include svgBackground('./img/trophy.svg', 100%);
+
+    :global(.isMobile) & {
+      margin-bottom: 10px;
+
+      @include square(80px);
+    }
+  }
+
+  &__loader {
+    z-index: 1;
+    margin-bottom: 20px;
+    position: relative;
+
+    @include square(112px);
 
     :global(.isMobile) & {
       margin-bottom: 10px;
@@ -105,6 +113,12 @@
     :global(.isMobile) & {
       display: none;
     }
+  }
+
+  &__sharing-button {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
   }
 
   @include media("<=tablet") {

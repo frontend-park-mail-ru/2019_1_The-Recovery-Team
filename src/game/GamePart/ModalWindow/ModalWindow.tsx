@@ -6,6 +6,8 @@ import {
 import PlayButtonNew, {
   playButtonTypes,
 } from 'components/buttons/PlayButtonNew';
+import SharingButton from 'components/buttons/SharingButton';
+import { loader } from 'config/images';
 import { routeCreators } from 'config/routes';
 import { GameModes } from 'game/config';
 import * as React from 'libs/Cheburact';
@@ -16,7 +18,7 @@ import musicStore, {
   actionMusicOn,
   musicActions,
   MusicChangedPL,
-} from '../../../store/musicStore';
+} from 'store/musicStore';
 import { gamePageTypes } from '../gamePageTypes';
 const styles = require('./ModalWindow.modules.scss');
 
@@ -128,15 +130,22 @@ export default class ModalWindow extends React.Component {
           style={circleButtonStyles.BLUE_FILL}
           onClick={this.toggleMusic}
         />
-        <div
-          className={cn(
-            'modal-window__title',
-            !hasTrophy && 'modal-window__title_no-trophy'
+        <div className={cn('modal-window__title')}>{title}</div>
+        {hasTrophy && (
+          <div className={cn('modal-window__trophy')}>
+            <SharingButton className={cn('modal-window__sharing-button')} />
+          </div>
+        )}
+        <div>
+          {type === gamePageTypes.SEARCH && (
+            <img
+              alt="Загрузка"
+              key="loader"
+              src={loader}
+              className={cn('modal-window__loader')}
+            />
           )}
-        >
-          {title}
         </div>
-        {hasTrophy && <div className={cn('modal-window__trophy')} />}
         <div className={cn('modal-window__game-buttons-container')}>
           {buttons.map(params => (
             <PlayButtonNew

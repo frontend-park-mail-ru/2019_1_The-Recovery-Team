@@ -10,3 +10,4 @@ export const defaultSharingImage = `${
 
 export const anonymousAvatar = require('./img/anonymousAvatar.jpg');
 export const defaultAvatar = require('./img/nouser.png');
+export const loader = require('./img/loader.svg');
