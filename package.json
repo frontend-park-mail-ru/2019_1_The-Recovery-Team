@@ -37,7 +37,7 @@
     "inline-chunk-manifest-html-webpack-plugin": "^2.0.0",
     "inline-manifest-webpack-plugin": "^4.0.2",
     "mini-css-extract-plugin": "^0.5.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.16.4",
     "resolve-url-loader": "^3.0.1",
